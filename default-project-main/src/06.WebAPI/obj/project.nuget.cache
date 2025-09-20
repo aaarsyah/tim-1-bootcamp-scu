@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "m+N+0sk6piE=",
+  "success": false,
+  "projectFilePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\06.WebAPI\\MyApp.WebAPI.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "Unable to resolve 'Microsoft.AspNetCore.OpenApi (>= 9.0.6)' for 'net9.0'.",
+      "projectPath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\06.WebAPI\\MyApp.WebAPI.csproj",
+      "filePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\06.WebAPI\\MyApp.WebAPI.csproj",
+      "libraryId": "Microsoft.AspNetCore.OpenApi",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
+}
