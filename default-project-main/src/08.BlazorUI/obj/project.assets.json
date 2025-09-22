@@ -8,11 +8,16 @@
     "net9.0": []
   },
   "packageFolders": {
+<<<<<<< HEAD
     "/Users/krisnafirdaus/.nuget/packages/": {}
+=======
+    "C:\\Users\\arry_\\.nuget\\packages\\": {}
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj",
       "projectName": "MyApp.BlazorUI",
       "projectPath": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj",
@@ -21,6 +26,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/krisnafirdaus/.nuget/NuGet/NuGet.Config"
+=======
+      "projectUniqueName": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj",
+      "projectName": "MyApp.BlazorUI",
+      "projectPath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj",
+      "packagesPath": "C:\\Users\\arry_\\.nuget\\packages\\",
+      "outputPath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\08.BlazorUI\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\arry_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -68,7 +83,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
       }
     }
   }

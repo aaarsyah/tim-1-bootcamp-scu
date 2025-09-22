@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "qO8uoa0716Q=",
   "success": true,
   "projectFilePath": "/Users/krisnafirdaus/Desktop/MyApp/src/03.Shared/MyApp.Shared.csproj",
+=======
+  "dgSpecHash": "EcCW6OFuSIg=",
+  "success": true,
+  "projectFilePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\03.Shared\\MyApp.Shared.csproj",
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
   "expectedPackageFiles": [],
   "logs": []
 }

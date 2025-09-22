@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "V3u1Bl5dALA=",
   "success": true,
   "projectFilePath": "/Users/krisnafirdaus/Desktop/MyApp/src/02.Domain/MyApp.Domain.csproj",
+=======
+  "dgSpecHash": "tGsbubyuumU=",
+  "success": true,
+  "projectFilePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\02.Domain\\MyApp.Domain.csproj",
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
   "expectedPackageFiles": [],
   "logs": []
 }

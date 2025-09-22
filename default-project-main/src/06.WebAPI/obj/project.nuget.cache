@@ -1,11 +1,20 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "yyrFmkv5USI=",
   "success": true,
   "projectFilePath": "/Users/krisnafirdaus/Desktop/MyApp/src/06.WebAPI/MyApp.WebAPI.csproj",
   "expectedPackageFiles": [
     "/Users/krisnafirdaus/.nuget/packages/microsoft.aspnetcore.openapi/9.0.6/microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
     "/Users/krisnafirdaus/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+=======
+  "dgSpecHash": "KP0aUWRZevE=",
+  "success": true,
+  "projectFilePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\06.WebAPI\\MyApp.WebAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\arry_\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "C:\\Users\\arry_\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+>>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
   ],
   "logs": []
 }
