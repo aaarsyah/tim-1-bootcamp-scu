@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "GJppSQcII+c=",
   "success": true,
   "projectFilePath": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj",
-=======
-  "dgSpecHash": "sxZ2wseZnvA=",
-  "success": true,
-  "projectFilePath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj",
->>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
   "expectedPackageFiles": [],
   "logs": []
 }
