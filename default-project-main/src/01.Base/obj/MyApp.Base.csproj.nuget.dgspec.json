@@ -1,37 +1,20 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "/Users/krisnafirdaus/Desktop/MyApp/src/01.Base/MyApp.Base.csproj": {}
+    "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\01.Base\\MyApp.Base.csproj": {}
   },
   "projects": {
-    "/Users/krisnafirdaus/Desktop/MyApp/src/01.Base/MyApp.Base.csproj": {
+    "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\01.Base\\MyApp.Base.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/krisnafirdaus/Desktop/MyApp/src/01.Base/MyApp.Base.csproj",
+        "projectUniqueName": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\01.Base\\MyApp.Base.csproj",
         "projectName": "MyApp.Base",
-        "projectPath": "/Users/krisnafirdaus/Desktop/MyApp/src/01.Base/MyApp.Base.csproj",
-        "packagesPath": "/Users/krisnafirdaus/.nuget/packages/",
-        "outputPath": "/Users/krisnafirdaus/Desktop/MyApp/src/01.Base/obj/",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/Users/krisnafirdaus/.nuget/NuGet/NuGet.Config"
-=======
-    "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\01.Base\\MyApp.Base.csproj": {}
-  },
-  "projects": {
-    "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\01.Base\\MyApp.Base.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\01.Base\\MyApp.Base.csproj",
-        "projectName": "MyApp.Base",
-        "projectPath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\01.Base\\MyApp.Base.csproj",
+        "projectPath": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\01.Base\\MyApp.Base.csproj",
         "packagesPath": "C:\\Users\\arry_\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\applemusic\\default-project-main\\src\\01.Base\\obj\\",
+        "outputPath": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\01.Base\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\arry_\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -76,11 +59,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
-=======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
->>>>>>> 478df8a541e322004ce8e2b9ab75ce06c0a61ea1
         }
       }
     }
