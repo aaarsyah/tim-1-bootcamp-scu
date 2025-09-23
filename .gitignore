@@ -4,3 +4,6 @@ obj/
 
 # jangan gitignore *.csproj, hanya ignore *.csproj.user
 *.csproj.user
+
+# file buatan dari Visual Studio?
+*.vs
