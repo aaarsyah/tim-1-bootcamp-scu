@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj": {}
+    "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj": {}
   },
   "projects": {
-    "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj": {
+    "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj",
+        "projectUniqueName": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj",
         "projectName": "MyApp.BlazorUI",
-        "projectPath": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/MyApp.BlazorUI.csproj",
-        "packagesPath": "/Users/krisnafirdaus/.nuget/packages/",
-        "outputPath": "/Users/krisnafirdaus/Desktop/MyApp/src/08.BlazorUI/obj/",
+        "projectPath": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\08.BlazorUI\\MyApp.BlazorUI.csproj",
+        "packagesPath": "C:\\Users\\arry_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\arry_\\applemusic-tim1\\default-project-main\\src\\08.BlazorUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/krisnafirdaus/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\arry_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -43,6 +43,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[8.12.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -62,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
