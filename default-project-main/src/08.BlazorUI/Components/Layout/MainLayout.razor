@@ -6,7 +6,9 @@
     @if (Loggedin)
     {
         <MudAppBar Elevation="1">
-            <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
             <MudSpacer />
             <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"></MudIconButton>
             <MudButton Variant="Variant.Text" Href="/login" Class="mx-2">
@@ -23,7 +25,9 @@
     else
     {
         <MudAppBar Elevation="1">
-            <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
             <MudSpacer />
             <MudButton Variant="Variant.Text" Href="/register" Class="mx-2">
                 <MudText>Daftar Sekarang</MudText>
