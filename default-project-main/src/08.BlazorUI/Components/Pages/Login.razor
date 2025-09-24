@@ -15,9 +15,6 @@
                       Required="true"
                       For="@(() => _loginModel.Email)" />
 
-        <ul>
-            Field value: @_loginModel.Email
-        </ul>
 
         <MudTextField @bind-Value="_loginModel.Password"
                       Label="Masukkan Password"
@@ -26,9 +23,6 @@
                       Required="true"
                       For="@(() => _loginModel.Password)" />
 
-        <ul>
-            Field value: @_loginModel.Password
-        </ul>
 
     <!-- Forgot password link -->
     <div class="d-flex justify-end mb-4">
@@ -38,7 +32,7 @@
     </div>
 
     <!-- Login button -->
-    <MudButton OnClick="Submit" Variant="Variant.Filled" Color="Color.Primary" Style="width: 200px; height: 60px; border-radius: 8px">
+    <MudButton OnClick="Submit" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
             Masuk
     </MudButton>
 
