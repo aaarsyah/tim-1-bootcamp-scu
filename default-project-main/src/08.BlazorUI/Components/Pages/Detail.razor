@@ -12,7 +12,8 @@
             <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
             <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
             <MudSelect @bind-Value="_date"
-                       Label="Tanggal Kursus">
+                       Label="Tanggal Kursus"
+                       FitContent="true">
                 @foreach (var _date in _dates)
                 {
                     <MudSelectItem Value="_date">@_date</MudSelectItem>
