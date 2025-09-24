@@ -1,6 +1,8 @@
 @page "/register"
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
+@using System.Text.RegularExpressions;
+@using System.ComponentModel.DataAnnotations;
+
+@inject NavigationManagerExt Navigation;
 
         <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
         <MudForm>
@@ -54,7 +56,7 @@
                     <div Class="d-flex align-center">
                         <MudText Typo="Typo.body2" Class="d-flex align-center">
                             Sudah punya akun? 
-                            <MudLink Href="/login" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
+                            <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
                         </MudText>
                     </div>
                     </MudStack>

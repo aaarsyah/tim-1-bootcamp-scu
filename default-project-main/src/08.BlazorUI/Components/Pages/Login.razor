@@ -2,6 +2,9 @@
 @using System.ComponentModel.DataAnnotations
 @using MudBlazor.Services;
 @using Microsoft.Extensions.Localization;
+@using MyApp.BlazorUI.Components;
+
+@inject NavigationManagerExt Navigation;
 
 <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
 
@@ -27,7 +30,7 @@
     <!-- Forgot password link -->
     <div class="d-flex justify-end mb-4">
         <MudText Typo="Typo.body2">
-            <MudLink Href="/forgot-password" Color="Color.Primary">Lupa kata sandi</MudLink>
+            <MudLink OnClick="Navigation.GoToForgotPass" Color="Color.Primary">Lupa kata sandi</MudLink>
         </MudText>
     </div>
 
@@ -40,7 +43,7 @@
     <div class="mt-2">
         <MudText Typo="Typo.body2">
             Belum punya akun? 
-            <MudLink Href="/register" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
+            <MudLink OnClick="Navigation.GoToRegister" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
         </MudText>
     </div>
     </MudForm>

@@ -1,13 +1,16 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase;
+@using MyApp.BlazorUI.Components.Pages;
+
+@inject NavigationManagerExt Navigation;
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+        <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
         <MudSpacer />
-        <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
+        <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
+        <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
     </MudAppBar>
     <MudMainContent Class="pt-16 pa-4">
         @Body
