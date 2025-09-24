@@ -36,6 +36,11 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/new-password");
         }
 
+        public void GoToEmailConfirmSuccess()
+        {
+            _navigation.NavigateTo("/email-confirm");
+        }
+
         // Contoh jika menggunakan id
         // public void GoToDetail(int id)
         // {
