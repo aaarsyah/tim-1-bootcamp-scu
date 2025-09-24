@@ -116,7 +116,6 @@ C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\ne
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\tzxjg6is5z-0n6lrtb02s.gz
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\0wz98yz2xy-lftp6ydp6b.gz
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\vwnirq6065-kh15es5tuz.gz
-C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\l0t2s5c4sl-re5l5kxn9s.gz
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\1wh2hxjnwm-t1cqhe9u97.gz
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\hpgjd1z1dy-c2jlpeoesf.gz
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\3ddeqsc1mf-sejl45xvog.gz
@@ -173,3 +172,4 @@ C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\ne
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\MyApp.BlazorUI.pdb
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\MyApp.BlazorUI.genruntimeconfig.cache
 C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\ref\MyApp.BlazorUI.dll
+C:\Users\arry_\applemusic-tim1\default-project-main\src\08.BlazorUI\obj\Debug\net9.0\compressed\l0t2s5c4sl-qiii2loypp.gz
