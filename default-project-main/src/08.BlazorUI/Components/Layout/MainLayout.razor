@@ -1,23 +1,75 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase;
+@using MyApp.BlazorUI.Components.Pages;
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject NavigationManagerExt Navigation;
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
+        <MudSpacer />
+        <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
+        <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
+    </MudAppBar>
+    <MudMainContent Class="pt-16 pa-4">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    MudTheme MyCustomTheme = new MudTheme()
+    {
+        Typography = new Typography()
+        {
+            Default = new DefaultTypography()
+            {
+                FontFamily = new[] {"Poppins"},
+                FontWeight = "500"
+            }
+        }
+    };
+
+    private bool _drawerOpen = true;
+    private bool _isDarkMode = false;
+    private MudTheme? _theme = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _theme = new()
+        {
+            PaletteLight = _lightPalette,
+            LayoutProperties = new LayoutProperties()
+        };
+    }
+
+    private void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+
+    private readonly PaletteLight _lightPalette = new()
+    {
+        Primary = "#5D5FEF", //Button Color
+        Black = "#110e2d",
+        AppbarText = "#424242",
+        AppbarBackground = "#F2C94C",
+        DrawerBackground = "#ffffff",
+        GrayLight = "#e8e8e8",
+        GrayLighter = "#f9f9f9",
+    };
+
+    
+}
+
+

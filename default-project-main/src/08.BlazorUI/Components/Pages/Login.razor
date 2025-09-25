@@ -1,0 +1,65 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using MudBlazor.Services;
+@using Microsoft.Extensions.Localization;
+@using MyApp.BlazorUI.Components;
+
+@inject NavigationManagerExt Navigation;
+
+<MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
+
+    <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-4">Login Dulu Yuk!</MudText>
+
+    <MudForm @ref="_form" Validated="OnValidated">
+        <MudTextField @bind-Value="_loginModel.Email"
+                      Label="Masukkan Email"
+                      Variant="Variant.Outlined"
+                      Required="true"
+                      For="@(() => _loginModel.Email)" />
+
+
+        <MudTextField @bind-Value="_loginModel.Password"
+                      Label="Masukkan Password"
+                      Variant="Variant.Outlined"
+                      InputType="InputType.Password"
+                      Required="true"
+                      For="@(() => _loginModel.Password)" />
+
+
+    <!-- Forgot password link -->
+    <div class="d-flex justify-end mb-4">
+        <MudText Typo="Typo.body2">
+            <MudLink OnClick="Navigation.GoToForgotPass" Color="Color.Primary">Lupa kata sandi</MudLink>
+        </MudText>
+    </div>
+
+    <!-- Login button -->
+    <MudButton OnClick="Navigation.GoToHome" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
+            Masuk
+    </MudButton>
+
+    <!-- Register link -->
+    <div class="mt-2">
+        <MudText Typo="Typo.body2">
+            Belum punya akun? 
+            <MudLink OnClick="Navigation.GoToRegister" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
+        </MudText>
+    </div>
+    </MudForm>
+</MudPaper>
+
+@code {
+    private MudForm _form;
+    private LoginModel _loginModel = new();
+    private void OnValidated() => Console.WriteLine("Form validated!");
+    
+    public class LoginModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+    }
+}

@@ -1,10 +1,18 @@
-using MyApp.BlazorUI.Components;
+using MyApp.BlazorUI.Components;        
+using MudBlazor.Services;
+using MyApp.BlazorUI.Components.Pages;         
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add MudBlazor services
+builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Add navigation service
+builder.Services.AddScoped<NavigationManagerExt>();
 
 var app = builder.Build();
 
@@ -17,8 +25,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
 app.UseAntiforgery();
 
 app.MapStaticAssets();

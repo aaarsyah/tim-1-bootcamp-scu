@@ -1,0 +1,9 @@
+# folder yang digunakan untuk build dan tidak perlu masuk ke repositori
+bin/
+obj/
+
+# jangan gitignore *.csproj, hanya ignore *.csproj.user
+*.csproj.user
+
+# file buatan dari Visual Studio?
+*.vs

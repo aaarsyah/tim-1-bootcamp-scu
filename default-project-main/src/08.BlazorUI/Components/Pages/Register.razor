@@ -1,0 +1,104 @@
+@page "/register"
+@using System.Text.RegularExpressions;
+@using System.ComponentModel.DataAnnotations;
+
+@inject NavigationManagerExt Navigation;
+
+        <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
+        <MudForm>
+
+        <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
+        <MudText Typo="Typo.subtitle1" Class="mb-4">Yuk daftar terlebih dahulu akun kamu</MudText>
+
+                    <MudTextField T="string"
+                      Label="Masukkan Nama Lengkap"
+                      Variant="Variant.Outlined"
+                      @bind-Value="_registerModel.FullName"
+                      Required="true"
+                      RequiredError="Nama Lengkap Harus Diisi!" />
+
+
+                    <MudTextField T="string" 
+                        Label="Masukkan Email" 
+                        Variant="Variant.Outlined"
+                        @bind-Value="_registerModel.Email"
+                        Required="true" 
+                        RequiredError="Email Harus diisi!"
+                        Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
+
+    
+                    <MudTextField T="string" 
+                        Label="Masukkan Password" 
+                        @bind-Value="_registerModel.Password"
+                        HelperText="Choose a strong password" 
+                        Variant="Variant.Outlined"
+                        @ref="pwField1"
+                        InputType="InputType.Password"
+                        Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
+                        Required="true"
+                        RequiredError="Password Haurs Diisi!"/>
+
+
+                    <MudTextField T="string"
+                            Label="Konfirmasi Password" 
+                            Variant="Variant.Outlined"
+                            @bind-Value="_registerModel.ConfirmPassword"
+                            HelperText="Repeat the password" 
+                            InputType="InputType.Password"
+                            Validation="@(new Func<string, string>(PasswordMatch))"/>
+
+
+                    <!-- Register button -->
+                    <MudStack Direction="Row" Spacing="5" Row="true">
+                    <MudButton OnClick="Navigation.GoToEmailConfirmSuccess" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">Daftar</MudButton>
+                    
+                    <!-- Login Link -->
+                    <div Class="d-flex align-center">
+                        <MudText Typo="Typo.body2" Class="d-flex align-center">
+                            Sudah punya akun? 
+                            <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
+                        </MudText>
+                    </div>
+                    </MudStack>
+            </MudForm>   
+        </MudPaper>
+
+
+@code {
+    string[] errors = { };
+    MudTextField<string> pwField1;
+    MudForm form;
+
+    private RegisterModel _registerModel = new();
+    public class RegisterModel
+    {
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+    }
+
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password Harus Diisi!";
+            yield break;
+        }
+        if (pw.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(pw, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(pw, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(pw, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+    private string PasswordMatch(string arg)
+    {
+        if (pwField1.Value != arg)
+            return "Password tidak sesuai";
+        return null;
+    }
+}
