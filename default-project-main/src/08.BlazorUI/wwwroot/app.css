@@ -1,3 +1,12 @@
+@font-face {
+    font-family: Poppins;
+    src: url(/font/Poppins-Regular.ttf);
+}
+@font-face {
+    font-family: Poppins-Medium;
+    src: url(/font/Poppins-Medium.ttf);
+}
+
 html, body {
             background-color: #f8f9fa;
             min-height: 100vh;

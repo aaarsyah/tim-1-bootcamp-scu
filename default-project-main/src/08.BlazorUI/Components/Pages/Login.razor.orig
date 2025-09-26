@@ -2,9 +2,12 @@
 @using System.ComponentModel.DataAnnotations
 @using MudBlazor.Services;
 @using Microsoft.Extensions.Localization;
+<<<<<<< HEAD
+=======
 @using MyApp.BlazorUI.Components;
 
 @inject NavigationManagerExt Navigation;
+>>>>>>> origin
 
 <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
 
@@ -18,6 +21,12 @@
                       Required="true"
                       For="@(() => _loginModel.Email)" />
 
+<<<<<<< HEAD
+        <ul>
+            Field value: @_loginModel.Email
+        </ul>
+=======
+>>>>>>> origin
 
         <MudTextField @bind-Value="_loginModel.Password"
                       Label="Masukkan Password"
@@ -26,16 +35,30 @@
                       Required="true"
                       For="@(() => _loginModel.Password)" />
 
+<<<<<<< HEAD
+        <ul>
+            Field value: @_loginModel.Password
+        </ul>
+=======
+>>>>>>> origin
 
     <!-- Forgot password link -->
     <div class="d-flex justify-end mb-4">
         <MudText Typo="Typo.body2">
+<<<<<<< HEAD
+            <MudLink Href="/forgot-password" Color="Color.Primary">Lupa kata sandi</MudLink>
+=======
             <MudLink OnClick="Navigation.GoToForgotPass" Color="Color.Primary">Lupa kata sandi</MudLink>
+>>>>>>> origin
         </MudText>
     </div>
 
     <!-- Login button -->
+<<<<<<< HEAD
+    <MudButton OnClick="Submit" Variant="Variant.Filled" Color="Color.Primary" Style="width: 200px; height: 60px; border-radius: 8px">
+=======
     <MudButton OnClick="Navigation.GoToHome" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
+>>>>>>> origin
             Masuk
     </MudButton>
 
@@ -43,7 +66,11 @@
     <div class="mt-2">
         <MudText Typo="Typo.body2">
             Belum punya akun? 
+<<<<<<< HEAD
+            <MudLink Href="/register" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
+=======
             <MudLink OnClick="Navigation.GoToRegister" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
+>>>>>>> origin
         </MudText>
     </div>
     </MudForm>
@@ -52,6 +79,19 @@
 @code {
     private MudForm _form;
     private LoginModel _loginModel = new();
+<<<<<<< HEAD
+
+    private async Task Submit()
+    {
+        await _form.Validate();
+        if (_form.IsValid)
+        {
+            Console.WriteLine($"Email: {_loginModel.Email}, Password: {_loginModel.Password}");
+        }
+    }
+
+=======
+>>>>>>> origin
     private void OnValidated() => Console.WriteLine("Form validated!");
     
     public class LoginModel

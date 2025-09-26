@@ -1,6 +1,45 @@
 ﻿@inherits LayoutComponentBase;
 @using MyApp.BlazorUI.Components.Pages;
 
+<<<<<<< HEAD
+<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
+
+<MudLayout>
+    @if (Loggedin)
+    {
+        <MudAppBar Elevation="1">
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"></MudIconButton>
+            <MudButton Variant="Variant.Text" Href="/login" Class="mx-2">
+                <MudText>Kelasku</MudText>
+            </MudButton>
+            <MudButton Variant="Variant.Text" Href="/register" Class="mx-2">
+                <MudText>Pembelian</MudText>
+            </MudButton>
+            <MudText Class="mx-2">|</MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="Logout"></MudIconButton>
+        </MudAppBar>
+    }
+    else
+    {
+        <MudAppBar Elevation="1">
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudButton Variant="Variant.Text" Href="/register" Class="mx-2">
+                <MudText>Daftar Sekarang</MudText>
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/login">
+                <MudText>Masuk</MudText>
+            </MudButton>
+        </MudAppBar>
+    }
+=======
 @inject NavigationManagerExt Navigation;
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
@@ -12,6 +51,7 @@
         <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
         <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
     </MudAppBar>
+>>>>>>> origin
     <MudMainContent Class="pt-16 pa-4">
         @Body
     </MudMainContent>
@@ -33,10 +73,23 @@
             {
                 FontFamily = new[] {"Poppins"},
                 FontWeight = "500"
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin
             }
         }
     };
 
+<<<<<<< HEAD
+    private bool Loggedin = true;
+    private void Logout()
+    {
+        Loggedin = false;
+    }
+
+=======
+>>>>>>> origin
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
@@ -60,7 +113,10 @@
 
     private readonly PaletteLight _lightPalette = new()
     {
+<<<<<<< HEAD
+=======
         Primary = "#5D5FEF", //Button Color
+>>>>>>> origin
         Black = "#110e2d",
         AppbarText = "#424242",
         AppbarBackground = "#F2C94C",

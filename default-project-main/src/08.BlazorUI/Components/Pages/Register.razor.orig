@@ -1,8 +1,13 @@
 @page "/register"
+<<<<<<< HEAD
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+=======
 @using System.Text.RegularExpressions;
 @using System.ComponentModel.DataAnnotations;
 
 @inject NavigationManagerExt Navigation;
+>>>>>>> origin
 
         <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
         <MudForm>
@@ -17,6 +22,12 @@
                       Required="true"
                       RequiredError="Nama Lengkap Harus Diisi!" />
 
+<<<<<<< HEAD
+                    <ul>
+                        Field value: @_registerModel.FullName
+                    </ul>
+=======
+>>>>>>> origin
 
                     <MudTextField T="string" 
                         Label="Masukkan Email" 
@@ -26,7 +37,14 @@
                         RequiredError="Email Harus diisi!"
                         Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
 
+<<<<<<< HEAD
+                    <ul>
+                        Field value: @_registerModel.Email
+                    </ul>
+                              
+=======
     
+>>>>>>> origin
                     <MudTextField T="string" 
                         Label="Masukkan Password" 
                         @bind-Value="_registerModel.Password"
@@ -38,6 +56,12 @@
                         Required="true"
                         RequiredError="Password Haurs Diisi!"/>
 
+<<<<<<< HEAD
+                    <ul>
+                        Field value: @_registerModel.Password
+                    </ul>
+=======
+>>>>>>> origin
 
                     <MudTextField T="string"
                             Label="Konfirmasi Password" 
@@ -47,16 +71,30 @@
                             InputType="InputType.Password"
                             Validation="@(new Func<string, string>(PasswordMatch))"/>
 
+<<<<<<< HEAD
+                    <ul>
+                        Field value: @_registerModel.ConfirmPassword
+                    </ul>
+
+                    <!-- Register button -->
+                    <MudStack Direction="Row" Spacing="5" Row="true">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 200px; height: 60px; border-radius: 8px">Daftar</MudButton>
+=======
 
                     <!-- Register button -->
                     <MudStack Direction="Row" Spacing="5" Row="true">
                     <MudButton OnClick="Navigation.GoToEmailConfirmSuccess" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">Daftar</MudButton>
+>>>>>>> origin
                     
                     <!-- Login Link -->
                     <div Class="d-flex align-center">
                         <MudText Typo="Typo.body2" Class="d-flex align-center">
                             Sudah punya akun? 
+<<<<<<< HEAD
+                            <MudLink Href="/login" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
+=======
                             <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
+>>>>>>> origin
                         </MudText>
                     </div>
                     </MudStack>

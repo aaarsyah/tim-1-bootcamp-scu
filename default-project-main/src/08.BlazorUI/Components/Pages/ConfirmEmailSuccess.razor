@@ -1,0 +1,13 @@
+@page "/email-confirm"
+
+@using System.ComponentModel.DataAnnotations
+@using MudBlazor.Services;
+@using Microsoft.Extensions.Localization;
+@inject NavigationManagerExt Navigation;
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex flex-column align-center mt-8">
+    <MudImage Src="img/animasiconfirmsuccess.jpg" Alt="Email Confirmation Animation" Width="250" Height="250"/>
+    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-2">Konfirmasi Email Berhasil</MudText>
+    <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-4">Silahkan Login terlebih dahulu untuk masuk ke aplikasi</MudText>
+    <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Style="width: 176px; height: 55px; border-radius: 6px">Masuk Sekarang</MudButton>
+</MudContainer>

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
+using MyApp.BlazorUI.Components;
+using MudBlazor.Services;
+
+using MudBlazor.Services;
+=======
 using MyApp.BlazorUI.Components;        
 using MudBlazor.Services;
 using MyApp.BlazorUI.Components.Pages;         
+>>>>>>> origin
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +18,12 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+<<<<<<< HEAD
+builder.Services.AddMudServices();
+=======
 // Add navigation service
 builder.Services.AddScoped<NavigationManagerExt>();
+>>>>>>> origin
 
 var app = builder.Build();
 
