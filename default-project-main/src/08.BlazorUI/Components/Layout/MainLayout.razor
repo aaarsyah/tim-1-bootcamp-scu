@@ -6,12 +6,41 @@
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
-        <MudSpacer />
-        <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
-        <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
-    </MudAppBar>
+    @if (Loggedin)
+    {
+        <MudAppBar Elevation="1">
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"></MudIconButton>
+            <MudButton Variant="Variant.Text" Class="mx-2">
+                <MudText>Kelasku</MudText>
+            </MudButton>
+            <MudButton Variant="Variant.Text" Class="mx-2">
+                <MudText>Pembelian</MudText>
+            </MudButton>
+            <MudText Class="mx-2">|</MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="Logout"></MudIconButton>
+        </MudAppBar>
+    }
+    else
+    {
+        <MudAppBar Elevation="1">
+            <MudLink Href="/" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Href="/register" Class="mx-2">
+                <MudText>Daftar Sekarang</MudText>
+            </MudButton>
+            <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">
+                <MudText>Masuk</MudText>
+            </MudButton>
+        </MudAppBar>
+    }
+    
     <MudMainContent Class="pt-16 pa-4">
         @Body
     </MudMainContent>
@@ -36,6 +65,12 @@
             }
         }
     };
+
+    private bool Loggedin = true;
+    private void Logout()
+    {
+        Loggedin = false;
+    }
 
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
