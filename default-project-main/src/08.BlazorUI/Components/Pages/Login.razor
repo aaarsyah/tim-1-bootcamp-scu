@@ -6,17 +6,20 @@
 
 @inject NavigationManagerExt Navigation;
 
+<PageTitle>Login</PageTitle>
+
 <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
 
     <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
     <MudText Typo="Typo.subtitle1" Class="mb-4">Login Dulu Yuk!</MudText>
 
-    <MudForm @ref="_form" Validated="OnValidated">
+    <MudForm @ref="_form">
         <MudTextField @bind-Value="_loginModel.Email"
                       Label="Masukkan Email"
                       Variant="Variant.Outlined"
                       Required="true"
-                      For="@(() => _loginModel.Email)" />
+                      RequiredError="Email Harus diisi!"
+                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
 
 
         <MudTextField @bind-Value="_loginModel.Password"
@@ -24,7 +27,8 @@
                       Variant="Variant.Outlined"
                       InputType="InputType.Password"
                       Required="true"
-                      For="@(() => _loginModel.Password)" />
+                      RequiredError="Password Harus Diisi!"
+                      Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" />
 
 
     <!-- Forgot password link -->
@@ -35,7 +39,7 @@
     </div>
 
     <!-- Login button -->
-    <MudButton OnClick="Navigation.GoToHome" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
+    <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
             Masuk
     </MudButton>
 
@@ -52,14 +56,28 @@
 @code {
     private MudForm _form;
     private LoginModel _loginModel = new();
-    private void OnValidated() => Console.WriteLine("Form validated!");
-    
+   
     public class LoginModel
     {
-        [Required, EmailAddress]
         public string Email { get; set; }
-
-        [Required]
         public string Password { get; set; }
+    }
+
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password Harus Diisi!";
+            yield break;
+        } //ditambahkan validasi password salah (sesuai database)
+    }
+
+    private async Task OnConfirm()
+    {
+        await _form.Validate();
+        if (_form.IsValid)
+        {
+            Navigation.GoToHome();
+        }
     }
 }

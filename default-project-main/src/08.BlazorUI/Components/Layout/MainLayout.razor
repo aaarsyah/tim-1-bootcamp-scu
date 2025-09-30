@@ -1,20 +1,133 @@
 ﻿@inherits LayoutComponentBase;
 @using MyApp.BlazorUI.Components.Pages;
-
 @inject NavigationManagerExt Navigation;
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
-        <MudSpacer />
-        <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
-        <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
-    </MudAppBar>
+@if (Loggedin)
+    {
+        <MudAppBar Elevation="1">
+            <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"></MudIconButton>
+            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
+                <MudText>Kelasku</MudText>
+            </MudButton>
+            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToPembelian" Class="mx-2">
+                <MudText>Pembelian</MudText>
+            </MudButton>
+            <MudText Class="mx-2">|</MudText>
+            <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="Logout"></MudIconButton>
+        </MudAppBar>
+
     <MudMainContent Class="pt-16 pa-4">
         @Body
     </MudMainContent>
+
+<!---Footer-->
+<MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+    <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+        <MudGrid Class="d-flex justify-space-evenly">
+            <!-- Kolom Tentang -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                <MudText Typo="Typo.body2">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
+                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                    architecto beatae vitae dicta sunt explicabo.
+                </MudText>
+            </MudItem>
+
+            <!-- Kolom Produk -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
+				<MudStack Row="true" Spacing="1">
+                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+					<li>Biola</li>
+					<li>Gitar</li>
+					<li>Drum</li>
+					<li>Menyanyi</li>
+					<li>Piano</li>
+					<li>Saxophone</li>
+				</ul>
+				</MudStack>
+            </MudItem>
+
+            <!-- Kolom Alamat -->
+            <MudItem xs="12" sm="12" md="4">
+                <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
+                <MudText Typo="Typo.body2" Class="mb-2">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                </MudText>
+				
+				 <!-- Kolom Kontak -->
+                <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
+                <MudStack Row="true" Spacing="2">
+					<!-- Phone -->
+					<MudLink Href="tel:+62">
+						<MudIconButton>
+						<img src="img/icon-telephone.svg" alt="Phone" />
+						</MudIconButton>
+					</MudLink>
+
+					<!-- Instagram -->
+					<MudLink Href="https://www.instagram.com/" Target="_blank">
+						<MudIconButton>
+							<img src="img/icon-instagram.svg" alt="Instagram" />
+						</MudIconButton>
+					</MudLink>
+
+					<!-- Youtube -->
+					<MudLink Href="https://www.youtube.com/" Target="_blank">
+						<MudIconButton>
+							<img src="img/icon-youtube.svg" alt="YouTube" />
+						</MudIconButton>
+					</MudLink>
+
+					<!-- Tele -->
+					<MudLink Href="https://web.telegram.org/">
+						<MudIconButton>
+						<img src="img/icon-tele.svg" alt="Instagram" />
+						</MudIconButton>
+					</MudLink>
+
+					<!-- Email -->
+					<MudLink Href="mailto:aku@gmail.com">
+						<MudIconButton>
+						<img src="img/icon-email.svg" alt="Instagram" />
+						</MudIconButton>
+					</MudLink>
+				</MudStack>
+
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudPaper>
+
+    }
+    else
+    {
+        <MudAppBar Elevation="1">
+            <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
+                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+            </MudLink>
+            <MudSpacer />
+            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister" Class="mx-2">
+                <MudText>Daftar Sekarang</MudText>
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">
+                <MudText>Masuk</MudText>
+            </MudButton>
+        </MudAppBar>
+
+    <MudMainContent Class="pt-16 pa-4">
+        @Body
+    </MudMainContent>
+    }
 </MudLayout>
 
 
@@ -36,6 +149,12 @@
             }
         }
     };
+
+    private bool Loggedin = true;
+    private void Logout()
+    {
+        Loggedin = false;
+    }
 
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;

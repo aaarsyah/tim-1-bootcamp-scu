@@ -41,6 +41,25 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/email-confirm");
         }
 
+        public void GoToKelasKu()
+        {
+            _navigation.NavigateTo("/kelasku");
+        }
+
+        public void GoToPembelian()
+        {
+            _navigation.NavigateTo("/pembelian");
+        }
+
+        public void GoToDetail()
+        {
+            _navigation.NavigateTo("/detail");
+        }
+        public void GoToListMenu()
+        {
+            _navigation.NavigateTo("/listmenu");
+        }
+
         // Contoh jika menggunakan id
         // public void GoToDetail(int id)
         // {

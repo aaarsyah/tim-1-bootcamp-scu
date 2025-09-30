@@ -1,12 +1,12 @@
 @page "/register"
 @using System.Text.RegularExpressions;
 @using System.ComponentModel.DataAnnotations;
-
 @inject NavigationManagerExt Navigation;
 
-        <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
-        <MudForm>
+<PageTitle>Register</PageTitle>
 
+        <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
+        <MudForm @ref="form">
         <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
         <MudText Typo="Typo.subtitle1" Class="mb-4">Yuk daftar terlebih dahulu akun kamu</MudText>
 
@@ -36,7 +36,7 @@
                         InputType="InputType.Password"
                         Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
                         Required="true"
-                        RequiredError="Password Haurs Diisi!"/>
+                        RequiredError="Password Harus Diisi!"/>
 
 
                     <MudTextField T="string"
@@ -50,10 +50,12 @@
 
                     <!-- Register button -->
                     <MudStack Direction="Row" Spacing="5" Row="true">
-                    <MudButton OnClick="Navigation.GoToEmailConfirmSuccess" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">Daftar</MudButton>
+                    <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
+                        Daftar
+                    </MudButton>
                     
                     <!-- Login Link -->
-                    <div Class="d-flex align-center">
+                    <div Class="d-flex align-center mt-4">
                         <MudText Typo="Typo.body2" Class="d-flex align-center">
                             Sudah punya akun? 
                             <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
@@ -65,7 +67,6 @@
 
 
 @code {
-    string[] errors = { };
     MudTextField<string> pwField1;
     MudForm form;
 
@@ -101,4 +102,14 @@
             return "Password tidak sesuai";
         return null;
     }
+
+    private async Task OnConfirm()
+    {
+        await form.Validate();
+        if (form.IsValid)
+        {
+            Navigation.GoToEmailConfirmSuccess();
+        }
+    }
 }
+
