@@ -41,6 +41,11 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/email-confirm");
         }
 
+        public void GoToCheckout()
+        {
+            _navigation.NavigateTo("/checkout");
+        }
+
         // Contoh jika menggunakan id
         // public void GoToDetail(int id)
         // {

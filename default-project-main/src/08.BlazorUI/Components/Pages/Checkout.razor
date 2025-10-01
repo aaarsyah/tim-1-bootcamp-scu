@@ -1,0 +1,136 @@
+﻿@page "/checkout"
+@using System.Globalization
+
+<MudPopoverProvider />
+
+@* <MudText HtmlTag="span">Item: @_selectedItemText</MudText> *@
+@* <MudText>Selected items (@selectedItems?.Count): @(selectedItems == null ? "" : string.Join(", ", selectedItems.OrderBy(x => x.Sign).Select(x => x.Sign)))</MudText> *@
+@* <MudText>Selected items (@selectedItems?.Count)</MudText>  *@
+
+@* @ref="_table" *@
+<MudContainer>
+    <MudStack Row="true">
+        <MudCheckBox @bind-Value="selectallcheckbox" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+        <MudText Class='ma-4'>Pilih Semua</MudText>
+    </MudStack>
+    <MudDivider></MudDivider>
+    @foreach (ItemMy item in _itemList)
+    {
+        <MudStack Row="true">
+            <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary"
+                         Checked="(e => UpdatePrice())"></MudCheckBox>
+            <MudImage Src=@item.Image></MudImage>
+            <MudContainer>
+                <MudText Style="color: #828282">@item.Category</MudText>
+                <MudText Style="color: #333333"><b>@item.Name</b></MudText>
+                <MudText Color="Color.Primary">
+                    <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</b>
+                </MudText>
+            </MudContainer>
+            <MudContainer>
+                <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                           OnClick="(e => RemoveItem(item))">
+                    <MudText>Delete</MudText>
+                </MudButton>
+            </MudContainer>
+            
+        </MudStack>
+        <MudDivider></MudDivider>
+    }
+
+    <MudDivider></MudDivider>
+    <MudToolBar>
+        <MudText>
+            Total biaya:
+        </MudText>
+        <MudText Color="Color.Primary">
+            <b>IDR @_itemList.Where(x => x.Selected).Aggregate(0, (total, x) => total + x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
+        </MudText>
+        <MudSpacer></MudSpacer>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary">
+            <MudText>Bayar Sekarang</MudText>
+        </MudButton>
+    </MudToolBar>
+    
+</MudContainer>
+
+
+@code {
+    public class ItemMy
+    {
+        public bool Selected { get; set; }
+        public String Image { get; set; }
+        public String Category { get; set; }
+        public String Name { get; set; }
+        public int Price { get; set; }
+        public ItemMy(String Image, String Category, String ShortDesc, int Price)
+        {
+            this.Selected = false;
+            this.Image = Image;
+            this.Category = Category;
+            this.Name = ShortDesc;
+            this.Price = Price;
+        }
+    }
+    private bool? selectallcheckbox = false;
+    private bool selectcheckbox = false;
+
+
+    private HashSet<ItemMy> selectedItems = new HashSet<ItemMy>();
+    private bool _selectOnRowClick = true;
+    private bool _selectionChangeable = true;
+    private string _selectedItemText = "No row clicked";
+    private List<ItemMy> _itemList = new List<ItemMy>();
+
+    private int _totalPrice = 0;
+
+    protected override void OnInitialized()
+    {
+        _itemList.Add(new ItemMy(
+            "img/Landing1.svg",
+            "Drum",
+            "Kursus Drummer Special Coach (Eno Netral)",
+            6500000
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Landing3.svg",
+            "Biola",
+            "Biola Mid-Level Course",
+            3000000
+        ));
+        _itemList.Add(new ItemMy(
+            "img/ListMenu2.svg",
+            "Drum",
+            "Expert Level Drummer Lessons",
+            5450000
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Landing6.svg",
+            "Saxophone",
+            "Expert Level Saxophone",
+            7350000
+        ));
+    }
+
+    public void UpdatePrice()
+    {
+        _totalPrice = 0;
+        foreach (ItemMy item in _itemList)
+        {
+            if (item.Selected)
+            {
+                _totalPrice += item.Price;
+            }
+        }
+    }
+
+    public void RemoveItem(ItemMy item)
+    {
+        _itemList.Remove(item);
+    }
+    // void OnRowClick(TableRowClickEventArgs<ItemMy> args)
+    // {
+    //     _selectedItemText = $"{args.Item.Number} ({args.Item.Number})";
+    // }
+
+}
