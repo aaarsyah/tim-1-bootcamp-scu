@@ -3,19 +3,94 @@
 
 @inject NavigationManagerExt Navigation;
 
+<style>
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.mud-main-content {
+    flex;
+}
+</style>
+
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 
-<MudLayout>
+<MudLayout Class="page-layout">
     <MudAppBar Elevation="1">
-        <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
+
+        
+     <MudLink Href="/" Target="_blank" Class="mr-2">
+       <MudImage @onclick="Navigation.GoToHome" Src="img/applogo.svg" Alt="App Logo"/>
+     </MudLink>
+
         <MudSpacer />
         <MudButton OnClick="Navigation.GoToRegister" Variant="Variant.Text" Color="Color.Primary" Href="/register" Class="mx-2">Daftar Sekarang</MudButton>
         <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Href="/login">Masuk</MudButton>
     </MudAppBar>
-    <MudMainContent Class="pt-16 pa-4">
+    <MudMainContent Class="mud-main-content pt-4">
         @Body
     </MudMainContent>
 </MudLayout>
+
+<!---Footer-->
+<MudPaper Class="footer mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+     <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+        <MudGrid Class="d-flex justify-space-evenly">
+            <!-- Kolom Tentang -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudText Typo="Typo.h6" Class="mb-2"><b>Training</b></MudText>
+                <MudText Typo="Typo.body2">
+                    pelatihan Musik Online dan Offline untuk semua usia dan level kemampuan.
+                </MudText>
+            </MudItem>
+
+            <!-- Kolom Produk -->
+            <MudItem xs="12" sm="6" md="4">
+                <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
+				<MudStack Row="true" Spacing="1">
+                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+					<li>Biola</li>
+					<li>Gitar</li>
+					<li>Drum</li>
+					<li>Menyanyi</li>
+					<li>Piano</li>
+					<li>Saxophone</li>
+				</ul>
+				</MudStack>
+            </MudItem>
+
+            <!-- Kolom Alamat -->
+            <MudItem xs="12" sm="4">
+     <MudText Typo="Typo.subtitle1"><b>Alamat</b></MudText>
+     <MudText>Jl. Harmoni No. 123, Jakarta - Indonesia<br />Email: info@apelmusic.com</MudText>
+     <MudText Typo="Typo.subtitle1"><b>Kontak</b></MudText>
+    <MudLink Href="" Target="_blank" Class="mr-2">
+         <MudImage Src="img/Logo-phone.png" Alt="Phone Logo" Style="width: 35px; height: 35px;" />
+    </MudLink>
+    <MudLink Href="https://instagram.com" Target="_blank" Class="mr-2">
+           <MudImage Src="img/Logo-instagram.png" Alt="Instagram Logo" Style="width: 35px; height: 35px;" />
+    </MudLink>
+    <MudLink Href="https://youtube.com" Target="_blank" Class="mr-2">
+         <MudImage Src="img/Logo-youtube.png" Alt="Youtube Logo" Style="width: 35px; height: 35px;" />
+    </MudLink>
+    <MudLink Href="https://telegram.com" Target="_blank" Class="mr-2">
+       <MudImage Src="img/Logo-Telegram.png" Alt="Telegram Logo" Style="width: 35px; height: 35px;" />
+    </MudLink>
+    <MudLink Href="https://mail.gmail.com" Target="_blank" Class="mr-2">
+          <MudImage Src="img/Logo-Email.png" Alt="Email Logo" Style="width: 35px; height: 35px;" />
+    </MudLink>
+ </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudPaper>
 
 
 <div id="blazor-error-ui" data-nosnippet>
