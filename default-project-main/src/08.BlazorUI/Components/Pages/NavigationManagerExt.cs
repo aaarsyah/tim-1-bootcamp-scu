@@ -55,9 +55,35 @@ namespace MyApp.BlazorUI.Components
         {
             _navigation.NavigateTo("/detail");
         }
+
         public void GoToListMenu()
         {
             _navigation.NavigateTo("/listmenu");
+        }
+
+        public void GoToInvoice()
+        {
+            _navigation.NavigateTo("/invoice");
+        }
+
+        public void GoToDetailsInvoice()
+        {
+            _navigation.NavigateTo("/details-invoice");
+        }
+
+        public void GoToDashboard()
+        {
+            _navigation.NavigateTo("/dashboard");
+        }
+
+        public void GoToUserManagement()
+        {
+            _navigation.NavigateTo("/user-management");
+        }
+
+        public void GoToPaymentMethod()
+        {
+            _navigation.NavigateTo("/payment-method");
         }
 
         // Contoh jika menggunakan id

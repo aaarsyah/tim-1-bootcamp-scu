@@ -1,12 +1,40 @@
 ﻿@inherits LayoutComponentBase;
+
 @using MyApp.BlazorUI.Components.Pages;
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+
 @inject NavigationManagerExt Navigation;
+@inject IUserService UserService
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
+<MudPopoverProvider /> 
+<MudDialogProvider /> 
+<MudSnackbarProvider />
 
 <MudLayout>
 @if (Loggedin)
     {
+        @if (UserRole == Role.Admin)
+        {
+            <MudAppBar Elevation="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
+                    <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
+                </MudLink>
+                <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
+            </MudAppBar>
+
+            <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu />
+            </MudDrawer>
+
+            <MudMainContent Class="pa-4 pt-6">
+                @Body
+            </MudMainContent>
+        }
+        else
+        {
         <MudAppBar Elevation="1">
             <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
                 <MudImage Src="img/applogo.svg" Alt="App Logo"/>
@@ -28,86 +56,86 @@
         @Body
     </MudMainContent>
 
-<!---Footer-->
-<MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
-    <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
-        <MudGrid Class="d-flex justify-space-evenly">
-            <!-- Kolom Tentang -->
-            <MudItem xs="12" sm="6" md="4">
-                <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
-                <MudText Typo="Typo.body2">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
-                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
-                    architecto beatae vitae dicta sunt explicabo.
-                </MudText>
-            </MudItem>
+    <!---Footer-->
+    <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+            <MudGrid Class="d-flex justify-space-evenly">
+                <!-- Kolom Tentang -->
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                    <MudText Typo="Typo.body2">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
+                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                        architecto beatae vitae dicta sunt explicabo.
+                    </MudText>
+                </MudItem>
 
-            <!-- Kolom Produk -->
-            <MudItem xs="12" sm="6" md="4">
-                <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
-				<MudStack Row="true" Spacing="1">
-                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
-					<li>Biola</li>
-					<li>Gitar</li>
-					<li>Drum</li>
-					<li>Menyanyi</li>
-					<li>Piano</li>
-					<li>Saxophone</li>
-				</ul>
-				</MudStack>
-            </MudItem>
+                <!-- Kolom Produk -->
+                <MudItem xs="12" sm="6" md="4">
+                    <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
+                    <MudStack Row="true" Spacing="1">
+                    <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+                        <li>Biola</li>
+                        <li>Gitar</li>
+                        <li>Drum</li>
+                        <li>Menyanyi</li>
+                        <li>Piano</li>
+                        <li>Saxophone</li>
+                    </ul>
+                    </MudStack>
+                </MudItem>
 
-            <!-- Kolom Alamat -->
-            <MudItem xs="12" sm="12" md="4">
-                <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
-                <MudText Typo="Typo.body2" Class="mb-2">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                </MudText>
-				
-				 <!-- Kolom Kontak -->
-                <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
-                <MudStack Row="true" Spacing="2">
-					<!-- Phone -->
-					<MudLink Href="tel:+62">
-						<MudIconButton>
-						<img src="img/icon-telephone.svg" alt="Phone" />
-						</MudIconButton>
-					</MudLink>
+                <!-- Kolom Alamat -->
+                <MudItem xs="12" sm="12" md="4">
+                    <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
+                    <MudText Typo="Typo.body2" Class="mb-2">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                    </MudText>
+                    
+                    <!-- Kolom Kontak -->
+                    <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
+                    <MudStack Row="true" Spacing="2">
+                        <!-- Phone -->
+                        <MudLink Href="tel:+62">
+                            <MudIconButton>
+                            <img src="img/icon-telephone.svg" alt="Phone" />
+                            </MudIconButton>
+                        </MudLink>
 
-					<!-- Instagram -->
-					<MudLink Href="https://www.instagram.com/" Target="_blank">
-						<MudIconButton>
-							<img src="img/icon-instagram.svg" alt="Instagram" />
-						</MudIconButton>
-					</MudLink>
+                        <!-- Instagram -->
+                        <MudLink Href="https://www.instagram.com/" Target="_blank">
+                            <MudIconButton>
+                                <img src="img/icon-instagram.svg" alt="Instagram" />
+                            </MudIconButton>
+                        </MudLink>
 
-					<!-- Youtube -->
-					<MudLink Href="https://www.youtube.com/" Target="_blank">
-						<MudIconButton>
-							<img src="img/icon-youtube.svg" alt="YouTube" />
-						</MudIconButton>
-					</MudLink>
+                        <!-- Youtube -->
+                        <MudLink Href="https://www.youtube.com/" Target="_blank">
+                            <MudIconButton>
+                                <img src="img/icon-youtube.svg" alt="YouTube" />
+                            </MudIconButton>
+                        </MudLink>
 
-					<!-- Tele -->
-					<MudLink Href="https://web.telegram.org/">
-						<MudIconButton>
-						<img src="img/icon-tele.svg" alt="Instagram" />
-						</MudIconButton>
-					</MudLink>
+                        <!-- Tele -->
+                        <MudLink Href="https://web.telegram.org/">
+                            <MudIconButton>
+                            <img src="img/icon-tele.svg" alt="Instagram" />
+                            </MudIconButton>
+                        </MudLink>
 
-					<!-- Email -->
-					<MudLink Href="mailto:aku@gmail.com">
-						<MudIconButton>
-						<img src="img/icon-email.svg" alt="Instagram" />
-						</MudIconButton>
-					</MudLink>
-				</MudStack>
+                        <!-- Email -->
+                        <MudLink Href="mailto:aku@gmail.com">
+                            <MudIconButton>
+                            <img src="img/icon-email.svg" alt="Instagram" />
+                            </MudIconButton>
+                        </MudLink>
+                    </MudStack>
 
-            </MudItem>
-        </MudGrid>
-    </MudContainer>
-</MudPaper>
-
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </MudPaper> 
+    }  
     }
     else
     {
@@ -150,6 +178,8 @@
         }
     };
 
+    [Parameter] 
+    public Role UserRole { get; set; } = Role.Admin;
     private bool Loggedin = true;
     private void Logout()
     {
@@ -176,14 +206,13 @@
         _drawerOpen = !_drawerOpen;
     }
 
-
     private readonly PaletteLight _lightPalette = new()
     {
         Primary = "#5D5FEF", //Button Color
         Black = "#110e2d",
         AppbarText = "#424242",
         AppbarBackground = "#F2C94C",
-        DrawerBackground = "#ffffff",
+        DrawerBackground = "#F8D24B",
         GrayLight = "#e8e8e8",
         GrayLighter = "#f9f9f9",
     };

@@ -1,7 +1,7 @@
 using MudBlazor.Services;
 
 using MyApp.BlazorUI.Components; 
-// using MyApp.BlazorUI.Services; 
+using MyApp.BlazorUI.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +15,9 @@ builder.Services.AddRazorComponents()
 // Add navigation service
 builder.Services.AddScoped<NavigationManagerExt>();
 
-//TaskService
-// builder.Services.AddScoped<ITaskService, TaskService>();
+//Service
+builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
