@@ -1,0 +1,97 @@
+﻿@page "/RincianInvoice"
+
+<PageTitle>Home</PageTitle>
+<MudContainer class="mt-20">
+    <MudItem xs="12" sm="10">
+    <MudText Typo="Typo.subtitle1"><b>Beranda  ><b> Invoice  ></b><b> Rincian Invoice</b></b></MudText>
+        <MudText Typo="Typo.subtitle1"><b>Menu Invoice</b></MudText>
+    </MudItem>
+</MudContainer>
+    
+<MudContainer class="mt-20">
+    <MudItem xs="16" sm="8">
+        <MudText Typo="Typo.subtitle1"><b>No.Invoice   : AB00003</b></MudText>
+        <MudText Typo="Typo.subtitle1"><b>Tanggal Beli : 25 Juli 2026</b></MudText>
+    </MudItem>
+    <MudTable T="Element" Items="@Elements.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
+          RowClass="cursor-pointer" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
+   
+    <HeaderContent>
+        <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+    <MudTd DataLabel="No">@context.Number</MudTd>
+    <MudTd DataLabel="NamaCourse">@context.NamaCourse</MudTd>
+    <MudTd DataLabel="Kategori">@context.Kategori</MudTd>
+    <MudTd DataLabel="JadwalKursus">@context.JadwalKursus</MudTd>
+    <MudTd DataLabel="Harga">@context.Harga</MudTd>
+</RowTemplate>
+</MudTable>
+</MudContainer>
+
+
+
+@code {
+    private int selectedRowNumber = -1;
+    private MudTable<Element> mudTable;
+    private List<string> clickedEvents = new();
+    private IEnumerable<Element> Elements = new List<Element>()
+    {
+           new Element()
+            {
+                Number = 1,
+                NamaCourse = "Kursus Drum Spesial Coach (Eno Netral)",
+                Kategori = "Drum",
+                JadwalKursus = "Senin, 25 Juli 2026",
+                Harga = "IDR. 8.500.000"
+            },
+       new Element()
+            {
+                Number = 2,
+                NamaCourse = "Biola Mid-Level Course",
+                Kategori = "Biola",
+                JadwalKursus = "Senin, 25 Juli 2026",
+                Harga = "IDR. 3.000.000"
+            }
+
+    };
+
+    private void RowClickEvent(TableRowClickEventArgs<Element> tableRowClickEventArgs)
+    {
+        clickedEvents.Add("Row has been clicked");
+    }
+
+    private string SelectedRowClassFunc(Element element, int rowNumber)
+    {
+        if (selectedRowNumber == rowNumber)
+        {
+            selectedRowNumber = -1;
+            clickedEvents.Add("Selected Row: None");
+            return string.Empty;
+        }
+        else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
+        {
+            selectedRowNumber = rowNumber;
+            clickedEvents.Add($"Selected Row: {rowNumber}");
+            return "selected";
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+
+    public class Element
+    {
+        public int Number { get; set; }
+        public string NamaCourse { get; set; }
+        public string Kategori { get; set; }
+        public string JadwalKursus { get; set; }
+        public string Harga { get; set; }
+    }
+}

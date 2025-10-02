@@ -23,7 +23,7 @@ namespace MyApp.BlazorUI.Components
 
         public void GoToHome()
         {
-            _navigation.NavigateTo("/");
+            _navigation.NavigateTo("/listmenu");
         }
 
         public void GoToForgotPass()
@@ -39,6 +39,11 @@ namespace MyApp.BlazorUI.Components
         public void GoToEmailConfirmSuccess()
         {
             _navigation.NavigateTo("/email-confirm");
+        }
+
+        public void GoToRincianInvoice()
+        {
+            _navigation.NavigateTo("/RincianInvoice");
         }
 
         // Contoh jika menggunakan id
