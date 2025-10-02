@@ -38,13 +38,11 @@
                     <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</b>
                 </MudText>
             </MudContainer>
-            <MudContainer>
-                <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
-                           OnClick="(e => RemoveItem(item))">
-                    <MudText>Delete</MudText>
-                </MudButton>
-            </MudContainer>
-            
+            <MudSpacer />
+            <MudButton Class="pa-4" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                        OnClick="(e => RemoveItem(item))">
+                <MudText>Delete</MudText>
+            </MudButton>
         </MudStack>
         <MudDivider></MudDivider>
     }
