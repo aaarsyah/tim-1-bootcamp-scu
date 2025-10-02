@@ -19,9 +19,9 @@
 
 @* @ref="_table" *@
 <MudContainer>
-    <MudStack Row="true">
+    <MudStack Row="true" AlignItems="AlignItems.Center">
         <MudCheckBox @bind-Value="selectallcheckbox" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
-        <MudText Class='ma-4'>Pilih Semua</MudText>
+        <MudText>Pilih Semua</MudText>
     </MudStack>
     <MudDivider></MudDivider>
     @foreach (ItemMy item in _itemList)
@@ -33,6 +33,7 @@
             <MudContainer>
                 <MudText Style="color: #828282">@item.Category</MudText>
                 <MudText Style="color: #333333"><b>@item.Name</b></MudText>
+                <MudText Style="color: #4F4F4F">Jadwal : @item.StartDate.ToString("D", new CultureInfo("id-ID")) </MudText>
                 <MudText Color="Color.Primary">
                     <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</b>
                 </MudText>
@@ -111,22 +112,22 @@
         public String Category { get; set; }
         public String Name { get; set; }
         public int Price { get; set; }
-        public ItemMy(String Image, String Category, String ShortDesc, int Price)
+        public DateOnly StartDate { get; set; }
+        public ItemMy(String Image, String Category, String ShortDesc, int Price, DateOnly StartDate)
         {
             this.Selected = false;
             this.Image = Image;
             this.Category = Category;
             this.Name = ShortDesc;
             this.Price = Price;
+            this.StartDate = StartDate;
         }
     }
     private bool? selectallcheckbox = false;
-    private bool selectcheckbox = false;
 
 
     private HashSet<ItemMy> selectedItems = new HashSet<ItemMy>();
     private MudMessageBox _mudMessageBox;
-    private string _selectedItemText = "No row clicked";
     private List<ItemMy> _itemList = new List<ItemMy>();
 
     private int _totalPrice = 0;
@@ -137,25 +138,29 @@
             "img/Landing1.svg",
             "Drum",
             "Kursus Drummer Special Coach (Eno Netral)",
-            6500000
+            6500000,
+            new DateOnly(2022, 10, 25)
         ));
         _itemList.Add(new ItemMy(
             "img/Landing3.svg",
             "Biola",
             "Biola Mid-Level Course",
-            3000000
+            3000000,
+            new DateOnly(2022, 10, 23)
         ));
         _itemList.Add(new ItemMy(
             "img/ListMenu2.svg",
             "Drum",
             "Expert Level Drummer Lessons",
-            5450000
+            5450000,
+            new DateOnly(2022, 10, 25)
         ));
         _itemList.Add(new ItemMy(
             "img/Landing6.svg",
             "Saxophone",
             "Expert Level Saxophone",
-            7350000
+            7350000,
+            new DateOnly(2022, 10, 27)
         ));
     }
 
