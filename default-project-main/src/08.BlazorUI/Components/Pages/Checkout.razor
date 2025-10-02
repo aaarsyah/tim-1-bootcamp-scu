@@ -3,6 +3,16 @@
 
 <MudPopoverProvider />
 
+<MudDialogProvider
+    FullWidth="false"
+    MaxWidth="MaxWidth.ExtraSmall"
+    CloseButton="false"
+    BackdropClick="true"
+    NoHeader="false"
+    Position="DialogPosition.Center"
+    CloseOnEscapeKey="true"
+    BackgroundClass=""/>
+
 @* <MudText HtmlTag="span">Item: @_selectedItemText</MudText> *@
 @* <MudText>Selected items (@selectedItems?.Count): @(selectedItems == null ? "" : string.Join(", ", selectedItems.OrderBy(x => x.Sign).Select(x => x.Sign)))</MudText> *@
 @* <MudText>Selected items (@selectedItems?.Count)</MudText>  *@
@@ -16,7 +26,7 @@
     <MudDivider></MudDivider>
     @foreach (ItemMy item in _itemList)
     {
-        <MudStack Row="true">
+        <MudStack Row="true" AlignItems="AlignItems.Center">
             <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary"
                          Checked="(e => UpdatePrice())"></MudCheckBox>
             <MudImage Src=@item.Image></MudImage>
@@ -47,13 +57,51 @@
             <b>IDR @_itemList.Where(x => x.Selected).Aggregate(0, (total, x) => total + x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
         </MudText>
         <MudSpacer></MudSpacer>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClickedAsync">
             <MudText>Bayar Sekarang</MudText>
         </MudButton>
     </MudToolBar>
     
 </MudContainer>
 
+<MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
+    <MessageContent>
+        <MudText>
+            Bayar pakai....
+        </MudText>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment1.svg" />
+            <MudText>GoPay</MudText>
+        </MudStack>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment2.svg" />
+            <MudText>OVO</MudText>
+        </MudStack>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment3.svg" />
+            <MudText>DANA</MudText>
+        </MudStack>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment4.svg" />
+            <MudText>Mandiri</MudText>
+        </MudStack>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment5.svg" />
+            <MudText>BCA</MudText>
+        </MudStack>
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src="img/Payment6.svg" />
+            <MudText>BNI</MudText>
+        </MudStack>
+    </MessageContent>
+    @* I can't center the action buttons below, sorry. https://github.com/MudBlazor/MudBlazor/issues/1739 *@
+    <NoButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary">Batal</MudButton>
+    </NoButton>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary">Bayar</MudButton>
+    </YesButton>
+</MudMessageBox>
 
 @code {
     public class ItemMy
@@ -77,8 +125,7 @@
 
 
     private HashSet<ItemMy> selectedItems = new HashSet<ItemMy>();
-    private bool _selectOnRowClick = true;
-    private bool _selectionChangeable = true;
+    private MudMessageBox _mudMessageBox;
     private string _selectedItemText = "No row clicked";
     private List<ItemMy> _itemList = new List<ItemMy>();
 
@@ -110,6 +157,13 @@
             "Expert Level Saxophone",
             7350000
         ));
+    }
+
+    private async Task OnButtonClickedAsync()
+    {
+        bool? result = await _mudMessageBox.ShowAsync();
+        // _state = result is null ? "Canceled" : "Deleted!";
+        // StateHasChanged();
     }
 
     public void UpdatePrice()
