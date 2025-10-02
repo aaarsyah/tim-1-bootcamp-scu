@@ -26,7 +26,7 @@
     <MudDivider></MudDivider>
     @foreach (ItemMy item in _itemList)
     {
-        <MudStack Row="true" AlignItems="AlignItems.Center">
+        <MudStack Class="ma-4"  Row="true" AlignItems="AlignItems.Center">
             <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary"
                          Checked="(e => UpdatePrice())"></MudCheckBox>
             <MudImage Src=@item.Image></MudImage>
@@ -135,28 +135,28 @@
     protected override void OnInitialized()
     {
         _itemList.Add(new ItemMy(
-            "img/Landing1.svg",
+            "img/Checkout1.svg",
             "Drum",
             "Kursus Drummer Special Coach (Eno Netral)",
             6500000,
             new DateOnly(2022, 10, 25)
         ));
         _itemList.Add(new ItemMy(
-            "img/Landing3.svg",
+            "img/Checkout2.svg",
             "Biola",
             "Biola Mid-Level Course",
             3000000,
             new DateOnly(2022, 10, 23)
         ));
         _itemList.Add(new ItemMy(
-            "img/ListMenu2.svg",
+            "img/Checkout3.svg",
             "Drum",
             "Expert Level Drummer Lessons",
             5450000,
             new DateOnly(2022, 10, 25)
         ));
         _itemList.Add(new ItemMy(
-            "img/Landing6.svg",
+            "img/Checkout4.svg",
             "Saxophone",
             "Expert Level Saxophone",
             7350000,

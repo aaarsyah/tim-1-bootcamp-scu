@@ -1,0 +1,62 @@
+﻿@page "/myclass"
+@using System.Globalization
+
+<MudPopoverProvider />
+
+@* <MudText HtmlTag="span">Item: @_selectedItemText</MudText> *@
+@* <MudText>Selected items (@selectedItems?.Count): @(selectedItems == null ? "" : string.Join(", ", selectedItems.OrderBy(x => x.Sign).Select(x => x.Sign)))</MudText> *@
+@* <MudText>Selected items (@selectedItems?.Count)</MudText>  *@
+
+@* @ref="_table" *@
+<MudContainer>
+    <MudDivider></MudDivider>
+    @foreach (ItemMy item in _itemList)
+    {
+        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+            <MudImage Src=@item.Image></MudImage>
+            <MudContainer>
+                <MudText Style="color: #828282">@item.Category</MudText>
+                <MudText Style="color: #333333"><b>@item.Name</b></MudText>
+                <MudText Color="Color.Primary">Jadwal : @item.StartDate.ToString("D", new CultureInfo("id-ID")) </MudText>
+            </MudContainer>
+        </MudStack>
+        <MudDivider></MudDivider>
+    }
+</MudContainer>
+
+@code {
+    public class ItemMy
+    {
+        public String Image { get; set; }
+        public String Category { get; set; }
+        public String Name { get; set; }
+        public DateOnly StartDate { get; set; }
+        //Should be a DTO here
+        public ItemMy(String Image, String Category, String ShortDesc, DateOnly StartDate)
+        {
+            this.Image = Image;
+            this.Category = Category;
+            this.Name = ShortDesc;
+            this.StartDate = StartDate;
+        }
+    }
+
+    private List<ItemMy> _itemList = new List<ItemMy>();
+
+    protected override void OnInitialized()
+    {
+        _itemList.Add(new ItemMy(
+            "img/Checkout1.svg",
+            "Drum",
+            "Kursus Drummer Special Coach (Eno Netral)",
+            new DateOnly(2022, 10, 25)
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Checkout2.svg",
+            "Biola",
+            "Biola Mid-Level Course",
+            new DateOnly(2022, 10, 23)
+        ));
+    }
+
+}
