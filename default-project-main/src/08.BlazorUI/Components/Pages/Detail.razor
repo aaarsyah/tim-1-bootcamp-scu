@@ -5,28 +5,54 @@
 <PageTitle>Detail Kelas</PageTitle>
 
 <MudContainer Class="mt-10">
-    <MudStack Row="true">
-        <MudImage Src="img/ListMenu1.svg"></MudImage>
-        <MudContainer>
-            <MudText class="">Drum</MudText>
-            <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-            <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
-            <MudSelect @bind-Value="_date"
-                       Label="Tanggal Kursus"
-                       FitContent="true">
-                @foreach (var _date in _dates)
-                {
-                    <MudSelectItem Value="_date">@_date</MudSelectItem>
-                }
-            </MudSelect>
-            <MudButton Class="px-4" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
-                <MudText>Masukkan Keranjang</MudText>
-            </MudButton>
-            <MudButton Class="px-4" Variant="Variant.Filled" Color="Color.Primary" Href="#">
-                <MudText>Beli Sekarang</MudText>
-            </MudButton>
-        </MudContainer>
-    </MudStack>
+    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+        <MudStack Row="true">
+            <MudImage Src="img/ListMenu1.svg"></MudImage>
+            <MudContainer>
+                <MudText class="">Drum</MudText>
+                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
+                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
+                <MudSelect @bind-Value="_date"
+                           Label="Tanggal Kursus"
+                           FitContent="true">
+                    @foreach (var _date in _dates)
+                    {
+                        <MudSelectItem Value="_date">@_date</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudButton Class="px-4" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
+                    <MudText>Masukkan Keranjang</MudText>
+                </MudButton>
+                <MudButton Class="px-4" Variant="Variant.Filled" Color="Color.Primary" Href="#">
+                    <MudText>Beli Sekarang</MudText>
+                </MudButton>
+            </MudContainer>
+        </MudStack>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+        <MudStack>
+            <MudImage Src="img/ListMenu1.svg"></MudImage>
+            <MudContainer>
+                <MudText class="">Drum</MudText>
+                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
+                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
+                <MudSelect @bind-Value="_date"
+                           Label="Tanggal Kursus"
+                           FitContent="true">
+                    @foreach (var _date in _dates)
+                    {
+                        <MudSelectItem Value="_date">@_date</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudButton Class="px-4" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
+                    <MudText>Masukkan Keranjang</MudText>
+                </MudButton>
+                <MudButton Class="px-4" Variant="Variant.Filled" Color="Color.Primary" Href="#">
+                    <MudText>Beli Sekarang</MudText>
+                </MudButton>
+            </MudContainer>
+        </MudStack>
+    </MudHidden>
     <MudText Class="mt-8" Typo="Typo.h5" >
         <b>Deskripsi</b>
     </MudText>
@@ -39,7 +65,7 @@
             <b>Kelas lain yang mungkin kamu suka</b>
         </MudText>
         <MudGrid Class="mt-8">
-            <MudItem xs="4">
+            <MudItem xs="12" md="6" lg="4">
                 <MudLink Href="/detail" Color="Color.Default">
                     <MudImage Src="img/ListMenu2.svg"></MudImage>
                     <MudText class="">Drum</MudText>
@@ -47,7 +73,7 @@
                     <MudText class="" Color="Color.Primary"><b>IDR 5.450.000</b></MudText>
                 </MudLink>
             </MudItem>
-            <MudItem xs="4">
+            <MudItem xs="12" md="6" lg="4">
                 <MudLink Href="/detail" Color="Color.Default">
                     <MudImage Src="img/ListMenu3.svg"></MudImage>
                     <MudText class="">Drum</MudText>
@@ -55,7 +81,7 @@
                     <MudText class="" Color="Color.Primary"><b>IDR 13.000.000</b></MudText>
                 </MudLink>
             </MudItem>
-            <MudItem xs="4">
+            <MudItem xs="12" md="6" lg="4">
                 <MudLink Href="/detail" Color="Color.Default">
                     <MudImage Src="img/ListMenu4.svg"></MudImage>
                     <MudText class="">Drum</MudText>
