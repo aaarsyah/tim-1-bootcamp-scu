@@ -30,7 +30,7 @@
 
 @code {
     [CascadingParameter]
-    public DialogReference DialogReference { get; set; }
+    private IMudDialogInstance MudDialog { get; set; }
 
     [Parameter] 
     public UserItem User { get; set; } = new();
@@ -48,12 +48,12 @@
             result = await UserService.UpdateUserAsync(User);
         }
 
-        DialogReference?.Close(DialogResult.Ok(result)); 
+        MudDialog.Close(DialogResult.Ok(result)); 
     }
 
     private void Cancel()
     {
-        DialogReference?.Close();
+        MudDialog.Cancel();
     }
 
 }

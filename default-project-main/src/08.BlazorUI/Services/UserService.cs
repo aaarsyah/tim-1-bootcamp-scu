@@ -9,13 +9,13 @@ namespace MyApp.BlazorUI.Services
 
         public UserService()
         {
-            // Seed with sample data
+
             SeedData();
         }
 
         public async Task<List<UserItem>> GetUserAsync()
         {
-            await Task.Delay(100); // Simulate async operation
+            await Task.Delay(100); 
             return _user.OrderByDescending(t => t.Name).ToList();
         }
 

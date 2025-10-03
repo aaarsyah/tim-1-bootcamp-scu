@@ -18,6 +18,8 @@ builder.Services.AddScoped<NavigationManagerExt>();
 //Service
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
 
 var app = builder.Build();
 

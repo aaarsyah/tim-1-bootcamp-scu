@@ -5,6 +5,7 @@
 @using MyApp.BlazorUI.Services
 @inject IMemberService MemberService
 @inject IUserService UserService
+@inject IPaymentService PaymentService;
 @inject NavigationManagerExt Navigation
 
 <PageTitle>Dashboard Admin</PageTitle>
@@ -104,6 +105,7 @@
     private IEnumerable<MemberItem> member = new List<MemberItem>();
 
     private IEnumerable<UserItem> user = new List<UserItem>();
+    private IEnumerable<PaymentItem> payment = new List<PaymentItem>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -119,6 +121,10 @@
         var users = await UserService.GetUserAsync();
         user = users;
         _totalUserActive = users.Count;
+
+        var payments = await PaymentService.GetPaymentAsync();
+        payment = payments;
+        _totalPayment = payments.Count;
     }
 
     private bool FilterFunc1(MemberItem member) => FilterFunc(member, searchString1);
