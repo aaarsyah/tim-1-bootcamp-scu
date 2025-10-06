@@ -21,6 +21,10 @@
         /// </summary>
         public string Description { get; set; } = string.Empty;
         /// <summary>
+        /// ImageUrl: URL gambar yang terkait<br />
+        /// </summary>
+        public string ImageUrl { get; set; } = string.Empty;
+        /// <summary>
         /// Price: Harga kelas dalam IDR
         /// </summary>
         public int Price { get; set; }
@@ -32,6 +36,5 @@
         /// Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-        //TODO: Add image URL
     }
 }

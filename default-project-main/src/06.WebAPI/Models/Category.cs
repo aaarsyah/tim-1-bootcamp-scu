@@ -25,10 +25,13 @@
         /// </summary>
         public string Description { get; set; } = string.Empty;
         /// <summary>
+        /// ImageUrl: URL gambar yang terkait<br />
+        /// </summary>
+        public string ImageUrl { get; set; } = string.Empty;
+        /// <summary>
         /// Courses: Kelas-kelas pelajaran yang terkait
         /// </summary>
         public ICollection<Course> Courses { get; set; } = new List<Course>();
-        //TODO: Add image URL
     }
 }
 
