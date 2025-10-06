@@ -30,6 +30,16 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.Price)
                         .IsRequired()
                         .HasColumnType("numeric(10)");
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
                         .WithMany(e => e.Courses)
@@ -58,6 +68,16 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(1000);
                 entity.Property(e => e.ImageUrl)
                         .HasMaxLength(256);
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Courses lagi
             });
             modelBuilder.Entity<Schedule>(entity =>
@@ -95,7 +115,12 @@ namespace MyApp.WebAPI.Data
                         .IsRequired()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-                
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan ItemCart
                 entity.HasMany<CartItem>()
                         .WithOne(e => e.User)
@@ -168,8 +193,14 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(20);
                 entity.Property(e => e.LogoUrl)
                         .HasMaxLength(256);
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Invoice lagi
-                });
+            });
         }
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.

@@ -29,6 +29,21 @@
         /// </summary>
         public int Price { get; set; }
         /// <summary>
+        /// IsActive: Apakah kelas pelajaran aktif?
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public bool IsActive { get; set; } = false;
+        /// <summary>
+        /// CreatedAt: Tangal pembuatan kelas pelajaran
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+        /// <summary>
+        /// UpdatedAt: Tangal perubahan kelas pelajaran
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime UpdatedAt { get; set; }
+        /// <summary>
         /// Category: Kategori kelas pelajaran yang terkait
         /// </summary>
         public Category Category { get; set; } = null;

@@ -18,5 +18,15 @@
         /// LogoUrl: URL logo metode pembayaran
         /// </summary>
         public string LogoUrl { get; set; } = string.Empty;
+        /// <summary>
+        /// CreatedAt: Tangal pembuatan metode pembayaran
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+        /// <summary>
+        /// UpdatedAt: Tangal perubahan metode pembayaran
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime UpdatedAt { get; set; }
     }
 }

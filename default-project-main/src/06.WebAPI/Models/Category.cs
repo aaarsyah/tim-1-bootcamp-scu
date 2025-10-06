@@ -30,6 +30,21 @@
         /// </summary>
         public string ImageUrl { get; set; } = string.Empty;
         /// <summary>
+        /// IsActive: Apakah kategori aktif?
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public bool IsActive { get; set; } = false;
+        /// <summary>
+        /// CreatedAt: Tangal pembuatan kategori
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+        /// <summary>
+        /// UpdatedAt: Tangal perubahan kategori
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
+        public DateTime UpdatedAt { get; set; }
+        /// <summary>
         /// Courses: Kelas-kelas pelajaran yang terkait
         /// </summary>
         public ICollection<Course> Courses { get; set; } = new List<Course>();
