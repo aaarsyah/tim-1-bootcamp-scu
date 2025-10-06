@@ -3,6 +3,7 @@
     /// <summary>
     /// Schedule: Representasi sebuah jadwal kelas<br />
     /// Many-to-One dengan Course (Many Schedules, One Course)
+    /// Many-to-One dengan Schedule (Many CartItem, One Schedule)
     /// </summary>
     public class Schedule
     {

@@ -25,7 +25,8 @@
         /// </summary>
         public string Description { get; set; } = string.Empty;
         /// <summary>
-        /// ImageUrl: URL gambar yang terkait<br />
+        /// ImageUrl: URL gambar kategori<br />
+        /// Catatan: Ditampilkan pada page Landing
         /// </summary>
         public string ImageUrl { get; set; } = string.Empty;
         /// <summary>

@@ -21,7 +21,7 @@
         /// </summary>
         public string Description { get; set; } = string.Empty;
         /// <summary>
-        /// ImageUrl: URL gambar yang terkait<br />
+        /// ImageUrl: URL gambar kelas pelajaran
         /// </summary>
         public string ImageUrl { get; set; } = string.Empty;
         /// <summary>
