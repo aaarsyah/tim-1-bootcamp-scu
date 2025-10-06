@@ -14,10 +14,10 @@
         /// <summary>
         /// User: Pengguna yang terkait
         /// </summary>
-        public User User { get; set; } = null;
+        public User User { get; set; } = null!;
         /// <summary>
         /// Schedule: Jadwal kelas yang terkait
         /// </summary>
-        public Schedule Schedule { get; set; } = null;
+        public Schedule Schedule { get; set; } = null!;
     }
 }

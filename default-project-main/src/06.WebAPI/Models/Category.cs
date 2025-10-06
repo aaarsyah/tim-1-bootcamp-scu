@@ -33,7 +33,7 @@
         /// IsActive: Apakah kategori aktif?
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         /// <summary>
         /// CreatedAt: Tangal pembuatan kategori
         /// Catatan: Digunakan pada page Admin

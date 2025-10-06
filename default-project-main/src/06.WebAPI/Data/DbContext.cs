@@ -43,6 +43,7 @@ namespace MyApp.WebAPI.Data
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
                         .WithMany(e => e.Courses)
+                        .HasForeignKey(e => e.CategoryId)
                         .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
                 entity.HasMany(e => e.Schedules)
@@ -201,11 +202,169 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Invoice lagi
             });
+            SeedData(modelBuilder);
         }
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
 
-            //Untuk sementara pakai SQL server lokal dari instalasi SQL Express
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            List<Category> categories = [
+                
+            ];
+            modelBuilder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = 1,
+                    Name = "Drum",
+                    LongName = "Drummer class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Piano",
+                    LongName = "Pianist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "Gitar",
+                    LongName = "Guitarist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 4,
+                    Name = "Bass",
+                    LongName = "Bassist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 5,
+                    Name = "Biola",
+                    LongName = "Violinist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 6,
+                    Name = "Menyangi",
+                    LongName = "Singer class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 7,
+                    Name = "Flute",
+                    LongName = "Flutist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new Category
+                {
+                    Id = 8,
+                    Name = "Saxophone",
+                    LongName = "Saxophonist class",
+                    Description = "",
+                    ImageUrl = "img/ListMenuBanner.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                }
+            );
+            modelBuilder.Entity<Course>().HasData(
+                new Course
+                {
+                    Id = 1,
+                    Name = "Kursus Drummer Special Coach (Eno Netral)",
+                    Description = "",
+                    ImageUrl = "img/Landing1.svg",
+                    Price = 8500000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 1
+                },
+                new Course
+                {
+                    Id = 2,
+                    Name = "[Beginner] Guitar class for kids",
+                    Description = "",
+                    ImageUrl = "img/Landing2.svg",
+                    Price = 1600000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 3
+                },
+                new Course
+                {
+                    Id = 3,
+                    Name = "Biola Mid-Level Course",
+                    Description = "",
+                    ImageUrl = "img/Landing3.svg",
+                    Price = 3000000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 5
+                },
+                new Course
+                {
+                    Id = 4,
+                    Name = "Drummer for kids (Level Basic/1)",
+                    Description = "",
+                    ImageUrl = "img/Landing4.svg",
+                    Price = 2200000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 1
+                },
+                new Course
+                {
+                    Id = 5,
+                    Name = "Kursu Piano : From Zero to Pro (Full Package)",
+                    Description = "",
+                    ImageUrl = "img/Landing5.svg",
+                    Price = 11650000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 2
+                },
+                new Course
+                {
+                    Id = 6,
+                    Name = "Expert Level Saxophone",
+                    Description = "",
+                    ImageUrl = "img/Landing6.svg",
+                    Price = 7350000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CategoryId = 8
+                }
+            );
+        }
+
+        //Untuk sementara pakai SQL server lokal dari instalasi SQL Express
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True");
     }

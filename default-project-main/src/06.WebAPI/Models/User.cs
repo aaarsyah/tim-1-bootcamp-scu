@@ -13,16 +13,16 @@
         /// <summary>
         /// Name: Nama pengguna
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         /// <summary>
         /// Email: Alamat email pengguna
         /// </summary>
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         /// <summary>
         /// Password: Password pengguna
         /// TODO: Menunggu implementasi autentikasi
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
         /// <summary>
         /// IsActive: Apakah pengguna sudah konfirmasi email?
         /// Catatan: Digunakan pada konfirmasi email

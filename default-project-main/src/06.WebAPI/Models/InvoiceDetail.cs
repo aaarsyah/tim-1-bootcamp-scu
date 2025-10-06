@@ -13,6 +13,6 @@
         /// <summary>
         /// Schedule: Jadwal kelas yang terkait
         /// </summary>
-        public Schedule Schedule { get; set; } = null;
+        public Schedule Schedule { get; set; } = null!;
     }
 }

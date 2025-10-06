@@ -18,6 +18,6 @@
         /// <summary>
         /// Course: Kelas pelajaran
         /// </summary>
-        public Course Course { get; set; } = null;
+        public Course Course { get; set; } = null!;
     }
 }

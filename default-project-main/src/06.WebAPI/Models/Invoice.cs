@@ -19,11 +19,11 @@
         /// User: Pengguna yang terkait<br />
         /// Catatan: Dapat berupa null bila user dihapus
         /// </summary>
-        public User? User { get; set; } = null;
+        public User? User { get; set; } = null!;
         /// <summary>
         /// PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
-        public PaymentMethod? PaymentMethod { get; set; } = null; //Collection navigation not required
+        public PaymentMethod? PaymentMethod { get; set; } = null!; //Collection navigation not required
         /// <summary>
         /// InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>

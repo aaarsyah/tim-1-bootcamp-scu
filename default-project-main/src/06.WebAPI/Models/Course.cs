@@ -32,7 +32,7 @@
         /// IsActive: Apakah kelas pelajaran aktif?
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         /// <summary>
         /// CreatedAt: Tangal pembuatan kelas pelajaran
         /// Catatan: Digunakan pada page Admin
@@ -46,7 +46,11 @@
         /// <summary>
         /// Category: Kategori kelas pelajaran yang terkait
         /// </summary>
-        public Category Category { get; set; } = null;
+        public int CategoryId { get; set; }
+        /// <summary>
+        /// Virtual field for Category
+        /// </summary>
+        public virtual Category Category { get; set; } = null!;
         /// <summary>
         /// Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
