@@ -27,6 +27,7 @@
 
             <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
+                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="Logout">Logout</MudButton>
             </MudDrawer>
 
             <MudMainContent Class="pa-4 pt-6">

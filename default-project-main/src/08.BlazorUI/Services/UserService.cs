@@ -9,7 +9,6 @@ namespace MyApp.BlazorUI.Services
 
         public UserService()
         {
-
             SeedData();
         }
 
