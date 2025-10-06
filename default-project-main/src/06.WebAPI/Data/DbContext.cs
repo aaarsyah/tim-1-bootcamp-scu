@@ -34,7 +34,7 @@ namespace MyApp.WebAPI.Data
                         .OnDelete(DeleteBehavior.Restrict); //Larang penghapusan bila ada Courses dengan Category yang akan dihapus
                 //relaitonship dengan Schedule
                 entity.HasMany(e => e.Schedules)
-                        .WithMany(e => e.Courses); // TODO: Konfigurasi tabel "join" (tabel antara Course dan Schedule
+                        .WithOne(e => e.Course); // TODO: Konfigurasi tabel "join" (tabel antara Course dan Schedule
 
             });
             modelBuilder.Entity<Category>(entity =>
