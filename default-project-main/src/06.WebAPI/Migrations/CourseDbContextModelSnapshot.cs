@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication1.Data;
+using MyApp.WebAPI.Data;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace MyApp.WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebApplication1.Models.Category", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,7 +178,7 @@ namespace MyApp.WebAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Course", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,7 +326,7 @@ namespace MyApp.WebAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.PaymentMethod", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.PaymentMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -414,7 +414,7 @@ namespace MyApp.WebAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Schedule", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Schedule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -435,9 +435,95 @@ namespace MyApp.WebAPI.Migrations
                     b.ToTable("Schedule");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Course", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.User", b =>
                 {
-                    b.HasOne("WebApplication1.Models.Category", "Category")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "zulfanjaya@gmail.com",
+                            IsActive = true,
+                            IsAdmin = false,
+                            Name = "Zulfan Jaya",
+                            Password = "zulfanjaya",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "kikisaputri@gmail.com",
+                            IsActive = true,
+                            IsAdmin = true,
+                            Name = "Kiki Saputri",
+                            Password = "kikisaputri",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "danawijaya@gmail.com",
+                            IsActive = false,
+                            IsAdmin = false,
+                            Name = "Dana Wijaya",
+                            Password = "danawijaya",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "hanawahdiah@gmail.com",
+                            IsActive = true,
+                            IsAdmin = false,
+                            Name = "Hana Wahdiah",
+                            Password = "hanawahdiah",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("MyApp.WebAPI.Models.Course", b =>
+                {
+                    b.HasOne("MyApp.WebAPI.Models.Category", "Category")
                         .WithMany("Course")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -447,9 +533,9 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Schedule", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Schedule", b =>
                 {
-                    b.HasOne("WebApplication1.Models.Course", "Course")
+                    b.HasOne("MyApp.WebAPI.Models.Course", "Course")
                         .WithMany("Schedules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -458,12 +544,12 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Category", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Category", b =>
                 {
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Course", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Course", b =>
                 {
                     b.Navigation("Schedules");
                 });

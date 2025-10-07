@@ -1,4 +1,4 @@
-namespace WebApplication1.Models
+namespace MyApp.WebAPI.Models
 {
     /// <summary>
     /// Standard API response wrapper

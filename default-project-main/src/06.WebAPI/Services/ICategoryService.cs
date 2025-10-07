@@ -1,6 +1,6 @@
-using WebApplication1.DTOs;
+using MyApp.WebAPI.DTOs;
 
-namespace WebApplication1.Services
+namespace MyApp.WebAPI.Services
 {
     /// <summary>
     /// Category service interface

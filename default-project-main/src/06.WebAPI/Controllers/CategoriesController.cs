@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.DTOs;
-using WebApplication1.Models;
-using WebApplication1.Services;
+using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Services;
 
-namespace WebApplication1.Controllers
+namespace MyApp.WebAPI.Controllers
 {
     /// <summary>
     /// Categories management controller

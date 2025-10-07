@@ -1,4 +1,4 @@
-namespace WebApplication1.DTOs
+namespace MyApp.WebAPI.DTOs
 {
     public class CategoryDto
     {

@@ -1,7 +1,7 @@
-using WebApplication1.DTOs;
-using WebApplication1.Models;
+using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models;
 
-namespace WebApplication1.Services
+namespace MyApp.WebAPI.Services
 {
     /// <summary>
     /// Product service interface

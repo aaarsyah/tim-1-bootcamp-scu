@@ -1,11 +1,11 @@
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
 // Import CourseDbContext dari folder Data
-using WebApplication1.Data;
+using MyApp.WebAPI.Data;
 // Import extension methods dari folder Extensions
-using WebApplication1.Extensions;
+using MyApp.WebAPI.Extensions;
 // Import custom middleware dari folder Middleware
-using WebApplication1.Middleware;
+using MyApp.WebAPI.Middleware;
 // Import FluentValidation core library
 using FluentValidation;
 // Import FluentValidation ASP.NET Core integration
@@ -54,7 +54,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     // Definisikan dokumen OpenAPI
     c.SwaggerDoc("v1", new() { 
-        Title = "Course API- Apple Music",          // Nama API
+        Title = "API- Apple Music",          // Nama API
         Version = "v1",                 // Versi API
         Description = "A simple e-commerce Course API for Apple Music Website", // Deskripsi API
     });

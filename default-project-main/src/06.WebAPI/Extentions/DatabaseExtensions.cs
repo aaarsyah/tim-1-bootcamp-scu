@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace WebApplication1.Extensions;
+namespace MyApp.WebAPI.Extensions;
 
 /// <summary>
 /// Extension methods untuk database operations seperti auto-migration

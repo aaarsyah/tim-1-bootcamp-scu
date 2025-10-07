@@ -1,8 +1,8 @@
 using System.Net;
 using System.Text.Json;
-using WebApplication1.Models;
+using MyApp.WebAPI.Models;
 
-namespace WebApplication1.Middleware
+namespace MyApp.WebAPI.Middleware
 {
     /// <summary>
     /// Global exception handling middleware

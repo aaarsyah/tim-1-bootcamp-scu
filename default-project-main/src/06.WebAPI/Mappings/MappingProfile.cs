@@ -1,8 +1,8 @@
 using AutoMapper;
-using WebApplication1.DTOs;
-using WebApplication1.Models;
+using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models;
 
-namespace WebApplication1.Mappings
+namespace MyApp.WebAPI.Mappings
 {
     /// <summary>
     /// AutoMapper profile for entity-DTO mappings
@@ -30,6 +30,11 @@ namespace WebApplication1.Mappings
             CreateMap<PaymentMethod, PaymentDto>();
             CreateMap<CreatePaymentDto, PaymentMethod>();
             CreateMap<UpdatePaymentDto, PaymentMethod>();
+
+            // User mappings
+            CreateMap<User, UserDto>();
+            CreateMap<CreateUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
         }
     }
 }

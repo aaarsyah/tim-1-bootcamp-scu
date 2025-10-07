@@ -1,15 +1,15 @@
 // Import AutoMapper untuk object-to-object mapping
 using AutoMapper;
 // Import DbContext untuk database operations
-using WebApplication1.Data;
+using MyApp.WebAPI.Data;
 // Import DTOs untuk data transfer objects
-using WebApplication1.DTOs;
+using MyApp.WebAPI.DTOs;
 // Import Models untuk entities dan response wrappers
-using WebApplication1.Models;
+using MyApp.WebAPI.Models;
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services
+namespace MyApp.WebAPI.Services
 {
     /// <summary>
     /// Implementasi business logic untuk Product operations

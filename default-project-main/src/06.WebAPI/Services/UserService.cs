@@ -1,0 +1,91 @@
+using AutoMapper;
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace MyApp.WebAPI.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly CourseDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserService> _logger;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public UserService(CourseDbContext context, IMapper mapper, ILogger<UserService> logger)
+        {
+            _context = context;
+            _mapper = mapper;
+            _logger = logger;
+        }
+
+   
+        public async Task<IEnumerable<UserDto>> GetAllUserAsync()
+        {
+            var user = await _context.User.ToListAsync();
+            return _mapper.Map<IEnumerable<UserDto>>(user);
+        }
+
+   
+        public async Task<UserDto?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.User
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+            return user != null ? _mapper.Map<UserDto>(user) : null;
+        }
+
+      
+        public async Task<UserDto> CreateUserAsync(CreateUserDto createUserDto)
+        {
+            var user = _mapper.Map<User>(createUserDto);
+            
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
+            
+            _logger.LogInformation("User created: {UserName} with ID: {UserId}", 
+                user.Name, user.Id);
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+     
+        public async Task<UserDto?> UpdateUserAsync(int id, UpdateUserDto updateUserDto)
+        {
+            var user = await _context.User.FindAsync(id);
+            if (user == null) return null;
+
+            _mapper.Map(updateUserDto, user);
+            user.UpdatedAt = DateTime.UtcNow;
+            
+            await _context.SaveChangesAsync();
+            
+            _logger.LogInformation("User updated: {UserId}", id);
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+      
+        public async Task<bool> DeleteUserAsync(int id)
+        {
+            var user = await _context.User.FindAsync(id);
+            if (user == null) return false;
+
+            _context.User.Remove(user);
+            await _context.SaveChangesAsync();
+            
+            _logger.LogInformation("User deleted: {UserId}", id);
+            
+            return true;
+        }
+
+     
+        public async Task<bool> UserExistsAsync(int id)
+        {
+            return await _context.User.AnyAsync(c => c.Id == id);
+        }
+    }
+}

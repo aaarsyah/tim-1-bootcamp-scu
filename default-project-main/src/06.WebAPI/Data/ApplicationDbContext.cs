@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
+using MyApp.WebAPI.Models;
 
-namespace WebApplication1.Data
+namespace MyApp.WebAPI.Data
 {
     public class CourseDbContext : DbContext
     {
@@ -17,24 +17,21 @@ namespace WebApplication1.Data
 
         /// <summary>
         /// DbSet untuk Course table
-        /// Entity Framework akan map ini ke tabel "Products" di database
-        /// DbSet provides CRUD operations untuk entity type Product
+        /// Entity Framework akan map ini ke tabel "Course" di database
         /// </summary>
         public DbSet<Course> Course { get; set; }
-        
-        /// <summary>
-        /// DbSet untuk Categories table  
-        /// Entity Framework akan map ini ke tabel "Categories" di database
-        /// </summary>
+    
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<PaymentMethod> Payment { get; set; }
+        public DbSet<User> User { get; set; }
+        
 
         /// <summary>
         /// OnModelCreating - Method untuk configure entity models menggunakan Fluent API
         /// Dipanggil sekali saat DbContext pertama kali di-initialize
         /// Lebih powerful daripada Data Annotations untuk complex configurations
-       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Call base implementation untuk ensure proper inheritance behavior
@@ -44,10 +41,10 @@ namespace WebApplication1.Data
             // Menggunakan separate methods untuk better organization dan readability
             ConfigureCategory(modelBuilder);
             ConfigureCourse(modelBuilder);
-            
+
             // ========== GLOBAL CONFIGURATIONS ==========
             ApplyGlobalConfigurations(modelBuilder);
-            
+
             // ========== DATA SEEDING ==========
             // Seed initial data untuk development dan testing
             SeedData(modelBuilder);
@@ -285,6 +282,149 @@ namespace WebApplication1.Data
             });
         }
 
+        private void ConfigureUser(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity =>
+            {
+                // ========== TABLE CONFIGURATION ==========
+                entity.ToTable("User");
+                entity.HasKey(e => e.Id);
+
+                // ========== COLUMN USER ==========
+                entity.Property(e => e.Name)
+                       .IsRequired()
+                       .HasMaxLength(20)
+                       .HasComment("User name");
+
+                entity.Property(e => e.Email)
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasComment("Indicates if User is active and available");
+
+                entity.Property(e => e.IsAdmin)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasComment("Indicates if User is Admin");
+
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                // Relationship dengan ItemCart
+                entity.HasMany<CartItem>() //bukan ICollection karena tidak boleh null sedangkan default awal nilai CartItem null
+                        .WithOne(e => e.User)
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
+
+                // Relationship dengan Participant (My Class)
+                entity.HasMany<Participant>()
+                        .WithOne(e => e.User)
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
+
+                // Relationship dengan Invoice
+                entity.HasMany<Invoice>()
+                        .WithOne(e => e.User)
+                        .OnDelete(DeleteBehavior.SetNull); // Putuskan semua Invoice yang terhubung bila User dihapus
+
+                // Constraint
+                entity.ToTable(e => e.HasCheckConstraint(
+                        "CK_Email", "[Email] LIKE '%@%.%'"));
+
+                entity.ToTable(e => e.HasCheckConstraint(
+                        "CK_Password",
+                        "LEN([Password]) >= 8 " +
+                        "AND [Password] LIKE '%[A-Z]%' " +
+                        "AND [Password] LIKE '%[a-z]%' " +
+                        "AND [Password] LIKE '%[0-9]%'"));
+
+                //Indexis (Pencarian)
+                entity.HasIndex(e => e.Email)
+                      .IsUnique()
+                      .HasDatabaseName("IX_User_Email");
+
+                entity.HasIndex(e => new { e.Name })
+                      .HasDatabaseName("IX_User_Name");
+
+                entity.HasIndex(e => e.IsActive)
+                      .HasDatabaseName("IX_User_IsActive")
+                      .HasFilter("[IsActive] = 1");
+
+                entity.HasIndex(e => e.IsAdmin)
+                      .HasDatabaseName("IX_User_IsAdmin")
+                      .HasFilter("[IsAdmin] = 1");      
+    
+            });
+        }
+
+        private void ConfigureCartItem(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CartItem>(entity =>
+                {
+                    entity.ToTable("CartItems");
+                    // Primary key
+                    entity.HasKey(e => e.Id);
+                    // Properties
+                    // Tak usah configure relationship sama User lagi
+                    // Relationship dengan Schedule
+                    entity.HasOne(e => e.Schedule)
+                            .WithMany()
+                            .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila Schedule dihapus
+                });
+
+        }
+
+        private void ConfigureParticipant(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Participant>(entity =>
+            {
+                entity.ToTable("Participants");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                // Tak usah configure relationship sama User lagi
+                // Relationship dengan Schedule
+                entity.HasOne(e => e.Schedule)
+                        .WithMany()
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
+            });
+        }
+
+        private void ConfigureInvoice(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.ToTable("Invoices");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                entity.Property(e => e.Date)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                // Tak usah configure relationship sama User lagi
+                // Relationship dengan PaymentMethod
+                entity.HasOne(e => e.PaymentMethod)
+                        .WithMany()
+                        .OnDelete(DeleteBehavior.SetNull); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+                // Relationship dengan InvoiceDetails
+                entity.HasMany(e => e.InvoiceDetails)
+                        .WithOne()
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+            });
+        }        
+
         /// <summary>
         /// Apply global configurations yang berlaku untuk semua entities
         /// Menggunakan conventions untuk consistency across database
@@ -496,8 +636,9 @@ namespace WebApplication1.Data
                     UpdatedAt = new DateTime(2024, 1, 4, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
+
             // ========== SEED PAYMENT METHOD ==========
-             modelBuilder.Entity<PaymentMethod>().HasData(
+            modelBuilder.Entity<PaymentMethod>().HasData(
                 new PaymentMethod
                 {
                     Id = 1,
@@ -533,6 +674,46 @@ namespace WebApplication1.Data
                     Id = 6,
                     Name = "BNI",
                     LogoUrl = "img/Payment6.svg"
+                }
+            );
+
+            // ========== SEED USER ==========
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Name = "Zulfan Jaya",
+                    Email = "zulfanjaya@gmail.com",
+                    Password = "zulfanjaya",
+                    IsActive = true,
+                    IsAdmin = false
+                },
+                new User
+                {
+                    Id = 2,
+                    Name = "Kiki Saputri",
+                    Email = "kikisaputri@gmail.com",
+                    Password = "kikisaputri",
+                    IsActive = true,
+                    IsAdmin = true
+                },
+                new User
+                {
+                    Id = 3,
+                    Name = "Dana Wijaya",
+                    Email = "danawijaya@gmail.com",
+                    Password = "danawijaya",
+                    IsActive = false,
+                    IsAdmin = false
+                },
+                new User
+                {
+                    Id = 4,
+                    Name = "Hana Wahdiah",
+                    Email = "hanawahdiah@gmail.com",
+                    Password = "hanawahdiah",
+                    IsActive = true,
+                    IsAdmin = false
                 }
             );
 

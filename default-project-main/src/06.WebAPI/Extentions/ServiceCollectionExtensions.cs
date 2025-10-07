@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Data;
-using WebApplication1.Services;
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Services;
 using FluentValidation;
 using System.Reflection;
 
 
-namespace WebApplication1.Extensions
+namespace MyApp.WebAPI.Extensions
 {
     /// <summary>
     /// Extension methods untuk IServiceCollection - memudahkan konfigurasi dependency injection
@@ -29,6 +29,8 @@ namespace WebApplication1.Extensions
             services.AddScoped<ICourseService, CourseService>();
 
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IUserService, UserService>();
+
 
             
             // Return services untuk method chaining (builder pattern)
@@ -96,7 +98,7 @@ namespace WebApplication1.Extensions
                     // ========== MIGRATION CONFIGURATION ==========
                     
                     // Specify assembly untuk migrations (jika migrations di assembly terpisah)
-                    // sqlOptions.MigrationsAssembly("WebApplication1.Migrations");
+                    // sqlOptions.MigrationsAssembly("MyApp.WebAPI.Migrations");
                     
                     // Set migration history table name (default: __EFMigrationsHistory)
                     // sqlOptions.MigrationsHistoryTable("EFMigrationsHistory", "dbo");
@@ -217,7 +219,7 @@ namespace WebApplication1.Extensions
                     sqliteOptions.CommandTimeout(30);
                     
                     // Configure migration assembly jika diperlukan
-                    // sqliteOptions.MigrationsAssembly("WebApplication1.Migrations");
+                    // sqliteOptions.MigrationsAssembly("MyApp.WebAPI.Migrations");
                 });
                 
                 // Development settings
@@ -268,4 +270,4 @@ namespace WebApplication1.Extensions
             }
         }
     } // End of ServiceCollectionExtensions class
-} // End of WebApplication1.Extensions namespace
+} // End of MyApp.WebAPI.Extensions namespace

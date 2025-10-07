@@ -1,10 +1,10 @@
 using AutoMapper;
-using WebApplication1.Data;
-using WebApplication1.DTOs;
-using WebApplication1.Models;
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Services
+namespace MyApp.WebAPI.Services
 {
     /// <summary>
     /// Category service implementation

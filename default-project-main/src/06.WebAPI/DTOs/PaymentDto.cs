@@ -1,4 +1,4 @@
-namespace WebApplication1.DTOs
+namespace MyApp.WebAPI.DTOs
 {
     public class PaymentDto
     {
@@ -15,18 +15,14 @@ namespace WebApplication1.DTOs
     }
 
     public class CreatePaymentDto
-    {
-        public int Id { get; set; }
-      
+    { 
         public string Name { get; set; } = string.Empty;
   
         public string LogoUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
     }
     public class UpdatePaymentDto
-    {
-        public int Id { get; set; }
-      
+    { 
         public string Name { get; set; } = string.Empty;
   
         public string LogoUrl { get; set; } = string.Empty;
