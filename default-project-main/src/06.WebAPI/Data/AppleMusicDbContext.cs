@@ -1,7 +1,9 @@
 ﻿// Import Entity Framework Core untuk database operations
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 // Import Models untuk entities
 using MyApp.WebAPI.Models;
+using Xunit.Sdk;
 
 namespace MyApp.WebAPI.Data
 {
@@ -184,14 +186,17 @@ namespace MyApp.WebAPI.Data
                 // Relationship dengan ItemCart
                 entity.HasMany<CartItem>()
                         .WithOne(e => e.User)
+                        .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
                 // Relationship dengan Participant
                 entity.HasMany<Participant>()
                         .WithOne(e => e.User)
+                        .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
                 // Relationship dengan Invoice
                 entity.HasMany<Invoice>()
                         .WithOne(e => e.User)
+                        .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.SetNull); // Putuskan semua Invoice yang terhubung bila User dihapus
                 // Constraint
                 entity.ToTable(e => e.HasCheckConstraint(
@@ -214,6 +219,7 @@ namespace MyApp.WebAPI.Data
                 // Relationship dengan Schedule
                 entity.HasOne(e => e.Schedule)
                         .WithMany()
+                        .HasForeignKey(e => e.ScheduleId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila Schedule dihapus
             });
         }
@@ -233,6 +239,7 @@ namespace MyApp.WebAPI.Data
                 // Relationship dengan Schedule
                 entity.HasOne(e => e.Schedule)
                         .WithMany()
+                        .HasForeignKey(e => e.ScheduleId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
             });
         }
@@ -255,10 +262,12 @@ namespace MyApp.WebAPI.Data
                 // Relationship dengan PaymentMethod
                 entity.HasOne(e => e.PaymentMethod)
                         .WithMany()
-                        .OnDelete(DeleteBehavior.SetNull); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+                        .HasForeignKey(e => e.PaymentMethodId)
+                        .OnDelete(DeleteBehavior.SetNull); // Putuskan semua InvoiceDetails yang terhubung bila Invoice dihapus
                 // Relationship dengan InvoiceDetails
                 entity.HasMany(e => e.InvoiceDetails)
                         .WithOne()
+                        .HasForeignKey(e => e.InvoiceId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
             });
         }
@@ -275,6 +284,12 @@ namespace MyApp.WebAPI.Data
                 entity.HasKey(e => e.Id);
                 // Properties
                 // Tak usah configure relationship sama Invoice lagi
+                // Relationship dengan Schedule
+                entity.HasOne(e => e.Schedule)
+                        .WithMany()
+                        .HasForeignKey(e => e.ScheduleId)
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
+                //TODO: diskusi bagaimana dengan invoice bilamana course/schedule dihapus
             });
         }
         /// <summary>
@@ -306,89 +321,87 @@ namespace MyApp.WebAPI.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            List<Category> categories = [
-                
-            ];
+            string placeholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
                     Id = 1,
                     Name = "Drum",
                     LongName = "Drummer class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 2,
                     Name = "Piano",
                     LongName = "Pianist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 3,
                     Name = "Gitar",
                     LongName = "Guitarist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 4,
                     Name = "Bass",
                     LongName = "Bassist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 5,
                     Name = "Biola",
                     LongName = "Violinist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 6,
-                    Name = "Menyangi",
+                    Name = "Menyanyi",
                     LongName = "Singer class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 7,
                     Name = "Flute",
                     LongName = "Flutist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
                     Id = 8,
                     Name = "Saxophone",
                     LongName = "Saxophonist class",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
             modelBuilder.Entity<Course>().HasData(
@@ -396,67 +409,404 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 1,
                     Name = "Kursus Drummer Special Coach (Eno Netral)",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing1.svg",
                     Price = 8500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 1
                 },
                 new Course
                 {
                     Id = 2,
                     Name = "[Beginner] Guitar class for kids",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing2.svg",
                     Price = 1600000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 3
                 },
                 new Course
                 {
                     Id = 3,
                     Name = "Biola Mid-Level Course",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing3.svg",
                     Price = 3000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 5
                 },
                 new Course
                 {
                     Id = 4,
                     Name = "Drummer for kids (Level Basic/1)",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing4.svg",
                     Price = 2200000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 1
                 },
                 new Course
                 {
                     Id = 5,
                     Name = "Kursu Piano : From Zero to Pro (Full Package)",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 2
                 },
                 new Course
                 {
                     Id = 6,
                     Name = "Expert Level Saxophone",
-                    Description = "",
+                    Description = placeholder,
                     ImageUrl = "img/Landing6.svg",
                     Price = 7350000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2024, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CategoryId = 8
+                }
+            );
+            modelBuilder.Entity<Schedule>().HasData(
+                new Schedule
+                {
+                    Id = 1,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 2,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 3,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 4,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 5,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 6,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 7,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 8,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 9,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 10,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 11,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 12,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 2
+                },
+                new Schedule
+                {
+                    Id = 13,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 14,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 15,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 16,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 17,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 18,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 3
+                },
+                new Schedule
+                {
+                    Id = 19,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 20,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 21,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 22,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 23,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 24,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 4
+                },
+                new Schedule
+                {
+                    Id = 25,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 26,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 27,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 28,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 29,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 30,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 5
+                },
+                new Schedule
+                {
+                    Id = 31,
+                    Date = new DateOnly(2022, 10, 25),
+                    CourseId = 6
+                },
+                new Schedule
+                {
+                    Id = 32,
+                    Date = new DateOnly(2022, 10, 26),
+                    CourseId = 6
+                },
+                new Schedule
+                {
+                    Id = 33,
+                    Date = new DateOnly(2022, 10, 27),
+                    CourseId = 6
+                },
+                new Schedule
+                {
+                    Id = 34,
+                    Date = new DateOnly(2022, 10, 28),
+                    CourseId = 6
+                },
+                new Schedule
+                {
+                    Id = 35,
+                    Date = new DateOnly(2022, 10, 29),
+                    CourseId = 6
+                },
+                new Schedule
+                {
+                    Id = 36,
+                    Date = new DateOnly(2022, 10, 30),
+                    CourseId = 6
+                }
+            );
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Name = "Super Admin",
+                    Email = "admin@applemusic.com",
+                    Password = "password",
+                    IsActive = true,
+                    IsAdmin = true,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 2,
+                    Name = "Nur Imam Iskandar",
+                    Email = "nurimamiskandar@gmail.com",
+                    Password = "password",
+                    IsActive = true,
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                }
+                ,
+                new User
+                {
+                    Id = 3,
+                    Name = "Iskandar",
+                    Email = "imam.stmik15@gmail.com",
+                    Password = "password",
+                    IsActive = true,
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 4,
+                    Name = "Dummy User",
+                    Email = "iniemaildummysaya@gmail.com",
+                    Password = "password",
+                    IsActive = false,
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 5,
+                    Name = "yusri sahrul",
+                    Email = "yusrisahrul.works@gmail.com",
+                    Password = "password",
+                    IsActive = true,
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new User
+                {
+                    Id = 6,
+                    Name = "yusri sahrul test",
+                    Email = "yusribootcamp@gmail.com",
+                    Password = "password",
+                    IsActive = true,
+                    IsAdmin = true,
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                }
+            );
+            modelBuilder.Entity<PaymentMethod>().HasData(
+                new PaymentMethod
+                {
+                    Id = 1,
+                    Name = "Gopay",
+                    LogoUrl = "img/Payment1.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new PaymentMethod
+                {
+                    Id = 2,
+                    Name = "OVO",
+                    LogoUrl = "img/Payment2.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new PaymentMethod
+                {
+                    Id = 3,
+                    Name = "DANA",
+                    LogoUrl = "img/Payment3.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new PaymentMethod
+                {
+                    Id = 4,
+                    Name = "Mandiri",
+                    LogoUrl = "img/Payment4.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new PaymentMethod
+                {
+                    Id = 5,
+                    Name = "BCA",
+                    LogoUrl = "img/Payment5.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                },
+                new PaymentMethod
+                {
+                    Id = 6,
+                    Name = "BNI",
+                    LogoUrl = "img/Payment6.svg",
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
         }

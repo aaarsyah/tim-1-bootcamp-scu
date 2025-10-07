@@ -12,12 +12,21 @@
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// User (foreign key): Pengguna yang terkait
+        /// </summary>
+        public int UserId { get; set; }
+        /// <summary>
         /// User: Pengguna yang terkait
         /// </summary>
-        public User User { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
+        /// <summary>
+        /// Schedule (foreign key): Jadwal kelas yang terkait
+        /// </summary>
+        public int ScheduleId { get; set; }
         /// <summary>
         /// Schedule: Jadwal kelas yang terkait
         /// </summary>
-        public Schedule Schedule { get; set; } = null!;
+        public virtual Schedule Schedule { get; set; } = null!;
+        
     }
 }

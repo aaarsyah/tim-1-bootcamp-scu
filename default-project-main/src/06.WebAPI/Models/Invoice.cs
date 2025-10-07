@@ -16,14 +16,23 @@
         /// </summary>
         public DateOnly Date { get; set; }
         /// <summary>
+        /// User (foreign key): Pengguna yang terkait<br />
+        /// Catatan: Dapat berupa null bila user dihapus
+        /// </summary>
+        public int? UserId { get; set; }
+        /// <summary>
         /// User: Pengguna yang terkait<br />
         /// Catatan: Dapat berupa null bila user dihapus
         /// </summary>
-        public User? User { get; set; } = null!;
+        public virtual User? User { get; set; } = null!;
+        /// <summary>
+        /// PaymentMethod (foreign key): Metode pembayaran yang terkait
+        /// </summary>
+        public int? PaymentMethodId { get; set; }
         /// <summary>
         /// PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
-        public PaymentMethod? PaymentMethod { get; set; } = null!; //Collection navigation not required
+        public PaymentMethod? PaymentMethod { get; set; } = null!;
         /// <summary>
         /// InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>

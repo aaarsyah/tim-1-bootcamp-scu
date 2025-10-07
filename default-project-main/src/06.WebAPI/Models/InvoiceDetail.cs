@@ -11,8 +11,16 @@
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// Invoice (foreign key): Bukti pembelian yang terkait
+        /// </summary>
+        public int? InvoiceId { get; set; }
+        /// <summary>
+        /// Schedule (foreign key): Jadwal kelas yang terkait
+        /// </summary>
+        public int ScheduleId { get; set; }
+        /// <summary>
         /// Schedule: Jadwal kelas yang terkait
         /// </summary>
-        public Schedule Schedule { get; set; } = null!;
+        public virtual Schedule Schedule { get; set; } = null!;
     }
 }
