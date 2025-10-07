@@ -3,24 +3,24 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
-    public class ProductDbContext : DbContext
+    public class CourseDbContext : DbContext
     {
         /// <summary>
         /// Constructor - Menerima DbContextOptions untuk dependency injection
         /// Options akan dikonfigurasi di Program.cs dengan connection string dan provider
         /// </summary>
         /// <param name="options">Database context options dari DI container</param>
-        public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
+        public CourseDbContext(DbContextOptions<CourseDbContext> options) : base(options)
         {
             // Constructor base akan handle semua configuration yang di-pass dari DI
         }
 
         /// <summary>
-        /// DbSet untuk Products table
+        /// DbSet untuk Course table
         /// Entity Framework akan map ini ke tabel "Products" di database
         /// DbSet provides CRUD operations untuk entity type Product
         /// </summary>
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Course> Course { get; set; }
         
         /// <summary>
         /// DbSet untuk Categories table  
@@ -41,7 +41,7 @@ namespace WebApplication1.Data
             // ========== ENTITY CONFIGURATIONS ==========
             // Menggunakan separate methods untuk better organization dan readability
             ConfigureCategory(modelBuilder);
-            ConfigureProduct(modelBuilder);
+            ConfigureCourse(modelBuilder);
             
             // ========== GLOBAL CONFIGURATIONS ==========
             ApplyGlobalConfigurations(modelBuilder);
@@ -73,17 +73,22 @@ namespace WebApplication1.Data
                 // Name column - Required dengan max length dan unique constraint
                 entity.Property(e => e.Name)
                       .IsRequired()                           // NOT NULL constraint
-                      .HasMaxLength(100)                      // VARCHAR(100) constraint
+                      .HasMaxLength(50)                      // VARCHAR(100) constraint
                       .HasComment("Category name - must be unique"); // SQL comment untuk documentation
+
+                entity.Property(e => e.LongName)
+                        .IsRequired()
+                        .HasMaxLength(150);
                 
                 // Description column - Optional dengan max length
                 entity.Property(e => e.Description)
-                      .HasMaxLength(500)                      // VARCHAR(500), nullable by default
+                      .HasMaxLength(1000)                      // VARCHAR(500), nullable by default
                       .HasComment("Optional category description");
                 
                 // IsActive column dengan default value
                 entity.Property(e => e.IsActive)
                       .IsRequired()                           // NOT NULL
+                      .HasColumnType("bit")
                       .HasDefaultValue(true)                  // DEFAULT constraint di database
                       .HasComment("Indicates if category is active");
                 
@@ -113,7 +118,7 @@ namespace WebApplication1.Data
 
                 entity.Property(e => e.ImageUrl)
                       .HasMaxLength(500)                      // URL length limitation
-                      .HasComment("URL path to product image");
+                      .HasComment("URL path to Course image");
                 
                 // Composite index untuk queries yang filter berdasarkan multiple columns
                 entity.HasIndex(e => new { e.IsActive, e.CreatedAt })
@@ -130,96 +135,103 @@ namespace WebApplication1.Data
         /// Includes relationship configuration, constraints, dan performance optimizations
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
-        private void ConfigureProduct(ModelBuilder modelBuilder)
+        private void ConfigureCourse(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>(entity =>
+            modelBuilder.Entity<Course>(entity =>
             {
                 // ========== TABLE CONFIGURATION ==========
-                entity.ToTable("Products");
+                entity.ToTable("Courses");
                 entity.HasKey(e => e.Id);
-                
+
                 // ========== COLUMN CONFIGURATIONS ==========
-                
+
                 // Name column dengan detailed constraints
                 entity.Property(e => e.Name)
                       .IsRequired()
-                      .HasMaxLength(200)                      // Lebih panjang dari Category untuk flexibility
-                      .HasComment("Product name");
-                
+                      .HasMaxLength(150)                      // Lebih panjang dari Category untuk flexibility
+                      .HasComment("Course name");
+
                 // Description column
                 entity.Property(e => e.Description)
                       .IsRequired()                           // Required untuk products (business rule)
-                      .HasMaxLength(1000)                     // Long text untuk detailed descriptions
-                      .HasComment("Detailed product description");
-                
+                      .HasMaxLength(3000)                     // Long text untuk detailed descriptions
+                      .HasComment("Detailed Course description");
+
                 // Price column dengan precision/scale specification
                 entity.Property(e => e.Price)
                       .IsRequired()
-                      .HasColumnType("decimal(18,2)")         // 18 total digits, 2 decimal places
-                      .HasComment("Product price in decimal format");
-                
-                
+                      .HasColumnType("numeric(10)")         
+                      .HasComment("Course price in numeric format");
+
+
                 // ImageUrl column - Optional
                 entity.Property(e => e.ImageUrl)
                       .HasMaxLength(500)                      // URL length limitation
-                      .HasComment("URL path to product image");
-                
+                      .HasComment("URL path to Course image");
+
                 // IsActive dengan default value
                 entity.Property(e => e.IsActive)
                       .IsRequired()
+                      .HasColumnType("bit")
                       .HasDefaultValue(true)
-                      .HasComment("Indicates if product is active and available");
-                
+                      .HasComment("Indicates if Course is active and available");
+
                 // Timestamp columns
                 entity.Property(e => e.CreatedAt)
                       .IsRequired()
                       .HasDefaultValueSql("GETUTCDATE()")
-                      .HasComment("Timestamp when product was created");
-                
+                      .HasComment("Timestamp when Course was created");
+
                 entity.Property(e => e.UpdatedAt)
                       .IsRequired()
                       .HasDefaultValueSql("GETUTCDATE()")
-                      .HasComment("Timestamp when product was last updated");
-                
+                      .HasComment("Timestamp when Course was last updated");
+
                 // ========== FOREIGN KEY CONFIGURATION ==========
-                
+
                 // CategoryId foreign key dengan explicit configuration
                 entity.Property(e => e.CategoryId)
                       .IsRequired()                           // NOT NULL - every product must have category
                       .HasComment("Foreign key reference to Categories table");
-                
+
                 // ========== INDEXES FOR PERFORMANCE ==========
-                
+
                 // Index pada Name untuk search functionality
                 entity.HasIndex(e => e.Name)
-                      .HasDatabaseName("IX_Products_Name");
-                
+                      .HasDatabaseName("IX_Course_Name");
+
                 // Index pada CategoryId untuk join performance
                 entity.HasIndex(e => e.CategoryId)
-                      .HasDatabaseName("IX_Products_CategoryId");
-                
+                      .HasDatabaseName("IX_Course_CategoryId");
+
                 // Index pada Price untuk range queries dan sorting
                 entity.HasIndex(e => e.Price)
-                      .HasDatabaseName("IX_Products_Price");
-                
+                      .HasDatabaseName("IX_Course_Price");
+
                 // Composite index untuk active products queries
                 entity.HasIndex(e => new { e.IsActive, e.CategoryId })
-                      .HasDatabaseName("IX_Products_Active_Category")
+                      .HasDatabaseName("IX_Course_Active_Category")
                       .HasFilter("[IsActive] = 1");
-                
+
                 // Composite index untuk search dan pagination
                 entity.HasIndex(e => new { e.IsActive, e.Name, e.Price })
-                      .HasDatabaseName("IX_Products_Active_Name_Price")
+                      .HasDatabaseName("IX_Course_Active_Name_Price")
                       .HasFilter("[IsActive] = 1");
-                
+
                 // ========== RELATIONSHIP CONFIGURATION ==========
-                
+
                 // Many-to-One relationship dengan Category
                 entity.HasOne(e => e.Category)               // Product has one Category
-                      .WithMany(e => e.Products)              // Category has many Products  
+                      .WithMany(e => e.Course)              // Category has many Products  
                       .HasForeignKey(e => e.CategoryId)       // Foreign key property
-                      .OnDelete(DeleteBehavior.Restrict)      // Prevent deleting Category if has Products
-                      .HasConstraintName("FK_Products_Categories"); // Custom FK constraint name
+                      .OnDelete(DeleteBehavior.Restrict)      // Larang penghapusan Category bila ada Courses yang terhubung
+                      .HasConstraintName("FK_Course_Categories"); // Custom FK constraint name
+
+                // Relationship dengan Schedule
+                entity.HasMany(e => e.Schedules)
+                      .WithOne(e => e.Course)
+                      .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
+
             });
         }
 
@@ -243,14 +255,6 @@ namespace WebApplication1.Data
                         property.SetMaxLength(255); // Default max length
                     }
                     
-                    // Configure decimal properties untuk consistent precision
-                    if (property.ClrType == typeof(decimal) || property.ClrType == typeof(decimal?))
-                    {
-                        if (property.GetColumnType() == null)
-                        {
-                            property.SetColumnType("decimal(18,2)"); // Default decimal precision
-                        }
-                    }
                 }
             }
             
@@ -279,6 +283,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 1, 
                     Name = "Drum", 
+                    LongName = "Drummer class",
                     Description = "Kelas yang mengajarkan teknik dasar hingga lanjutan bermain drum, termasuk ritme, tempo, dan koordinasi tangan.", 
                     IsActive = true,
                     ImageUrl = "/images/drum.svg",
@@ -289,6 +294,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 2, 
                     Name = "Piano", 
+                    LongName = "Pianist class",
                     Description = "Pelajari dasar bermain piano, membaca notasi musik, harmoni, dan teknik permainan untuk semua level.", 
                     IsActive = true,
                     ImageUrl = "/images/piano.svg",
@@ -299,6 +305,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 3, 
                     Name = "Gitar", 
+                    LongName = "Guitarist class",
                     Description = "Kursus gitar akustik dan elektrik untuk mempelajari chord, melodi, improvisasi, dan teknik fingerstyle.", 
                     IsActive = true,
                     ImageUrl = "/images/guitar.svg",
@@ -309,6 +316,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 4, 
                     Name = "Bass", 
+                    LongName = "Bassist class",
                     Description = "Kelas bass untuk memahami peran ritmis dan harmonis dalam musik serta teknik slap dan groove.", 
                     IsActive = true,
                     ImageUrl = "/images/bass.svg",
@@ -319,6 +327,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 5, 
                     Name = "Biola", 
+                    LongName = "Violinist class",
                     Description = "Pelatihan bermain biola dari dasar hingga mahir, mencakup teknik bowing, fingering, dan intonasi.", 
                     IsActive = true,
                     ImageUrl = "/images/violin.svg",
@@ -328,7 +337,8 @@ namespace WebApplication1.Data
                 new Category 
                 { 
                     Id = 6, 
-                    Name = "Menyanyi", 
+                    Name = "Menyanyi",
+                    LongName = "Singer class", 
                     Description = "Kelas vokal untuk melatih teknik pernapasan, intonasi, artikulasi, dan ekspresi dalam bernyanyi.", 
                     IsActive = true,
                     ImageUrl = "/images/singing.svg",
@@ -339,6 +349,7 @@ namespace WebApplication1.Data
                 { 
                     Id = 7, 
                     Name = "Flute", 
+                    LongName = "Flutist class",
                     Description = "Kursus flute untuk memahami embouchure, pernapasan, teknik fingering, dan interpretasi musik klasik maupun modern.", 
                     IsActive = true,
                     ImageUrl = "/images/flute.svg",
@@ -348,7 +359,8 @@ namespace WebApplication1.Data
                 new Category 
                 { 
                     Id = 8, 
-                    Name = "Saxophone", 
+                    Name = "Saxophone",
+                    LongName = "Saxophone class", 
                     Description = "Kelas saxophone untuk mempelajari teknik embouchure, improvisasi jazz, serta kontrol nada dan dinamika.", 
                     IsActive = true,
                     ImageUrl = "/images/saxophone.svg",
@@ -360,8 +372,8 @@ namespace WebApplication1.Data
             );
 
             // ========== SEED PRODUCTS ==========
-            modelBuilder.Entity<Product>().HasData(
-                new Product 
+            modelBuilder.Entity<Course>().HasData(
+                new Course 
                 { 
                     Id = 1, 
                     Name = "Kursus Drummer Special Coach (Eno Netral)", 
@@ -373,7 +385,7 @@ namespace WebApplication1.Data
                     CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
                     UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
                 },
-                new Product 
+                new Course 
                 { 
                     Id = 2, 
                     Name = "[Beginner] Guitar class for kids", 
@@ -385,7 +397,7 @@ namespace WebApplication1.Data
                     CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
                     UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
                 },
-                new Product 
+                new Course 
                 { 
                     Id = 3, 
                     Name = "Biola Mid-Level Course", 
@@ -397,7 +409,7 @@ namespace WebApplication1.Data
                     CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
                     UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
                 },
-                new Product 
+                new Course 
                 { 
                     Id = 4, 
                     Name = "Drummer for kids (Level Basic/1)", 
@@ -409,7 +421,7 @@ namespace WebApplication1.Data
                     CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc), 
                     UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc) 
                 },
-                new Product 
+                new Course 
                 { 
                     Id = 5, 
                     Name = "Kursus Piano : From Zero to Pro (Full Package)", 
@@ -421,7 +433,7 @@ namespace WebApplication1.Data
                     CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc), 
                     UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc) 
                 },
-                new Product 
+                new Course 
                 { 
                     Id = 6, 
                     Name = "Expert Level Saxophone", 
@@ -452,10 +464,10 @@ namespace WebApplication1.Data
             // ========== AUDIT TRAIL UNTUK PRODUCTS ==========
             
             // Get semua Product entities yang sedang di-track dan dalam state Modified
-            var modifiedProducts = ChangeTracker.Entries<Product>()
+            var modifiedCourses = ChangeTracker.Entries<Course>()
                 .Where(e => e.State == EntityState.Modified);
 
-            foreach (var entry in modifiedProducts)
+            foreach (var entry in modifiedCourses)
             {
                 // Update timestamp saat entity di-modify
                 entry.Entity.UpdatedAt = DateTime.UtcNow;

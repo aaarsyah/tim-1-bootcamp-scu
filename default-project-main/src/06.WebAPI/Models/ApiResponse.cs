@@ -156,7 +156,7 @@ namespace WebApplication1.Models
     /// <summary>
     /// Product query parameters
     /// </summary>
-    public class ProductQueryParameters : PaginationParameters
+    public class CourseQueryParameters : PaginationParameters
     {
         /// <summary>
         /// Search term

@@ -3,11 +3,12 @@
 @using System.ComponentModel.DataAnnotations
 
 @inject IDialogService DialogService;
-@inject IPaymentService PaymentService;
+@inject ICategoryService CategoryService;
 
 <MudDialog>
     <DialogContent>
-        <MudTextField @bind-Value="Payment.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="Category.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="Category.Description" Label="Description" Required="true" />
         
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
 
@@ -17,21 +18,21 @@
                    StartIcon="@Icons.Material.Filled.CloudUpload"
                    Class="mt-20"
                    for="fileInput">
-            Upload Logo
+            Upload Picture Category
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Payment.Logo))
+        @if (!string.IsNullOrEmpty(Category.Picture))
         {
-            <MudImage Src="@Payment.Logo"
-                      Alt="Logo Preview"
+            <MudImage Src="@Category.Picture"
+                      Alt="Picture Category Preview"
                       Width="150" Height="100"
                       Class="mt-4" />
         }
 
         
-        <MudSelect @bind-Value="Payment.AllPayment" Class="mt-4" Label="Status">
-            <MudSelectItem Value="PaymentStatus.Active">Active</MudSelectItem>
-            <MudSelectItem Value="PaymentStatus.InActive">Inactive</MudSelectItem>
+        <MudSelect @bind-Value="Category.AllCategory" Class="mt-4" Label="Status">
+            <MudSelectItem Value="CategoryStatus.Active">Active</MudSelectItem>
+            <MudSelectItem Value="CategoryStatus.InActive">Inactive</MudSelectItem>
         </MudSelect>
     </DialogContent>
 
@@ -46,7 +47,7 @@
     private IMudDialogInstance MudDialog { get; set; }
 
     [Parameter]
-    public PaymentItem Payment { get; set; } = new();
+    public CategoryItem Category { get; set; } = new();
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
@@ -67,21 +68,21 @@
                 _ => "image/png"
             };
 
-            Payment.Logo = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+            Category.Picture = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
         }
     }
 
     private async Task Save()
     {
-        PaymentItem result;
+        CategoryItem result;
 
-        if (Payment.Id == 0)
+        if (Category.Id == 0)
         {
-            result = await PaymentService.CreatePaymentAsync(Payment); 
+            result = await CategoryService.CreateCategoryAsync(Category); 
         }
         else
         {
-            result = await PaymentService.UpdatePaymentAsync(Payment);
+            result = await CategoryService.UpdateCategoryAsync(Category);
         }
         MudDialog.Close(DialogResult.Ok(result));
         

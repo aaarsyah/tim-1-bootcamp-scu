@@ -41,14 +41,19 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/email-confirm");
         }
 
-        public void GoToKelasKu()
+        public void GoToSuccessPurchase()
         {
-            _navigation.NavigateTo("/kelasku");
+            _navigation.NavigateTo("/success-purchase");
         }
 
-        public void GoToPembelian()
+        public void GoToKelasKu()
         {
-            _navigation.NavigateTo("/pembelian");
+            _navigation.NavigateTo("/myclass");
+        }
+
+        public void GoToCheckout()
+        {
+            _navigation.NavigateTo("/checkout");
         }
 
         public void GoToDetail()
@@ -79,6 +84,16 @@ namespace MyApp.BlazorUI.Components
         public void GoToUserManagement()
         {
             _navigation.NavigateTo("/user-management");
+        }
+
+        public void GoToCategoryManagement()
+        {
+            _navigation.NavigateTo("/category");
+        }
+
+        public void GoToCourseManagement()
+        {
+            _navigation.NavigateTo("/course");
         }
 
         public void GoToPaymentMethod()

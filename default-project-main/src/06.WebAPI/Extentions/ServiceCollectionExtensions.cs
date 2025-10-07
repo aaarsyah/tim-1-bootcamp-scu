@@ -26,7 +26,7 @@ namespace WebApplication1.Extensions
             
             // Daftarkan ProductService dengan lifetime Scoped
             // Interface IProductService akan di-resolve ke implementasi ProductService
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICourseService, CourseService>();
             
             // Return services untuk method chaining (builder pattern)
             return services;
@@ -43,8 +43,8 @@ namespace WebApplication1.Extensions
             // Daftarkan ProductDbContext ke DI container dengan In-Memory database
             // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
             // Cocok untuk demo dan testing, tidak untuk Production
-            services.AddDbContext<ProductDbContext>(options =>
-                options.UseInMemoryDatabase("ProductApiDb")); // "ProductApiDb" adalah nama database
+            services.AddDbContext<CourseDbContext>(options =>
+                options.UseInMemoryDatabase("CourseApiDb")); // "ProductApiDb" adalah nama database
             
             // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
             // services.AddDbContext<ProductDbContext>(options =>
@@ -65,7 +65,7 @@ namespace WebApplication1.Extensions
         public static IServiceCollection AddSqlServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             // Daftarkan ProductDbContext dengan SQL Server provider
-            services.AddDbContext<ProductDbContext>(options =>
+            services.AddDbContext<CourseDbContext>(options =>
             {
                 // Ambil connection string dari appsettings.json
                 // Jika tidak ada, gunakan LocalDB default untuk development
@@ -201,11 +201,11 @@ namespace WebApplication1.Extensions
         /// <returns>IServiceCollection untuk method chaining</returns>
         public static IServiceCollection AddSqliteDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ProductDbContext>(options =>
+            services.AddDbContext<CourseDbContext>(options =>
             {
                 // SQLite connection string - database will be created as file
                 var connectionString = configuration.GetConnectionString("SqliteConnection") 
-                    ?? "Data Source=ProductApiDb.sqlite";
+                    ?? "Data Source=CourseApiDb.sqlite";
                 
                 // Configure SQLite dengan optimizations
                 options.UseSqlite(connectionString, sqliteOptions =>

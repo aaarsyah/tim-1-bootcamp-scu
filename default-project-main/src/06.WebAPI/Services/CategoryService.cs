@@ -11,14 +11,14 @@ namespace WebApplication1.Services
     /// </summary>
     public class CategoryService : ICategoryService
     {
-        private readonly ProductDbContext _context;
+        private readonly CourseDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<CategoryService> _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public CategoryService(ProductDbContext context, IMapper mapper, ILogger<CategoryService> logger)
+        public CategoryService(CourseDbContext context, IMapper mapper, ILogger<CategoryService> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -31,7 +31,7 @@ namespace WebApplication1.Services
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
             var categories = await _context.Categories
-                .Include(c => c.Products)
+                .Include(c => c.Course)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
@@ -43,7 +43,7 @@ namespace WebApplication1.Services
         public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
         {
             var category = await _context.Categories
-                .Include(c => c.Products)
+                .Include(c => c.Course)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return category != null ? _mapper.Map<CategoryDto>(category) : null;
@@ -92,7 +92,7 @@ namespace WebApplication1.Services
             if (category == null) return false;
 
             // Check if category has products
-            var hasProducts = await _context.Products.AnyAsync(p => p.CategoryId == id);
+            var hasProducts = await _context.Course.AnyAsync(p => p.CategoryId == id);
             if (hasProducts)
             {
                 throw new InvalidOperationException("Cannot delete category that has products");

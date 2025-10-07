@@ -3,7 +3,7 @@ namespace WebApplication1.DTOs
     /// <summary>
     /// Product data transfer object
     /// </summary>
-    public class ProductDto
+    public class CourseDto
     {
         /// <summary>
         /// Product ID
@@ -55,7 +55,7 @@ namespace WebApplication1.DTOs
     /// <summary>
     /// Create product request
     /// </summary>
-    public class CreateProductDto
+    public class CreateCourseDto
     {
         /// <summary>
         /// Product name
@@ -87,7 +87,7 @@ namespace WebApplication1.DTOs
     /// <summary>
     /// Update product request
     /// </summary>
-    public class UpdateProductDto
+    public class UpdateCourseDto
     {
         /// <summary>
         /// Product name

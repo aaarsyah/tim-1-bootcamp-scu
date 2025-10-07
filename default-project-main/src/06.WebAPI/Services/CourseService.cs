@@ -15,12 +15,12 @@ namespace WebApplication1.Services
     /// Implementasi business logic untuk Product operations
     /// Class ini berisi semua logic untuk CRUD operations, filtering, dan pagination
     /// </summary>
-    public class ProductService : IProductService
+    public class CourseService : ICourseService
     {
         // Dependencies yang di-inject melalui constructor
-        private readonly ProductDbContext _context; // Database context untuk data access
+        private readonly CourseDbContext _context; // Database context untuk data access
         private readonly IMapper _mapper; // AutoMapper untuk convert Entity <-> DTO
-        private readonly ILogger<ProductService> _logger; // Logger untuk logging operations
+        private readonly ILogger<CourseService> _logger; // Logger untuk logging operations
 
         /// <summary>
         /// Constructor untuk dependency injection
@@ -28,7 +28,7 @@ namespace WebApplication1.Services
         /// <param name="context">Database context</param>
         /// <param name="mapper">AutoMapper instance</param>
         /// <param name="logger">Logger instance</param>
-        public ProductService(ProductDbContext context, IMapper mapper, ILogger<ProductService> logger)
+        public CourseService(CourseDbContext context, IMapper mapper, ILogger<CourseService> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -41,11 +41,11 @@ namespace WebApplication1.Services
         /// </summary>
         /// <param name="parameters">Parameter untuk filtering dan pagination</param>
         /// <returns>PagedResponse berisi products dan pagination info</returns>
-        public async Task<PagedResponse<IEnumerable<ProductDto>>> GetProductsAsync(ProductQueryParameters parameters)
+        public async Task<PagedResponse<IEnumerable<CourseDto>>> GetCourseAsync(CourseQueryParameters parameters)
         {
             // Buat base query dengan Include untuk eager loading Category data
             // AsQueryable() memungkinkan kita untuk chain multiple LINQ operations
-            var query = _context.Products
+            var query = _context.Course
                 .Include(p => p.Category) // Eager load Category untuk avoid N+1 problem
                 .AsQueryable();
 
@@ -108,7 +108,7 @@ namespace WebApplication1.Services
             var totalRecords = await query.CountAsync();
             
             // Apply pagination dengan Skip dan Take
-            var products = await query
+            var course = await query
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize) // Skip records untuk previous pages
                 .Take(parameters.PageSize)                                // Take hanya sebanyak PageSize
                 .ToListAsync();                                          // Execute query dan convert ke List
@@ -117,13 +117,13 @@ namespace WebApplication1.Services
             
             // AutoMapper convert dari Product entities ke ProductDto objects
             // Mapping configuration ada di MappingProfile.cs
-            var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+            var courseDtos = _mapper.Map<IEnumerable<CourseDto>>(course);
 
             // ========== CREATE PAGINATED RESPONSE ==========
             
             // Buat PagedResponse dengan pagination metadata
-            return PagedResponse<IEnumerable<ProductDto>>.Create(
-                productDtos,                    // Data yang akan dikembalikan
+            return PagedResponse<IEnumerable<CourseDto>>.Create(
+                courseDtos,                    // Data yang akan dikembalikan
                 parameters.PageNumber,          // Current page number
                 parameters.PageSize,            // Page size
                 totalRecords);                  // Total records untuk calculate total pages
@@ -132,87 +132,87 @@ namespace WebApplication1.Services
         /// <summary>
         /// Get product by ID
         /// </summary>
-        public async Task<ProductDto?> GetProductByIdAsync(int id)
+        public async Task<CourseDto?> GetCourseByIdAsync(int id)
         {
-            var product = await _context.Products
+            var course = await _context.Course
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            return product != null ? _mapper.Map<ProductDto>(product) : null;
+            return course != null ? _mapper.Map<CourseDto>(course) : null;
         }
 
         /// <summary>
         /// Create new product
         /// </summary>
-        public async Task<ProductDto> CreateProductAsync(CreateProductDto createProductDto)
+        public async Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto)
         {
             // Validate category exists
-            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createProductDto.CategoryId);
+            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
             if (!categoryExists)
             {
-                throw new ArgumentException($"Category with ID {createProductDto.CategoryId} does not exist");
+                throw new ArgumentException($"Category with ID {createCourseDto.CategoryId} does not exist");
             }
 
-            var product = _mapper.Map<Product>(createProductDto);
+            var course = _mapper.Map<Course>(createCourseDto);
             
-            _context.Products.Add(product);
+            _context.Course.Add(course);
             await _context.SaveChangesAsync();
             
             // Reload with category for DTO mapping
-            await _context.Entry(product).Reference(p => p.Category).LoadAsync();
+            await _context.Entry(course).Reference(p => p.Category).LoadAsync();
             
-            _logger.LogInformation("Product created: {ProductName} with ID: {ProductId}", 
-                product.Name, product.Id);
+            _logger.LogInformation("Course created: {CourseName} with ID: {CourseId}", 
+                course.Name, course.Id);
 
-            return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<CourseDto>(course);
         }
 
         /// <summary>
         /// Update product
         /// </summary>
-        public async Task<ProductDto?> UpdateProductAsync(int id, UpdateProductDto updateProductDto)
+        public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
-            var product = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null) return null;
+            var course = await _context.Course.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            if (course == null) return null;
 
             // Validate category exists if changed
-            if (updateProductDto.CategoryId != product.CategoryId)
+            if (updateCourseDto.CategoryId != course.CategoryId)
             {
-                var categoryExists = await _context.Categories.AnyAsync(c => c.Id == updateProductDto.CategoryId);
+                var categoryExists = await _context.Categories.AnyAsync(c => c.Id == updateCourseDto.CategoryId);
                 if (!categoryExists)
                 {
-                    throw new ArgumentException($"Category with ID {updateProductDto.CategoryId} does not exist");
+                    throw new ArgumentException($"Category with ID {updateCourseDto.CategoryId} does not exist");
                 }
             }
 
-            _mapper.Map(updateProductDto, product);
-            product.UpdatedAt = DateTime.UtcNow;
+            _mapper.Map(updateCourseDto, course);
+            course.UpdatedAt = DateTime.UtcNow;
             
             await _context.SaveChangesAsync();
             
             // Reload category if changed
-            if (updateProductDto.CategoryId != product.CategoryId)
+            if (updateCourseDto.CategoryId != course.CategoryId)
             {
-                await _context.Entry(product).Reference(p => p.Category).LoadAsync();
+                await _context.Entry(course).Reference(p => p.Category).LoadAsync();
             }
             
-            _logger.LogInformation("Product updated: {ProductId}", id);
+            _logger.LogInformation("Course updated: {CourseId}", id);
 
-            return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<CourseDto>(course);
         }
 
         /// <summary>
         /// Delete product
         /// </summary>
-        public async Task<bool> DeleteProductAsync(int id)
+        public async Task<bool> DeleteCourseAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null) return false;
+            var course = await _context.Course.FindAsync(id);
+            if (course == null) return false;
 
-            _context.Products.Remove(product);
+            _context.Course.Remove(course);
             await _context.SaveChangesAsync();
             
-            _logger.LogInformation("Product deleted: {ProductId}", id);
+            _logger.LogInformation("Course deleted: {CourseId}", id);
             
             return true;
         }

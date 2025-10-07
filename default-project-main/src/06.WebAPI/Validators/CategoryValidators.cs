@@ -62,16 +62,16 @@ namespace WebApplication1.Validators
     /// <summary>
     /// Validator for creating products
     /// </summary>
-    public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
+    public class CreateCourseDtoValidator : AbstractValidator<CreateCourseDto>
     {
         /// <summary>
         /// Constructor with validation rules
         /// </summary>
-        public CreateProductDtoValidator()
+        public CreateCourseDtoValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Product name is required")
-                .Length(2, 200).WithMessage("Product name must be between 2 and 200 characters");
+                .NotEmpty().WithMessage("Course name is required")
+                .Length(2, 200).WithMessage("Course name must be between 2 and 200 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
@@ -98,16 +98,16 @@ namespace WebApplication1.Validators
     /// <summary>
     /// Validator for updating products
     /// </summary>
-    public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
+    public class UpdateCourseDtoValidator : AbstractValidator<UpdateCourseDto>
     {
         /// <summary>
         /// Constructor with validation rules
         /// </summary>
-        public UpdateProductDtoValidator()
+        public UpdateCourseDtoValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Product name is required")
-                .Length(2, 200).WithMessage("Product name must be between 2 and 200 characters");
+                .NotEmpty().WithMessage("Course name is required")
+                .Length(2, 200).WithMessage("Course name must be between 2 and 200 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")

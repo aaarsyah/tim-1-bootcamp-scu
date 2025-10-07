@@ -11,6 +11,8 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         
         public string Name { get; set; } = string.Empty; // Default empty string untuk avoid null
+
+        public string LongName { get; set; } = string.Empty;
         
         public string Description { get; set; } = string.Empty;
 
@@ -21,7 +23,8 @@ namespace WebApplication1.Models
         
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
+        //Jadwal
+        public virtual ICollection<Course> Course { get; set; } = new List<Course>();
     }
 }

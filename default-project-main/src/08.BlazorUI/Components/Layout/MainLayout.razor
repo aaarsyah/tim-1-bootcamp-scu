@@ -17,6 +17,8 @@
     {
         @if (UserRole == Role.Admin)
         {
+            @if (ShouldShowAppBar())
+            {
             <MudAppBar Elevation="1">
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
                 <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
@@ -24,6 +26,7 @@
                 </MudLink>
                 <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
             </MudAppBar>
+            }
 
             <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
@@ -36,28 +39,33 @@
         }
         else
         {
+        @if (ShouldShowAppBar())
+        {
         <MudAppBar Elevation="1">
             <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
                 <MudImage Src="img/applogo.svg" Alt="App Logo"/>
             </MudLink>
             <MudSpacer />
-            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
             <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
                 <MudText>Kelasku</MudText>
             </MudButton>
-            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToPembelian" Class="mx-2">
+            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
                 <MudText>Pembelian</MudText>
             </MudButton>
             <MudText Class="mx-2">|</MudText>
             <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="Logout"></MudIconButton>
         </MudAppBar>
+        }
 
     <MudMainContent Class="pt-16 pa-4">
         @Body
     </MudMainContent>
 
     <!---Footer-->
+    @if (ShouldShowFooter())
+    {
     <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
         <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
             <MudGrid Class="d-flex justify-space-evenly">
@@ -136,10 +144,13 @@
             </MudGrid>
         </MudContainer>
     </MudPaper> 
-    }  
+    }
+}  
     }
     else
     {
+        @if (ShouldShowAppBar())
+        {
         <MudAppBar Elevation="1">
             <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
                 <MudImage Src="img/applogo.svg" Alt="App Logo"/>
@@ -152,6 +163,7 @@
                 <MudText>Masuk</MudText>
             </MudButton>
         </MudAppBar>
+        }   
 
     <MudMainContent Class="pt-16 pa-4">
         @Body
@@ -167,6 +179,7 @@
 </div>
 
 @code {
+    [Inject] private NavigationManager NavManager { get; set; } = default!;
     MudTheme MyCustomTheme = new MudTheme()
     {
         Typography = new Typography()
@@ -180,7 +193,7 @@
     };
 
     [Parameter] 
-    public Role UserRole { get; set; } = Role.Admin;
+    public Role UserRole { get; set; } = Role.Admin; //role user
     private bool Loggedin = true;
     private void Logout()
     {
@@ -191,15 +204,46 @@
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
 
+     private string? currentPath;
+
+    // ====== Lifecycle ======
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        currentPath = NavManager.Uri;
+
+        // Event listener untuk deteksi perubahan halaman
+        NavManager.LocationChanged += (_, __) =>
+        {
+            currentPath = NavManager.Uri;
+            StateHasChanged(); // Refresh tampilan saat route berubah
+        };
 
         _theme = new()
         {
             PaletteLight = _lightPalette,
             LayoutProperties = new LayoutProperties()
         };
+    }
+
+    // ====== Logic Visibility ======
+
+    private bool ShouldShowFooter()
+    {
+        var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
+        // Sembunyikan footer di halaman tertentu
+        return !(path.Contains("checkout") ||
+                 path.Contains("success-purchase") ||
+                 path.Contains("email-success-confirm"));
+    }
+
+    private bool ShouldShowAppBar()
+    {
+        var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
+        // Sembunyikan AppBar di halaman tertentu
+        return !(path.Contains("success-purchase") ||
+                 path.Contains("email-success-confirm"));
     }
 
     private void DrawerToggle()

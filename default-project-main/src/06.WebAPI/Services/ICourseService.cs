@@ -6,31 +6,31 @@ namespace WebApplication1.Services
     /// <summary>
     /// Product service interface
     /// </summary>
-    public interface IProductService
+    public interface ICourseService
     {
         /// <summary>
         /// Get products with pagination and filtering
         /// </summary>
-        Task<PagedResponse<IEnumerable<ProductDto>>> GetProductsAsync(ProductQueryParameters parameters);
+        Task<PagedResponse<IEnumerable<CourseDto>>> GetCourseAsync(CourseQueryParameters parameters);
         
         /// <summary>
         /// Get product by ID
         /// </summary>
-        Task<ProductDto?> GetProductByIdAsync(int id);
+        Task<CourseDto?> GetCourseByIdAsync(int id);
         
         /// <summary>
         /// Create new product
         /// </summary>
-        Task<ProductDto> CreateProductAsync(CreateProductDto createProductDto);
+        Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto);
         
         /// <summary>
         /// Update product
         /// </summary>
-        Task<ProductDto?> UpdateProductAsync(int id, UpdateProductDto updateProductDto);
+        Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto);
         
         /// <summary>
         /// Delete product
         /// </summary>
-        Task<bool> DeleteProductAsync(int id);
+        Task<bool> DeleteCourseAsync(int id);
     }
 }
