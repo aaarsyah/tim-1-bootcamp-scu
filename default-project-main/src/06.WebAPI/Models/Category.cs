@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+namespace MyApp.WebAPI.Models
 {
     /// <summary>
     /// Category: Representasi sebuah kelas pelajaran<br />
@@ -47,7 +47,7 @@
         /// <summary>
         /// Courses: Kelas-kelas pelajaran yang terkait
         /// </summary>
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }
 

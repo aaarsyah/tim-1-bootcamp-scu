@@ -19,49 +19,16 @@ namespace MyApp.WebAPI.Data
             // Constructor base akan handle semua configuration yang di-pass dari DI
         }
         public DbSet<Course> Courses { get; set; }
+        /// <summary>
+        /// DbSet untuk Categories table  
+        /// Entity Framework akan map ini ke tabel "Categories" di database
+        /// </summary>
+        public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             // Course
-            modelBuilder.Entity<Course>(entity =>
-            {
-                entity.ToTable("Courses");
-                // Primary key
-                entity.HasKey(e => e.Id);
-                // Properties
-                entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(150);
-                entity.Property(e => e.Description)
-                        .HasMaxLength(3000);
-                entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(256);
-                entity.Property(e => e.Price)
-                        .IsRequired()
-                        .HasColumnType("numeric(10)");
-                entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-                entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
-                // Relationship dengan Category
-                entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Courses)
-                        .HasForeignKey(e => e.CategoryId)
-                        .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
-                // Relationship dengan Schedule
-                entity.HasMany(e => e.Schedules)
-                        .WithOne(e => e.Course)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
-                // Constraint
-                entity.ToTable(e => e.HasCheckConstraint(
-                        "CK_Price", "[Price] >= 0"));
-            });
+            ConfigureCourse(modelBuilder);
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Categories");
@@ -213,8 +180,54 @@ namespace MyApp.WebAPI.Data
             });
             SeedData(modelBuilder);
         }
-        // The following configures EF to create a Sqlite database file in the
-        // special "local" folder for your platform.
+
+        /// <summary>
+        /// Configure Product entity dengan advanced Fluent API features
+        /// Includes relationship configuration, constraints, dan performance optimizations
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureCourse(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.ToTable("Courses");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                entity.Property(e => e.Name)
+                        .IsRequired()
+                        .HasMaxLength(150);
+                entity.Property(e => e.Description)
+                        .HasMaxLength(3000);
+                entity.Property(e => e.ImageUrl)
+                        .HasMaxLength(256);
+                entity.Property(e => e.Price)
+                        .IsRequired()
+                        .HasColumnType("numeric(10)");
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                // Relationship dengan Category
+                entity.HasOne(e => e.Category)
+                        .WithMany(e => e.Courses)
+                        .HasForeignKey(e => e.CategoryId)
+                        .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
+                // Relationship dengan Schedule
+                entity.HasMany(e => e.Schedules)
+                        .WithOne(e => e.Course)
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
+                // Constraint
+                entity.ToTable(e => e.HasCheckConstraint(
+                        "CK_Price", "[Price] >= 0"));
+            });
+        }
 
         private void SeedData(ModelBuilder modelBuilder)
         {
@@ -373,7 +386,78 @@ namespace MyApp.WebAPI.Data
             );
         }
 
-        //Untuk sementara pakai SQL server lokal dari instalasi SQL Express
+        /// <summary>
+        /// Override SaveChangesAsync untuk implement audit trail functionality
+        /// Automatically update UpdatedAt timestamps saat entities di-modify
+        /// 
+        /// ChangeTracker Features:
+        /// - Tracks entity state changes (Added, Modified, Deleted, etc.)
+        /// - Allows custom logic sebelum save ke database
+        /// - Useful untuk audit trails, soft deletes, validation, etc.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token untuk async operations</param>
+        /// <returns>Number of affected rows</returns>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // ========== AUDIT TRAIL UNTUK PRODUCTS ==========
+
+            // Get semua Product entities yang sedang di-track dan dalam state Modified
+            var modifiedCourses = ChangeTracker.Entries<Course>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in modifiedCourses)
+            {
+                // Update timestamp saat entity di-modify
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
+
+                // Optional: Log changes untuk debugging atau audit purposes
+                // LogEntityChanges(entry);
+            }
+
+            // ========== AUDIT TRAIL UNTUK CATEGORIES ==========
+
+            var modifiedCategories = ChangeTracker.Entries<Category>()
+                .Where(e => e.State == EntityState.Modified);
+
+            foreach (var entry in modifiedCategories)
+            {
+                entry.Entity.UpdatedAt = DateTime.UtcNow;
+            }
+
+            // ========== ADDITIONAL BUSINESS LOGIC ==========
+
+            // Contoh: Validate business rules sebelum save
+            // ValidateBusinessRules();
+
+            // Contoh: Handle soft deletes
+            // HandleSoftDeletes();
+
+            // Call base SaveChangesAsync untuk actually persist changes ke database
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Helper method untuk log entity changes (optional, untuk debugging)
+        /// Berguna untuk tracking changes dalam development environment
+        /// </summary>
+        /// <param name="entry">Entity entry yang berubah</param>
+        private void LogEntityChanges(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry entry)
+        {
+            if (entry.State == EntityState.Modified)
+            {
+                foreach (var property in entry.Properties)
+                {
+                    if (property.IsModified)
+                    {
+                        var originalValue = property.OriginalValue;
+                        var currentValue = property.CurrentValue;
+                        // Log: Property {property.Metadata.Name} changed from {originalValue} to {currentValue}
+                    }
+                }
+            }
+        }
+
+        // Tidak dipakai lagi
         //protected override void OnConfiguring(DbContextOptionsBuilder options)
         //    => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True");
     }

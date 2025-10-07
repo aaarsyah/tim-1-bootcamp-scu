@@ -1,0 +1,98 @@
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+@using System.ComponentModel.DataAnnotations
+
+@inject IDialogService DialogService;
+@inject ICourseService CourseService;
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="Course.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="Course.Description" Label="Description" Required="true" />
+        <MudTextField @bind-Value="Course.CategoryId" Label="CategoryId" Required="true" />
+        <MudTextField @bind-Value="Course.Harga" Label="Harga" Required="true" />
+        <MudTextField @bind-Value="Course.Jadwal" Label="Jadwal" Required="true" />
+
+        <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
+
+        <MudButton HtmlTag="label"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.CloudUpload"
+                   Class="mt-20"
+                   for="fileInput">
+            Upload Picture Course
+        </MudButton>
+
+        @if (!string.IsNullOrEmpty(Course.Picture))
+        {
+            <MudImage Src="@Course.Picture"
+                      Alt="Picture Course Preview"
+                      Width="150" Height="100"
+                      Class="mx-auto mt-4" />
+        }
+
+        
+        <MudSelect @bind-Value="Course.AllCourse" Class="mt-4" Label="Status">
+            <MudSelectItem Value="CourseStatus.Active">Active</MudSelectItem>
+            <MudSelectItem Value="CourseStatus.InActive">Inactive</MudSelectItem>
+        </MudSelect>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public CourseItem Course { get; set; } = new();
+
+    private async Task UploadImage(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+
+            var ext = Path.GetExtension(file.Name).ToLower();
+            var mime = ext switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".svg" => "image/svg+xml",
+                _ => "image/png"
+            };
+
+            Course.Picture = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+        }
+    }
+
+    private async Task Save()
+    {
+        CourseItem result;
+
+        if (Course.Id == 0)
+        {
+            result = await CourseService.CreateCourseAsync(Course); 
+        }
+        else
+        {
+            result = await CourseService.UpdateCourseAsync(Course);
+        }
+        MudDialog.Close(DialogResult.Ok(result));
+        
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+}

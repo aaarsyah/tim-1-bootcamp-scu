@@ -1,0 +1,59 @@
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+@using System.ComponentModel.DataAnnotations
+
+@inject IDialogService DialogService;
+@inject IUserService UserService;
+
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="User.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="User.Email" Label="Email" Required="true" Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
+        
+        <MudSelect @bind-Value="User.UserRole" Class="mt-4" Label="Role">
+            <MudSelectItem Value="Role.User">User</MudSelectItem>
+            <MudSelectItem Value="Role.Admin">Admin</MudSelectItem>
+        </MudSelect>
+        
+        <MudSelect @bind-Value="User.AllUser" Class="mt-4" Label="Status">
+            <MudSelectItem Value="UserStatus.Active">Active</MudSelectItem>
+            <MudSelectItem Value="UserStatus.InActive">Inactive</MudSelectItem>
+        </MudSelect>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter] 
+    public UserItem User { get; set; } = new();
+
+    private async Task Save()
+    {
+        UserItem result;
+
+        if (User.Id == 0)
+        {
+            result = await UserService.CreateUserAsync(User); 
+        }
+        else
+        {
+            result = await UserService.UpdateUserAsync(User);
+        }
+
+        MudDialog.Close(DialogResult.Ok(result)); 
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+}

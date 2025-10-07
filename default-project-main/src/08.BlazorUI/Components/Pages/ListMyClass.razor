@@ -1,13 +1,8 @@
-﻿@page "/myclass"
+@page "/myclass"
 @using System.Globalization
 
-<MudPopoverProvider />
+<PageTitle>My Class</PageTitle>
 
-@* <MudText HtmlTag="span">Item: @_selectedItemText</MudText> *@
-@* <MudText>Selected items (@selectedItems?.Count): @(selectedItems == null ? "" : string.Join(", ", selectedItems.OrderBy(x => x.Sign).Select(x => x.Sign)))</MudText> *@
-@* <MudText>Selected items (@selectedItems?.Count)</MudText>  *@
-
-@* @ref="_table" *@
 <MudContainer>
     <MudDivider></MudDivider>
     @foreach (ItemMy item in _itemList)

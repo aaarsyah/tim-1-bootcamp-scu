@@ -1,7 +1,10 @@
-﻿@page "/checkout"
+@page "/checkout"
+
 @using System.Globalization
 
-<MudPopoverProvider />
+@inject NavigationManagerExt Navigation;
+
+<PageTitle>Checkout</PageTitle>
 
 <MudDialogProvider
     FullWidth="false"
@@ -13,11 +16,6 @@
     CloseOnEscapeKey="true"
     BackgroundClass=""/>
 
-@* <MudText HtmlTag="span">Item: @_selectedItemText</MudText> *@
-@* <MudText>Selected items (@selectedItems?.Count): @(selectedItems == null ? "" : string.Join(", ", selectedItems.OrderBy(x => x.Sign).Select(x => x.Sign)))</MudText> *@
-@* <MudText>Selected items (@selectedItems?.Count)</MudText>  *@
-
-@* @ref="_table" *@
 <MudContainer>
     <MudStack Row="true" AlignItems="AlignItems.Center">
         <MudCheckBox @bind-Value="selectallcheckbox" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
@@ -60,7 +58,7 @@
             <MudText>Bayar Sekarang</MudText>
         </MudButton>
     </MudToolBar>
-    
+
 </MudContainer>
 
 <MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
@@ -93,12 +91,13 @@
             <MudText>BNI</MudText>
         </MudStack>
     </MessageContent>
-    @* I can't center the action buttons below, sorry. https://github.com/MudBlazor/MudBlazor/issues/1739 *@
+    
+    
     <NoButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary">Batal</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-4" Style="width: 170px;" OnClick="Navigation.GoToCheckout">Batal</MudButton>
     </NoButton>
     <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary">Bayar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-4" Style="width: 170px;" OnClick="Navigation.GoToSuccessPurchase">Bayar</MudButton>
     </YesButton>
 </MudMessageBox>
 
@@ -185,9 +184,5 @@
     {
         _itemList.Remove(item);
     }
-    // void OnRowClick(TableRowClickEventArgs<ItemMy> args)
-    // {
-    //     _selectedItemText = $"{args.Item.Number} ({args.Item.Number})";
-    // }
 
 }

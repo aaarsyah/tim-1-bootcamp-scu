@@ -1,0 +1,122 @@
+<<<<<<< HEAD
+﻿@page "/listmenu"
+
+<PageTitle>Daftar Kelas</PageTitle>
+
+<MudImage Class="" Src="img/ListMenuBanner.svg" Alt="List Menu Banner"
+          Style="width: 100vw;"></MudImage><br />
+
+
+<MudContainer>
+    <MudText Class="mt-8" Typo="Typo.h5" >
+        <b>Drumming class</b>
+    </MudText>
+    <MudText Class="desc mt-8">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </MudText>
+    <MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
+        <b>Kelas yang tersedia</b>
+    </MudText>
+    <MudGrid Class="mt-8">
+        <MudItem xs="4">
+            <MudLink Href="/detail" Color="Color.Default">
+                <MudImage Src="img/ListMenu1.svg"></MudImage>
+                <MudText class="category color-gray-3">Drum</MudText>
+                <MudText class="name color-gray-1"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
+                <MudText class="name color-iris" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
+            </MudLink>
+        </MudItem>
+        <MudItem xs="4">
+            <MudLink Href="/detail" Color="Color.Default">
+                <MudImage Src="img/ListMenu2.svg"></MudImage>
+                <MudText class="">Drum</MudText>
+                <MudText class=""><b>Expert Level Drummer Lessons</b></MudText>
+                <MudText class="" Color="Color.Primary"><b>IDR 5.450.000</b></MudText>
+            </MudLink>
+        </MudItem>
+        <MudItem xs="4">
+            <MudLink Href="/detail" Color="Color.Default">
+                <MudImage Src="img/ListMenu3.svg"></MudImage>
+                <MudText class="">Drum</MudText>
+                <MudText class=""><b>From Zero to Professional Drummer (Complit Package)</b></MudText>
+                <MudText class="" Color="Color.Primary"><b>IDR 13.000.000</b></MudText>
+            </MudLink>
+        </MudItem>
+        <MudItem xs="4">
+            <MudLink Href="/detail" Color="Color.Default">
+                <MudImage Src="img/ListMenu4.svg"></MudImage>
+                <MudText class="">Drum</MudText>
+                <MudText class=""><b>Drummer for kids (Level Basic/1)</b></MudText>
+                <MudText class="" Color="Color.Primary"><b>IDR 2.200.000</b></MudText>
+            </MudLink>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@code {
+
+}
+=======
+@page "/listmenu"
+@inject NavigationManagerExt Navigation;
+
+<PageTitle>Daftar Kelas</PageTitle>
+
+	<div class="pa-0 ma-n4">
+		<MudImage Class="" Src="img/ListMenuBanner.svg" Alt="List Menu Banner" Style="width: 100%;"></MudImage>
+	</div> 
+	<br />
+
+<MudContainer>
+	<MudText Class="mt-8" Typo="Typo.h5" >
+		<b>Drumming class</b>
+	</MudText>
+	<MudText Class="desc mt-8">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</MudText>
+
+	<MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
+		<b>Kelas yang tersedia</b>
+	</MudText>
+
+	<MudGrid Class="mb-20 mt-4 gap-10 gap-x-20 d-flex justify-start">
+		<MudItem xs="12" sm="6" md="4" lg="3">
+			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+				<MudImage Src="img/ListMenu1.svg" Class="w-100 mb-2"></MudImage>
+				<MudText Class="category color-gray-3">Drum</MudText>
+				<MudText Class="name color-gray-1"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
+				<MudText Class="name color-iris pt-10" Color="Color.Primary"><b>IDR 8.500.000</b></MudText>
+			</MudLink>
+		</MudItem>
+		<MudItem xs="12" sm="6" md="4" lg="3">
+			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+				<MudImage Src="img/ListMenu2.svg" Class="w-100 mb-2"></MudImage>
+				<MudText class="">Drum</MudText>
+				<MudText class=""><b>Expert Level Drummer Lessons</b></MudText>
+				<MudText class="pt-10" Color="Color.Primary"><b>IDR 5.450.000</b></MudText>
+			</MudLink>
+		</MudItem>
+		<MudItem xs="12" sm="6" md="4" lg="3">
+			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+				<MudImage Src="img/ListMenu3.svg" Class="w-100 mb-2"></MudImage>
+				<MudText class="">Drum</MudText>
+				<MudText class=""><b>From Zero to Professional Drummer (Complit Package)</b></MudText>
+				<MudText class="pt-10" Color="Color.Primary"><b>IDR 13.000.000</b></MudText>
+			</MudLink>
+		</MudItem>
+		<MudItem xs="12" sm="6" md="4" lg="3">
+			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+				<MudImage Src="img/ListMenu4.svg" Class="w-100 mb-2"></MudImage>
+				<MudText class="">Drum</MudText>
+				<MudText class=""><b>Drummer for kids (Level Basic/1)</b></MudText>
+				<MudText class="pt-10" Color="Color.Primary"><b>IDR 2.200.000</b></MudText>
+			</MudLink>
+		</MudItem>
+	</MudGrid>
+</MudContainer>
+
+@code {
+
+}
+>>>>>>> origin/Feature/D21-Endpoint_Data_Course_and_Category_Course

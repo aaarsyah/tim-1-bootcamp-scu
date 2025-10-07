@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+namespace MyApp.WebAPI.Models
 {
     /// <summary>
     /// Course: Representasi sebuah kelas pelajaran<br />
