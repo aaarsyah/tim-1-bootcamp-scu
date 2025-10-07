@@ -9,6 +9,15 @@ namespace MyApp.WebAPI.Data
 
     public class AppleMusicDbContext : DbContext
     {
+        /// <summary>
+        /// Constructor - Menerima DbContextOptions untuk dependency injection
+        /// Options akan dikonfigurasi di Program.cs dengan connection string dan provider
+        /// </summary>
+        /// <param name="options">Database context options dari DI container</param>
+        public AppleMusicDbContext(DbContextOptions<AppleMusicDbContext> options) : base(options)
+        {
+            // Constructor base akan handle semua configuration yang di-pass dari DI
+        }
         public DbSet<Course> Courses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -365,7 +374,7 @@ namespace MyApp.WebAPI.Data
         }
 
         //Untuk sementara pakai SQL server lokal dari instalasi SQL Express
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True");
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //    => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True");
     }
 }

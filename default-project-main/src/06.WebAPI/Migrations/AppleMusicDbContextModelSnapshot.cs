@@ -359,7 +359,7 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("InvoiceDetail");
+                    b.ToTable("InvoiceDetail", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Participant", b =>
