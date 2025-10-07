@@ -47,7 +47,7 @@ namespace WebApplication1.Validators
 
             RuleFor(x => x.Description)
                 .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
-            
+
             RuleFor(x => x.ImageUrl)
                 .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.ImageUrl))
                 .WithMessage("Image URL must be a valid URL");
@@ -130,4 +130,53 @@ namespace WebApplication1.Validators
             return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
     }
+
+//Payment Method
+    public class CreatePaymentDtoValidator : AbstractValidator<CreatePaymentDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public CreatePaymentDtoValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Payment name is required")
+                .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
+
+            RuleFor(x => x.LogoUrl)
+                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.LogoUrl))
+                .WithMessage("Image URL must be a valid URL");
+        }
+
+        private bool BeAValidUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
+        }
+    }
+
+    /// <summary>
+    /// Validator for updating payment method
+    /// </summary>
+    public class UpdatePaymentDtoValidator : AbstractValidator<UpdatePaymentDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public UpdatePaymentDtoValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Payment name is required")
+                .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
+            
+            RuleFor(x => x.LogoUrl)
+                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.LogoUrl))
+                .WithMessage("Image URL must be a valid URL");
+        }
+
+        private bool BeAValidUrl(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
+        }
+    }
+
 }

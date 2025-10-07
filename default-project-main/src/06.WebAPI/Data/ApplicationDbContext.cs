@@ -28,6 +28,8 @@ namespace WebApplication1.Data
         /// </summary>
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<PaymentMethod> Payment { get; set; }
+
         /// <summary>
         /// OnModelCreating - Method untuk configure entity models menggunakan Fluent API
         /// Dipanggil sekali saat DbContext pertama kali di-initialize
@@ -235,6 +237,54 @@ namespace WebApplication1.Data
             });
         }
 
+        private void ConfigurePayment(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PaymentMethod>(entity =>
+            {
+                // ========== TABLE CONFIGURATION ==========
+                entity.ToTable("Payment");
+                entity.HasKey(e => e.Id);
+
+                // ========== COLUMN PAYMENT METHOD ==========
+
+                entity.ToTable("PaymentMethods");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                entity.Property(e => e.Name)
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasComment("Payment Method name");
+
+                entity.Property(e => e.LogoUrl)
+                      .HasMaxLength(500)                      // URL length limitation
+                      .HasComment("URL path to Payment logo");
+
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                 // IsActive dengan default value
+                entity.Property(e => e.IsActive)
+                      .IsRequired()
+                      .HasColumnType("bit")
+                      .HasDefaultValue(true)
+                      .HasComment("Indicates if Payment is active and available");
+
+                // Tak usah configure relationship sama Invoice lagi
+                
+                // Composite index untuk queries yang filter berdasarkan multiple columns
+                entity.HasIndex(e => new { e.IsActive, e.Name})
+                      .HasDatabaseName("IX_Payment_Active_Name")
+                      .HasFilter("[IsActive] = 1");
+
+            });
+        }
+
         /// <summary>
         /// Apply global configurations yang berlaku untuk semua entities
         /// Menggunakan conventions untuk consistency across database
@@ -243,7 +293,7 @@ namespace WebApplication1.Data
         private void ApplyGlobalConfigurations(ModelBuilder modelBuilder)
         {
             // ========== GLOBAL NAMING CONVENTIONS ==========
-            
+
             // Configure semua string properties untuk use NVARCHAR instead of NVARCHAR(MAX)
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -254,10 +304,10 @@ namespace WebApplication1.Data
                     {
                         property.SetMaxLength(255); // Default max length
                     }
-                    
+
                 }
             }
-            
+
             // ========== GLOBAL QUERY FILTERS ==========
             // Apply soft delete filter globally (if needed in future)
             // modelBuilder.Entity<Product>().HasQueryFilter(p => p.IsActive);
@@ -279,173 +329,213 @@ namespace WebApplication1.Data
         {
             // ========== SEED CATEGORIES ==========
             modelBuilder.Entity<Category>().HasData(
-                new Category 
-                { 
-                    Id = 1, 
-                    Name = "Drum", 
+                new Category
+                {
+                    Id = 1,
+                    Name = "Drum",
                     LongName = "Drummer class",
-                    Description = "Kelas yang mengajarkan teknik dasar hingga lanjutan bermain drum, termasuk ritme, tempo, dan koordinasi tangan.", 
+                    Description = "Kelas yang mengajarkan teknik dasar hingga lanjutan bermain drum, termasuk ritme, tempo, dan koordinasi tangan.",
                     IsActive = true,
                     ImageUrl = "/images/drum.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 2, 
-                    Name = "Piano", 
+                new Category
+                {
+                    Id = 2,
+                    Name = "Piano",
                     LongName = "Pianist class",
-                    Description = "Pelajari dasar bermain piano, membaca notasi musik, harmoni, dan teknik permainan untuk semua level.", 
+                    Description = "Pelajari dasar bermain piano, membaca notasi musik, harmoni, dan teknik permainan untuk semua level.",
                     IsActive = true,
                     ImageUrl = "/images/piano.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 3, 
-                    Name = "Gitar", 
+                new Category
+                {
+                    Id = 3,
+                    Name = "Gitar",
                     LongName = "Guitarist class",
-                    Description = "Kursus gitar akustik dan elektrik untuk mempelajari chord, melodi, improvisasi, dan teknik fingerstyle.", 
+                    Description = "Kursus gitar akustik dan elektrik untuk mempelajari chord, melodi, improvisasi, dan teknik fingerstyle.",
                     IsActive = true,
                     ImageUrl = "/images/guitar.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 4, 
-                    Name = "Bass", 
+                new Category
+                {
+                    Id = 4,
+                    Name = "Bass",
                     LongName = "Bassist class",
-                    Description = "Kelas bass untuk memahami peran ritmis dan harmonis dalam musik serta teknik slap dan groove.", 
+                    Description = "Kelas bass untuk memahami peran ritmis dan harmonis dalam musik serta teknik slap dan groove.",
                     IsActive = true,
                     ImageUrl = "/images/bass.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 5, 
-                    Name = "Biola", 
+                new Category
+                {
+                    Id = 5,
+                    Name = "Biola",
                     LongName = "Violinist class",
-                    Description = "Pelatihan bermain biola dari dasar hingga mahir, mencakup teknik bowing, fingering, dan intonasi.", 
+                    Description = "Pelatihan bermain biola dari dasar hingga mahir, mencakup teknik bowing, fingering, dan intonasi.",
                     IsActive = true,
                     ImageUrl = "/images/violin.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 6, 
+                new Category
+                {
+                    Id = 6,
                     Name = "Menyanyi",
-                    LongName = "Singer class", 
-                    Description = "Kelas vokal untuk melatih teknik pernapasan, intonasi, artikulasi, dan ekspresi dalam bernyanyi.", 
+                    LongName = "Singer class",
+                    Description = "Kelas vokal untuk melatih teknik pernapasan, intonasi, artikulasi, dan ekspresi dalam bernyanyi.",
                     IsActive = true,
                     ImageUrl = "/images/singing.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 7, 
-                    Name = "Flute", 
+                new Category
+                {
+                    Id = 7,
+                    Name = "Flute",
                     LongName = "Flutist class",
-                    Description = "Kursus flute untuk memahami embouchure, pernapasan, teknik fingering, dan interpretasi musik klasik maupun modern.", 
+                    Description = "Kursus flute untuk memahami embouchure, pernapasan, teknik fingering, dan interpretasi musik klasik maupun modern.",
                     IsActive = true,
                     ImageUrl = "/images/flute.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Category 
-                { 
-                    Id = 8, 
+                new Category
+                {
+                    Id = 8,
                     Name = "Saxophone",
-                    LongName = "Saxophone class", 
-                    Description = "Kelas saxophone untuk mempelajari teknik embouchure, improvisasi jazz, serta kontrol nada dan dinamika.", 
+                    LongName = "Saxophone class",
+                    Description = "Kelas saxophone untuk mempelajari teknik embouchure, improvisasi jazz, serta kontrol nada dan dinamika.",
                     IsActive = true,
                     ImageUrl = "/images/saxophone.svg",
-                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 }
 
-                
+
             );
 
             // ========== SEED PRODUCTS ==========
             modelBuilder.Entity<Course>().HasData(
-                new Course 
-                { 
-                    Id = 1, 
-                    Name = "Kursus Drummer Special Coach (Eno Netral)", 
-                    Description = "High-performance gaming laptop with RTX graphics, 16GB RAM, and 1TB SSD. Perfect for gaming and professional work.", 
-                    Price = 8500000, 
+                new Course
+                {
+                    Id = 1,
+                    Name = "Kursus Drummer Special Coach (Eno Netral)",
+                    Description = "High-performance gaming laptop with RTX graphics, 16GB RAM, and 1TB SSD. Perfect for gaming and professional work.",
+                    Price = 8500000,
                     ImageUrl = "/images/Class1.svg",
                     IsActive = true,
                     CategoryId = 1,
-                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Course 
-                { 
-                    Id = 2, 
-                    Name = "[Beginner] Guitar class for kids", 
-                    Description = "Latest smartphone with 5G connectivity, triple camera system, and all-day battery life. Available in multiple colors.", 
-                    Price = 1600000, 
+                new Course
+                {
+                    Id = 2,
+                    Name = "[Beginner] Guitar class for kids",
+                    Description = "Latest smartphone with 5G connectivity, triple camera system, and all-day battery life. Available in multiple colors.",
+                    Price = 1600000,
                     ImageUrl = "/images/Class2.svg",
                     IsActive = true,
                     CategoryId = 3,
-                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Course 
-                { 
-                    Id = 3, 
-                    Name = "Biola Mid-Level Course", 
-                    Description = "Premium noise-cancelling wireless headphones with 30-hour battery life and superior sound quality.", 
-                    Price = 3000000, 
+                new Course
+                {
+                    Id = 3,
+                    Name = "Biola Mid-Level Course",
+                    Description = "Premium noise-cancelling wireless headphones with 30-hour battery life and superior sound quality.",
+                    Price = 3000000,
                     ImageUrl = "/images/Class3.svg",
                     IsActive = true,
                     CategoryId = 5,
-                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Course 
-                { 
-                    Id = 4, 
-                    Name = "Drummer for kids (Level Basic/1)", 
-                    Description = "Comfortable 100% organic cotton t-shirt with modern fit. Available in multiple sizes and colors.", 
-                    Price = 2200000, 
+                new Course
+                {
+                    Id = 4,
+                    Name = "Drummer for kids (Level Basic/1)",
+                    Description = "Comfortable 100% organic cotton t-shirt with modern fit. Available in multiple sizes and colors.",
+                    Price = 2200000,
                     ImageUrl = "/images/Class4.svg",
                     IsActive = true,
                     CategoryId = 1,
-                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Course 
-                { 
-                    Id = 5, 
-                    Name = "Kursus Piano : From Zero to Pro (Full Package)", 
-                    Description = "Classic fit denim jeans made from durable, comfortable fabric. Perfect for casual and semi-formal occasions.", 
-                    Price = 11650000, 
+                new Course
+                {
+                    Id = 5,
+                    Name = "Kursus Piano : From Zero to Pro (Full Package)",
+                    Description = "Classic fit denim jeans made from durable, comfortable fabric. Perfect for casual and semi-formal occasions.",
+                    Price = 11650000,
                     ImageUrl = "/images/Class5.svg",
                     IsActive = true,
                     CategoryId = 2,
-                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, DateTimeKind.Utc)
                 },
-                new Course 
-                { 
-                    Id = 6, 
-                    Name = "Expert Level Saxophone", 
-                    Description = "Comprehensive guide to C# programming with practical examples, best practices, and real-world projects.", 
-                    Price = 7350000, 
+                new Course
+                {
+                    Id = 6,
+                    Name = "Expert Level Saxophone",
+                    Description = "Comprehensive guide to C# programming with practical examples, best practices, and real-world projects.",
+                    Price = 7350000,
                     ImageUrl = "/images/Class6.svg",
                     IsActive = true,
                     CategoryId = 8,
-                    CreatedAt = new DateTime(2024, 1, 4, 0, 0, 0, DateTimeKind.Utc), 
-                    UpdatedAt = new DateTime(2024, 1, 4, 0, 0, 0, DateTimeKind.Utc) 
+                    CreatedAt = new DateTime(2024, 1, 4, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 4, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
+            // ========== SEED PAYMENT METHOD ==========
+             modelBuilder.Entity<PaymentMethod>().HasData(
+                new PaymentMethod
+                {
+                    Id = 1,
+                    Name = "Gopay",
+                    LogoUrl = "img/Payment1.svg"
+                },
+                new PaymentMethod
+                {
+                    Id = 2,
+                    Name = "OVO",
+                    LogoUrl = "img/Payment2.svg"
+                },
+                new PaymentMethod
+                {
+                    Id = 3,
+                    Name = "Dana",
+                    LogoUrl = "img/Payment3.svg"
+                },
+                new PaymentMethod
+                {
+                    Id = 4,
+                    Name = "Mandiri",
+                    LogoUrl = "img/Payment4.svg"
+                },
+                new PaymentMethod
+                {
+                    Id = 5,
+                    Name = "BCA",
+                    LogoUrl = "img/Payment5.svg"
+                },
+                new PaymentMethod
+                {
+                    Id = 6,
+                    Name = "BNI",
+                    LogoUrl = "img/Payment6.svg"
+                }
+            );
+
         }
 
         /// <summary>

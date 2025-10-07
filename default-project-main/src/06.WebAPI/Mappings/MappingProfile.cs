@@ -19,12 +19,17 @@ namespace WebApplication1.Mappings
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
 
-            // Product mappings
+            // Course mappings
             CreateMap<Course, CourseDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
-            
+
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>();
+
+            // PaymentMethod mappings
+            CreateMap<PaymentMethod, PaymentDto>();
+            CreateMap<CreatePaymentDto, PaymentMethod>();
+            CreateMap<UpdatePaymentDto, PaymentMethod>();
         }
     }
 }

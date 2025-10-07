@@ -61,23 +61,23 @@ namespace WebApplication1.DTOs
         /// Product name
         /// </summary>
         public string Name { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Product description
         /// </summary>
         public string Description { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Product price
         /// </summary>
         public decimal Price { get; set; }
-        
-        
+
+
         /// <summary>
         /// Product image URL
         /// </summary>
         public string ImageUrl { get; set; } = string.Empty;
-        
+        public bool IsActive { get; set; }
         /// <summary>
         /// Category ID
         /// </summary>
@@ -104,10 +104,6 @@ namespace WebApplication1.DTOs
         /// </summary>
         public decimal Price { get; set; }
         
-        /// <summary>
-        /// Stock quantity
-        /// </summary>
-        public int Stock { get; set; }
         
         /// <summary>
         /// Product image URL

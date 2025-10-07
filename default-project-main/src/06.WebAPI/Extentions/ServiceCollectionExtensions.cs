@@ -27,6 +27,9 @@ namespace WebApplication1.Extensions
             // Daftarkan ProductService dengan lifetime Scoped
             // Interface IProductService akan di-resolve ke implementasi ProductService
             services.AddScoped<ICourseService, CourseService>();
+
+            services.AddScoped<IPaymentService, PaymentService>();
+
             
             // Return services untuk method chaining (builder pattern)
             return services;
