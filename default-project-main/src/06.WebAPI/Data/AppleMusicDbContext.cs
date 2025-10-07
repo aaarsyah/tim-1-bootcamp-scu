@@ -29,6 +29,74 @@ namespace MyApp.WebAPI.Data
             base.OnModelCreating(modelBuilder);
             // Course
             ConfigureCourse(modelBuilder);
+            ConfigureCategory(modelBuilder);
+            ConfigureSchedule(modelBuilder);
+            // User
+            ConfigureUser(modelBuilder);
+            ConfigureCartItem(modelBuilder);
+            ConfigureParticipant(modelBuilder);
+            // Invoice
+            ConfigureInvoice(modelBuilder);
+            ConfigureInvoiceDetail(modelBuilder);
+            // Invoice
+            ConfigurePaymentMethod(modelBuilder);
+            SeedData(modelBuilder);
+        }
+
+        /// <summary>
+        /// Configure Course entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureCourse(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.ToTable("Courses");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                entity.Property(e => e.Name)
+                        .IsRequired()
+                        .HasMaxLength(150);
+                entity.Property(e => e.Description)
+                        .HasMaxLength(3000);
+                entity.Property(e => e.ImageUrl)
+                        .HasMaxLength(256);
+                entity.Property(e => e.Price)
+                        .IsRequired()
+                        .HasColumnType("numeric(10)");
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+                entity.Property(e => e.CreatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.UpdatedAt)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                // Relationship dengan Category
+                entity.HasOne(e => e.Category)
+                        .WithMany(e => e.Courses)
+                        .HasForeignKey(e => e.CategoryId)
+                        .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
+                // Relationship dengan Schedule
+                entity.HasMany(e => e.Schedules)
+                        .WithOne(e => e.Course)
+                        .HasForeignKey(e => e.CourseId)
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
+                // Constraint
+                entity.ToTable(e => e.HasCheckConstraint(
+                        "CK_Price", "[Price] >= 0"));
+            });
+        }
+
+        /// <summary>
+        /// Configure Category entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureCategory(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Categories");
@@ -57,6 +125,14 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Courses lagi
             });
+        }
+
+        /// <summary>
+        /// Configure Schedule entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureSchedule(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.ToTable("Schedules");
@@ -68,7 +144,14 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Courses lagi
             });
-            // User
+        }
+
+        /// <summary>
+        /// Configure User entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureUser(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
@@ -114,6 +197,13 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable(e => e.HasCheckConstraint(
                         "CK_Email", "[Email] LIKE '%@%.%'"));
             });
+        }
+        /// <summary>
+        /// Configure CartItem entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureCartItem(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<CartItem>(entity =>
             {
                 entity.ToTable("CartItems");
@@ -126,6 +216,13 @@ namespace MyApp.WebAPI.Data
                         .WithMany()
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila Schedule dihapus
             });
+        }
+        /// <summary>
+        /// Configure Participant entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureParticipant(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Participant>(entity =>
             {
                 entity.ToTable("Participants");
@@ -138,7 +235,13 @@ namespace MyApp.WebAPI.Data
                         .WithMany()
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
             });
-            // Invoice
+        }
+        /// <summary>
+        /// Configure Invoice entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureInvoice(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.ToTable("Invoices");
@@ -158,7 +261,28 @@ namespace MyApp.WebAPI.Data
                         .WithOne()
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
             });
-            // Invoice
+        }
+        /// <summary>
+        /// Configure ConfigurePaymentMethod entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigureInvoiceDetail(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InvoiceDetail>(entity =>
+            {
+                entity.ToTable("InvoiceDetail");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                // Tak usah configure relationship sama Invoice lagi
+            });
+        }
+        /// <summary>
+        /// Configure ConfigurePaymentMethod entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+        private void ConfigurePaymentMethod(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<PaymentMethod>(entity =>
             {
                 entity.ToTable("PaymentMethods");
@@ -177,55 +301,6 @@ namespace MyApp.WebAPI.Data
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Invoice lagi
-            });
-            SeedData(modelBuilder);
-        }
-
-        /// <summary>
-        /// Configure Product entity dengan advanced Fluent API features
-        /// Includes relationship configuration, constraints, dan performance optimizations
-        /// </summary>
-        /// <param name="modelBuilder">ModelBuilder instance</param>
-        private void ConfigureCourse(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Course>(entity =>
-            {
-                entity.ToTable("Courses");
-                // Primary key
-                entity.HasKey(e => e.Id);
-                // Properties
-                entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(150);
-                entity.Property(e => e.Description)
-                        .HasMaxLength(3000);
-                entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(256);
-                entity.Property(e => e.Price)
-                        .IsRequired()
-                        .HasColumnType("numeric(10)");
-                entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-                entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
-                // Relationship dengan Category
-                entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Courses)
-                        .HasForeignKey(e => e.CategoryId)
-                        .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
-                // Relationship dengan Schedule
-                entity.HasMany(e => e.Schedules)
-                        .WithOne(e => e.Course)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
-                // Constraint
-                entity.ToTable(e => e.HasCheckConstraint(
-                        "CK_Price", "[Price] >= 0"));
             });
         }
 

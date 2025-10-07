@@ -44,11 +44,11 @@ namespace MyApp.WebAPI.Models
         /// </summary>
         public DateTime UpdatedAt { get; set; }
         /// <summary>
-        /// Category: Kategori kelas pelajaran yang terkait
+        /// CategoryId (foreign key): Kategori kelas pelajaran yang terkait
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
-        /// Virtual field for Category
+        /// Category: Kategori kelas pelajaran yang terkait
         /// </summary>
         public virtual Category Category { get; set; } = null!;
         /// <summary>

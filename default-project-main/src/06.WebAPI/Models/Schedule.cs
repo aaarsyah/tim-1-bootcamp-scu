@@ -16,8 +16,12 @@ namespace MyApp.WebAPI.Models
         /// </summary>
         public DateOnly Date { get; set; }
         /// <summary>
-        /// Course: Kelas pelajaran
+        /// CourseId (foreign key): Kelas pelajaran yang terkait
         /// </summary>
-        public Course Course { get; set; } = null!;
+        public int CourseId { get; set; }
+        /// <summary>
+        /// Course: Kelas pelajaran yang terkait
+        /// </summary>
+        public virtual Course Course { get; set; } = null!;
     }
 }
