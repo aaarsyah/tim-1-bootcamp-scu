@@ -27,7 +27,11 @@ namespace MyApp.WebAPI.Extensions
             // Daftarkan ProductService dengan lifetime Scoped
             // Interface IProductService akan di-resolve ke implementasi ProductService
             services.AddScoped<ICourseService, CourseService>();
-            
+
+            // Daftarkan ProductService dengan lifetime Scoped
+            // Interface IProductService akan di-resolve ke implementasi ProductService
+            services.AddScoped<ICheckoutService, CheckoutService>();
+
             // Return services untuk method chaining (builder pattern)
             return services;
         }
@@ -69,7 +73,7 @@ namespace MyApp.WebAPI.Extensions
             {
                 // Ambil connection string dari appsettings.json
                 // Jika tidak ada, gunakan LocalDB default untuk development
-                var connectionString = configuration.GetConnectionString("DefaultConnection") 
+                var connectionString = configuration.GetConnectionString("LocalSqlServer")
                     ?? "Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True";
                 
                 // Configure SQL Server dengan advanced options

@@ -20,12 +20,42 @@ namespace MyApp.WebAPI.Data
         {
             // Constructor base akan handle semua configuration yang di-pass dari DI
         }
+        /// <summary>
+        /// DbSet untuk Courses table
+        /// </summary>
         public DbSet<Course> Courses { get; set; }
         /// <summary>
-        /// DbSet untuk Categories table  
-        /// Entity Framework akan map ini ke tabel "Categories" di database
+        /// DbSet untuk Categories table
         /// </summary>
         public DbSet<Category> Categories { get; set; }
+        /// <summary>
+        /// DbSet untuk Schedules table
+        /// </summary>
+        public DbSet<Schedule> Schedules { get; set; }
+        /// <summary>
+        /// DbSet untuk Users table
+        /// </summary>
+        public DbSet<User> Users { get; set; }
+        /// <summary>
+        /// DbSet untuk CartItems table
+        /// </summary>
+        public DbSet<CartItem> CartItems { get; set; }
+        /// <summary>
+        /// DbSet untuk Participants table
+        /// </summary>
+        public DbSet<Participant> Participants { get; set; }
+        /// <summary>
+        /// DbSet untuk Invoices table
+        /// </summary>
+        public DbSet<Invoice> Invoices { get; set; }
+        /// <summary>
+        /// DbSet untuk InvoiceDetails table
+        /// </summary>
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        /// <summary>
+        /// DbSet untuk PaymentMethods table
+        /// </summary>
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -40,8 +70,9 @@ namespace MyApp.WebAPI.Data
             // Invoice
             ConfigureInvoice(modelBuilder);
             ConfigureInvoiceDetail(modelBuilder);
-            // Invoice
+            // Payment Method
             ConfigurePaymentMethod(modelBuilder);
+            // Data seeding
             SeedData(modelBuilder);
         }
 
@@ -143,7 +174,7 @@ namespace MyApp.WebAPI.Data
                 // Properties
                 entity.Property(e => e.Date)
                         .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasDefaultValueSql("CURRENT_DATE");
                 // Tak usah configure relationship sama Courses lagi
             });
         }
@@ -255,7 +286,7 @@ namespace MyApp.WebAPI.Data
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
-                entity.Property(e => e.Date)
+                entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama User lagi
@@ -272,7 +303,7 @@ namespace MyApp.WebAPI.Data
             });
         }
         /// <summary>
-        /// Configure ConfigurePaymentMethod entity dengan advanced Fluent API features
+        /// Configure InvoiceDetail entity dengan advanced Fluent API features
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
         private void ConfigureInvoiceDetail(ModelBuilder modelBuilder)
@@ -293,7 +324,7 @@ namespace MyApp.WebAPI.Data
             });
         }
         /// <summary>
-        /// Configure ConfigurePaymentMethod entity dengan advanced Fluent API features
+        /// Configure PaymentMethod entity dengan advanced Fluent API features
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
         private void ConfigurePaymentMethod(ModelBuilder modelBuilder)

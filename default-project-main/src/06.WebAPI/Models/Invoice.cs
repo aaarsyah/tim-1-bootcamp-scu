@@ -14,7 +14,7 @@
         /// <summary>
         /// Date: Tanggal pembelian
         /// </summary>
-        public DateOnly Date { get; set; }
+        public DateTime CreatedAt { get; set; }
         /// <summary>
         /// User (foreign key): Pengguna yang terkait<br />
         /// Catatan: Dapat berupa null bila user dihapus
@@ -32,11 +32,11 @@
         /// <summary>
         /// PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
-        public PaymentMethod? PaymentMethod { get; set; } = null!;
+        public virtual PaymentMethod? PaymentMethod { get; set; } = null!;
         /// <summary>
         /// InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>
-        public ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation not required
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah saja
 
     }
 }
