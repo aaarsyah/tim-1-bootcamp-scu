@@ -21,6 +21,8 @@ namespace MyApp.WebAPI.Models
         /// <summary>
         /// Course: Kelas pelajaran
         /// </summary>
-        public Course Course { get; set; } = null!;
+        public Course Course { get; set; } = null!; //untuk ambil course name response
+        public int CourseId { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

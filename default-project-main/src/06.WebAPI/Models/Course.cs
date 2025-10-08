@@ -14,8 +14,8 @@ namespace MyApp.WebAPI.Models
         /// Primary Key - Auto-increment ID
         /// </summary>
         public int Id { get; set; }
-        
-         public string Name { get; set; } = string.Empty;
+
+        public string Name { get; set; } = string.Empty;
         /// <summary>
         /// Description: Deskripsi kelas pelajaran<br />
         /// Catatan: Ditampilkan pada page Detail Kelas
@@ -56,5 +56,6 @@ namespace MyApp.WebAPI.Models
         /// Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public int ScheduleId { get; set; }
     }
 }

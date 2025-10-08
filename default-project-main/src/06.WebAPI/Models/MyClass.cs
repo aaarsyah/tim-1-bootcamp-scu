@@ -5,19 +5,30 @@
     /// Many-to-One dengan User (Many Participant, One user)
     /// Many-to-One dengan Schedule (Many Participant, One Schedule)
     /// </summary>
-    public class Participant
+    public class MyClass
     {
         /// <summary>
         /// Id: Primary key
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// User: Pengguna yang terkait
+        /// Foreign key ke User
         /// </summary>
-        public User User { get; set; } = null!;
+        public int UserId { get; set; }
+
         /// <summary>
-        /// Schedule: Jadwal kelas yang terkait
+        /// Foreign key ke Schedule
         /// </summary>
-        public Schedule Schedule { get; set; } = null!;
+        public int ScheduleId { get; set; }
+
+        /// <summary>
+        /// User: Pengguna yang terkait (Navigasi)
+        /// </summary>
+        public virtual User User { get; set; } = null!;
+        public virtual Schedule Schedule { get; set; } = null!;
+        /// <summary>
+        /// Schedule: Jadwal kelas yang terkait (Navigasi)
+        /// </summary>
+    
     }
 }

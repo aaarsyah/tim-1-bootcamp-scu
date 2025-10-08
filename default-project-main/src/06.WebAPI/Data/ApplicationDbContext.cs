@@ -25,6 +25,10 @@ namespace MyApp.WebAPI.Data
 
         public DbSet<PaymentMethod> Payment { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<MyClass> MyClass { get; set; }
+        public DbSet<Schedule> Schedule { get; set; }
+
+
         
 
         /// <summary>
@@ -330,7 +334,7 @@ namespace MyApp.WebAPI.Data
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
 
                 // Relationship dengan Participant (My Class)
-                entity.HasMany<Participant>()
+                entity.HasMany<MyClass>()
                         .WithOne(e => e.User)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
 
@@ -376,8 +380,10 @@ namespace MyApp.WebAPI.Data
                     entity.ToTable("CartItems");
                     // Primary key
                     entity.HasKey(e => e.Id);
+
                     // Properties
                     // Tak usah configure relationship sama User lagi
+
                     // Relationship dengan Schedule
                     entity.HasOne(e => e.Schedule)
                             .WithMany()
@@ -386,19 +392,23 @@ namespace MyApp.WebAPI.Data
 
         }
 
-        private void ConfigureParticipant(ModelBuilder modelBuilder)
+        private void ConfigureMyClass(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Participant>(entity =>
+            modelBuilder.Entity<MyClass>(entity =>
             {
-                entity.ToTable("Participants");
+                entity.ToTable("MyClass");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
-                // Tak usah configure relationship sama User lagi
+                // Relationship dengan User
+                entity.HasOne(e => e.User)
+                        .WithMany()
+                        .HasForeignKey(e => e.UserId)
+                        .OnDelete(DeleteBehavior.Cascade);
                 // Relationship dengan Schedule
                 entity.HasOne(e => e.Schedule)
                         .WithMany()
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
+                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua myClass yang terhubung bila Schedule dihapus
             });
         }
 
@@ -422,6 +432,21 @@ namespace MyApp.WebAPI.Data
                 entity.HasMany(e => e.InvoiceDetails)
                         .WithOne()
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+            });
+        }
+
+         private void ConfigureSchedule(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Schedule>(entity =>
+            {
+                entity.ToTable("Schedules");
+                // Primary key
+                entity.HasKey(e => e.Id);
+                // Properties
+                entity.Property(e => e.Date)
+                        .IsRequired()
+                        .HasDefaultValueSql("GETUTCDATE()");
+                // Tak usah configure relationship sama Courses lagi
             });
         }        
 
@@ -643,37 +668,49 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 1,
                     Name = "Gopay",
-                    LogoUrl = "img/Payment1.svg"
+                    LogoUrl = "img/Payment1.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new PaymentMethod
                 {
                     Id = 2,
                     Name = "OVO",
-                    LogoUrl = "img/Payment2.svg"
+                    LogoUrl = "img/Payment2.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new PaymentMethod
                 {
                     Id = 3,
                     Name = "Dana",
-                    LogoUrl = "img/Payment3.svg"
+                    LogoUrl = "img/Payment3.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new PaymentMethod
                 {
                     Id = 4,
                     Name = "Mandiri",
-                    LogoUrl = "img/Payment4.svg"
+                    LogoUrl = "img/Payment4.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new PaymentMethod
                 {
                     Id = 5,
                     Name = "BCA",
-                    LogoUrl = "img/Payment5.svg"
+                    LogoUrl = "img/Payment5.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new PaymentMethod
                 {
                     Id = 6,
                     Name = "BNI",
-                    LogoUrl = "img/Payment6.svg"
+                    LogoUrl = "img/Payment6.svg",
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
 
@@ -686,7 +723,9 @@ namespace MyApp.WebAPI.Data
                     Email = "zulfanjaya@gmail.com",
                     Password = "zulfanjaya",
                     IsActive = true,
-                    IsAdmin = false
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
@@ -695,7 +734,9 @@ namespace MyApp.WebAPI.Data
                     Email = "kikisaputri@gmail.com",
                     Password = "kikisaputri",
                     IsActive = true,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
@@ -704,7 +745,9 @@ namespace MyApp.WebAPI.Data
                     Email = "danawijaya@gmail.com",
                     Password = "danawijaya",
                     IsActive = false,
-                    IsAdmin = false
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
@@ -713,9 +756,41 @@ namespace MyApp.WebAPI.Data
                     Email = "hanawahdiah@gmail.com",
                     Password = "hanawahdiah",
                     IsActive = true,
-                    IsAdmin = false
+                    IsAdmin = false,
+                    CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
+
+            // ========== SEED MY CLASS ==========
+            modelBuilder.Entity<MyClass>().HasData(
+                new MyClass { Id = 1, UserId = 1, ScheduleId = 1 },
+                new MyClass { Id = 2, UserId = 1, ScheduleId = 2 },
+                new MyClass { Id = 3, UserId = 3, ScheduleId = 2 }
+            );
+
+            // ========== SEED SCHEDULE ==========
+            modelBuilder.Entity<Schedule>().HasData(
+                new Schedule
+                {
+                    Id = 1,
+                    Date = new DateOnly(2025, 10, 15),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 2,
+                    Date = new DateOnly(2025, 10, 20),
+                    CourseId = 1
+                },
+                new Schedule
+                {
+                    Id = 3,
+                    Date = new DateOnly(2025, 11, 1),
+                    CourseId = 2
+                }
+            );
+
 
         }
 

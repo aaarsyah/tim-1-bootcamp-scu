@@ -24,7 +24,6 @@ namespace MyApp.WebAPI.Models
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        //Jadwal
         public virtual ICollection<Course> Course { get; set; } = new List<Course>();
     }
 }

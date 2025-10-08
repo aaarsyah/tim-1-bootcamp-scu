@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(CourseDbContext))]
-    [Migration("20251007105052_UserMigration")]
-    partial class UserMigration
+    [Migration("20251008083148_UpdatedMigration")]
+    partial class UpdatedMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,6 +227,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("numeric(10)")
                         .HasComment("Course price in numeric format");
 
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -265,6 +268,7 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Kursus Drummer Special Coach (Eno Netral)",
                             Price = 8500000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -277,6 +281,7 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "[Beginner] Guitar class for kids",
                             Price = 1600000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -289,6 +294,7 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Biola Mid-Level Course",
                             Price = 3000000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -301,6 +307,7 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Drummer for kids (Level Basic/1)",
                             Price = 2200000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -313,6 +320,7 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Kursus Piano : From Zero to Pro (Full Package)",
                             Price = 11650000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -325,7 +333,51 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Expert Level Saxophone",
                             Price = 7350000m,
+                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("MyApp.WebAPI.Models.MyClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MyClass");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ScheduleId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ScheduleId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ScheduleId = 2,
+                            UserId = 3
                         });
                 });
 
@@ -364,56 +416,56 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment1.svg",
                             Name = "Gopay",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment2.svg",
                             Name = "OVO",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment3.svg",
                             Name = "Dana",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment4.svg",
                             Name = "Mandiri",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment5.svg",
                             Name = "BCA",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsActive = true,
                             LogoUrl = "img/Payment6.svg",
                             Name = "BNI",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -431,11 +483,37 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.ToTable("Schedule");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CourseId = 1,
+                            Date = new DateOnly(2025, 10, 15),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CourseId = 1,
+                            Date = new DateOnly(2025, 10, 20),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CourseId = 2,
+                            Date = new DateOnly(2025, 11, 1),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.User", b =>
@@ -481,46 +559,46 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "zulfanjaya@gmail.com",
                             IsActive = true,
                             IsAdmin = false,
                             Name = "Zulfan Jaya",
                             Password = "zulfanjaya",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "kikisaputri@gmail.com",
                             IsActive = true,
                             IsAdmin = true,
                             Name = "Kiki Saputri",
                             Password = "kikisaputri",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "danawijaya@gmail.com",
                             IsActive = false,
                             IsAdmin = false,
                             Name = "Dana Wijaya",
                             Password = "danawijaya",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "hanawahdiah@gmail.com",
                             IsActive = true,
                             IsAdmin = false,
                             Name = "Hana Wahdiah",
                             Password = "hanawahdiah",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -534,6 +612,25 @@ namespace MyApp.WebAPI.Migrations
                         .HasConstraintName("FK_Course_Categories");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MyApp.WebAPI.Models.MyClass", b =>
+                {
+                    b.HasOne("MyApp.WebAPI.Models.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyApp.WebAPI.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Schedule");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Schedule", b =>

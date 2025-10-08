@@ -47,6 +47,7 @@ namespace MyApp.WebAPI.Services
             // AsQueryable() memungkinkan kita untuk chain multiple LINQ operations
             var query = _context.Course
                 .Include(p => p.Category) // Eager load Category untuk avoid N+1 problem
+                .Include(p => p.Schedules) 
                 .AsQueryable();
 
             // ========== APPLY FILTERS ==========
@@ -136,6 +137,7 @@ namespace MyApp.WebAPI.Services
         {
             var course = await _context.Course
                 .Include(p => p.Category)
+                .Include(p => p.Schedules) 
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             return course != null ? _mapper.Map<CourseDto>(course) : null;
@@ -172,7 +174,9 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
-            var course = await _context.Course.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+            var course = await _context.Course
+                        .Include(p => p.Category)
+                        .FirstOrDefaultAsync(p => p.Id == id);
             if (course == null) return null;
 
             // Validate category exists if changed

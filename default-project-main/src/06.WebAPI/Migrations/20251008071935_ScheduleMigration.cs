@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyApp.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class CourseMigration : Migration
+    public partial class ScheduleMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,42 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LogoUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
@@ -45,7 +81,8 @@ namespace MyApp.WebAPI.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true, comment: "Indicates if Course is active and available"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()", comment: "Timestamp when Course was created"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()", comment: "Timestamp when Course was last updated"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Foreign key reference to Categories table")
+                    CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Foreign key reference to Categories table"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +115,32 @@ namespace MyApp.WebAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MyClass",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MyClass", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MyClass_Schedule_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MyClass_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Description", "ImageUrl", "IsActive", "LongName", "Name", "UpdatedAt" },
@@ -94,16 +157,60 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "ImageUrl", "IsActive", "Name", "Price", "UpdatedAt" },
+                table: "Payment",
+                columns: new[] { "Id", "CreatedAt", "IsActive", "LogoUrl", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "High-performance gaming laptop with RTX graphics, 16GB RAM, and 1TB SSD. Perfect for gaming and professional work.", "/images/Class1.svg", true, "Kursus Drummer Special Coach (Eno Netral)", 8500000m, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { 2, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Latest smartphone with 5G connectivity, triple camera system, and all-day battery life. Available in multiple colors.", "/images/Class2.svg", true, "[Beginner] Guitar class for kids", 1600000m, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { 3, 5, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Premium noise-cancelling wireless headphones with 30-hour battery life and superior sound quality.", "/images/Class3.svg", true, "Biola Mid-Level Course", 3000000m, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { 4, 1, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc), "Comfortable 100% organic cotton t-shirt with modern fit. Available in multiple sizes and colors.", "/images/Class4.svg", true, "Drummer for kids (Level Basic/1)", 2200000m, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { 5, 2, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc), "Classic fit denim jeans made from durable, comfortable fabric. Perfect for casual and semi-formal occasions.", "/images/Class5.svg", true, "Kursus Piano : From Zero to Pro (Full Package)", 11650000m, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { 6, 8, new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc), "Comprehensive guide to C# programming with practical examples, best practices, and real-world projects.", "/images/Class6.svg", true, "Expert Level Saxophone", 7350000m, new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc) }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment1.svg", "Gopay", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment2.svg", "OVO", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment3.svg", "Dana", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment4.svg", "Mandiri", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment5.svg", "BCA", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment6.svg", "BNI", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "CreatedAt", "Email", "IsActive", "IsAdmin", "Name", "Password", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "zulfanjaya@gmail.com", true, false, "Zulfan Jaya", "zulfanjaya", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "kikisaputri@gmail.com", true, true, "Kiki Saputri", "kikisaputri", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "danawijaya@gmail.com", false, false, "Dana Wijaya", "danawijaya", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "hanawahdiah@gmail.com", true, false, "Hana Wahdiah", "hanawahdiah", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "ImageUrl", "IsActive", "Name", "Price", "ScheduleId", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "High-performance gaming laptop with RTX graphics, 16GB RAM, and 1TB SSD. Perfect for gaming and professional work.", "/images/Class1.svg", true, "Kursus Drummer Special Coach (Eno Netral)", 8500000m, 0, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 2, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Latest smartphone with 5G connectivity, triple camera system, and all-day battery life. Available in multiple colors.", "/images/Class2.svg", true, "[Beginner] Guitar class for kids", 1600000m, 0, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 3, 5, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc), "Premium noise-cancelling wireless headphones with 30-hour battery life and superior sound quality.", "/images/Class3.svg", true, "Biola Mid-Level Course", 3000000m, 0, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 4, 1, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc), "Comfortable 100% organic cotton t-shirt with modern fit. Available in multiple sizes and colors.", "/images/Class4.svg", true, "Drummer for kids (Level Basic/1)", 2200000m, 0, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 5, 2, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc), "Classic fit denim jeans made from durable, comfortable fabric. Perfect for casual and semi-formal occasions.", "/images/Class5.svg", true, "Kursus Piano : From Zero to Pro (Full Package)", 11650000m, 0, new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { 6, 8, new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc), "Comprehensive guide to C# programming with practical examples, best practices, and real-world projects.", "/images/Class6.svg", true, "Expert Level Saxophone", 7350000m, 0, new DateTime(2024, 1, 4, 0, 0, 0, 0, DateTimeKind.Utc) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Schedule",
+                columns: new[] { "Id", "CourseId", "Date" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateOnly(2025, 10, 15) },
+                    { 2, 1, new DateOnly(2025, 10, 20) },
+                    { 3, 2, new DateOnly(2025, 11, 1) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MyClass",
+                columns: new[] { "Id", "ScheduleId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -152,6 +259,16 @@ namespace MyApp.WebAPI.Migrations
                 column: "Price");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MyClass_ScheduleId",
+                table: "MyClass",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyClass_UserId",
+                table: "MyClass",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schedule_CourseId",
                 table: "Schedule",
                 column: "CourseId");
@@ -161,7 +278,16 @@ namespace MyApp.WebAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "MyClass");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
+
+            migrationBuilder.DropTable(
                 name: "Schedule");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Courses");

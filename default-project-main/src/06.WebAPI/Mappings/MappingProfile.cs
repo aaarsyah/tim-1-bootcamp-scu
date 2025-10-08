@@ -21,7 +21,8 @@ namespace MyApp.WebAPI.Mappings
 
             // Course mappings
             CreateMap<Course, CourseDto>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.ScheduleDates, opt => opt.MapFrom(src => src.Schedules.Select(s => s.Date).ToList()));
 
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>();
@@ -35,6 +36,23 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<User, UserDto>();
             CreateMap<CreateUserDto, User>();
             CreateMap<UpdateUserDto, User>();
+
+            // MyClass mappings
+            CreateMap<MyClass, MyClassDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Schedule.Course.Name))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Schedule.Course.ImageUrl))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Schedule.Date));
+
+            CreateMap<CreateMyClassDto, MyClass>();
+            CreateMap<UpdateMyClassDto, MyClass>();
+
+            // Schedule mappings
+            CreateMap<Schedule, ScheduleDto>()
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Course.Name));
+
+            CreateMap<CreateScheduleDto, Schedule>();
+            CreateMap<UpdateScheduleDto, Schedule>();
         }
     }
 }

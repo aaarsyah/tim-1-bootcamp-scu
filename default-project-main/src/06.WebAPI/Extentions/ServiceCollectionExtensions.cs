@@ -30,9 +30,10 @@ namespace MyApp.WebAPI.Extensions
 
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMyClassService, MyClassService>();
+            services.AddScoped<IScheduleService, ScheduleService>();
 
 
-            
             // Return services untuk method chaining (builder pattern)
             return services;
         }
@@ -49,7 +50,7 @@ namespace MyApp.WebAPI.Extensions
             // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
             // Cocok untuk demo dan testing, tidak untuk Production
             services.AddDbContext<CourseDbContext>(options =>
-                options.UseInMemoryDatabase("CourseApiDb")); // "ProductApiDb" adalah nama database
+                options.UseInMemoryDatabase("CourseApiDb")); // "CourseApiDb" adalah nama database
             
             // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
             // services.AddDbContext<ProductDbContext>(options =>

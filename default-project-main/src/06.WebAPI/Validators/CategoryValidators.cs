@@ -21,14 +21,9 @@ namespace MyApp.WebAPI.Validators
                 .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
 
             RuleFor(x => x.ImageUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.ImageUrl))
-                .WithMessage("Image URL must be a valid URL");
+                .NotEmpty().WithMessage("Image Category is required");
         }
 
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
-        }
     }
 
     /// <summary>
@@ -49,13 +44,7 @@ namespace MyApp.WebAPI.Validators
                 .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
 
             RuleFor(x => x.ImageUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.ImageUrl))
-                .WithMessage("Image URL must be a valid URL");
-        }
-
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
+                .NotEmpty().WithMessage("Image Category is required");
         }
     }
 
@@ -85,13 +74,7 @@ namespace MyApp.WebAPI.Validators
                 .GreaterThan(0).WithMessage("Valid category is required");
 
             RuleFor(x => x.ImageUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.ImageUrl))
-                .WithMessage("Image URL must be a valid URL");
-        }
-
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
+                .NotEmpty().WithMessage("Image Course is required");
         }
     }
 
@@ -121,13 +104,7 @@ namespace MyApp.WebAPI.Validators
                 .GreaterThan(0).WithMessage("Valid category is required");
 
             RuleFor(x => x.ImageUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.ImageUrl))
-                .WithMessage("Image URL must be a valid URL");
-        }
-
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
+                .NotEmpty().WithMessage("Image Course is required");
         }
     }
 
@@ -144,13 +121,7 @@ namespace MyApp.WebAPI.Validators
                 .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
 
             RuleFor(x => x.LogoUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.LogoUrl))
-                .WithMessage("Image URL must be a valid URL");
-        }
-
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
+                .NotEmpty().WithMessage("Logo Payment is required");
         }
     }
 
@@ -169,13 +140,7 @@ namespace MyApp.WebAPI.Validators
                 .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
 
             RuleFor(x => x.LogoUrl)
-                .Must(BeAValidUrl).When(x => !string.IsNullOrEmpty(x.LogoUrl))
-                .WithMessage("Image URL must be a valid URL");
-        }
-
-        private bool BeAValidUrl(string url)
-        {
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
+                .NotEmpty().WithMessage("Logo Payment is required");
         }
     }
 
@@ -230,6 +195,74 @@ namespace MyApp.WebAPI.Validators
                 .Matches(@"[a-z]").WithMessage("Password must contain at least one lowercase letter")
                 .Matches(@"\d").WithMessage("Password must contain at least one digit");
 
+        }
+    }
+
+    //MyClass
+    public class CreateMyClassDtoValidator : AbstractValidator<CreateMyClassDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public CreateMyClassDtoValidator()
+        {
+            RuleFor(x => x.UserId)
+                .NotEmpty().WithMessage("UserId is required");
+
+            RuleFor(x => x.ScheduleId)
+                .NotEmpty().WithMessage("ScheduleId is required");
+        }
+    }
+
+    /// <summary>
+    /// Validator for updating payment method
+    /// </summary>
+    public class UpdateMyClassDtoValidator : AbstractValidator<UpdateMyClassDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public UpdateMyClassDtoValidator()
+        {
+            RuleFor(x => x.UserId)
+                .NotEmpty().WithMessage("UserId is required");
+
+            RuleFor(x => x.ScheduleId)
+                .NotEmpty().WithMessage("ScheduleId is required");
+        }
+    }
+
+    //Schedule
+    public class CreateScheduleDtoValidator : AbstractValidator<CreateScheduleDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public CreateScheduleDtoValidator()
+        {
+            RuleFor(x => x.Date)
+                .NotEmpty().WithMessage("Date is required");
+
+            RuleFor(x => x.CourseId)
+                .NotEmpty().WithMessage("CourseId is required");
+        }
+    }
+
+    /// <summary>
+    /// Validator for updating payment method
+    /// </summary>
+    public class UpdateScheduleDtoValidator : AbstractValidator<UpdateScheduleDto>
+    {
+        /// <summary>
+        /// Constructor with validation rules
+        /// </summary>
+        public UpdateScheduleDtoValidator()
+        {
+            RuleFor(x => x.Date)
+                .NotEmpty().WithMessage("Date is required");
+
+            RuleFor(x => x.CourseId)
+                .NotEmpty().WithMessage("CourseId is required");
         }
     }
 

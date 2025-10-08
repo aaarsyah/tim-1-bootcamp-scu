@@ -54,7 +54,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     // Definisikan dokumen OpenAPI
     c.SwaggerDoc("v1", new() { 
-        Title = "API- Apple Music",          // Nama API
+        Title = "API - Apple Music",          // Nama API
         Version = "v1",                 // Versi API
         Description = "A simple e-commerce Course API for Apple Music Website", // Deskripsi API
     });
