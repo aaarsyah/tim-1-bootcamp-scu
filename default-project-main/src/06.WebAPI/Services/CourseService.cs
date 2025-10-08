@@ -3,11 +3,12 @@ using AutoMapper;
 // Import DbContext untuk database operations
 using MyApp.WebAPI.Data;
 // Import DTOs untuk data transfer objects
-using MyApp.WebAPI.DTOs;
 // Import Models untuk entities dan response wrappers
 using MyApp.WebAPI.Models;
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
+using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Models.DTOs;
 
 namespace MyApp.WebAPI.Services
 {

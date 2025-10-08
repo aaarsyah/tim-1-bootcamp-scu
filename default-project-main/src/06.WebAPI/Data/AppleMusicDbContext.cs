@@ -1,8 +1,10 @@
 ﻿// Import Entity Framework Core untuk database operations
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using MyApp.WebAPI.Models.Entities;
+
+
 // Import Models untuk entities
-using MyApp.WebAPI.Models;
 using Xunit.Sdk;
 
 namespace MyApp.WebAPI.Data
@@ -285,6 +287,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("Invoices");
                 // Primary key
                 entity.HasKey(e => e.Id);
+                // Unique Index
+                entity.HasIndex(e => e.RefCode).IsUnique();
                 // Properties
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()

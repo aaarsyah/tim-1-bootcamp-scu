@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
+using System.Globalization;
+using System.Numerics;
 
 namespace MyApp.WebAPI.Services
 {
@@ -92,7 +94,6 @@ namespace MyApp.WebAPI.Services
                                 $"ScheduleId {itemcartid} not found");
                         }
                         items.Add(item);
-                        
                     }
                     // ===== STEP 5 =====
                     var paymentmethod = await _context.PaymentMethods
@@ -111,6 +112,7 @@ namespace MyApp.WebAPI.Services
                     // ===== STEP 7 =====
                     var invoice = new Invoice
                     {
+                        //Guid = GenerateInvoiceId(),
                         CreatedAt = DateTime.UtcNow,
                         UserId = user.Id,
                         PaymentMethodId = paymentmethod.Id,
@@ -149,6 +151,15 @@ namespace MyApp.WebAPI.Services
                     throw; // Re-throw to be handled by middleware
                 }
             });
+        }
+        private string GenerateInvoiceId()
+        {
+            var a = new BigInteger(Guid.NewGuid().ToByteArray().Concat(new byte[] { 0 }).ToArray()).ToString("D", CultureInfo.InvariantCulture);
+            return $"TXN{a}";
+        }
+        private string GenerateInvoiceIdv2()
+        {
+            return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(1000, 9999)}";
         }
     }
 }

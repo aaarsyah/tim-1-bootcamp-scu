@@ -1,11 +1,11 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
-    /// Participant: Representasi sebuah pengguna yang mengikuti sebuah kelas di satu jadwal<br />
-    /// Many-to-One dengan User (Many Participant, One user)
-    /// Many-to-One dengan Schedule (Many Participant, One Schedule)
+    /// CartItem: Representasi sebuah barang belanjaan dalam keranjang pembelian<br />
+    /// Many-to-One dengan User (Many CartItem, One user)
+    /// Many-to-One dengan Schedule (Many CartItem, One Schedule)
     /// </summary>
-    public class Participant
+    public class CartItem
     {
         /// <summary>
         /// Id: Primary key
@@ -27,5 +27,6 @@
         /// Schedule: Jadwal kelas yang terkait
         /// </summary>
         public virtual Schedule Schedule { get; set; } = null!;
+        
     }
 }

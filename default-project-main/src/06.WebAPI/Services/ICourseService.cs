@@ -1,5 +1,5 @@
-using MyApp.WebAPI.DTOs;
 using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
 
 namespace MyApp.WebAPI.Services
 {

@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// PaymentMethod: Representasi sebuah metode pembayaran<br />

@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// InvoiceDetail: Representasi sebuah item dalam bukti pembelian<br />

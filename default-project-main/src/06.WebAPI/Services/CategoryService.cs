@@ -1,8 +1,8 @@
 using AutoMapper;
 using MyApp.WebAPI.Data;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Models.DTOs;
 
 namespace MyApp.WebAPI.Services
 {

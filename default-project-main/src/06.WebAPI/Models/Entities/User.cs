@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// User: Representasi sebuah pengguna yang terdaftar<br />
@@ -10,6 +10,10 @@
         /// Id: Primary key
         /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// Guid: Nama pengguna
+        /// </summary>
+        public string Guid { get; set; } = string.Empty;
         /// <summary>
         /// Name: Nama pengguna
         /// </summary>

@@ -1,9 +1,10 @@
 // Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
 using Microsoft.AspNetCore.Mvc;
 // Import DTOs untuk request/response objects
-using MyApp.WebAPI.DTOs;
 // Import Models untuk response wrapper classes
 using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
+
 // Import Services untuk business logic
 using MyApp.WebAPI.Services;
 

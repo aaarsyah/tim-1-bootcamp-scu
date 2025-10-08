@@ -1,4 +1,4 @@
-namespace MyApp.WebAPI.Models
+namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// Category: Representasi sebuah kelas pelajaran<br />

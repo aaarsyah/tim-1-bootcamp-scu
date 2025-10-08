@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// Invoice: Representasi sebuah bukti pembelian<br />
@@ -11,6 +11,10 @@
         /// Id: Primary key
         /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// RefCode: Kode bukti pembelian
+        /// </summary>
+        public string RefCode { get; set; } = string.Empty;
         /// <summary>
         /// Date: Tanggal pembelian
         /// </summary>

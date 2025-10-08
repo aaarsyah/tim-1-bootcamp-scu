@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyApp.WebAPI.DTOs
+namespace MyApp.WebAPI.Models.DTOs
 {
     /// <summary>
     /// Transfer Request DTO
@@ -19,7 +19,7 @@ namespace MyApp.WebAPI.DTOs
         [Required(ErrorMessage = "ItemCartIds is required")]
         public List<int> ItemCartIds { get; set; } = null!;
         [Required(ErrorMessage = "PaymentMethodId is required")]
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
     }
     public class CheckoutResponseDto
     {
