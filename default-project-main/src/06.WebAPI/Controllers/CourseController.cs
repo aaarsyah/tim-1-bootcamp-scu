@@ -107,7 +107,7 @@ namespace MyApp.WebAPI.Controllers
             var course = await _courseService.CreateCourseAsync(createCourseDto);
             
             // Buat success response dengan custom message
-            var response = ApiResponse<CourseDto>.SuccessResult(course, "Course created successfully");
+            var response = ApiResponse<CourseDto>.SuccessResult(course);
             
             // Return 201 Created dengan Location header yang menunjuk ke GET endpoint
             // CreatedAtAction akan generate URL: api/Course/{id} di Location header
@@ -139,7 +139,7 @@ namespace MyApp.WebAPI.Controllers
             }
 
             // Return 200 OK dengan updated product data
-            return Ok(ApiResponse<CourseDto>.SuccessResult(course, "Course updated successfully"));
+            return Ok(ApiResponse<CourseDto>.SuccessResult(course));
         }
 
         /// <summary>

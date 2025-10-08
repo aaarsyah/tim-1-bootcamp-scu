@@ -25,6 +25,11 @@ namespace MyApp.WebAPI.Mappings
             
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>();
+
+            // Checkout mappings
+            CreateMap<CartItem, CartItemResponseDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Schedule.Course.Name));
         }
     }
 }

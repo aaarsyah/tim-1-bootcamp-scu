@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyApp.WebAPI.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyApp.WebAPI.Models.DTOs
 {
@@ -34,5 +35,28 @@ namespace MyApp.WebAPI.Models.DTOs
         /// Null if still pending
         /// </summary>
         public DateTime? ProcessedAt { get; set; }
+    }
+    public class CartItemResponseDto
+    {
+        /// <summary>
+        /// Id: Primary key
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// User (foreign key): Pengguna yang terkait
+        /// </summary>
+        public int UserId { get; set; }
+        /// <summary>
+        /// User: Pengguna yang terkait
+        /// </summary>
+        public string UserName { get; set; } = string.Empty;
+        /// <summary>
+        /// Schedule (foreign key): Jadwal kelas yang terkait
+        /// </summary>
+        public int ScheduleId { get; set; }
+        /// <summary>
+        /// Schedule: Jadwal kelas yang terkait
+        /// </summary>
+        public string CourseName { get; set; } = string.Empty;
     }
 }

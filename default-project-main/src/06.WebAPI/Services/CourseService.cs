@@ -1,14 +1,15 @@
 // Import AutoMapper untuk object-to-object mapping
 using AutoMapper;
+// Import Entity Framework Core untuk database operations
+using Microsoft.EntityFrameworkCore;
 // Import DbContext untuk database operations
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
 // Import DTOs untuk data transfer objects
 // Import Models untuk entities dan response wrappers
 using MyApp.WebAPI.Models;
-// Import Entity Framework Core untuk database operations
-using Microsoft.EntityFrameworkCore;
-using MyApp.WebAPI.Models.Entities;
 using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {
@@ -151,7 +152,7 @@ namespace MyApp.WebAPI.Services
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
             if (!categoryExists)
             {
-                throw new ArgumentException($"Category with ID {createCourseDto.CategoryId} does not exist");
+                throw new ValidationException($"Category with ID {createCourseDto.CategoryId} does not exist");
             }
 
             var course = _mapper.Map<Course>(createCourseDto);
@@ -182,7 +183,7 @@ namespace MyApp.WebAPI.Services
                 var categoryExists = await _context.Categories.AnyAsync(c => c.Id == updateCourseDto.CategoryId);
                 if (!categoryExists)
                 {
-                    throw new ArgumentException($"Category with ID {updateCourseDto.CategoryId} does not exist");
+                    throw new ValidationException($"Category with ID {updateCourseDto.CategoryId} does not exist");
                 }
             }
 

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace MyApp.WebAPI.Models
 {
     /// <summary>
@@ -7,43 +9,38 @@ namespace MyApp.WebAPI.Models
     public class ApiResponse<T>
     {
         /// <summary>
-        /// Whether the request was successful
+        /// Machine-readable status code
+        /// Purpose: Frontend can handle specific errors programmatically
+        /// Examples: "NOT_FOUND", "SUCCESS", "VALIDATION_ERROR"
         /// </summary>
-        public bool Success { get; set; }
-        
-        /// <summary>
-        /// Response message
-        /// </summary>
-        public string Message { get; set; } = string.Empty;
-        
+        public string StatusCode { get; set; } = string.Empty;
         /// <summary>
         /// Response data
         /// </summary>
         public T? Data { get; set; }
-        
+        /// <summary>
+        /// Response message
+        /// </summary>
+        public string? ErrorMessage { get; set; }
         /// <summary>
         /// Error details if any
         /// </summary>
         public object? Errors { get; set; }
-        
         /// <summary>
         /// Response timestamp
         /// </summary>
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-
         /// <summary>
         /// Create successful response
         /// </summary>
-        public static ApiResponse<T> SuccessResult(T data, string message = "Success")
+        public static ApiResponse<T> SuccessResult(T data)
         {
             return new ApiResponse<T>
             {
-                Success = true,
-                Message = message,
+                StatusCode = "SUCCESS",
                 Data = data
             };
         }
-
         /// <summary>
         /// Create error response
         /// </summary>
@@ -51,8 +48,19 @@ namespace MyApp.WebAPI.Models
         {
             return new ApiResponse<T>
             {
-                Success = false,
-                Message = message,
+                ErrorMessage = message,
+                Errors = errors
+            };
+        }
+        /// <summary>
+        /// Create error response
+        /// </summary>
+        public static ApiResponse<T> ErrorResult(string statusCode, string message, object? errors = null)
+        {
+            return new ApiResponse<T>
+            {
+                StatusCode = statusCode,
+                ErrorMessage = message,
                 Errors = errors
             };
         }
@@ -107,7 +115,6 @@ namespace MyApp.WebAPI.Models
             
             return new PagedResponse<IEnumerable<TData>>
             {
-                Success = true,
                 Data = data,
                 PageNumber = pageNumber,
                 PageSize = pageSize,

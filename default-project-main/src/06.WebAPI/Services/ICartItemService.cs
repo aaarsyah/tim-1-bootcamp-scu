@@ -1,4 +1,6 @@
-﻿using MyApp.WebAPI.Models.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
 
 namespace MyApp.WebAPI.Services
 {
@@ -12,7 +14,7 @@ namespace MyApp.WebAPI.Services
     /// 3. Multiple Implementations - Different strategies for different scenarios
     /// 4. Clear Contract - Documents what service provides
     /// </summary>
-    public interface ICheckoutService
+    public interface ICartItemService
     {
         /// <summary>
         /// Process courses for checkout
@@ -31,5 +33,12 @@ namespace MyApp.WebAPI.Services
         /// Throws: NotFoundException, InsufficientBalanceException, BusinessLogicException
         /// </summary>
         Task<CheckoutResponseDto> CheckoutItemsAsync(CheckoutRequestDto request);
+        ///
+        Task<IEnumerable<CartItemResponseDto>> GetAllCartItemAsync();
+        Task<IEnumerable<CartItemResponseDto>> GetCartItemByIdAsync(int userId);
+        /// <summary>
+        /// Add item to cart
+        /// </summary>
+        Task<CartItemResponseDto> AddCartItemAsync(int userId, int scheduleid);
     }
 }

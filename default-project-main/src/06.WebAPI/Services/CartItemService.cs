@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
 using System.Globalization;
@@ -17,31 +21,38 @@ namespace MyApp.WebAPI.Services
     /// 3. Audit Trail - Automatic logging via DbContext
     /// 4. Error Handling - Custom exceptions for specific scenarios
     /// </summary>
-    public class CheckoutService : ICheckoutService
+    public class CartItemService : ICartItemService
     {
         private readonly AppleMusicDbContext _context;
-        private readonly ILogger<CheckoutService> _logger;
-
-        public CheckoutService(
+        private readonly IMapper _mapper;
+        private readonly ILogger<CartItemService> _logger;
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public CartItemService(
             AppleMusicDbContext context,
-            ILogger<CheckoutService> logger)
+            IMapper mapper,
+            ILogger<CartItemService> logger)
         {
             _context = context;
+            _mapper = mapper;
             _logger = logger;
         }
+
+
         /// <summary>
-        /// Checkout barang yang dibeli pengguna
-        /// 
-        /// TRANSACTION FLOW:
-        /// 1. BEGIN database transaction
-        /// 2. Validasi apakah user ada
-        /// 3. Validasi apakah user aktif
-        /// 4. Validasi apakah semua barang yang dicheckout termasuk dalam keranjang pembeli
-        /// 5. Validate apakah payment method ada dan tersedia
-        /// 6. Hapus barang yang dicheckout dari keranjang
-        /// 7. Buat invoice beserta detilnya
-        /// 8. COMMIT transaction
-        /// 
+        /// Checkout barang yang dibeli pengguna<br />
+        /// <br />
+        /// TRANSACTION FLOW:<br />
+        /// 1. BEGIN database transaction<br />
+        /// 2. Validasi apakah user ada<br />
+        /// 3. Validasi apakah user aktif<br />
+        /// 4. Validasi apakah semua barang yang dicheckout termasuk dalam keranjang pembeli<br />
+        /// 5. Validate apakah payment method ada dan tersedia<br />
+        /// 6. Hapus barang yang dicheckout dari keranjang<br />
+        /// 7. Buat invoice beserta detilnya<br />
+        /// 8. COMMIT transaction<br />
+        /// <br />
         /// If ANY step fails -> ROLLBACK (nothing saved)
         /// </summary>
         public async Task<CheckoutResponseDto> CheckoutItemsAsync(CheckoutRequestDto request)
@@ -54,7 +65,7 @@ namespace MyApp.WebAPI.Services
             // Business Rule: Cannot check out empty cart
             if (request.ItemCartIds.Count == 0)
             {
-                throw new InvalidOperationException("Cannot check out empty cart!");
+                throw new ValidationException("Checked out items cannot be empty");
             }
             // ===== USE EXECUTION STRATEGY WITH RETRY =====
             // Purpose: Make transaction compatible with retry logic
@@ -72,13 +83,13 @@ namespace MyApp.WebAPI.Services
                         .FirstOrDefaultAsync();
                     if (user == null)
                     {
-                        throw new Exception(
-                            $"UserId {request.UserId} not found");
+                        throw new ValidationException(
+                            $"Invalid UserId {request.UserId} ");
                     }
                     // ===== STEP 3 =====
                     if (!user.IsActive)
                     {
-                        throw new Exception(
+                        throw new PermissionException(
                             $"UserId {user.Id} not active");
                     }
                     // ===== STEP 4 =====
@@ -90,8 +101,8 @@ namespace MyApp.WebAPI.Services
                             .FirstOrDefaultAsync();
                         if (item == null)
                         {
-                            throw new Exception(
-                                $"ScheduleId {itemcartid} not found");
+                            throw new ValidationException(
+                                $"ScheduleId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
                         }
                         items.Add(item);
                     }
@@ -101,7 +112,7 @@ namespace MyApp.WebAPI.Services
                         .FirstOrDefaultAsync();
                     if (paymentmethod == null)
                     {
-                        throw new Exception(
+                        throw new ValidationException(
                             $"PaymentMethodId {request.PaymentMethodId} not found");
                     }
                     // ===== STEP 6 =====
@@ -148,11 +159,32 @@ namespace MyApp.WebAPI.Services
                 }
                 catch (Exception)
                 {
+                    // ===== ROLLBACK ON ERROR =====
+                    // Any exception -> undo all changes
+                    await transaction.RollbackAsync();
+                    _logger.LogError("Checkout successful, transaction rolled back");
                     throw; // Re-throw to be handled by middleware
                 }
             });
         }
-        
+
+        public async Task<IEnumerable<CartItemResponseDto>> GetAllCartItemAsync()
+        {
+            var categories = await _context.CartItems
+                .Include(c => c.Schedule)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
+        }
+
+        public async Task<IEnumerable<CartItemResponseDto>> GetCartItemByIdAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<CartItemResponseDto> AddCartItemAsync(int userId, int scheduleid)
+        {
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Generate unique transaction ID<br />
         /// Format: TXN{yyyyMMddHHmmss}{random 6 digits}<br />

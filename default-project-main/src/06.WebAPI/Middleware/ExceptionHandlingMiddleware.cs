@@ -1,6 +1,9 @@
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
+using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
-using MyApp.WebAPI.Models;
+using Xunit.Sdk;
 
 namespace MyApp.WebAPI.Middleware
 {
@@ -40,34 +43,20 @@ namespace MyApp.WebAPI.Middleware
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            
-            var response = new ApiResponse<object>();
+
+            ApiResponse<object> response;
 
             switch (exception)
             {
-                case ArgumentException ex:
-                    response = ApiResponse<object>.ErrorResult(ex.Message);
-                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                case BaseApiException ex: // Semua exception dari BaseApiException
+                    context.Response.StatusCode = ex.StatusCode;
+                    response = ApiResponse<object>.ErrorResult(ex.ErrorCode,ex.Message);
+                    // TODO: Add stack trace for development purposes
+                    // TODO: Include error details for ValidationException
                     break;
-                
-                case KeyNotFoundException ex:
-                    response = ApiResponse<object>.ErrorResult(ex.Message);
-                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    break;
-                
-                case InvalidOperationException ex:
-                    response = ApiResponse<object>.ErrorResult(ex.Message);
-                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    break;
-                
-                case UnauthorizedAccessException ex:
-                    response = ApiResponse<object>.ErrorResult("Unauthorized access");
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    break;
-                
                 default:
                     response = ApiResponse<object>.ErrorResult("An error occurred while processing your request");
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     break;
             }
 

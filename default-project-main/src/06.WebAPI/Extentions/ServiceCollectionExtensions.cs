@@ -30,7 +30,7 @@ namespace MyApp.WebAPI.Extensions
 
             // Daftarkan ProductService dengan lifetime Scoped
             // Interface IProductService akan di-resolve ke implementasi ProductService
-            services.AddScoped<ICheckoutService, CheckoutService>();
+            services.AddScoped<ICartItemService, CartItemService>();
 
             // Return services untuk method chaining (builder pattern)
             return services;
