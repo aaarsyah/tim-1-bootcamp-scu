@@ -112,7 +112,7 @@ namespace MyApp.WebAPI.Services
                     // ===== STEP 7 =====
                     var invoice = new Invoice
                     {
-                        //Guid = GenerateInvoiceId(),
+                        RefCode = GenerateInvoiceId(),
                         CreatedAt = DateTime.UtcNow,
                         UserId = user.Id,
                         PaymentMethodId = paymentmethod.Id,
@@ -152,14 +152,20 @@ namespace MyApp.WebAPI.Services
                 }
             });
         }
+        
+        /// <summary>
+        /// Generate unique transaction ID<br />
+        /// Format: TXN{yyyyMMddHHmmss}{random 6 digits}<br />
+        /// Example: TXN20251005123059012345
+        /// </summary>
         private string GenerateInvoiceId()
         {
-            var a = new BigInteger(Guid.NewGuid().ToByteArray().Concat(new byte[] { 0 }).ToArray()).ToString("D", CultureInfo.InvariantCulture);
-            return $"TXN{a}";
+            return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
         }
-        private string GenerateInvoiceIdv2()
-        {
-            return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(1000, 9999)}";
-        }
+        //private string GenerateInvoiceId_GUID()
+        //{
+        //    var a = new BigInteger(Guid.NewGuid().ToByteArray().Concat(new byte[] { 0 }).ToArray()).ToString("D", CultureInfo.InvariantCulture);
+        //    return $"TXN{a}";
+        //}
     }
 }

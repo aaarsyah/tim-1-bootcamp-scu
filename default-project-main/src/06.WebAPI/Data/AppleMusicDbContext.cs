@@ -176,7 +176,7 @@ namespace MyApp.WebAPI.Data
                 // Properties
                 entity.Property(e => e.Date)
                         .IsRequired()
-                        .HasDefaultValueSql("CURRENT_DATE");
+                        .HasDefaultValueSql("CONVERT (DATE, GETUTCDATE())");
                 // Tak usah configure relationship sama Courses lagi
             });
         }
@@ -290,6 +290,9 @@ namespace MyApp.WebAPI.Data
                 // Unique Index
                 entity.HasIndex(e => e.RefCode).IsUnique();
                 // Properties
+                entity.Property(e => e.RefCode)
+                        .IsRequired()
+                        .HasMaxLength(32);
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");

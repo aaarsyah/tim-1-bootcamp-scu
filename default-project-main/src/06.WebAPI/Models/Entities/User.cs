@@ -11,10 +11,6 @@
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Guid: Nama pengguna
-        /// </summary>
-        public string Guid { get; set; } = string.Empty;
-        /// <summary>
         /// Name: Nama pengguna
         /// </summary>
         public string Name { get; set; } = string.Empty;
