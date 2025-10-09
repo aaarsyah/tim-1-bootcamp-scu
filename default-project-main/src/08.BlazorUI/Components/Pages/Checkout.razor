@@ -3,6 +3,7 @@
 @using System.Globalization
 
 @inject NavigationManagerExt Navigation;
+@inject ISnackbar Snackbar
 
 <PageTitle>Checkout</PageTitle>
 
@@ -18,7 +19,13 @@
 
 <MudContainer>
     <MudStack Row="true" AlignItems="AlignItems.Center">
-        <MudCheckBox @bind-Value="selectallcheckbox" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+        
+        <MudCheckBox T="bool?" 
+             Value="selectallcheckbox" 
+             ValueChanged="OnSelectAllChanged" 
+             Size="Size.Small" 
+             Color="Color.Primary" />
+
         <MudText>Pilih Semua</MudText>
     </MudStack>
     <MudDivider></MudDivider>
@@ -63,45 +70,75 @@
 
 <MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
     <MessageContent>
-        <MudText>
-            Bayar pakai....
-        </MudText>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment1.svg" />
-            <MudText>GoPay</MudText>
-        </MudStack>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment2.svg" />
-            <MudText>OVO</MudText>
-        </MudStack>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment3.svg" />
-            <MudText>DANA</MudText>
-        </MudStack>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment4.svg" />
-            <MudText>Mandiri</MudText>
-        </MudStack>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment5.svg" />
-            <MudText>BCA</MudText>
-        </MudStack>
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src="img/Payment6.svg" />
-            <MudText>BNI</MudText>
+    <MudStack>
+        @foreach (var payment in payments)
+        {
+            <MudButton 
+                Variant="@GetVariant(payment.Name)"
+                Color="@GetColor(payment.Name)"
+                OnClick="@(() => SelectPayment(payment.Name))"
+                Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
+                
+                <MudImage Src="@payment.Image" Style="width:40px; margin-right:8px;" />
+                <MudText>@payment.Name</MudText>
+            </MudButton>
+        }
         </MudStack>
     </MessageContent>
     
     
     <NoButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-4" Style="width: 170px;" OnClick="Navigation.GoToCheckout">Batal</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="Navigation.GoToCheckout">Batal</MudButton>
     </NoButton>
     <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-4" Style="width: 170px;" OnClick="Navigation.GoToSuccessPurchase">Bayar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
     </YesButton>
 </MudMessageBox>
 
 @code {
+    private string? selectedPayment;
+
+    private List<(string Name, string Image)> payments = new()
+    {
+        ("GoPay", "img/Payment1.svg"),
+        ("OVO", "img/Payment2.svg"),
+        ("DANA", "img/Payment3.svg"),
+        ("Mandiri", "img/Payment4.svg"),
+        ("BCA", "img/Payment5.svg"),
+        ("BNI", "img/Payment6.svg")
+    };
+
+    private void SelectPayment(string name)
+    {
+        selectedPayment = name;
+        StateHasChanged();
+    }
+
+//Perubahan warna ketika di Select Payment nya masih belum aktif 
+    private Color GetColor(string name)
+    {
+        return name == selectedPayment ? Color.Primary : Color.Default;
+    }
+
+    private Variant GetVariant(string name)
+    {
+        return name == selectedPayment ? Variant.Outlined : Variant.Text;
+    }
+
+    //Gunanya untuk post nanti ke invoice
+    private void OnPaymentConfirmed()
+    {
+        if (string.IsNullOrEmpty(selectedPayment))
+        {
+            // Kalau belum pilih metode pembayaran
+            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            return;
+        }
+
+        // Navigasi ke halaman berikut dengan membawa parameter
+        Navigation.GoToPaymentMethodSelected(selectedPayment);
+    }
+
     public class ItemMy
     {
         public bool Selected { get; set; }
@@ -164,8 +201,6 @@
     private async Task OnButtonClickedAsync()
     {
         bool? result = await _mudMessageBox.ShowAsync();
-        // _state = result is null ? "Canceled" : "Deleted!";
-        // StateHasChanged();
     }
 
     public void UpdatePrice()
@@ -179,6 +214,29 @@
             }
         }
     }
+
+    private async Task OnSelectAllChanged(bool? value)
+    {
+        selectallcheckbox = value;
+
+        if (selectallcheckbox == true)
+        {
+            foreach (var item in _itemList)
+            {
+                item.Selected = true;
+            }
+        }
+        else
+        {
+            foreach (var item in _itemList)
+            {
+                item.Selected = false;
+            }
+        }
+
+        UpdatePrice();
+    }
+
 
     public void RemoveItem(ItemMy item)
     {

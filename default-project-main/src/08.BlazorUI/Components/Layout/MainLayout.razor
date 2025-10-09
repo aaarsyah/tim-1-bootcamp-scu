@@ -66,7 +66,7 @@
     <!---Footer-->
     @if (ShouldShowFooter())
     {
-    <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+    <MudPaper Class="footer mt-12" Style="background-color:#F8D24B; border-radius: 0;">
         <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
             <MudGrid Class="d-flex justify-space-evenly">
                 <!-- Kolom Tentang -->
@@ -79,7 +79,7 @@
                     </MudText>
                 </MudItem>
 
-                <!-- Kolom Produk -->
+                 <!-- Kolom Produk -->
                 <MudItem xs="12" sm="6" md="4">
                     <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
                     <MudStack Row="true" Spacing="1">
@@ -95,7 +95,7 @@
                 </MudItem>
 
                 <!-- Kolom Alamat -->
-                <MudItem xs="12" sm="12" md="4">
+                <MudItem xs="12" sm="4">
                     <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
                     <MudText Typo="Typo.body2" Class="mb-2">
                         Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
@@ -193,7 +193,7 @@
     };
 
     [Parameter] 
-    public Role UserRole { get; set; } = Role.Admin; //role user
+    public Role UserRole { get; set; } = Role.User; //role user
     private bool Loggedin = true;
     private void Logout()
     {
