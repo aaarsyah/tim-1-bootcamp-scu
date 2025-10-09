@@ -78,7 +78,7 @@ namespace MyApp.WebAPI.Services
                 try
                 {
                     // ===== STEP 2 =====
-                    var user = await _context.Users
+                    var user = await _context.User
                         .Where(a => a.Id == request.UserId)
                         .FirstOrDefaultAsync();
                     if (user == null)
@@ -107,7 +107,7 @@ namespace MyApp.WebAPI.Services
                         items.Add(item);
                     }
                     // ===== STEP 5 =====
-                    var paymentmethod = await _context.PaymentMethods
+                    var paymentmethod = await _context.Payment
                         .Where(a => a.Id == request.PaymentMethodId)
                         .FirstOrDefaultAsync();
                     if (paymentmethod == null)

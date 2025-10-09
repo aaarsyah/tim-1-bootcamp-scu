@@ -1,6 +1,6 @@
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
-// Import CourseDbContext dari folder Data
+// Import AppleMusicDbContext dari folder Data
 using MyApp.WebAPI.Data;
 // Import extension methods dari folder Extensions
 using MyApp.WebAPI.Extensions;

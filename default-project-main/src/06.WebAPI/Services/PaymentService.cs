@@ -1,6 +1,7 @@
 using AutoMapper;
 using MyApp.WebAPI.Data;
-using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 using MyApp.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,14 +9,14 @@ namespace MyApp.WebAPI.Services
 {
     public class PaymentService : IPaymentService
     {
-        private readonly CourseDbContext _context;
+        private readonly AppleMusicDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<PaymentService> _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public PaymentService(CourseDbContext context, IMapper mapper, ILogger<PaymentService> logger)
+        public PaymentService(AppleMusicDbContext context, IMapper mapper, ILogger<PaymentService> logger)
         {
             _context = context;
             _mapper = mapper;

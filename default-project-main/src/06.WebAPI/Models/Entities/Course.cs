@@ -1,19 +1,17 @@
 namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
-    /// Course: Representasi sebuah kelas pelajaran<br />
-    /// One-to-Many dengan Schedule (One Course, Many Schedules)<br />
-    /// Many-to-One dengan Category (Many Courses, One Category)
+    /// Course entity - Represents an academic course
+    /// Demonstrates Many-to-One (with Department), One-to-Many (with Enrollments),
+    /// and Many-to-Many (with Instructors) relationships
     /// </summary>
     public class Course
     {
         /// <summary>
-        /// Id: Primary key
+        /// Primary Key - Auto-increment ID
         /// </summary>
         public int Id { get; set; }
-        /// <summary>
-        /// Name: Nama kelas pelajaran
-        /// </summary>
+
         public string Name { get; set; } = string.Empty;
         /// <summary>
         /// Description: Deskripsi kelas pelajaran<br />
@@ -44,16 +42,17 @@ namespace MyApp.WebAPI.Models.Entities
         /// </summary>
         public DateTime UpdatedAt { get; set; }
         /// <summary>
-        /// CategoryId (foreign key): Kategori kelas pelajaran yang terkait
+        /// Category: Kategori kelas pelajaran yang terkait
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
-        /// Category: Kategori kelas pelajaran yang terkait
+        /// Virtual field for Category
         /// </summary>
         public virtual Category Category { get; set; } = null!;
         /// <summary>
         /// Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public int ScheduleId { get; set; }
     }
 }

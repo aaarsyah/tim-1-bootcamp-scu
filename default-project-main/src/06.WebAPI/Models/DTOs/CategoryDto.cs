@@ -4,11 +4,12 @@ namespace MyApp.WebAPI.Models.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public string LongName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
+        
 
         public DateTime CreatedAt { get; set; }
-        public int ProductCount { get; set; }
         
         public string ImageUrl { get; set; } = string.Empty;
     }
@@ -19,15 +20,17 @@ namespace MyApp.WebAPI.Models.DTOs
     public class CreateCategoryDto
     {
         public string Name { get; set; } = string.Empty;
+        public string LongName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
     public class UpdateCategoryDto
     {
         public string Name { get; set; } = string.Empty;
-
+        public string LongName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
 }

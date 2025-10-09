@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
+using MyApp.WebAPI.Models;
+
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -68,7 +69,7 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<MyClassDto>> CreateMyClass(CreateMyClassDto createMyClassDto)
         {
             var myclass = await _myclassService.CreateMyClassAsync(createMyClassDto);
-            var response = ApiResponse<MyClassDto>.SuccessResult(myclass, "MyClass created successfully");
+            var response = ApiResponse<MyClassDto>.SuccessResult(myclass);
             return CreatedAtAction(nameof(GetMyClass), new { id = myclass.Id }, response);
         }
 

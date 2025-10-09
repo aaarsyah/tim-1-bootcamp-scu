@@ -43,26 +43,40 @@ namespace MyApp.WebAPI.Middleware
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-<<<<<<< HEAD
             
             var response = new ApiResponse<object>();
 
             switch (exception)
             {
-                    context.Response.StatusCode = ex.StatusCode;
-                    response = ApiResponse<object>.ErrorResult(ex.ErrorCode,ex.Message);
-                    // TODO: Add stack trace for development purposes
-                    // TODO: Include error details for ValidationException
+                case ArgumentException ex:
+                    response = ApiResponse<object>.ErrorResult(ex.Message);
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
+                
+                case KeyNotFoundException ex:
+                    response = ApiResponse<object>.ErrorResult(ex.Message);
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    break;
+                
+                case InvalidOperationException ex:
+                    response = ApiResponse<object>.ErrorResult(ex.Message);
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                
+                case UnauthorizedAccessException ex:
+                    response = ApiResponse<object>.ErrorResult("Unauthorized access");
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    break;
+                
                 default:
                     response = ApiResponse<object>.ErrorResult("An error occurred while processing your request");
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
->>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
 
             var jsonResponse = JsonSerializer.Serialize(response, new JsonSerializerOptions
             {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
 
             await context.Response.WriteAsync(jsonResponse);

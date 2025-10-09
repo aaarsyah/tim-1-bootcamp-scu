@@ -1,12 +1,11 @@
 // Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
 using Microsoft.AspNetCore.Mvc;
 // Import DTOs untuk request/response objects
-// Import Models untuk response wrapper classes
-using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
-
 // Import Services untuk business logic
 using MyApp.WebAPI.Services;
+using MyApp.WebAPI.Models;
+
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -107,7 +106,7 @@ namespace MyApp.WebAPI.Controllers
             var course = await _courseService.CreateCourseAsync(createCourseDto);
             
             // Buat success response dengan custom message
-            var response = ApiResponse<CourseDto>.SuccessResult(course, "Course created successfully");
+            var response = ApiResponse<CourseDto>.SuccessResult(course);
             
             // Return 201 Created dengan Location header yang menunjuk ke GET endpoint
             // CreatedAtAction akan generate URL: api/Course/{id} di Location header
@@ -134,12 +133,12 @@ namespace MyApp.WebAPI.Controllers
             
             if (course == null)
             {
-                // Return 404 jika product tidak ditemukan
+                // Return 404 jika course tidak ditemukan
                 return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
             }
 
             // Return 200 OK dengan updated product data
-            return Ok(ApiResponse<CourseDto>.SuccessResult(course, "Course updated successfully"));
+            return Ok(ApiResponse<CourseDto>.SuccessResult(course));
         }
 
         /// <summary>

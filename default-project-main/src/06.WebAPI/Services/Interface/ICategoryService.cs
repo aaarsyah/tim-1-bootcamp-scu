@@ -1,4 +1,7 @@
-using MyApp.WebAPI.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {

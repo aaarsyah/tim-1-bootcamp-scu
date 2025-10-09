@@ -22,30 +22,16 @@ namespace MyApp.WebAPI.Data
         {
             // Constructor base akan handle semua configuration yang di-pass dari DI
         }
-        /// <summary>
-        /// DbSet untuk Courses table
-        /// </summary>
-        public DbSet<Course> Courses { get; set; }
-        /// <summary>
-        /// DbSet untuk Categories table
-        /// </summary>
+        public DbSet<Course> Course { get; set; }
+    
         public DbSet<Category> Categories { get; set; }
-        /// <summary>
-        /// DbSet untuk Schedules table
-        /// </summary>
-        public DbSet<Schedule> Schedules { get; set; }
-        /// <summary>
-        /// DbSet untuk Users table
-        /// </summary>
-        public DbSet<User> Users { get; set; }
-        /// <summary>
-        /// DbSet untuk CartItems table
-        /// </summary>
+
+        public DbSet<PaymentMethod> Payment { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<MyClass> MyClass { get; set; } //Participans = MyClass
+        public DbSet<Schedule> Schedule { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        /// <summary>
-        /// DbSet untuk Participants table
-        /// </summary>
-        public DbSet<Participant> Participants { get; set; }
+   
         /// <summary>
         /// DbSet untuk Invoices table
         /// </summary>
@@ -54,10 +40,7 @@ namespace MyApp.WebAPI.Data
         /// DbSet untuk InvoiceDetails table
         /// </summary>
         public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
-        /// <summary>
-        /// DbSet untuk PaymentMethods table
-        /// </summary>
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -86,7 +69,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("Courses");
+                entity.ToTable("Course");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -112,7 +95,7 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Courses)
+                        .WithMany(e => e.Course)
                         .HasForeignKey(e => e.CategoryId)
                         .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
@@ -865,10 +848,10 @@ namespace MyApp.WebAPI.Data
             // ========== AUDIT TRAIL UNTUK PRODUCTS ==========
 
             // Get semua Product entities yang sedang di-track dan dalam state Modified
-            var modifiedCourses = ChangeTracker.Entries<Course>()
+            var modifiedCourse = ChangeTracker.Entries<Course>()
                 .Where(e => e.State == EntityState.Modified);
 
-            foreach (var entry in modifiedCourses)
+            foreach (var entry in modifiedCourse)
             {
                 // Update timestamp saat entity di-modify
                 entry.Entity.UpdatedAt = DateTime.UtcNow;

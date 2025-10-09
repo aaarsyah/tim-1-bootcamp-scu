@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
+using MyApp.WebAPI.Models;
+
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -68,7 +69,7 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ScheduleDto>> CreateSchedule(CreateScheduleDto createScheduleDto)
         {
             var schedule = await _scheduleService.CreateScheduleAsync(createScheduleDto);
-            var response = ApiResponse<ScheduleDto>.SuccessResult(schedule, "Schedule created successfully");
+            var response = ApiResponse<ScheduleDto>.SuccessResult(schedule);
             return CreatedAtAction(nameof(GetSchedule), new { id = schedule.Id }, response);
         }
 
@@ -86,7 +87,7 @@ namespace MyApp.WebAPI.Controllers
                 return NotFound(ApiResponse<object>.ErrorResult($"Schedule with ID {id} not found"));
             }
 
-            return Ok(ApiResponse<ScheduleDto>.SuccessResult(schedule, "Schedule updated successfully"));
+            return Ok(ApiResponse<ScheduleDto>.SuccessResult(schedule));
 
         }
 

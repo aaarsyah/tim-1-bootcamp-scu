@@ -1,4 +1,4 @@
-﻿namespace MyApp.WebAPI.Models
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// Participant: Representasi sebuah pengguna yang mengikuti sebuah kelas di satu jadwal<br />

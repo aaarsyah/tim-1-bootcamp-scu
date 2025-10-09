@@ -21,10 +21,14 @@
     <MudStack Row="true" AlignItems="AlignItems.Center">
         
         <MudCheckBox T="bool?" 
+             Value="selectallcheckbox" 
              ValueChanged="OnSelectAllChanged" 
              Size="Size.Small" 
              Color="Color.Primary" />
 
+        <MudText>Pilih Semua</MudText>
+    </MudStack>
+    <MudDivider></MudDivider>
     @foreach (ItemMy item in _itemList)
     {
         <MudStack Class="ma-4"  Row="true" AlignItems="AlignItems.Center">

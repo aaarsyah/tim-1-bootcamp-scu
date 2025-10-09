@@ -8,13 +8,10 @@ namespace MyApp.WebAPI.Models
     /// <typeparam name="T">Response data type</typeparam>
     public class ApiResponse<T>
     {
-        /// <summary>
-<<<<<<< HEAD
         /// Whether the request was successful
         /// </summary>
         /// </summary>
         public string StatusCode { get; set; } = string.Empty;
->>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI
         /// <summary>
         /// Response data
         public T? Data { get; set; }

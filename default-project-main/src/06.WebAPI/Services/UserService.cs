@@ -1,6 +1,7 @@
 using AutoMapper;
 using MyApp.WebAPI.Data;
-using MyApp.WebAPI.DTOs;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 using MyApp.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,14 +9,14 @@ namespace MyApp.WebAPI.Services
 {
     public class UserService : IUserService
     {
-        private readonly CourseDbContext _context;
+        private readonly AppleMusicDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<UserService> _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public UserService(CourseDbContext context, IMapper mapper, ILogger<UserService> logger)
+        public UserService(AppleMusicDbContext context, IMapper mapper, ILogger<UserService> logger)
         {
             _context = context;
             _mapper = mapper;
