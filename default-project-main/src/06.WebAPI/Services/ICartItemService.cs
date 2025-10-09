@@ -38,6 +38,6 @@ namespace MyApp.WebAPI.Services
         Task<IEnumerable<CartItemResponseDto>> GetCartItemByIdAsync(int userId);
 
         Task<bool> AddCourseToCartAsync(int userId, int scheduleid);
-        Task<CartItemResponseDto> RemoveCourseFromCartAsync(int userId, int scheduleid);
+        Task<bool> RemoveCourseFromCartAsync(int userId, int cartid);
     }
 }

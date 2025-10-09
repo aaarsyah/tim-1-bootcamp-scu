@@ -195,7 +195,7 @@ namespace MyApp.WebAPI.Services
         /// 3. Validasi apakah schedule ada<br />
         /// 4. Tambahkan schedule ke cart user<br />
         /// <br />
-        /// Returns: Transaction details with unique ID
+        /// Returns: true
         /// Throws: NotFoundException, InsufficientBalanceException, BusinessLogicException
         /// </summary>
         public async Task<bool> AddCourseToCartAsync(int userId, int scheduleid)
@@ -235,9 +235,51 @@ namespace MyApp.WebAPI.Services
             await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<CartItemResponseDto> RemoveCourseFromCartAsync(int userId, int scheduleid)
+        /// <summary>
+        /// Tambankan course ke dalam cart user<br />
+        /// Tujuan: Supaya user bisa membeli courses<br />
+        /// <br />
+        /// Langkah:<br />
+        /// 1. Validasi apakah user ada<br />
+        /// 2. Validasi apakah user aktif<br />
+        /// 3. Validasi apakah schedule ada di keranjang user<br />
+        /// 4. Hapus schedule dari cart user<br />
+        /// <br />
+        /// Returns: Transaction details with unique ID
+        /// Throws: NotFoundException, InsufficientBalanceException, BusinessLogicException
+        /// </summary>
+        public async Task<bool> RemoveCourseFromCartAsync(int userId, int cartItemId)
         {
-            throw new NotImplementedException();
+            // ===== STEP 1 =====
+            var user = await _context.Users
+                .Where(a => a.Id == userId)
+                .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                throw new ValidationException(
+                    $"Invalid UserId {userId} ");
+            }
+            // ===== STEP 2 =====
+            if (!user.IsActive)
+            {
+                throw new PermissionException(
+                    $"UserId {user.Id} not active");
+            }
+            // ===== STEP 3 =====
+            var cartitem = await _context.CartItems
+                .Where(a => a.Id == cartItemId && a.UserId == userId)
+                .FirstOrDefaultAsync();
+            if (cartitem == null)
+            {
+                throw new ValidationException(
+                    $"cartItemId {cartItemId} not found");
+            }
+            // ===== STEP 4 =====
+            _context.CartItems.Remove(cartitem);
+            // ===== STEP 8 =====
+            // All operations succeeded, make permanent
+            await _context.SaveChangesAsync();
+            return true;
         }
         /// <summary>
         /// Generate unique transaction ID<br />

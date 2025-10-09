@@ -98,9 +98,9 @@ namespace MyApp.WebAPI.Controllers
         /// <param name="parameters">Query parameters untuk filtering, sorting, dan pagination</param>
         /// <returns>Paginated list berisi ProductDto objects</returns>
         [HttpGet] // HTTP GET method
-        [ProducesResponseType(typeof(IEnumerable<CartItemResponseDto>), StatusCodes.Status200OK)] // Swagger documentation
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<CartItemResponseDto>>), StatusCodes.Status200OK)] // Swagger documentation
         [Produces("application/json")]
-        public async Task<ApiResponse<IEnumerable<CartItemResponseDto>>> GetAllCartItem()
+        public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetAllCartItem()
         {
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -109,12 +109,12 @@ namespace MyApp.WebAPI.Controllers
             var result = await _cartItemService.GetAllCartItemAsync();
 
             // Return 200 OK
-            return ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result);
+            return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
         }
         [HttpGet("add")] // HTTP GET method
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<object>>> AddCourseToCartAsync(int userId, [FromQuery] int scheduleid)
+        public async Task<ActionResult<ApiResponse<object>>> AddCourseToCart(int userId, [FromQuery] int scheduleid)
         {
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -123,7 +123,21 @@ namespace MyApp.WebAPI.Controllers
             await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
 
             // Return 200 OK
-            return ApiResponse<object>.SuccessResult();
+            return Ok(ApiResponse<object>.SuccessResult());
+        }
+        [HttpGet("remove")] // HTTP GET method
+        [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
+        public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart(int userId, [FromQuery] int cartid)
+        {
+            // [FromQuery] attribute: bind query string parameters ke object properties
+            // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
+
+            // Panggil service method untuk get products dengan filtering
+            await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
+
+            // Return 200 OK
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }
