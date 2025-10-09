@@ -1,11 +1,57 @@
+<<<<<<< HEAD
+using Microsoft.EntityFrameworkCore;
+using MyApp.WebAPI.Data;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Untuk sementara AddDBContext diletakkan disini
+// TODO: Pindahkan ke ServiceCollectionExtensions.cs nanti
+builder.Services.AddDbContext<AppleMusicDbContext>(options =>
+{
+    // Ambil connection string dari appsettings.json
+    // Jika tidak ada, gunakan LocalDB default untuk development
+    var connectionString = builder.Configuration.GetConnectionString("LocalSqlServer");
+
+    // Configure SQL Server dengan advanced options
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        // ========== CONNECTION RESILIENCE ==========
+
+        // Enable automatic retry untuk transient failures
+        // Berguna untuk handle network issues, timeouts, dll
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 3,                    // Retry maksimal 3 kali
+            maxRetryDelay: TimeSpan.FromSeconds(30), // Max delay 30 detik between retries
+            errorNumbersToAdd: null);                // Additional SQL error numbers untuk retry
+
+        // ========== COMMAND CONFIGURATION ==========
+
+        // Set command timeout untuk queries (30 seconds default)
+        // Increase jika ada long-running queries/migrations
+        sqlOptions.CommandTimeout(60); // 60 seconds timeout
+
+        // ========== MIGRATION CONFIGURATION ==========
+
+        // Specify assembly untuk migrations (jika migrations di assembly terpisah)
+        // sqlOptions.MigrationsAssembly("WebApplication1.Migrations");
+
+        // Set migration history table name (default: __EFMigrationsHistory)
+        // sqlOptions.MigrationsHistoryTable("EFMigrationsHistory", "dbo");
+    });
+});
+
+// Add services to the container.
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+=======
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
 // Import CourseDbContext dari folder Data
-using MyApp.WebAPI.Data;
+using WebApplication1.Data;
 // Import extension methods dari folder Extensions
-using MyApp.WebAPI.Extensions;
+using WebApplication1.Extensions;
 // Import custom middleware dari folder Middleware
-using MyApp.WebAPI.Middleware;
+using WebApplication1.Middleware;
 // Import FluentValidation core library
 using FluentValidation;
 // Import FluentValidation ASP.NET Core integration
@@ -17,8 +63,8 @@ using System.Reflection;
 // args adalah command line arguments yang diterima aplikasi
 var builder = WebApplication.CreateBuilder(args);
 
-
 // ========== KONFIGURASI SERVICES (DEPENDENCY INJECTION) ==========
+>>>>>>> origin/Feature/D21-Endpoint_Data_Course_and_Category_Course
 
 // Tambahkan Controllers ke DI container
 // Ini akan mendaftarkan semua classes yang inherit dari ControllerBase
@@ -55,7 +101,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     // Definisikan dokumen OpenAPI
     c.SwaggerDoc("v1", new() { 
-        Title = "API - Apple Music",          // Nama API
+        Title = "Course API- Apple Music",          // Nama API
         Version = "v1",                 // Versi API
         Description = "A simple e-commerce Course API for Apple Music Website", // Deskripsi API
     });

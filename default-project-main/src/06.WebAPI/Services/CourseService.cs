@@ -1,13 +1,15 @@
 // Import AutoMapper untuk object-to-object mapping
 using AutoMapper;
-// Import DbContext untuk database operations
-using MyApp.WebAPI.Data;
-// Import DTOs untuk data transfer objects
-using MyApp.WebAPI.DTOs;
-// Import Models untuk entities dan response wrappers
-using MyApp.WebAPI.Models;
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
+// Import DbContext untuk database operations
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
+// Import DTOs untuk data transfer objects
+// Import Models untuk entities dan response wrappers
+using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {
@@ -18,7 +20,7 @@ namespace MyApp.WebAPI.Services
     public class CourseService : ICourseService
     {
         // Dependencies yang di-inject melalui constructor
-        private readonly CourseDbContext _context; // Database context untuk data access
+        private readonly AppleMusicDbContext _context; // Database context untuk data access
         private readonly IMapper _mapper; // AutoMapper untuk convert Entity <-> DTO
         private readonly ILogger<CourseService> _logger; // Logger untuk logging operations
 
@@ -28,7 +30,7 @@ namespace MyApp.WebAPI.Services
         /// <param name="context">Database context</param>
         /// <param name="mapper">AutoMapper instance</param>
         /// <param name="logger">Logger instance</param>
-        public CourseService(CourseDbContext context, IMapper mapper, ILogger<CourseService> logger)
+        public CourseService(AppleMusicDbContext context, IMapper mapper, ILogger<CourseService> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -152,7 +154,7 @@ namespace MyApp.WebAPI.Services
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
             if (!categoryExists)
             {
-                throw new ArgumentException($"Category with ID {createCourseDto.CategoryId} does not exist");
+                throw new ValidationException($"Category with ID {createCourseDto.CategoryId} does not exist");
             }
 
             var course = _mapper.Map<Course>(createCourseDto);
@@ -174,9 +176,7 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
-            var course = await _context.Course
-                        .Include(p => p.Category)
-                        .FirstOrDefaultAsync(p => p.Id == id);
+            var course = await _context.Courses.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
             if (course == null) return null;
 
             // Validate category exists if changed
@@ -185,7 +185,7 @@ namespace MyApp.WebAPI.Services
                 var categoryExists = await _context.Categories.AnyAsync(c => c.Id == updateCourseDto.CategoryId);
                 if (!categoryExists)
                 {
-                    throw new ArgumentException($"Category with ID {updateCourseDto.CategoryId} does not exist");
+                    throw new ValidationException($"Category with ID {updateCourseDto.CategoryId} does not exist");
                 }
             }
 

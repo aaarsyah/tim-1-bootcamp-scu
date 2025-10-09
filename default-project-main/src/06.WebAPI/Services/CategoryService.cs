@@ -1,8 +1,8 @@
 using AutoMapper;
 using MyApp.WebAPI.Data;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Models.DTOs;
 
 namespace MyApp.WebAPI.Services
 {
@@ -11,14 +11,10 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public class CategoryService : ICategoryService
     {
-        private readonly CourseDbContext _context;
+        private readonly AppleMusicDbContext _context;
         private readonly IMapper _mapper;
-        private readonly ILogger<CategoryService> _logger;
-
-        /// <summary>
         /// Constructor
-        /// </summary>
-        public CategoryService(CourseDbContext context, IMapper mapper, ILogger<CategoryService> logger)
+        public CategoryService(AppleMusicDbContext context, IMapper mapper, ILogger<CategoryService> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -31,19 +27,22 @@ namespace MyApp.WebAPI.Services
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
             var categories = await _context.Categories
+<<<<<<< HEAD
                 .Include(c => c.Course)
+=======
+                .Include(c => c.Courses)
+>>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
-        }
-
-        /// <summary>
-        /// Get category by ID
-        /// </summary>
         public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
         {
             var category = await _context.Categories
+<<<<<<< HEAD
                 .Include(c => c.Course)
+=======
+                .Include(c => c.Courses)
+>>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return category != null ? _mapper.Map<CategoryDto>(category) : null;
@@ -52,11 +51,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Create new category
         /// </summary>
-        public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto createCategoryDto)
         {
-            var category = _mapper.Map<Category>(createCategoryDto);
-            
-            _context.Categories.Add(category);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Category created: {CategoryName} with ID: {CategoryId}", 

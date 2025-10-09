@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using MyApp.WebAPI.DTOs;
 using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
 
 namespace MyApp.WebAPI.Controllers

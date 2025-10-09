@@ -49,8 +49,8 @@ namespace MyApp.WebAPI.Extensions
             // Daftarkan ProductDbContext ke DI container dengan In-Memory database
             // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
             // Cocok untuk demo dan testing, tidak untuk Production
-            services.AddDbContext<CourseDbContext>(options =>
-                options.UseInMemoryDatabase("CourseApiDb")); // "CourseApiDb" adalah nama database
+            services.AddDbContext<AppleMusicDbContext>(options =>
+                options.UseInMemoryDatabase("CourseApiDb")); // "ProductApiDb" adalah nama database
             
             // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
             // services.AddDbContext<ProductDbContext>(options =>
@@ -71,11 +71,11 @@ namespace MyApp.WebAPI.Extensions
         public static IServiceCollection AddSqlServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             // Daftarkan ProductDbContext dengan SQL Server provider
-            services.AddDbContext<CourseDbContext>(options =>
+            services.AddDbContext<AppleMusicDbContext>(options =>
             {
                 // Ambil connection string dari appsettings.json
                 // Jika tidak ada, gunakan LocalDB default untuk development
-                var connectionString = configuration.GetConnectionString("DefaultConnection") 
+                var connectionString = configuration.GetConnectionString("LocalSqlServer")
                     ?? "Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True";
                 
                 // Configure SQL Server dengan advanced options
@@ -207,7 +207,7 @@ namespace MyApp.WebAPI.Extensions
         /// <returns>IServiceCollection untuk method chaining</returns>
         public static IServiceCollection AddSqliteDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CourseDbContext>(options =>
+            services.AddDbContext<AppleMusicDbContext>(options =>
             {
                 // SQLite connection string - database will be created as file
                 var connectionString = configuration.GetConnectionString("SqliteConnection") 
@@ -220,11 +220,11 @@ namespace MyApp.WebAPI.Extensions
                     sqliteOptions.CommandTimeout(30);
                     
                     // Configure migration assembly jika diperlukan
+<<<<<<< HEAD
                     // sqliteOptions.MigrationsAssembly("MyApp.WebAPI.Migrations");
+=======
+                    // sqliteOptions.MigrationsAssembly("WebApplication1.Migrations");
                 });
-                
-                // Development settings
-                var serviceProvider = services.BuildServiceProvider();
                 var environment = serviceProvider.GetService<IWebHostEnvironment>();
                 
                 if (environment?.IsDevelopment() == true)
@@ -271,4 +271,8 @@ namespace MyApp.WebAPI.Extensions
             }
         }
     } // End of ServiceCollectionExtensions class
+<<<<<<< HEAD
 } // End of MyApp.WebAPI.Extensions namespace
+=======
+} // End of WebApplication1.Extensions namespace
+>>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI

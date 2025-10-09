@@ -1,6 +1,6 @@
 using AutoMapper;
-using MyApp.WebAPI.DTOs;
-using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Mappings
 {
@@ -19,11 +19,11 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
 
+<<<<<<< HEAD
             // Course mappings
             CreateMap<Course, CourseDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.ScheduleDates, opt => opt.MapFrom(src => src.Schedules.Select(s => s.Date).ToList()));
-
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>();
 
@@ -53,6 +53,8 @@ namespace MyApp.WebAPI.Mappings
 
             CreateMap<CreateScheduleDto, Schedule>();
             CreateMap<UpdateScheduleDto, Schedule>();
-        }
-    }
-}
+=======
+            // Product mappings
+            CreateMap<Course, CourseDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+            

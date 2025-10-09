@@ -1,0 +1,27 @@
+namespace MyApp.WebAPI.Models.Entities
+{
+    /// <summary>
+    /// Schedule: Representasi sebuah jadwal kelas<br />
+    /// Many-to-One dengan Course (Many Schedules, One Course)
+    /// Many-to-One dengan Schedule (Many CartItem, One Schedule)
+    /// </summary>
+    public class Schedule
+    {
+        /// <summary>
+        /// Id: Primary key
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// Date: Tanggal mulai kelas
+        /// </summary>
+        public DateOnly Date { get; set; }
+        /// <summary>
+        /// CourseId (foreign key): Kelas pelajaran yang terkait
+        /// </summary>
+        public int CourseId { get; set; }
+        /// <summary>
+        /// Course: Kelas pelajaran yang terkait
+        /// </summary>
+        public virtual Course Course { get; set; } = null!;
+    }
+}
