@@ -175,7 +175,7 @@ namespace MyApp.WebAPI.Services
         public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
             var course = await _context.Courses.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
-            if (course == null) return null;
+            if (course == null) throw new NotFoundException($"Invalid Id {id}");
 
             // Validate category exists if changed
             if (updateCourseDto.CategoryId != course.CategoryId)
@@ -209,7 +209,7 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> DeleteCourseAsync(int id)
         {
             var course = await _context.Courses.FindAsync(id);
-            if (course == null) return false;
+            if (course == null) throw new NotFoundException($"Invalid Id {id}");
 
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();

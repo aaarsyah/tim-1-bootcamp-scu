@@ -1,8 +1,10 @@
 using AutoMapper;
-using MyApp.WebAPI.Data;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
-using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {
@@ -71,7 +73,7 @@ namespace MyApp.WebAPI.Services
         public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) return null;
+            if (category == null) throw new NotFoundException($"Invalid Id {id}");
 
             _mapper.Map(updateCategoryDto, category);
             category.UpdatedAt = DateTime.UtcNow;
@@ -89,13 +91,13 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) return false;
+            if (category == null) throw new NotFoundException($"Invalid Id {id}");
 
             // Check if category has products
             var hasProducts = await _context.Courses.AnyAsync(p => p.CategoryId == id);
             if (hasProducts)
             {
-                throw new InvalidOperationException("Cannot delete category that has products");
+                throw new ValidationException("Cannot delete category that has products");
             }
 
             _context.Categories.Remove(category);

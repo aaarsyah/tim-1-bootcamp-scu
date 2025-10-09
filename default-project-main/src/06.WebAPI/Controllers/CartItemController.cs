@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
+using System.Net;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -98,7 +100,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpGet] // HTTP GET method
         [ProducesResponseType(typeof(IEnumerable<CartItemResponseDto>), StatusCodes.Status200OK)] // Swagger documentation
         [Produces("application/json")]
-        public async Task<ActionResult<IEnumerable<CartItemResponseDto>>> GetAllCartItem()
+        public async Task<ApiResponse<IEnumerable<CartItemResponseDto>>> GetAllCartItem()
         {
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -107,14 +109,21 @@ namespace MyApp.WebAPI.Controllers
             var result = await _cartItemService.GetAllCartItemAsync();
 
             // Return 200 OK
-            return Ok(result);
+            return ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result);
         }
-        [HttpGet("test")] // HTTP GET method
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<CartItemResponseDto>>), StatusCodes.Status200OK)] // Swagger documentation
+        [HttpGet("add")] // HTTP GET method
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-        public async Task<CartItemResponseDto> AddCartItemAsync([FromQuery] int userId, [FromQuery] int scheduleid)
+        public async Task<ActionResult<ApiResponse<object>>> AddCourseToCartAsync(int userId, [FromQuery] int scheduleid)
         {
-            throw new NotImplementedException();
+            // [FromQuery] attribute: bind query string parameters ke object properties
+            // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
+
+            // Panggil service method untuk get products dengan filtering
+            await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
+
+            // Return 200 OK
+            return ApiResponse<object>.SuccessResult();
         }
     }
 }

@@ -33,12 +33,23 @@ namespace MyApp.WebAPI.Models
         /// <summary>
         /// Create successful response
         /// </summary>
-        public static ApiResponse<T> SuccessResult(T data)
+        public static ApiResponse<T> SuccessResult(T? data)
         {
             return new ApiResponse<T>
             {
                 StatusCode = "SUCCESS",
                 Data = data
+            };
+        }
+        /// <summary>
+        /// Create successful response with no data
+        /// </summary>
+        public static ApiResponse<object> SuccessResult()
+        {
+            return new ApiResponse<object>
+            {
+                StatusCode = "SUCCESS",
+                Data = null
             };
         }
         /// <summary>

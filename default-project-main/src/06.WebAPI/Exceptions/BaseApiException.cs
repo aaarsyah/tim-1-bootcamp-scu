@@ -1,23 +1,28 @@
 ﻿namespace MyApp.WebAPI.Exceptions
 {
     /// <summary>
-    /// Base class for all custom API exceptions
-    /// Purpose: Provide consistent error information structure
-    /// 
-    /// Why custom exceptions?
-    /// 1. Better control over HTTP status codes
-    /// 2. Consistent error response format
-    /// 3. Additional context with error codes and details
-    /// 4. Easier error handling in middleware
-    /// 
-    /// Example usage:
-    /// throw new NotFoundException("Account not found", new { accountId = "ACC123" });
+    /// Base class untuk semua custom API exceptions<br />
+    /// Tujuan: Supaya semua exception dari API tetap konsisten<br />
+    /// <br />
+    /// Mengapa?<br />
+    /// 1. Dapat menggunakan error code untuk dibaca frontend<br />
+    /// 2. Error yang konsisten untuk seluruh API<br />
+    /// 3. Informasi detil mengenai error<br />
+    /// 4. Lebih mudah dihandle di middleware<br />
+    /// <br />
+    /// Semua class exception baru yang dihasilkan oleh API harus inherit dari kelas ini<br />
+    /// Contoh kasus:<br />
+    /// Create: throw ValidationException bila menyalahi database constraint (Ada username yang sama atau email tidak valid)<br />
+    /// Read (get/query list): seharusnya tidak throw apapun, return list kosong bila hasil query kosong<br />
+    /// Update: throw NotFoundException bila record yang ingin diupdate tidak ditemukan, atau ValidationException bila menyalahi database constraint<br />
+    /// Delete: throw NotFoundException bila record yang ingin didelete tidak ditemukan, atau ValidationException bila menyalahi database constraint (misal foreign key ON DELETE RESTRICT)<br />
+    /// Get by id/name: throw NotFoundException bila record yang ingin didapatkan tidak ditemukan.
     /// </summary>
     public abstract class BaseApiException : Exception
     {
         /// <summary>
-        /// HTTP status code to return
-        /// Examples: 400 (Bad Request), 404 (Not Found), 500 (Internal Server Error)
+        /// HTTP status code<br />
+        /// Contoh: 400 (Bad Request), 404 (Not Found), 500 (Internal Server Error)
         /// </summary>
         public int StatusCode { get; }
 

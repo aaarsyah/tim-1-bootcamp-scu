@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
@@ -153,7 +154,6 @@ namespace MyApp.WebAPI.Services
                     return new CheckoutResponseDto
                     {
                         InvoiceId = invoice.Id,
-                        //Status = "Completed", // TODO: Tambah column Status di Invoice?
                         CreatedAt = DateTime.UtcNow
                     };
                 }
@@ -167,7 +167,11 @@ namespace MyApp.WebAPI.Services
                 }
             });
         }
-
+        /// <summary>
+        /// Get all items in all users<br />
+        /// Use case:<br />
+        /// None<br />
+        /// </summary>
         public async Task<IEnumerable<CartItemResponseDto>> GetAllCartItemAsync()
         {
             var categories = await _context.CartItems
@@ -181,7 +185,57 @@ namespace MyApp.WebAPI.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<CartItemResponseDto> AddCartItemAsync(int userId, int scheduleid)
+        /// <summary>
+        /// Tambankan course ke dalam cart user<br />
+        /// Tujuan: Supaya user bisa membeli courses<br />
+        /// <br />
+        /// Langkah:<br />
+        /// 1. Validasi apakah user ada<br />
+        /// 2. Validasi apakah user aktif<br />
+        /// 3. Validasi apakah schedule ada<br />
+        /// 4. Tambahkan schedule ke cart user<br />
+        /// <br />
+        /// Returns: Transaction details with unique ID
+        /// Throws: NotFoundException, InsufficientBalanceException, BusinessLogicException
+        /// </summary>
+        public async Task<bool> AddCourseToCartAsync(int userId, int scheduleid)
+        {
+            // ===== STEP 1 =====
+            var user = await _context.Users
+                .Where(a => a.Id == userId)
+                .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                throw new ValidationException(
+                    $"Invalid UserId {userId} ");
+            }
+            // ===== STEP 2 =====
+            if (!user.IsActive)
+            {
+                throw new PermissionException(
+                    $"UserId {user.Id} not active");
+            }
+            // ===== STEP 3 =====
+            var schedule = await _context.Schedules
+                .Where(a => a.Id == scheduleid)
+                .FirstOrDefaultAsync();
+            if (schedule == null)
+            {
+                throw new ValidationException(
+                    $"ScheduleId {scheduleid} not found");
+            }
+            // ===== STEP 4 =====
+            _context.CartItems.Add(new CartItem
+            {
+                UserId = user.Id,
+                ScheduleId = schedule.Id
+            });
+            // ===== STEP 8 =====
+            // All operations succeeded, make permanent
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<CartItemResponseDto> RemoveCourseFromCartAsync(int userId, int scheduleid)
         {
             throw new NotImplementedException();
         }
