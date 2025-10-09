@@ -9,25 +9,43 @@
     <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
         <MudStack Row="true">
             <MudImage Src="img/ListMenu1.svg"></MudImage>
+
             <MudContainer>
-                <MudText class="">Drum</MudText>
-                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
-                <MudSelect @bind-Value="_date"
-                           Label="Tanggal Kursus"
-                           FitContent="true">
-                    @foreach (var _date in _dates)
-                    {
-                        <MudSelectItem Value="_date">@_date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudButton Class="px-4" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
-                    <MudText>Masukkan Keranjang</MudText>
-                </MudButton>
-                <MudButton Class="px-4" Variant="Variant.Filled" Color="Color.Primary" Href="#">
-                    <MudText>Beli Sekarang</MudText>
-                </MudButton>
-            </MudContainer>
+
+    <MudText class="">Drum</MudText>
+
+    <MudText class="" Typo="Typo.h5">
+        <b>Kursus Drummer Special Coach (Eno Netral)</b>
+    </MudText>
+
+    <!-- Jarak antara judul dan harga -->
+    <MudText class="mt-2" Typo="Typo.h5" Color="Color.Primary">
+        <b>IDR 6.500.000</b>
+    </MudText>
+
+    <!-- Jarak antara harga dan select tanggal -->
+    <MudSelect @bind-Value="_date" FitContent="true" class="mt-8">
+        @foreach (var _date in _dates)
+        {
+            <MudSelectItem Value="_date">
+                @_date.ToString("D", new CultureInfo("id-ID"))
+            </MudSelectItem>
+        }
+    </MudSelect>
+
+    <!-- Jarak antara select dan tombol Masukkan Keranjang -->
+    <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
+        <MudText>Masukkan Keranjang</MudText>
+    </MudButton>
+
+    <!-- Tombol Beli Sekarang langsung di bawahnya -->
+    <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" Href="#">
+        <MudText>Beli Sekarang</MudText>
+    </MudButton>
+
+</MudContainer>
+
+
         </MudStack>
     </MudHidden>
     <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
@@ -37,6 +55,7 @@
                 <MudText class="">Drum</MudText>
                 <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
                 <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
+                
                 <MudSelect @bind-Value="_date"
                            Label="Tanggal Kursus"
                            FitContent="true">
@@ -45,6 +64,7 @@
                         <MudSelectItem Value="_date">@_date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
                     }
                 </MudSelect>
+
                 <MudButton Class="px-4" Variant="Variant.Outlined" Color="Color.Primary" Href="#">
                     <MudText>Masukkan Keranjang</MudText>
                 </MudButton>

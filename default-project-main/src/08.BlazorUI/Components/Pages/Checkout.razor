@@ -20,7 +20,13 @@
 @* @ref="_table" *@
 <MudContainer>
     <MudStack Row="true" AlignItems="AlignItems.Center">
-        <MudCheckBox @bind-Value="selectallcheckbox" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+        
+        <MudCheckBox T="bool?" 
+             Value="selectallcheckbox" 
+             ValueChanged="OnSelectAllChanged" 
+             Size="Size.Small" 
+             Color="Color.Primary" />
+
         <MudText>Pilih Semua</MudText>
     </MudStack>
     <MudDivider></MudDivider>
@@ -98,7 +104,7 @@
         <MudButton Variant="Variant.Outlined" Color="Color.Primary">Batal</MudButton>
     </NoButton>
     <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary">Bayar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/Invoice">Bayar</MudButton>
     </YesButton>
 </MudMessageBox>
 
@@ -180,6 +186,29 @@
             }
         }
     }
+
+    private async Task OnSelectAllChanged(bool? value)
+{
+    selectallcheckbox = value;
+
+    if (selectallcheckbox == true)
+    {
+        foreach (var item in _itemList)
+        {
+            item.Selected = true;
+        }
+    }
+    else
+    {
+        foreach (var item in _itemList)
+        {
+            item.Selected = false;
+        }
+    }
+
+    UpdatePrice();
+}
+
 
     public void RemoveItem(ItemMy item)
     {
