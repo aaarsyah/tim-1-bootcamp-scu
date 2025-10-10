@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models;
 
 using MyApp.WebAPI.Services;
+using System.Net;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -119,10 +122,10 @@ namespace MyApp.WebAPI.Controllers
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
             // Panggil service method untuk get products dengan filtering
-            var result = await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
+            await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
         [HttpGet("remove")] // HTTP GET method
         [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
@@ -133,10 +136,10 @@ namespace MyApp.WebAPI.Controllers
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
             // Panggil service method untuk get products dengan filtering
-            var result = await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
+            await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }

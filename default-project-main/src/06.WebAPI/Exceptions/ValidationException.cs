@@ -1,16 +1,18 @@
 ﻿namespace MyApp.WebAPI.Exceptions
 {
     /// <summary>
-    /// Exception untuk input yang tidak sah<br />
-    /// Tujuan: Untuk mengingatkan client bahwa aksi yang ingin dilakukan tidak benar<br />
+    /// Exception untuk input yang tidak sah, sehingga tidak dijalankan dan tidak mengubah sistem<br />
+    /// Tujuan: Untuk mengingatkan client untuk memperbaiki inputnya<br />
     /// HTTP Status: 400 Bad Request<br />
     /// <br />
     /// Dipakai ketika:<br />
     /// - Input yang diberikan tidak sesuai dengan format JSON yang ditentukan<br />
-    /// - Input yang diberikan sesuai format namun tidak benar (misal userid tidak sesuai)<br />
-    /// - User/Course yang ingin di-update tidak ditemukan<br />
+    /// - User men-checkout barang yang tidak di keranjangnya<br />
+    /// - Data yang diinsert menyalahi database constraint (Ada username yang sama atau email tidak valid)<br />
     /// <b>Tidak</b> dipakai ketika:<br />
-    /// - User/Course yang di-query tidak ditemukan (return empty result saja)<br />
+    /// - Hasil query User/Course berupa list kosong (return empty result saja)<br />
+    /// - User/Course yang ingin di-update/delete tidak ditemukan (gunakan NotFoundException)<br />
+    /// - User/Course yang ingin diperlihatkan detilnya tidak ditemukan (gunakan NotFoundException)<br />
     /// <br />
     /// Contoh dengan error-error spesifik:<br />
     /// var errors = new Dictionary&lt;string, string[]&gt;<br />

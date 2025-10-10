@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// User: Representasi sebuah pengguna yang terdaftar<br />
-    /// //One-to-Many dengan CartItem (One User, Many CartItem)
+    /// One-to-Many dengan CartItem (One User, Many CartItem)
     /// </summary>
     public class User
     {

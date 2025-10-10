@@ -30,15 +30,15 @@
         /// </summary>
         public virtual User? User { get; set; } = null!;
         /// <summary>
-        /// PaymentMethod (foreign key): Metode pembayaran yang terkait
+        /// PaymentMethodId (foreign key): Id metode pembayaran yang terkait
         /// </summary>
         public int? PaymentMethodId { get; set; }
         /// <summary>
-        /// PaymentMethod: Metode pembayaran yang terkait
+        /// Virtual field untuk PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
         public virtual PaymentMethod? PaymentMethod { get; set; } = null!;
         /// <summary>
-        /// InvoiceDetails: Item-item dalam bukti pembelian yang terkait
+        /// Virtual field untuk InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah saja
 

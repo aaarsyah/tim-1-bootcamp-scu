@@ -22,14 +22,14 @@ namespace MyApp.WebAPI.Data
         {
             // Constructor base akan handle semua configuration yang di-pass dari DI
         }
-        public DbSet<Course> Course { get; set; }
+        public DbSet<Course> Courses { get; set; }
     
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<PaymentMethod> Payment { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<MyClass> MyClass { get; set; } //Participans = MyClass
-        public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
+        public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
    
         /// <summary>
@@ -51,7 +51,7 @@ namespace MyApp.WebAPI.Data
             // User
             ConfigureUser(modelBuilder);
             ConfigureCartItem(modelBuilder);
-            ConfigureParticipant(modelBuilder);
+            ConfigureMyClass(modelBuilder);
             // Invoice
             ConfigureInvoice(modelBuilder);
             ConfigureInvoiceDetail(modelBuilder);
@@ -69,7 +69,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("Course");
+                entity.ToTable("Courses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -95,7 +95,7 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Course)
+                        .WithMany(e => e.Courses)
                         .HasForeignKey(e => e.CategoryId)
                         .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
@@ -205,7 +205,7 @@ namespace MyApp.WebAPI.Data
                         .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
                 // Relationship dengan Participant
-                entity.HasMany<Participant>()
+                entity.HasMany<MyClass>()
                         .WithOne(e => e.User)
                         .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
@@ -243,11 +243,11 @@ namespace MyApp.WebAPI.Data
         /// Configure Participant entity dengan advanced Fluent API features
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
-        private void ConfigureParticipant(ModelBuilder modelBuilder)
+        private void ConfigureMyClass(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Participant>(entity =>
+            modelBuilder.Entity<MyClass>(entity =>
             {
-                entity.ToTable("Participants");
+                entity.ToTable("MyClasses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
