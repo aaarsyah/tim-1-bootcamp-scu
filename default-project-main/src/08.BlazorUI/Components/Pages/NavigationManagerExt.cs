@@ -101,14 +101,11 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/payment-method");
         }
 
-<<<<<<< HEAD
         public void GoToPaymentMethodSelected(string selectedPayment)
         {
             _navigation.NavigateTo($"/success-purchase?method={selectedPayment}");
         }
 
-=======
->>>>>>> Feature/D22-Endpoint_AND_Merge_Transaction_AND_UI
         // Contoh jika menggunakan id
         // public void GoToDetail(int id)
         // {

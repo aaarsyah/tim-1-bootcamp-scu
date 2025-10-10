@@ -32,6 +32,8 @@ namespace MyApp.WebAPI.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMyClassService, MyClassService>();
             services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<ICartItemService, CartItemService>();
+
 
 
             // Return services untuk method chaining (builder pattern)
