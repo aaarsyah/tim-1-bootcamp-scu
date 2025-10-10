@@ -1,0 +1,132 @@
+@page "/course" 
+
+@using System.Net.Http.Json
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+
+@inject IDialogService DialogService;
+@inject ICourseService CourseService;
+@inject NavigationManagerExt Navigation;
+
+
+<PageTitle>Course Management</PageTitle>
+
+<MudText Typo="Typo.h5" Class="mt-16 mb-4">Course</MudText>
+
+<MudButton Class="mb-6" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large"
+           OnClick="() => OpenCourseDialog(null)">
+    Add Course
+</MudButton>
+
+<MudTable Items="@course" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Course</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium" Class="mt-0" />
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Description</MudTh>
+        <MudTh>Picture</MudTh>
+        <MudTh>CategoryId</MudTh>
+        <MudTh>Harga</MudTh>
+        <MudTh>Jadwal</MudTh>
+        <MudTh>Status</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudImage Class="mt-3" Src="@context.Picture" Alt="@context.Name" Width="40" Height="40" />
+        <MudTd DataLabel="CategoryId">@context.CategoryId</MudTd>
+        <MudTd DataLabel="Harga">@context.Harga</MudTd>
+        <MudTd DataLabel="Jadwal">@context.Jadwal</MudTd>
+        <MudTd DataLabel="Status">
+            @if (context.AllCourse == CourseStatus.Active)
+            {
+                <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">
+                    Active
+                </MudChip>
+            }
+            else if (context.AllCourse == CourseStatus.InActive)
+            {
+                <MudChip T="string" Color="Color.Error" Variant="Variant.Filled" Size="Size.Small">
+                    Inactive
+                </MudChip>
+            }
+        </MudTd>
+        <MudTd DataLabel="Action">
+            <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
+                       OnClick="() => OpenCourseDialog(context)">
+                Edit
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
+                       Class="ml-2"
+                       OnClick="() => DeleteCourse(context.Id)">
+                Delete
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+    private IEnumerable<CourseItem> course = new List<CourseItem>();
+    private bool hover = true;
+    private string searchString1 = "";
+    private CourseItem selectedItem1 = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCourses();
+    }
+
+    private async Task LoadCourses()
+    {
+        course = await CourseService.GetCourseAsync();
+    }
+
+    private bool FilterFunc1(CourseItem u) => FilterFunc(u, searchString1);
+
+    private bool FilterFunc(CourseItem u, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (u.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
+        return false;
+    }
+
+    private async Task DeleteCourse(int id)
+    {
+        bool result = await CourseService.DeleteCourseAsync(id);
+        if (result) await LoadCourses();
+    }
+
+  private async Task OpenCourseDialog(CourseItem courseItem)
+    {
+        var parameters = new DialogParameters();
+        if (courseItem != null)
+            parameters.Add("Course", courseItem);
+
+        var options = new DialogOptions
+        {
+            CloseButton = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var dialog = DialogService.Show<CourseDialog>("Course Form", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data is CourseItem)
+        {
+            await LoadCourses();
+        }
+    }
+
+}

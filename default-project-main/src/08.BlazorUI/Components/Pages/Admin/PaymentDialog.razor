@@ -1,0 +1,94 @@
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+@using System.ComponentModel.DataAnnotations
+
+@inject IDialogService DialogService;
+@inject IPaymentService PaymentService;
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="Payment.Name" Label="Name" Required="true" />
+        
+        <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
+
+        <MudButton HtmlTag="label"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.CloudUpload"
+                   Class="mt-20"
+                   for="fileInput">
+            Upload Logo
+        </MudButton>
+
+        @if (!string.IsNullOrEmpty(Payment.Logo))
+        {
+            <MudImage Src="@Payment.Logo"
+                      Alt="Logo Preview"
+                      Width="150" Height="100"
+                      Class="mt-4" />
+        }
+
+        
+        <MudSelect @bind-Value="Payment.AllPayment" Class="mt-4" Label="Status">
+            <MudSelectItem Value="PaymentStatus.Active">Active</MudSelectItem>
+            <MudSelectItem Value="PaymentStatus.InActive">Inactive</MudSelectItem>
+        </MudSelect>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
+        <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public PaymentItem Payment { get; set; } = new();
+
+    private async Task UploadImage(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+
+            var ext = Path.GetExtension(file.Name).ToLower();
+            var mime = ext switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".svg" => "image/svg+xml",
+                _ => "image/png"
+            };
+
+            Payment.Logo = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+        }
+    }
+
+    private async Task Save()
+    {
+        PaymentItem result;
+
+        if (Payment.Id == 0)
+        {
+            result = await PaymentService.CreatePaymentAsync(Payment); 
+        }
+        else
+        {
+            result = await PaymentService.UpdatePaymentAsync(Payment);
+        }
+        MudDialog.Close(DialogResult.Ok(result));
+        
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+}

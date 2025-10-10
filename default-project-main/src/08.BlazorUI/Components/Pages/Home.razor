@@ -1,8 +1,176 @@
 ﻿@page "/"
+@using MudBlazor
 
-@* Landing Page *@
+@inject NavigationManagerExt Navigation;
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home Apple Music</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to Landing Page</MudText>
+<MudContainer MaxWidth="MaxWidth.False" Class="pa-0 ma-0" Style="position: relative; object-fit: cover;">
+    <!-- Banner -->
+    <div class="pa-0 ma-n4">
+        <MudImage Class="object-cover" Src="img/LandingBanner.svg" Alt="Landing Page Banner"
+                Style="display: block; width: 100%; object-fit: cover;" />
+    </div>
+
+    <!-- Overlay Content -->
+    <MudContainer Class="overlay-text"
+                  Style="position: absolute; 
+                         overflow: scroll; 
+                         inset: 0;
+                         width: 100%;
+                         place-items: center;
+                         color: white;">
+        <MudStack Spacing="2" Align="Center">                 
+        <MudText Class="pt-16" Typo="Typo.h4" Align="Align.Center">
+            Hi Musiker! Gabung yuk di Apel Music
+        </MudText>
+        <MudText Typo="Typo.h6" Class="mt-2 mb-6" Align="Align.Center">
+            Banyak kelas keren yang bisa menunjang bakat bermusik kamu
+        </MudText>
+        </MudStack>
+
+        <!-- Statistik -->
+        <MudGrid Class="d-flex justify-space-evenly">
+            <MudItem xs="12" sm="6" md="4" >
+                <MudPaper Class="pa-4 py-10 rounded-xl">
+                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
+                        <b>500+</b>
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                        Lebih dari sekedar kelas biasa yang bisa mengeluarkan bakat kalian
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="pa-4 py-10 rounded-xl">
+                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
+                        <b>50+</b>
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                        Lulusan yang menjadi musisi ternama dengan skill memukau
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Class="pa-4 py-10 rounded-xl">
+                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
+                        <b>10+</b>
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                        Coach Special kolaborasi dengan 
+                        <br /> musisi terkenal
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+<!-- Explore Kelas Favorite -->
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-5">
+            <MudStack Spacing="4">
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
+                <b>Explore kelas favorit</b>
+                </MudText>
+
+                <MudGrid Class="mb-20 mt-4 gap-10 d-flex justify-space-evenly">
+                    @foreach (var course in FeaturedCourses)
+                    {
+                        <MudItem xs="12" sm="6" md="4" lg="3">
+                            <MudPaper Class="course-card" Elevation="0">
+                            <MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+                                <MudImage Src="@course.Image"
+                                          Class="w-100 mb-2"
+                                          Alt="@course.Title"/>
+                                    <MudText Class="category color-gray-3">@course.Category</MudText>
+                                    <MudText Class="name color-gray-1"><b>@course.Title</b></MudText>
+                                    <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>@course.Price</b></MudText>
+                            </MudLink>    
+                            </MudPaper>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudStack>
+</MudContainer>
+
+<!-- Pilih Kelas Impian Kamu -->
+<div class="pa-0 ma-n4">
+        <MudContainer MaxWidth="MaxWidth.False" Style="background-color: lightblue;" Class="category-section py-8" DisableGutters="true">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
+                <b>Pilih kelas impian kamu</b>
+                <br/>
+            </MudText>
+
+            <MudGrid Spacing="3" Class="mt-4 mb-20">
+                @foreach (var category in Categories)
+                {
+                    <MudItem xs="3" sm="3" md="3" lg="3" Class="d-flex justify-space-evenly">
+                    <MudLink OnClick="Navigation.GoToListMenu" Color="Color.Default">
+                        <MudImage Class="w-100 mb-2" 
+                                  Src="@category.Image" 
+                                  Alt="@category.Name" />
+                        <MudText Align="Align.Center" Typo="Typo.body2"><b>@category.Name</b></MudText>
+                    </MudLink>    
+                    </MudItem>
+                }
+            </MudGrid>
+            </MudStack>
+        </MudContainer>
+</div>
+
+<!-- Benefit -->
+ <MudContainer MaxWidth="MaxWidth.Large" Class="py-16">
+            <MudGrid AlignItems="Center">
+                <MudItem xs="12" md="5">
+                    <div class="benefit-illustration">
+                        <MudImage Src="img/LandingBenefit.svg"
+                                  Alt="Guitar Player Illustration"/>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" md="7">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.h5" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
+                        <b>Benefit ikut Apel Course</b>
+                        </MudText>
+                        <br/>
+                        <MudText Class="category color-gray-1">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
+                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                        </MudText>
+                        </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+
+
+@code {
+    private record CourseCard(string Category, string Title, string Price, string Image);
+    private record CategoryItem(string Name, string Image);
+
+    private IEnumerable<CourseCard> FeaturedCourses => new[]
+    {
+        new CourseCard("Drum", "Kursus Drummer Special Coach (Eno Netral)", "IDR 8.500.000", "img/Landing1.svg"),
+        new CourseCard("Gitar", "[Beginner] Guitar class for kids", "IDR 1.600.000", "img/Landing2.svg"),
+        new CourseCard("Biola", "Biola Mid-Level Course", "IDR 3.000.000", "img/Landing3.svg"),
+        new CourseCard("Drum", "Drummer for kids (Level Basic/1)", "IDR 2.200.000", "img/Landing4.svg"),
+        new CourseCard("Piano", "Kursus Piano: From Zero to Pro (Full Package)", "IDR 11.650.000", "img/Landing5.svg"),
+        new CourseCard("Saxophone", "Expert Level Saxophone", "IDR 7.350.000", "img/Landing6.svg")
+    };
+
+    private IEnumerable<CategoryItem> Categories => new[]
+    {
+        new CategoryItem("Drum", "img/Class1.svg"),
+        new CategoryItem("Piano", "img/Class2.svg"),
+        new CategoryItem("Gitar", "img/Class3.svg"),
+        new CategoryItem("Bass", "img/Class4.svg"),
+        new CategoryItem("Biola", "img/Class5.svg"),
+        new CategoryItem("Menyanyi", "img/Class6.svg"),
+        new CategoryItem("Flute", "img/Class7.svg"),
+        new CategoryItem("Saxophone", "img/Class8.svg")
+    };
+}
+

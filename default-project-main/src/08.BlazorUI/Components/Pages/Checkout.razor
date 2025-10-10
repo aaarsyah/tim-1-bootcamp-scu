@@ -1,0 +1,246 @@
+@page "/checkout"
+
+@using System.Globalization
+
+@inject NavigationManagerExt Navigation;
+@inject ISnackbar Snackbar
+
+<PageTitle>Checkout</PageTitle>
+
+<MudDialogProvider
+    FullWidth="false"
+    MaxWidth="MaxWidth.ExtraSmall"
+    CloseButton="false"
+    BackdropClick="true"
+    NoHeader="false"
+    Position="DialogPosition.Center"
+    CloseOnEscapeKey="true"
+    BackgroundClass=""/>
+
+<MudContainer>
+    <MudStack Row="true" AlignItems="AlignItems.Center">
+        
+        <MudCheckBox T="bool?" 
+             Value="selectallcheckbox" 
+             ValueChanged="OnSelectAllChanged" 
+             Size="Size.Small" 
+             Color="Color.Primary" />
+
+        <MudText>Pilih Semua</MudText>
+    </MudStack>
+    <MudDivider></MudDivider>
+    @foreach (ItemMy item in _itemList)
+    {
+        <MudStack Class="ma-4"  Row="true" AlignItems="AlignItems.Center">
+            <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary"
+                         Checked="(e => UpdatePrice())"></MudCheckBox>
+            <MudImage Src=@item.Image></MudImage>
+            <MudContainer>
+                <MudText Style="color: #828282">@item.Category</MudText>
+                <MudText Style="color: #333333"><b>@item.Name</b></MudText>
+                <MudText Style="color: #4F4F4F">Jadwal : @item.StartDate.ToString("D", new CultureInfo("id-ID"))</MudText>
+                <MudText Color="Color.Primary">
+                    <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</b>
+                </MudText>
+            </MudContainer>
+            <MudSpacer />
+            <MudButton Class="pa-4" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                        OnClick="(e => RemoveItem(item))">
+                <MudText>Delete</MudText>
+            </MudButton>
+        </MudStack>
+        <MudDivider></MudDivider>
+    }
+
+    <MudDivider></MudDivider>
+    <MudToolBar>
+        <MudText>
+            Total biaya:
+        </MudText>
+        <MudText Color="Color.Primary">
+            <b>IDR @_itemList.Where(x => x.Selected).Aggregate(0, (total, x) => total + x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
+        </MudText>
+        <MudSpacer></MudSpacer>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClickedAsync">
+            <MudText>Bayar Sekarang</MudText>
+        </MudButton>
+    </MudToolBar>
+
+</MudContainer>
+
+<MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
+    <MessageContent>
+    <MudStack>
+        @foreach (var payment in payments)
+        {
+            <MudButton 
+                Variant="@GetVariant(payment.Name)"
+                Color="@GetColor(payment.Name)"
+                OnClick="@(() => SelectPayment(payment.Name))"
+                Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
+                
+                <MudImage Src="@payment.Image" Style="width:40px; margin-right:8px;" />
+                <MudText>@payment.Name</MudText>
+            </MudButton>
+        }
+        </MudStack>
+    </MessageContent>
+    
+    
+    <NoButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="Navigation.GoToCheckout">Batal</MudButton>
+    </NoButton>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
+    </YesButton>
+</MudMessageBox>
+
+@code {
+    private string? selectedPayment;
+
+    private List<(string Name, string Image)> payments = new()
+    {
+        ("GoPay", "img/Payment1.svg"),
+        ("OVO", "img/Payment2.svg"),
+        ("DANA", "img/Payment3.svg"),
+        ("Mandiri", "img/Payment4.svg"),
+        ("BCA", "img/Payment5.svg"),
+        ("BNI", "img/Payment6.svg")
+    };
+
+    private void SelectPayment(string name)
+    {
+        selectedPayment = name;
+        StateHasChanged();
+    }
+
+//Perubahan warna ketika di Select Payment nya masih belum aktif 
+    private Color GetColor(string name)
+    {
+        return name == selectedPayment ? Color.Primary : Color.Default;
+    }
+
+    private Variant GetVariant(string name)
+    {
+        return name == selectedPayment ? Variant.Outlined : Variant.Text;
+    }
+
+    //Gunanya untuk post nanti ke invoice
+    private void OnPaymentConfirmed()
+    {
+        if (string.IsNullOrEmpty(selectedPayment))
+        {
+            // Kalau belum pilih metode pembayaran
+            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            return;
+        }
+
+        // Navigasi ke halaman berikut dengan membawa parameter
+        Navigation.GoToPaymentMethodSelected(selectedPayment);
+    }
+
+    public class ItemMy
+    {
+        public bool Selected { get; set; }
+        public String Image { get; set; }
+        public String Category { get; set; }
+        public String Name { get; set; }
+        public int Price { get; set; }
+        public DateOnly StartDate { get; set; }
+        public ItemMy(String Image, String Category, String ShortDesc, int Price, DateOnly StartDate)
+        {
+            this.Selected = false;
+            this.Image = Image;
+            this.Category = Category;
+            this.Name = ShortDesc;
+            this.Price = Price;
+            this.StartDate = StartDate;
+        }
+    }
+    private bool? selectallcheckbox = false;
+
+
+    private HashSet<ItemMy> selectedItems = new HashSet<ItemMy>();
+    private MudMessageBox _mudMessageBox;
+    private List<ItemMy> _itemList = new List<ItemMy>();
+
+    private int _totalPrice = 0;
+
+    protected override void OnInitialized()
+    {
+        _itemList.Add(new ItemMy(
+            "img/Checkout1.svg",
+            "Drum",
+            "Kursus Drummer Special Coach (Eno Netral)",
+            6500000,
+            new DateOnly(2022, 10, 25)
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Checkout2.svg",
+            "Biola",
+            "Biola Mid-Level Course",
+            3000000,
+            new DateOnly(2022, 10, 23)
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Checkout3.svg",
+            "Drum",
+            "Expert Level Drummer Lessons",
+            5450000,
+            new DateOnly(2022, 10, 25)
+        ));
+        _itemList.Add(new ItemMy(
+            "img/Checkout4.svg",
+            "Saxophone",
+            "Expert Level Saxophone",
+            7350000,
+            new DateOnly(2022, 10, 27)
+        ));
+    }
+
+    private async Task OnButtonClickedAsync()
+    {
+        bool? result = await _mudMessageBox.ShowAsync();
+    }
+
+    public void UpdatePrice()
+    {
+        _totalPrice = 0;
+        foreach (ItemMy item in _itemList)
+        {
+            if (item.Selected)
+            {
+                _totalPrice += item.Price;
+            }
+        }
+    }
+
+    private async Task OnSelectAllChanged(bool? value)
+    {
+        selectallcheckbox = value;
+
+        if (selectallcheckbox == true)
+        {
+            foreach (var item in _itemList)
+            {
+                item.Selected = true;
+            }
+        }
+        else
+        {
+            foreach (var item in _itemList)
+            {
+                item.Selected = false;
+            }
+        }
+
+        UpdatePrice();
+    }
+
+
+    public void RemoveItem(ItemMy item)
+    {
+        _itemList.Remove(item);
+    }
+
+}

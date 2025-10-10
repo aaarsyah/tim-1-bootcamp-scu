@@ -1,0 +1,146 @@
+@page "/dashboard" 
+
+@using System.Net.Http.Json
+@using MyApp.BlazorUI.Models
+@using MyApp.BlazorUI.Services
+@inject IMemberService MemberService
+@inject IUserService UserService
+@inject IPaymentService PaymentService;
+@inject NavigationManagerExt Navigation
+
+<PageTitle>Dashboard Admin</PageTitle>
+
+<MudText Typo="Typo.h5" Class="mt-16 mb-4">Welcome, Admin!</MudText>
+
+<!-- Statistics Cards -->
+<MudGrid Class="mb-6">
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Total User Active</MudText>
+                        <MudText Typo="Typo.h4">@_totalUserActive</MudText>
+                    </div>
+                    <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Size="Size.Large" />
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Total Payment</MudText>
+                        <MudText Typo="Typo.h4">@_totalPayment</MudText>
+                    </div>
+                    <MudIcon Icon="@Icons.Material.Filled.Payments" Color="Color.Warning" Size="Size.Large" />
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Total Member</MudText>
+                        <MudText Typo="Typo.h4">@_totalMember</MudText>
+                    </div>
+                    <MudIcon Icon="@Icons.Material.Filled.PeopleAlt" Color="Color.Success" Size="Size.Large" />
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<!-- Table -->
+<MudTable Items="@member" Hover="@hover" Filter="new Func<MemberItem,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Members</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Email</MudTh>
+        <MudTh>No. Invoice</MudTh>
+        <MudTh>Date</MudTh>
+        <MudTh>Total Course</MudTh>
+        <MudTh>Total Price</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="NoInvoice">@context.NoInvoice</MudTd>
+        <MudTd DataLabel="Date">@context.Date</MudTd>
+        <MudTd DataLabel="TotalCourse">@context.TotalCourse</MudTd>
+        <MudTd DataLabel="TotalPrice">@context.TotalPrice</MudTd>
+        <MudTd DataLabel="Action">
+            <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
+                OnClick="Navigation.GoToDetailsInvoice">
+                Details
+            </MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+
+
+@code {
+    private int _totalUserActive = 0;
+    private int _totalPayment = 0;
+    private int _totalMember = 0;
+
+    private bool hover = true;
+    private string searchString1 = "";
+    private MemberItem selectedItem1 = null;
+    private HashSet<MemberItem> selectedItems = new HashSet<MemberItem>();
+
+    private IEnumerable<MemberItem> member = new List<MemberItem>();
+
+    private IEnumerable<UserItem> user = new List<UserItem>();
+    private IEnumerable<PaymentItem> payment = new List<PaymentItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDashboardData();
+    }
+
+    private async Task LoadDashboardData()
+    {
+        var members = await MemberService.GetMembersAsync();
+        member = members;
+        _totalMember = members.Count;
+
+        var users = await UserService.GetUserAsync();
+        user = users;
+        _totalUserActive = users.Count;
+
+        var payments = await PaymentService.GetPaymentAsync();
+        payment = payments;
+        _totalPayment = payments.Count;
+    }
+
+    private bool FilterFunc1(MemberItem member) => FilterFunc(member, searchString1);
+
+    private bool FilterFunc(MemberItem member, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (member.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (member.NoInvoice.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{member.TotalCourse} {member.Date} {member.TotalPrice}".Contains(searchString))
+            return true;
+        return false;
+    }
+
+
+}
