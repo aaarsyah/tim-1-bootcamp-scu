@@ -26,9 +26,9 @@ namespace MyApp.WebAPI.Services
    
         public async Task<IEnumerable<MyClassDto>> GetAllMyClassAsync()
         {
-            var myclass = await _context.MyClass.ToListAsync();
+            var myclass = await _context.MyClasses.ToListAsync();
             //Query Response
-                var myClasses = await _context.MyClass
+                var myClasses = await _context.MyClasses
                                 .Include(m => m.Schedule)
                                     .ThenInclude(s => s.Course)
                                         .ThenInclude(c => c.Category)
@@ -39,7 +39,7 @@ namespace MyApp.WebAPI.Services
    
         public async Task<MyClassDto?> GetMyClassByIdAsync(int id)
         {
-            var myclass = await _context.MyClass
+            var myclass = await _context.MyClasses
                         .Include(m => m.Schedule)
                             .ThenInclude(s => s.Course)
                                 .ThenInclude(c => c.Category)
@@ -52,7 +52,7 @@ namespace MyApp.WebAPI.Services
         public async Task<MyClassDto> CreateMyClassAsync(CreateMyClassDto createMyClassDto)
         {
              // Validate userId exists
-            var userExists = await _context.User.AnyAsync(c => c.Id == createMyClassDto.UserId);
+            var userExists = await _context.Users.AnyAsync(c => c.Id == createMyClassDto.UserId);
             if (!userExists)
             {
                 //Eror Handling
@@ -60,7 +60,7 @@ namespace MyApp.WebAPI.Services
             }
 
             // Validate ScheduleId exists       
-            var scheduleExists = await _context.Schedule.AnyAsync(s => s.Id == createMyClassDto.ScheduleId);
+            var scheduleExists = await _context.Schedules.AnyAsync(s => s.Id == createMyClassDto.ScheduleId);
             if (!scheduleExists)
             {
                 throw new ArgumentException($"Schedule with ID {createMyClassDto.ScheduleId} does not exist");
@@ -68,7 +68,7 @@ namespace MyApp.WebAPI.Services
 
             var myclass = _mapper.Map<MyClass>(createMyClassDto);
             
-            _context.MyClass.Add(myclass);
+            _context.MyClasses.Add(myclass);
             await _context.SaveChangesAsync();
 
             //Reload
@@ -92,13 +92,13 @@ namespace MyApp.WebAPI.Services
      
         public async Task<MyClassDto?> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto)
         {
-            var myclass = await _context.MyClass.FindAsync(id);
+            var myclass = await _context.MyClasses.FindAsync(id);
             if (myclass == null) return null;
 
             // Validate user exists if changed
             if (updateMyClassDto.UserId != myclass.UserId)
             {
-                var userExists = await _context.User.AnyAsync(c => c.Id == updateMyClassDto.UserId);
+                var userExists = await _context.Users.AnyAsync(c => c.Id == updateMyClassDto.UserId);
                 if (!userExists)
                 {
                     //Eror Handling
@@ -107,7 +107,7 @@ namespace MyApp.WebAPI.Services
             }
 
             // Validate ScheduleId exists       
-            var scheduleExists = await _context.Schedule.AnyAsync(s => s.Id == updateMyClassDto.ScheduleId);
+            var scheduleExists = await _context.Schedules.AnyAsync(s => s.Id == updateMyClassDto.ScheduleId);
             if (!scheduleExists)
             {
                 throw new ArgumentException($"Schedule with ID {updateMyClassDto.ScheduleId} does not exist");
@@ -134,10 +134,10 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeleteMyClassAsync(int id)
         {
-            var myclass = await _context.MyClass.FindAsync(id);
+            var myclass = await _context.MyClasses.FindAsync(id);
             if (myclass == null) return false;
 
-            _context.MyClass.Remove(myclass);
+            _context.MyClasses.Remove(myclass);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("MyClass deleted: {MyClassId}", id);
@@ -148,7 +148,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<bool> MyClassExistsAsync(int id)
         {
-            return await _context.MyClass.AnyAsync(c => c.Id == id);
+            return await _context.MyClasses.AnyAsync(c => c.Id == id);
         }
     }
 }

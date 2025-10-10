@@ -1,9 +1,10 @@
 using AutoMapper;
+using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MyApp.WebAPI.Services
 {
@@ -32,7 +33,7 @@ namespace MyApp.WebAPI.Services
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
             var categories = await _context.Categories
-                .Include(c => c.Course)
+                .Include(c => c.Courses)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);
@@ -44,7 +45,7 @@ namespace MyApp.WebAPI.Services
         public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
         {
             var category = await _context.Categories
-                .Include(c => c.Course)
+                .Include(c => c.Courses)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return category != null ? _mapper.Map<CategoryDto>(category) : null;
@@ -72,7 +73,7 @@ namespace MyApp.WebAPI.Services
         public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) return null;
+            if (category == null) throw new NotFoundException($"Invalid Id {id}");
 
             _mapper.Map(updateCategoryDto, category);
             category.UpdatedAt = DateTime.UtcNow;
@@ -90,13 +91,13 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) return false;
+            if (category == null) throw new NotFoundException($"Invalid Id {id}");
 
             // Check if category has products
-            var hasProducts = await _context.Course.AnyAsync(p => p.CategoryId == id);
+            var hasProducts = await _context.Courses.AnyAsync(p => p.CategoryId == id);
             if (hasProducts)
             {
-                throw new InvalidOperationException("Cannot delete category that has products");
+                throw new ValidationException("Cannot delete category that has products");
             }
 
             _context.Categories.Remove(category);

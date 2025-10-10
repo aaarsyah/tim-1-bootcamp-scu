@@ -1,15 +1,18 @@
 ﻿namespace MyApp.WebAPI.Exceptions
 {
     /// <summary>
-    /// Exception untuk resource (berupa halaman) yang tidak ditemukan<br />
-    /// Tujuan: Untuk mengingatkan client bahwa ia tersesat<br />
+    /// Exception untuk resource (berupa halaman atau user) yang tidak ditemukan<br />
+    /// Tujuan: Untuk mengingatkan client bahwa yang ia cari tidak ada (atau kalau server tidak mau ngasih tahu)<br />
     /// HTTP Status: 404 Not Found<br />
     /// <br />
     /// Dipakai ketika:<br />
     /// - Halaman yang ingin dicari tidak ada<br />
+    /// - User/Course yang ingin di-update/delete tidak ditemukan<br />
+    /// - User/Course yang ingin diperlihatkan detilnya tidak ditemukan<br />
     /// <b>Tidak</b> dipakai ketika:<br />
-    /// - User/Course yang di-query tidak ditemukan (return empty result saja)<br />
-    /// - User/Course yang ingin di-update tidak ditemukan (gunakan ValidationException)<br />
+    /// - Hasil query User/Course berupa list kosong (return empty result saja)<br />
+    /// - Input yang diberikan tidak sesuai dengan format JSON yang ditentukan (gunakan ValidationException)<br />
+    /// - User men-checkout barang yang tidak di keranjangnya (gunakan ValidationException)<br />
     /// Contoh:<br />
     /// throw new NotFoundException($"Page not found.");<br />
     /// </summary>

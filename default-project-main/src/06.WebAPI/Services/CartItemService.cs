@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
@@ -78,7 +79,7 @@ namespace MyApp.WebAPI.Services
                 try
                 {
                     // ===== STEP 2 =====
-                    var user = await _context.User
+                    var user = await _context.Users
                         .Where(a => a.Id == request.UserId)
                         .FirstOrDefaultAsync();
                     if (user == null)
@@ -107,7 +108,7 @@ namespace MyApp.WebAPI.Services
                         items.Add(item);
                     }
                     // ===== STEP 5 =====
-                    var paymentmethod = await _context.Payment
+                    var paymentmethod = await _context.PaymentMethods
                         .Where(a => a.Id == request.PaymentMethodId)
                         .FirstOrDefaultAsync();
                     if (paymentmethod == null)
@@ -200,7 +201,7 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> AddCourseToCartAsync(int userId, int scheduleid)
         {
             // ===== STEP 1 =====
-            var user = await _context.User
+            var user = await _context.Users
                 .Where(a => a.Id == userId)
                 .FirstOrDefaultAsync();
             if (user == null)
@@ -215,7 +216,7 @@ namespace MyApp.WebAPI.Services
                     $"UserId {user.Id} not active");
             }
             // ===== STEP 3 =====
-            var schedule = await _context.Schedule
+            var schedule = await _context.Schedules
                 .Where(a => a.Id == scheduleid)
                 .FirstOrDefaultAsync();
             if (schedule == null)
@@ -250,7 +251,7 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> RemoveCourseFromCartAsync(int userId, int cartItemId)
         {
             // ===== STEP 1 =====
-            var user = await _context.User
+            var user = await _context.Users
                 .Where(a => a.Id == userId)
                 .FirstOrDefaultAsync();
             if (user == null)

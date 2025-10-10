@@ -26,14 +26,14 @@ namespace MyApp.WebAPI.Services
    
         public async Task<IEnumerable<UserDto>> GetAllUserAsync()
         {
-            var user = await _context.User.ToListAsync();
+            var user = await _context.Users.ToListAsync();
             return _mapper.Map<IEnumerable<UserDto>>(user);
         }
 
    
         public async Task<UserDto?> GetUserByIdAsync(int id)
         {
-            var user = await _context.User
+            var user = await _context.Users
             .FirstOrDefaultAsync(c => c.Id == id);
 
             return user != null ? _mapper.Map<UserDto>(user) : null;
@@ -44,7 +44,7 @@ namespace MyApp.WebAPI.Services
         {
             var user = _mapper.Map<User>(createUserDto);
             
-            _context.User.Add(user);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("User created: {UserName} with ID: {UserId}", 
@@ -56,7 +56,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<UserDto?> UpdateUserAsync(int id, UpdateUserDto updateUserDto)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null) return null;
 
             _mapper.Map(updateUserDto, user);
@@ -72,10 +72,10 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null) return false;
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("User deleted: {UserId}", id);
@@ -86,7 +86,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<bool> UserExistsAsync(int id)
         {
-            return await _context.User.AnyAsync(c => c.Id == id);
+            return await _context.Users.AnyAsync(c => c.Id == id);
         }
     }
 }
