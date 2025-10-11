@@ -2,6 +2,7 @@
 bin/
 obj/
 
+# entah file apa ini, program tidak akan error sekalipun dihaups
 # jangan gitignore *.csproj, hanya ignore *.csproj.user
 *.csproj.user
 
@@ -10,3 +11,6 @@ obj/
 
 # file dari merge confilct resolution dan tidak perlu masuk ke repositori
 *.orig
+
+# jangan masukkan logs ke repositori
+logs/

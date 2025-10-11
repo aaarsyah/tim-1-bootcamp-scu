@@ -8,6 +8,7 @@
     /// Dipakai ketika:<br />
     /// - Input yang diberikan tidak sesuai dengan format JSON yang ditentukan<br />
     /// - User men-checkout barang yang tidak di keranjangnya<br />
+    /// - Login gagal karena salah password/email/dll.<br />
     /// - Data yang diinsert menyalahi database constraint (Ada username yang sama atau email tidak valid)<br />
     /// <b>Tidak</b> dipakai ketika:<br />
     /// - Hasil query User/Course berupa list kosong (return empty result saja)<br />

@@ -24,19 +24,7 @@ namespace MyApp.WebAPI.Models
     /// </summary>
     public class ErrorResponse
     {
-        /// <summary>
-        /// Machine-readable error code
-        /// Purpose: Frontend can handle specific errors programmatically
-        /// Examples: "NOT_FOUND", "INSUFFICIENT_BALANCE", "VALIDATION_ERROR"
-        /// </summary>
-        public string ErrorCode { get; set; } = string.Empty;
-        
-        /// <summary>
-        /// Human-readable error message
-        /// Purpose: Display to user or log
-        /// Should be clear and actionable
-        /// </summary>
-        public string Message { get; set; } = string.Empty;
+        // ErrorCode dan Message sudah ada di ApiResponse
         
         /// <summary>
         /// Additional error context (optional)

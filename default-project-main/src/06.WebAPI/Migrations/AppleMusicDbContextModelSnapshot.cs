@@ -1031,11 +1031,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -1087,15 +1082,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e875bbb0-1dd8-4ed0-b6a7-9f0e6db7134d",
+                            ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             Name = "Super Admin",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1105,15 +1099,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1b728d7b-d3f9-4552-ab8e-55ed7cf26518",
+                            ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             Name = "Nur Imam Iskandar",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1123,15 +1116,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "258a3806-1c44-4b21-96e2-2702ffad8869",
+                            ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             Name = "Iskandar",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1141,15 +1133,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37702938-cc5d-41f4-84f9-e8910b94b912",
+                            ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             Name = "Dummy User",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1159,15 +1150,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2afac984-6d9a-4311-94cb-b901c2f8b4e0",
+                            ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
                             Name = "yusri sahrul",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1177,15 +1167,14 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf704c0e-9448-4b19-9a19-ce496141fad8",
+                            ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = true,
                             LockoutEnabled = false,
                             Name = "yusri sahrul test",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1341,6 +1330,17 @@ namespace MyApp.WebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.UserClaim", b =>
+                {
+                    b.HasOne("MyApp.WebAPI.Models.Entities.User", "User")
+                        .WithMany("UserClaims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Category", b =>

@@ -736,6 +736,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 1,
+                    ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "Super Admin",
                     Email = "admin@applemusic.com",
                     IsActive = true,
@@ -746,6 +747,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 2,
+                    ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
                     IsActive = true,
@@ -757,6 +759,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 3,
+                    ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
                     IsActive = true,
@@ -767,6 +770,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 4,
+                    ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
                     IsActive = false,
@@ -777,6 +781,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 5,
+                    ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
                     IsActive = true,
@@ -787,6 +792,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 6,
+                    ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624", // GUID dibuat static supaya database seed tidak berubah-ubah
                     Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
                     IsActive = true,

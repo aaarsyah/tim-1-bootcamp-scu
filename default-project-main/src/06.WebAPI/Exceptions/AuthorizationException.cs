@@ -6,9 +6,11 @@
     /// HTTP Status: 401 Unauthorized<br />
     /// <br />
     /// Dipakai ketika:<br />
-    /// - User yang belum login mencoba untuk melakukan checkout <br />
+    /// - User yang belum login mencoba untuk melakukan checkout<br />
+    /// 
     /// <b>Tidak</b> dipakai ketika:<br />
     /// - User yang login mencoba untuk mengakses halaman admin (gunakan PermissionException)<br />
+    /// - Login gagal karena salah password/email/dll. (gunakan ValidationException)<br />
     /// <br />
     /// Contoh:<br />
     /// throw new AuthorizationException($"Please log in first to access your cart.");<br />

@@ -263,13 +263,11 @@ try
         });
     }
 
-    // Ini akan catch semua unhandled exceptions dan return response yang konsisten
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
-
     // Add Correlation ID to each request
     app.UseMiddleware<CorrelationIdMiddleware>();
 
-    // Catch all unhandled exceptions and convert to error responses
+    // Ini akan catch semua unhandled exceptions dan return response yang konsisten
+    // app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();

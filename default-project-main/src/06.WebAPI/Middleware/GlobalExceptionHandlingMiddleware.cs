@@ -1,7 +1,8 @@
-using System.Net;
-using System.Text.Json;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
+using System;
+using System.Net;
+using System.Text.Json;
 
 namespace MyApp.WebAPI.Middleware
 {
@@ -28,6 +29,12 @@ namespace MyApp.WebAPI.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionHandlingMiddleware> _logger;
         private readonly IHostEnvironment _environment;
+        //The compiler told me to do this
+        private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
 
         public GlobalExceptionHandlingMiddleware(
             RequestDelegate next,
@@ -68,37 +75,37 @@ namespace MyApp.WebAPI.Middleware
             
             var traceId = context.TraceIdentifier; // For tracking in logs
             ErrorResponse errorResponse;
-
+            ApiResponse<object> response;
             // ===== HANDLE DIFFERENT EXCEPTION TYPES =====
-            
+
             switch (exception)
             {
                 // ===== CUSTOM API EXCEPTIONS =====
                 // Our business exceptions with predefined status codes
-                case BaseApiException apiException:
-                    context.Response.StatusCode = apiException.StatusCode;
-                    errorResponse = new ErrorResponse
-                    {
-                        ErrorCode = apiException.ErrorCode,
-                        Message = apiException.Message,
-                        Details = apiException.Details,
-                        TraceId = traceId,
-                        // Show stack trace only in development
-                        StackTrace = _environment.IsDevelopment() ? apiException.StackTrace : null
-                    };
-                    
+                case BaseApiException ex:
+                    context.Response.StatusCode = ex.StatusCode;
                     // Special handling for validation errors with field-specific errors
-                    if (apiException is ValidationException validationException && 
-                        validationException.Details is Dictionary<string, string[]> validationErrors)
+                    if (ex is ValidationException validationEx &&
+                        validationEx.Details is Dictionary<string, string[]> validationErrors)
                     {
                         errorResponse = new ValidationErrorResponse
                         {
-                            ErrorCode = validationException.ErrorCode,
-                            Message = validationException.Message,
                             ValidationErrors = validationErrors,
                             TraceId = traceId,
-                            StackTrace = _environment.IsDevelopment() ? validationException.StackTrace : null
+                            StackTrace = _environment.IsDevelopment() ? validationEx.StackTrace : null
                         };
+                        response = ApiResponse<object>.ErrorResult(ex.ErrorCode, ex.Message, errorResponse);
+                    }
+                    else
+                    {
+                        errorResponse = new ErrorResponse
+                        {
+                            Details = ex.Details,
+                            TraceId = traceId,
+                            // Show stack trace only in development
+                            StackTrace = _environment.IsDevelopment() ? ex.StackTrace : null
+                        };
+                        response = ApiResponse<object>.ErrorResult(ex.ErrorCode, ex.Message, errorResponse);
                     }
                     break;
 
@@ -108,12 +115,10 @@ namespace MyApp.WebAPI.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "ARGUMENT_NULL",
-                        Message = "A required argument was null",
-                        Details = argumentNullException.ParamName,
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentNullException.StackTrace : null
                     };
+                    response = ApiResponse<object>.ErrorResult("ARGUMENT_NULL", "A required argument was null", errorResponse);
                     break;
 
                 // ===== ARGUMENT EXCEPTION =====
@@ -122,11 +127,10 @@ namespace MyApp.WebAPI.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "ARGUMENT_INVALID",
-                        Message = argumentException.Message,
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentException.StackTrace : null
                     };
+                    response = ApiResponse<object>.ErrorResult("ARGUMENT_INVALID", argumentException.Message, errorResponse);
                     break;
 
                 // ===== UNAUTHORIZED ACCESS =====
@@ -135,11 +139,10 @@ namespace MyApp.WebAPI.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "UNAUTHORIZED",
-                        Message = "Access denied",
                         TraceId = traceId
                         // No stack trace for security
                     };
+                    response = ApiResponse<object>.ErrorResult("UNAUTHORIZED", "Access denied", errorResponse);
                     break;
 
                 // ===== TIMEOUT EXCEPTION =====
@@ -148,12 +151,11 @@ namespace MyApp.WebAPI.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "TIMEOUT",
-                        Message = "The request timed out",
                         Details = timeoutException.Message,
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? timeoutException.StackTrace : null
                     };
+                    response = ApiResponse<object>.ErrorResult("TIMEOUT", "The request timed out", errorResponse);
                     break;
 
                 // ===== TASK CANCELED (TIMEOUT) =====
@@ -163,27 +165,25 @@ namespace MyApp.WebAPI.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "TIMEOUT",
-                        Message = "The request timed out",
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? taskCanceledException.StackTrace : null
                     };
+                    response = ApiResponse<object>.ErrorResult("TIMEOUT", "The request timed out", errorResponse);
                     break;
 
                 // ===== UNKNOWN/UNHANDLED EXCEPTIONS =====
                 // Anything else = Internal Server Error
                 default:
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    var message = _environment.IsDevelopment() ?
+                            exception.Message : // Show details in dev
+                            "An internal server error occurred"; // Generic message in production
                     errorResponse = new ErrorResponse
                     {
-                        ErrorCode = "INTERNAL_SERVER_ERROR",
-                        Message = _environment.IsDevelopment() ? 
-                            exception.Message : // Show details in dev
-                            "An internal server error occurred", // Generic message in production
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? exception.StackTrace : null
                     };
-
+                    response = ApiResponse<object>.ErrorResult("INTERNAL_SERVER_ERROR", message, errorResponse);
                     // Log full details for internal errors
                     _logger.LogError(exception, 
                         "Internal server error occurred. TraceId: {TraceId}", traceId);
@@ -191,11 +191,7 @@ namespace MyApp.WebAPI.Middleware
             }
 
             // Convert error response to JSON
-            var jsonResponse = JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            });
+            var jsonResponse = JsonSerializer.Serialize(response, jsonSerializerOptions);
 
             // Send error response
             await context.Response.WriteAsync(jsonResponse);
