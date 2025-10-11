@@ -33,10 +33,8 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<CreatePaymentDto, PaymentMethod>();
             CreateMap<UpdatePaymentDto, PaymentMethod>();
 
-            // User mappings
-            CreateMap<User, UserDto>();
-            CreateMap<CreateUserDto, User>();
-            CreateMap<UpdateUserDto, User>();
+            // // User mappings
+            // CreateMap<User, UserDto>();
 
             // MyClass mappings
             CreateMap<MyClass, MyClassDto>()

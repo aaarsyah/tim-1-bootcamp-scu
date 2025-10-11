@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Services;
+using MyApp.WebAPI.Configuration;
 using FluentValidation;
 using System.Reflection;
 
@@ -26,14 +27,18 @@ namespace MyApp.WebAPI.Extensions
             
             // Daftarkan ProductService dengan lifetime Scoped
             // Interface IProductService akan di-resolve ke implementasi ProductService
+            // Purpose: Setup dependency injection
+
             services.AddScoped<ICourseService, CourseService>();
 
             services.AddScoped<IPaymentService, PaymentService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMyClassService, MyClassService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ICartItemService, CartItemService>();
-
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            
+            services.AddScoped<IUserManagementService, UserManagementService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
             // Return services untuk method chaining (builder pattern)
@@ -52,7 +57,7 @@ namespace MyApp.WebAPI.Extensions
             // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
             // Cocok untuk demo dan testing, tidak untuk Production
             services.AddDbContext<AppleMusicDbContext>(options =>
-                options.UseInMemoryDatabase("CourseApiDb")); // "CourseApiDb" adalah nama database
+                options.UseInMemoryDatabase("AppleMusicDb")); // "CourseApiDb" adalah nama database
             
             // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
             // services.AddDbContext<ProductDbContext>(options =>
@@ -213,7 +218,7 @@ namespace MyApp.WebAPI.Extensions
             {
                 // SQLite connection string - database will be created as file
                 var connectionString = configuration.GetConnectionString("SqliteConnection") 
-                    ?? "Data Source=CourseApiDb.sqlite";
+                    ?? "Data Source=AppleMusicDb.sqlite";
                 
                 // Configure SQLite dengan optimizations
                 options.UseSqlite(connectionString, sqliteOptions =>

@@ -1,0 +1,874 @@
+2025-10-11 01:09:11.547 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:09:27.454 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:09:34.034 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:09:50.571 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:16.047 +07:00 [INF] 📊 AppleMusicDbContext: 1 applied, 0 pending migration(s) {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:16.884 +07:00 [INF] ✅ AppleMusicDbContext is already up to date {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:17.443 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:21.580 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:21.827 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:21.953 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:22.231 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:22.616 +07:00 [INF] ✅ Up to date: 1 (AppleMusicDbContext) {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:22.681 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:23.010 +07:00 [INF] ❌ Errors: 0 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:23.216 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:23.547 +07:00 [INF] ✨ All migrations completed successfully! {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:23.665 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:24.659 +07:00 [INF] Ensuring database is created... {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:27.142 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:10:27.145 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:13:49.472 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG852AIJDO6:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDO6","CorrelationId":"ef35c5cd","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:14:03.855 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG852AIJDO6:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDO6","CorrelationId":"ef35c5cd","Application":"TransactionErrorHandlingAPI"}
+System.ArgumentException: IDX10703: Cannot create a 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey', key length is zero.
+   at Microsoft.IdentityModel.Tokens.SymmetricSecurityKey..ctor(Byte[] key)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__3(JwtBearerOptions options) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 110
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c.<Get>b__10_0(String name, IOptionsFactory`1 factory)
+   at Microsoft.Extensions.Options.OptionsCache`1.<>c__DisplayClass3_1`1.<GetOrAdd>b__2()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+   at System.Lazy`1.ExecutionAndPublication(LazyHelper executionAndPublication, Boolean useDefaultConstructor)
+   at System.Lazy`1.CreateValue()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd[TArg](String name, Func`3 createOptions, TArg factoryArgument)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.Get(String name)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync(HttpContext context, String scheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 01:14:25.821 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG852AIJDO7:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDO7","CorrelationId":"5bcf85d2","Application":"TransactionErrorHandlingAPI"}
+System.ArgumentException: IDX10703: Cannot create a 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey', key length is zero.
+   at Microsoft.IdentityModel.Tokens.SymmetricSecurityKey..ctor(Byte[] key)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__3(JwtBearerOptions options) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 110
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c.<Get>b__10_0(String name, IOptionsFactory`1 factory)
+   at Microsoft.Extensions.Options.OptionsCache`1.<>c__DisplayClass3_1`1.<GetOrAdd>b__2()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+--- End of stack trace from previous location ---
+   at System.Lazy`1.CreateValue()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd[TArg](String name, Func`3 createOptions, TArg factoryArgument)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.Get(String name)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync(HttpContext context, String scheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 01:14:35.515 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG852AIJDO7:00000002","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDO7","CorrelationId":"10beedb0","Application":"TransactionErrorHandlingAPI"}
+System.ArgumentException: IDX10703: Cannot create a 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey', key length is zero.
+   at Microsoft.IdentityModel.Tokens.SymmetricSecurityKey..ctor(Byte[] key)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__3(JwtBearerOptions options) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 110
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c.<Get>b__10_0(String name, IOptionsFactory`1 factory)
+   at Microsoft.Extensions.Options.OptionsCache`1.<>c__DisplayClass3_1`1.<GetOrAdd>b__2()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+--- End of stack trace from previous location ---
+   at System.Lazy`1.CreateValue()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd[TArg](String name, Func`3 createOptions, TArg factoryArgument)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.Get(String name)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync(HttpContext context, String scheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 01:14:47.586 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG852AIJDO8:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDO8","CorrelationId":"6f119ba8","Application":"TransactionErrorHandlingAPI"}
+System.ArgumentException: IDX10703: Cannot create a 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey', key length is zero.
+   at Microsoft.IdentityModel.Tokens.SymmetricSecurityKey..ctor(Byte[] key)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__3(JwtBearerOptions options) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 110
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c.<Get>b__10_0(String name, IOptionsFactory`1 factory)
+   at Microsoft.Extensions.Options.OptionsCache`1.<>c__DisplayClass3_1`1.<GetOrAdd>b__2()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+--- End of stack trace from previous location ---
+   at System.Lazy`1.CreateValue()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd[TArg](String name, Func`3 createOptions, TArg factoryArgument)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.Get(String name)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync(HttpContext context, String scheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 01:15:12.344 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG852AIJDOB:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG852AIJDOB","CorrelationId":"c0bc4350","Application":"TransactionErrorHandlingAPI"}
+System.ArgumentException: IDX10703: Cannot create a 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey', key length is zero.
+   at Microsoft.IdentityModel.Tokens.SymmetricSecurityKey..ctor(Byte[] key)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__3(JwtBearerOptions options) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 110
+   at Microsoft.Extensions.Options.ConfigureNamedOptions`1.Configure(String name, TOptions options)
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.<>c.<Get>b__10_0(String name, IOptionsFactory`1 factory)
+   at Microsoft.Extensions.Options.OptionsCache`1.<>c__DisplayClass3_1`1.<GetOrAdd>b__2()
+   at System.Lazy`1.ViaFactory(LazyThreadSafetyMode mode)
+--- End of stack trace from previous location ---
+   at System.Lazy`1.CreateValue()
+   at Microsoft.Extensions.Options.OptionsCache`1.GetOrAdd[TArg](String name, Func`3 createOptions, TArg factoryArgument)
+   at Microsoft.Extensions.Options.OptionsMonitor`1.Get(String name)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.InitializeAsync(AuthenticationScheme scheme, HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationHandlerProvider.GetHandlerAsync(HttpContext context, String authenticationScheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync(HttpContext context, String scheme)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 01:22:32.912 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:22:44.847 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:22:53.488 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:23:10.449 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:24:44.414 +07:00 [INF] 📊 AppleMusicDbContext: 1 applied, 0 pending migration(s) {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:25:37.099 +07:00 [INF] ✅ AppleMusicDbContext is already up to date {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:25:52.151 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:06.701 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:20.377 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:34.223 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:39.799 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:40.275 +07:00 [INF] ✅ Up to date: 1 (AppleMusicDbContext) {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:40.466 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:42.077 +07:00 [INF] ❌ Errors: 0 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:43.980 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:44.132 +07:00 [INF] ✨ All migrations completed successfully! {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:45.693 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:46.557 +07:00 [INF] Ensuring database is created... {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:54.000 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:26:55.031 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:27:45.030 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG85AM03S4Q:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4Q","CorrelationId":"4142eb17","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:28:36.504 +07:00 [INF] User registration attempt for email: KarinaMarlina@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"aa95c15b-b5fa-44e4-af3b-beae0aa84251","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG85AM03S4S:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4S","CorrelationId":"0dea27ae","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:28:50.235 +07:00 [ERR] Failed executing DbCommand (1,166ms) [Parameters=[@__normalizedEmail_0='KARINAMARLINA@EXAMPLE.COM' (Size = 256)], CommandType='"Text"', CommandTimeout='60']
+SELECT TOP(2) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[CreatedAt], [u].[Email], [u].[EmailConfirmed], [u].[IsActive], [u].[IsAdmin], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[Name], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[Password], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[RefreshToken], [u].[RefreshTokenExpiryTime], [u].[SecurityStamp], [u].[TwoFactorEnabled], [u].[UpdatedAt], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[NormalizedEmail] = @__normalizedEmail_0 {"EventId":{"Id":20102,"Name":"Microsoft.EntityFrameworkCore.Database.Command.CommandError"},"SourceContext":"Microsoft.EntityFrameworkCore.Database.Command","ActionId":"aa95c15b-b5fa-44e4-af3b-beae0aa84251","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG85AM03S4S:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4S","CorrelationId":"0dea27ae","Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:28:54.840 +07:00 [ERR] An exception occurred while iterating over the results of a query for context type 'MyApp.WebAPI.Data.AppleMusicDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'NormalizedEmail'.
+Invalid column name 'AccessFailedCount'.
+Invalid column name 'ConcurrencyStamp'.
+Invalid column name 'EmailConfirmed'.
+Invalid column name 'LockoutEnabled'.
+Invalid column name 'LockoutEnd'.
+Invalid column name 'NormalizedEmail'.
+Invalid column name 'NormalizedUserName'.
+Invalid column name 'PasswordHash'.
+Invalid column name 'PhoneNumber'.
+Invalid column name 'PhoneNumberConfirmed'.
+Invalid column name 'RefreshToken'.
+Invalid column name 'RefreshTokenExpiryTime'.
+Invalid column name 'SecurityStamp'.
+Invalid column name 'TwoFactorEnabled'.
+Invalid column name 'UserName'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:f96d08f4-ce54-431e-bfcb-a2cced72fcb7
+Error Number:207,State:1,Class:16 {"EventId":{"Id":10100,"Name":"Microsoft.EntityFrameworkCore.Query.QueryIterationFailed"},"SourceContext":"Microsoft.EntityFrameworkCore.Query","ActionId":"aa95c15b-b5fa-44e4-af3b-beae0aa84251","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG85AM03S4S:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4S","CorrelationId":"0dea27ae","Application":"TransactionErrorHandlingAPI"}
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'NormalizedEmail'.
+Invalid column name 'AccessFailedCount'.
+Invalid column name 'ConcurrencyStamp'.
+Invalid column name 'EmailConfirmed'.
+Invalid column name 'LockoutEnabled'.
+Invalid column name 'LockoutEnd'.
+Invalid column name 'NormalizedEmail'.
+Invalid column name 'NormalizedUserName'.
+Invalid column name 'PasswordHash'.
+Invalid column name 'PhoneNumber'.
+Invalid column name 'PhoneNumberConfirmed'.
+Invalid column name 'RefreshToken'.
+Invalid column name 'RefreshTokenExpiryTime'.
+Invalid column name 'SecurityStamp'.
+Invalid column name 'TwoFactorEnabled'.
+Invalid column name 'UserName'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:f96d08f4-ce54-431e-bfcb-a2cced72fcb7
+Error Number:207,State:1,Class:16
+2025-10-11 01:28:55.376 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG85AM03S4S:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4S","CorrelationId":"0dea27ae","Application":"TransactionErrorHandlingAPI"}
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'NormalizedEmail'.
+Invalid column name 'AccessFailedCount'.
+Invalid column name 'ConcurrencyStamp'.
+Invalid column name 'EmailConfirmed'.
+Invalid column name 'LockoutEnabled'.
+Invalid column name 'LockoutEnd'.
+Invalid column name 'NormalizedEmail'.
+Invalid column name 'NormalizedUserName'.
+Invalid column name 'PasswordHash'.
+Invalid column name 'PhoneNumber'.
+Invalid column name 'PhoneNumberConfirmed'.
+Invalid column name 'RefreshToken'.
+Invalid column name 'RefreshTokenExpiryTime'.
+Invalid column name 'SecurityStamp'.
+Invalid column name 'TwoFactorEnabled'.
+Invalid column name 'UserName'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.FindByEmailAsync(String email)
+   at MyApp.WebAPI.Services.AuthenticationService.RegisterAsync(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 50
+   at MyApp.WebAPI.Controllers.AuthController.Register(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 47
+   at lambda_method134(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+ClientConnectionId:f96d08f4-ce54-431e-bfcb-a2cced72fcb7
+Error Number:207,State:1,Class:16
+2025-10-11 01:28:59.194 +07:00 [ERR] Internal server error occurred. TraceId: 0HNG85AM03S4S:00000001 {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG85AM03S4S:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG85AM03S4S","CorrelationId":"0dea27ae","Application":"TransactionErrorHandlingAPI"}
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'NormalizedEmail'.
+Invalid column name 'AccessFailedCount'.
+Invalid column name 'ConcurrencyStamp'.
+Invalid column name 'EmailConfirmed'.
+Invalid column name 'LockoutEnabled'.
+Invalid column name 'LockoutEnd'.
+Invalid column name 'NormalizedEmail'.
+Invalid column name 'NormalizedUserName'.
+Invalid column name 'PasswordHash'.
+Invalid column name 'PhoneNumber'.
+Invalid column name 'PhoneNumberConfirmed'.
+Invalid column name 'RefreshToken'.
+Invalid column name 'RefreshTokenExpiryTime'.
+Invalid column name 'SecurityStamp'.
+Invalid column name 'TwoFactorEnabled'.
+Invalid column name 'UserName'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.FindByEmailAsync(String email)
+   at MyApp.WebAPI.Services.AuthenticationService.RegisterAsync(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 50
+   at MyApp.WebAPI.Controllers.AuthController.Register(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 47
+   at lambda_method134(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+ClientConnectionId:f96d08f4-ce54-431e-bfcb-a2cced72fcb7
+Error Number:207,State:1,Class:16
+2025-10-11 01:38:43.674 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:38:46.123 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 01:40:06.701 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:40:09.470 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 01:40:27.329 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:40:27.469 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 01:42:58.045 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:43:01.799 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 01:47:03.460 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:47:26.398 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 01:50:44.974 +07:00 [INF] Starting Transaction Error Handling API {"Application":"TransactionErrorHandlingAPI"}
+2025-10-11 01:50:50.835 +07:00 [FTL] Application terminated unexpectedly {"Application":"TransactionErrorHandlingAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 02:02:09.681 +07:00 [INF] Starting Transaction Error Handling API {"Application":"AppleMusicAPI"}
+2025-10-11 02:02:21.931 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 02:08:05.545 +07:00 [INF] Starting Transaction Error Handling API {"Application":"AppleMusicAPI"}
+2025-10-11 02:08:15.134 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 02:09:40.019 +07:00 [INF] Starting Transaction Error Handling API {"Application":"AppleMusicAPI"}
+2025-10-11 02:09:43.009 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 02:11:25.239 +07:00 [INF] Starting Transaction Error Handling API {"Application":"AppleMusicAPI"}
+2025-10-11 02:11:27.888 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 13:52:29.069 +07:00 [INF] Starting Transaction Error Handling API {"Application":"AppleMusicAPI"}
+2025-10-11 13:52:47.486 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 13:57:21.788 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 13:57:23.910 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:00:47.568 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:00:54.109 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:03:15.354 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:03:18.655 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:13:47.049 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:13:51.661 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:21:23.262 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:21:27.969 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:34:41.993 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:34:47.865 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:37:07.095 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:37:09.555 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:48:18.642 +07:00 [INF] Starting AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:48:22.192 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 210
+2025-10-11 14:53:51.324 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 14:53:59.896 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:00.412 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:06.737 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-11 14:54:15.251 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:15.268 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:15.288 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:15.417 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:17.639 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-11 14:54:35.365 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:36.687 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:37.026 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:37.116 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:38.296 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:38.694 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:38.826 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:38.915 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:39.029 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:39.035 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:39.048 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:39.080 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 14:54:40.667 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-11 14:55:02.303 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-11 14:55:02.309 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-11 14:56:05.234 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG8JEDDODEV:00000003","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODEV","CorrelationId":"532bdf40","Application":"AppleMusicAPI"}
+2025-10-11 14:56:28.551 +07:00 [INF] User registration attempt for email: user@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF0:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF0","CorrelationId":"37239da2","Application":"AppleMusicAPI"}
+2025-10-11 14:56:30.602 +07:00 [WRN] User registration failed for user@example.com: Email '' is invalid. {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF0:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF0","CorrelationId":"37239da2","Application":"AppleMusicAPI"}
+2025-10-11 14:56:51.881 +07:00 [INF] User registration attempt for email: apa@gmail.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF1:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF1","CorrelationId":"bf6e360d","Application":"AppleMusicAPI"}
+2025-10-11 14:56:54.673 +07:00 [WRN] User registration failed for apa@gmail.com: Email '' is invalid. {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF1:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF1","CorrelationId":"bf6e360d","Application":"AppleMusicAPI"}
+2025-10-11 14:58:45.468 +07:00 [INF] User registration attempt for email: superman123@gmail.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF3:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF3","CorrelationId":"2146b1de","Application":"AppleMusicAPI"}
+2025-10-11 14:58:45.935 +07:00 [WRN] User registration failed for superman123@gmail.com: Email '' is invalid. {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"643b5b7c-b965-47a3-85f0-8293e14f12ed","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF3:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JEDDODF3","CorrelationId":"2146b1de","Application":"AppleMusicAPI"}
+2025-10-11 15:02:02.263 +07:00 [INF] Login attempt for email: admin@applemusic.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d1b3e789-fe09-41cd-98d6-7b39aa0ee053","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF4:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8JEDDODF4","CorrelationId":"fbbd9e51","Application":"AppleMusicAPI"}
+2025-10-11 15:02:02.569 +07:00 [WRN] Login failed: User not found or inactive for email: admin@applemusic.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d1b3e789-fe09-41cd-98d6-7b39aa0ee053","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8JEDDODF4:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8JEDDODF4","CorrelationId":"fbbd9e51","Application":"AppleMusicAPI"}
+2025-10-11 15:10:14.822 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:10:20.872 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:29.747 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:36.439 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-11 15:10:38.852 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:41.575 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:41.940 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:41.974 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:44.104 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-11 15:10:51.365 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:51.369 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:51.376 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:51.385 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:56.512 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:10:59.182 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:06.683 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.173 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.225 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.240 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.251 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.691 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:11:09.971 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-11 15:11:10.302 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-11 15:11:10.304 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-11 15:13:29.869 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG8JNTTK982:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8JNTTK982","CorrelationId":"d8a9e75a","Application":"AppleMusicAPI"}
+2025-10-11 15:13:30.671 +07:00 [INF] Login attempt for email: admin@applemusic.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"ca69e9b7-1354-4108-887f-c546a369e4fb","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8JNTTK982:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8JNTTK982","CorrelationId":"d8a9e75a","Application":"AppleMusicAPI"}
+2025-10-11 15:13:32.199 +07:00 [WRN] Login failed: User not found or inactive for email: admin@applemusic.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"ca69e9b7-1354-4108-887f-c546a369e4fb","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8JNTTK982:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8JNTTK982","CorrelationId":"d8a9e75a","Application":"AppleMusicAPI"}
+2025-10-11 15:17:50.466 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:17:53.251 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:17:55.201 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:17:59.370 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-11 15:18:05.121 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:07.740 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:08.454 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:08.592 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:09.840 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-11 15:18:09.948 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:09.972 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:10.073 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:11.427 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:13.366 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:14.702 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.018 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.026 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.235 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.249 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.260 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.306 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:18:16.834 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-11 15:18:17.098 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-11 15:18:17.137 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-11 15:19:41.250 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG8JREBTE8T:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JREBTE8T","CorrelationId":"1ba3f07e","Application":"AppleMusicAPI"}
+2025-10-11 15:19:42.134 +07:00 [INF] User registration attempt for email: email@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"73d01353-603c-4790-89ad-3a442cb8b821","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JREBTE8T:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JREBTE8T","CorrelationId":"1ba3f07e","Application":"AppleMusicAPI"}
+2025-10-11 15:19:43.910 +07:00 [WRN] User registration failed for email@example.com: Email '' is invalid. {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"73d01353-603c-4790-89ad-3a442cb8b821","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8JREBTE8T:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8JREBTE8T","CorrelationId":"1ba3f07e","Application":"AppleMusicAPI"}
+2025-10-11 15:36:00.905 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:36:07.158 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:09.154 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:13.126 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-11 15:36:17.809 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:17.873 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:17.879 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:18.195 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:19.826 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-11 15:36:20.667 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:20.810 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:20.911 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:20.930 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.226 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.243 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.266 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.328 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.343 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.359 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.376 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.394 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.734 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.956 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-11 15:36:21.959 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-11 15:36:55.503 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG8K54U1OKL:00000001","RequestPath":"/api/MyClass","ConnectionId":"0HNG8K54U1OKL","CorrelationId":"f46cf90a","Application":"AppleMusicAPI"}
+2025-10-11 15:37:51.217 +07:00 [INF] User registration attempt for email: apa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"7dfc1921-c519-4fcf-b640-a5ef52ee35e2","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8K54U1OKN:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K54U1OKN","CorrelationId":"507ce5ef","Application":"AppleMusicAPI"}
+2025-10-11 15:37:53.020 +07:00 [ERR] An exception occurred in the database while saving changes for context type 'MyApp.WebAPI.Data.AppleMusicDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Password', table 'AppleMusicDb.dbo.Users'; column does not allow nulls. INSERT fails.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:dad643d9-3080-4cfb-8e99-270bee27b9dc
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken) {"EventId":{"Id":10000,"Name":"Microsoft.EntityFrameworkCore.Update.SaveChangesFailed"},"SourceContext":"Microsoft.EntityFrameworkCore.Update","ActionId":"7dfc1921-c519-4fcf-b640-a5ef52ee35e2","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8K54U1OKN:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K54U1OKN","CorrelationId":"507ce5ef","Application":"AppleMusicAPI"}
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Password', table 'AppleMusicDb.dbo.Users'; column does not allow nulls. INSERT fails.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:dad643d9-3080-4cfb-8e99-270bee27b9dc
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-10-11 15:37:55.621 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG8K54U1OKN:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K54U1OKN","CorrelationId":"507ce5ef","Application":"AppleMusicAPI"}
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Password', table 'AppleMusicDb.dbo.Users'; column does not allow nulls. INSERT fails.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:dad643d9-3080-4cfb-8e99-270bee27b9dc
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Data.AppleMusicDbContext.SaveChangesAsync(CancellationToken cancellationToken) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Data\AppleMusicDbContext.cs:line 921
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at MyApp.WebAPI.Services.AuthenticationService.RegisterAsync(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 70
+   at MyApp.WebAPI.Controllers.AuthController.Register(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 47
+   at lambda_method510(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 15:37:56.042 +07:00 [ERR] Internal server error occurred. TraceId: 0HNG8K54U1OKN:00000001 {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG8K54U1OKN:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K54U1OKN","CorrelationId":"507ce5ef","Application":"AppleMusicAPI"}
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'Password', table 'AppleMusicDb.dbo.Users'; column does not allow nulls. INSERT fails.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:dad643d9-3080-4cfb-8e99-270bee27b9dc
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Data.AppleMusicDbContext.SaveChangesAsync(CancellationToken cancellationToken) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Data\AppleMusicDbContext.cs:line 921
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at MyApp.WebAPI.Services.AuthenticationService.RegisterAsync(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 70
+   at MyApp.WebAPI.Controllers.AuthController.Register(RegisterRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 47
+   at lambda_method510(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-11 15:39:19.114 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:39:19.784 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-11 15:39:47.142 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:39:47.770 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-11 15:39:56.651 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:39:56.741 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-11 15:40:19.268 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-11 15:40:20.069 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:20.086 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:21.984 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.156 +07:00 [ERR] ❌ Cannot connect to database for AppleMusicDbContext {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.175 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.183 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.215 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.459 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:23.732 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.083 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.411 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.482 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.515 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.697 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:24.839 +07:00 [WRN]   → AppleMusicDbContext: Cannot connect to database {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:25.293 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-11 15:40:27.162 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-11 15:40:34.956 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-11 15:40:34.995 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-11 15:41:17.480 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG8K7IQ6M4R:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K7IQ6M4R","CorrelationId":"29bc9181","Application":"AppleMusicAPI"}
+2025-10-11 15:41:18.591 +07:00 [INF] User registration attempt for email: user@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"59ebe7e5-9a47-46c3-82ce-0c1abb39c236","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M4R:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K7IQ6M4R","CorrelationId":"29bc9181","Application":"AppleMusicAPI"}
+2025-10-11 15:41:24.893 +07:00 [INF] User registration successful for email: user@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"59ebe7e5-9a47-46c3-82ce-0c1abb39c236","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M4R:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG8K7IQ6M4R","CorrelationId":"29bc9181","Application":"AppleMusicAPI"}
+2025-10-11 15:43:07.222 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"0ed68588","RequestId":"0HNG8K7IQ6M4S:00000001","RequestPath":"/api/Payment","ConnectionId":"0HNG8K7IQ6M4S","Application":"AppleMusicAPI"}
+2025-10-11 15:44:20.859 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"6448f4e3","RequestId":"0HNG8K7IQ6M4T:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8K7IQ6M4T","Application":"AppleMusicAPI"}
+2025-10-11 15:44:21.762 +07:00 [INF] Login attempt for email: user@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"2071b646-1468-4d84-bfd6-01a4b74699c1","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M4T:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8K7IQ6M4T","CorrelationId":"6448f4e3","Application":"AppleMusicAPI"}
+2025-10-11 15:44:24.331 +07:00 [INF] Login successful for email: user@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"2071b646-1468-4d84-bfd6-01a4b74699c1","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M4T:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG8K7IQ6M4T","CorrelationId":"6448f4e3","Application":"AppleMusicAPI"}
+2025-10-11 15:44:48.279 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"49a7bf32","RequestId":"0HNG8K7IQ6M4U:00000001","RequestPath":"/api/Auth/profile","ConnectionId":"0HNG8K7IQ6M4U","Application":"AppleMusicAPI"}
+2025-10-11 15:45:24.105 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"e4b89ca6","RequestId":"0HNG8K7IQ6M4V:00000001","RequestPath":"/api/Auth/change-password","ConnectionId":"0HNG8K7IQ6M4V","Application":"AppleMusicAPI"}
+2025-10-11 15:45:34.666 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"85264fc2","RequestId":"0HNG8K7IQ6M50:00000001","RequestPath":"/api/Auth/change-password","ConnectionId":"0HNG8K7IQ6M50","Application":"AppleMusicAPI"}
+2025-10-11 15:45:38.187 +07:00 [INF] Password changed successfully for user: 7 {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"341f57a0-3654-4d03-9e57-2291ac698297","ActionName":"MyApp.WebAPI.Controllers.AuthController.ChangePassword (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M50:00000001","RequestPath":"/api/Auth/change-password","ConnectionId":"0HNG8K7IQ6M50","CorrelationId":"85264fc2","Application":"AppleMusicAPI"}
+2025-10-11 15:45:47.277 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"bee67ca1","RequestId":"0HNG8K7IQ6M51:00000001","RequestPath":"/api/Auth/logout","ConnectionId":"0HNG8K7IQ6M51","Application":"AppleMusicAPI"}
+2025-10-11 15:45:48.738 +07:00 [INF] User logged out: 7 {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a02fc02b-9ae0-4a81-8b31-1b3bf58b715e","ActionName":"MyApp.WebAPI.Controllers.AuthController.Logout (MyApp.WebAPI)","RequestId":"0HNG8K7IQ6M51:00000001","RequestPath":"/api/Auth/logout","ConnectionId":"0HNG8K7IQ6M51","CorrelationId":"bee67ca1","Application":"AppleMusicAPI"}
+2025-10-11 15:46:46.700 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"52767edc","RequestId":"0HNG8K7IQ6M52:00000001","RequestPath":"/api/Auth/profile","ConnectionId":"0HNG8K7IQ6M52","Application":"AppleMusicAPI"}

@@ -1,7 +1,9 @@
 ﻿// Import Entity Framework Core untuk database operations
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MyApp.WebAPI.Models.Entities;
+using System.Text.Json;
 
 
 // Import Models untuk entities
@@ -10,17 +12,18 @@ using Xunit.Sdk;
 namespace MyApp.WebAPI.Data
 {
     // Untuk membuat: dotnet ef migrations add InitialCreate
+    /// Application Database Context with Identity Support
+    /// Purpose: Central point for database operations and configuration
 
-    public class AppleMusicDbContext : DbContext
+    public class AppleMusicDbContext : IdentityDbContext<User, Role, int>
     {
         /// <summary>
         /// Constructor - Menerima DbContextOptions untuk dependency injection
         /// Options akan dikonfigurasi di Program.cs dengan connection string dan provider
         /// </summary>
-        /// <param name="options">Database context options dari DI container</param>
+        /// /// <param name="options">Database context options dari DI container</param>
         public AppleMusicDbContext(DbContextOptions<AppleMusicDbContext> options) : base(options)
         {
-            // Constructor base akan handle semua configuration yang di-pass dari DI
         }
         public DbSet<Course> Course { get; set; }
     
@@ -51,7 +54,7 @@ namespace MyApp.WebAPI.Data
             // User
             ConfigureUser(modelBuilder);
             ConfigureCartItem(modelBuilder);
-            ConfigureParticipant(modelBuilder);
+            ConfigureMyClass(modelBuilder);
             // Invoice
             ConfigureInvoice(modelBuilder);
             ConfigureInvoiceDetail(modelBuilder);
@@ -168,28 +171,26 @@ namespace MyApp.WebAPI.Data
         /// Configure User entity dengan advanced Fluent API features
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
+        
         private void ConfigureUser(ModelBuilder modelBuilder)
         {
+            // ===== USER CONFIGURATION =====
+            // Configure User entity for Identity
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
-                entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(20);
                 entity.Property(e => e.Email)
                         .IsRequired()
                         .HasMaxLength(50);
-                entity.Property(e => e.Password)
+                entity.Property(e => e.RefreshToken)
+                        .HasMaxLength(500);
+                entity.Property(e => e.Name)
                         .IsRequired()
-                        .HasMaxLength(256);
+                        .HasMaxLength(20);
                 entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-                entity.Property(e => e.IsAdmin)
                         .IsRequired()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -205,7 +206,7 @@ namespace MyApp.WebAPI.Data
                         .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
                 // Relationship dengan Participant
-                entity.HasMany<Participant>()
+                entity.HasMany<MyClass>()
                         .WithOne(e => e.User)
                         .HasForeignKey(e => e.UserId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
@@ -217,6 +218,24 @@ namespace MyApp.WebAPI.Data
                 // Constraint
                 entity.ToTable(e => e.HasCheckConstraint(
                         "CK_Email", "[Email] LIKE '%@%.%'"));
+            });
+
+            // ===== ROLE CONFIGURATION =====
+            // Configure Role entity for Identity
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(500);
+            });
+
+            // ===== USER CLAIM CONFIGURATION =====
+            // Configure UserClaim relationship
+            modelBuilder.Entity<UserClaim>(entity =>
+            {
+                // Relationship dengan User
+                entity.HasOne(e => e.User)
+                    .WithMany(u => u.UserClaims)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
         /// <summary>
@@ -243,11 +262,11 @@ namespace MyApp.WebAPI.Data
         /// Configure Participant entity dengan advanced Fluent API features
         /// </summary>
         /// <param name="modelBuilder">ModelBuilder instance</param>
-        private void ConfigureParticipant(ModelBuilder modelBuilder)
+        private void ConfigureMyClass(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Participant>(entity =>
+            modelBuilder.Entity<MyClass>(entity =>
             {
-                entity.ToTable("Participants");
+                entity.ToTable("MyClass");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -343,6 +362,8 @@ namespace MyApp.WebAPI.Data
         private void SeedData(ModelBuilder modelBuilder)
         {
             string placeholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            var seedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category
                 {
@@ -711,13 +732,12 @@ namespace MyApp.WebAPI.Data
                     CourseId = 6
                 }
             );
-            modelBuilder.Entity<User>().HasData(
+            modelBuilder.Entity<User>().HasData(    
                 new User
                 {
                     Id = 1,
                     Name = "Super Admin",
                     Email = "admin@applemusic.com",
-                    Password = "password",
                     IsActive = true,
                     IsAdmin = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
@@ -728,7 +748,6 @@ namespace MyApp.WebAPI.Data
                     Id = 2,
                     Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
-                    Password = "password",
                     IsActive = true,
                     IsAdmin = false,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
@@ -740,7 +759,6 @@ namespace MyApp.WebAPI.Data
                     Id = 3,
                     Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
-                    Password = "password",
                     IsActive = true,
                     IsAdmin = false,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
@@ -751,7 +769,6 @@ namespace MyApp.WebAPI.Data
                     Id = 4,
                     Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
-                    Password = "password",
                     IsActive = false,
                     IsAdmin = false,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
@@ -762,7 +779,6 @@ namespace MyApp.WebAPI.Data
                     Id = 5,
                     Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
-                    Password = "password",
                     IsActive = true,
                     IsAdmin = false,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
@@ -773,13 +789,36 @@ namespace MyApp.WebAPI.Data
                     Id = 6,
                     Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
-                    Password = "password",
                     IsActive = true,
                     IsAdmin = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
+
+            //Seeding ROLE
+            modelBuilder.Entity<Role>().HasData(
+                new Role
+                {
+                    Id = 1,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    Description = "Administrator with management access",
+                    CreatedAt = seedDate,
+                    ConcurrencyStamp = "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+                },
+                new Role
+                {
+                    Id = 4,
+                    Name = "User",
+                    NormalizedName = "USER",
+                    Description = "Standard user with basic access",
+                    CreatedAt = seedDate,
+                    ConcurrencyStamp = "d4e5f6a7-b8c9-0123-def1-234567890123"
+                }
+            );
+
+
             modelBuilder.Entity<PaymentMethod>().HasData(
                 new PaymentMethod
                 {
@@ -902,9 +941,5 @@ namespace MyApp.WebAPI.Data
                 }
             }
         }
-
-        // Tidak dipakai lagi
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //    => options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppleMusicDb;Trusted_Connection=True;TrustServerCertificate=True");
     }
 }

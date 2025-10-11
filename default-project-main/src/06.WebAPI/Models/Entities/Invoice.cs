@@ -18,7 +18,7 @@
         /// <summary>
         /// Date: Tanggal pembelian
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// User (foreign key): Pengguna yang terkait<br />
         /// Catatan: Dapat berupa null bila user dihapus

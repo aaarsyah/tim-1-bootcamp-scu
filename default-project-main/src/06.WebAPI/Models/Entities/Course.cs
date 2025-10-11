@@ -35,12 +35,12 @@ namespace MyApp.WebAPI.Models.Entities
         /// CreatedAt: Tangal pembuatan kelas pelajaran
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// UpdatedAt: Tangal perubahan kelas pelajaran
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// Category: Kategori kelas pelajaran yang terkait
         /// </summary>

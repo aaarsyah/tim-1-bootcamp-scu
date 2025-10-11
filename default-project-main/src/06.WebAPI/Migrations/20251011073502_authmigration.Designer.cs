@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyApp.WebAPI.Data;
 
@@ -11,9 +12,11 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    partial class AppleMusicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251011073502_authmigration")]
+    partial class authmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1057,10 +1060,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e875bbb0-1dd8-4ed0-b6a7-9f0e6db7134d",
+                            ConcurrencyStamp = "7f520b27-049d-411a-b99c-87fbe16068e8",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = true,
                             LockoutEnabled = false,
@@ -1075,10 +1078,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1b728d7b-d3f9-4552-ab8e-55ed7cf26518",
+                            ConcurrencyStamp = "dd92ffef-028b-40d5-8c1e-fee28a425eae",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
@@ -1093,10 +1096,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "258a3806-1c44-4b21-96e2-2702ffad8869",
+                            ConcurrencyStamp = "b0da0459-a6d9-431a-8c19-e72eceb39bcb",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
@@ -1111,10 +1114,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37702938-cc5d-41f4-84f9-e8910b94b912",
+                            ConcurrencyStamp = "8006b0b0-9d66-4d8c-9762-393623c0842b",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = false,
                             IsAdmin = false,
                             LockoutEnabled = false,
@@ -1129,10 +1132,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2afac984-6d9a-4311-94cb-b901c2f8b4e0",
+                            ConcurrencyStamp = "709f3997-22ff-4297-bb8e-7d425d667c5b",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = false,
                             LockoutEnabled = false,
@@ -1147,10 +1150,10 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf704c0e-9448-4b19-9a19-ce496141fad8",
+                            ConcurrencyStamp = "98cff2b3-9436-428d-bd3f-9aa67754dfbc",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             IsActive = true,
                             IsAdmin = true,
                             LockoutEnabled = false,

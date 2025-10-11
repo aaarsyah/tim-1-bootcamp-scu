@@ -22,12 +22,12 @@
         /// CreatedAt: Tangal pembuatan metode pembayaran
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// UpdatedAt: Tangal perubahan metode pembayaran
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public bool IsActive { get; set; } = true;
     }
 }
