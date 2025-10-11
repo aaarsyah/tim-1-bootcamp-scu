@@ -11,7 +11,9 @@ namespace MyApp.WebAPI.Models.Entities
         /// Primary Key - Auto-increment ID
         /// </summary>
         public int Id { get; set; }
-
+        /// <summary>
+        /// Name: Nama kelas pelajaran
+        /// </summary>
         public string Name { get; set; } = string.Empty;
         /// <summary>
         /// Description: Deskripsi kelas pelajaran<br />
@@ -32,27 +34,26 @@ namespace MyApp.WebAPI.Models.Entities
         /// </summary>
         public bool IsActive { get; set; } = true;
         /// <summary>
-        /// CreatedAt: Tangal pembuatan kelas pelajaran
+        /// CreatedAt: Tangal pembuatan kelas pelajaran<br />
         /// Catatan: Digunakan pada page Admin
         /// </summary>
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
-        /// UpdatedAt: Tangal perubahan kelas pelajaran
+        /// UpdatedAt: Tangal perubahan kelas pelajaran<br />
         /// Catatan: Digunakan pada page Admin
         /// </summary>
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
-        /// Category: Kategori kelas pelajaran yang terkait
+        /// CategoryId (foreign key): Id kategori kelas pelajaran yang terkait
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
-        /// Virtual field for Category
+        /// Virtual field untuk Category: Kategori kelas pelajaran yang terkait
         /// </summary>
         public virtual Category Category { get; set; } = null!;
         /// <summary>
         /// Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-        public int ScheduleId { get; set; }
     }
 }

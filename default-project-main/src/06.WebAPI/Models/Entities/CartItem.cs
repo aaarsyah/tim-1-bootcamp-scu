@@ -20,11 +20,11 @@
         /// </summary>
         public virtual User User { get; set; } = null!;
         /// <summary>
-        /// Schedule (foreign key): Jadwal kelas yang terkait
+        /// ScheduleId (foreign key): Id jadwal kelas yang terkait
         /// </summary>
         public int ScheduleId { get; set; }
         /// <summary>
-        /// Schedule: Jadwal kelas yang terkait
+        /// Virtual field untuk Schedule: Jadwal kelas yang terkait
         /// </summary>
         public virtual Schedule Schedule { get; set; } = null!;
         

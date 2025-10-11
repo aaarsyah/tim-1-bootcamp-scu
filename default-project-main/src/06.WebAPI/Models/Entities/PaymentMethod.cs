@@ -27,7 +27,11 @@
         /// UpdatedAt: Tangal perubahan metode pembayaran
         /// Catatan: Digunakan pada page Admin
         /// </summary>
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; }
+        /// <summary>
+        /// IsActive: Apakah metode pembayaran aktif?
+        /// Catatan: Digunakan pada page Admin
+        /// </summary>
         public bool IsActive { get; set; } = true;
     }
 }

@@ -26,14 +26,14 @@ namespace MyApp.WebAPI.Services
    
         public async Task<IEnumerable<PaymentDto>> GetAllPaymentAsync()
         {
-            var payments = await _context.Payment.ToListAsync();
+            var payments = await _context.PaymentMethods.ToListAsync();
             return _mapper.Map<IEnumerable<PaymentDto>>(payments);
         }
 
    
         public async Task<PaymentDto?> GetPaymentByIdAsync(int id)
         {
-            var payment = await _context.Payment
+            var payment = await _context.PaymentMethods
             .FirstOrDefaultAsync(c => c.Id == id);
 
             return payment != null ? _mapper.Map<PaymentDto>(payment) : null;
@@ -44,7 +44,7 @@ namespace MyApp.WebAPI.Services
         {
             var payment = _mapper.Map<PaymentMethod>(createPaymentDto);
             
-            _context.Payment.Add(payment);
+            _context.PaymentMethods.Add(payment);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Payment created: {PaymentName} with ID: {PaymentId}", 
@@ -56,7 +56,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<PaymentDto?> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto)
         {
-            var payment = await _context.Payment.FindAsync(id);
+            var payment = await _context.PaymentMethods.FindAsync(id);
             if (payment == null) return null;
 
             _mapper.Map(updatePaymentDto, payment);
@@ -72,10 +72,10 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeletePaymentAsync(int id)
         {
-            var payment = await _context.Payment.FindAsync(id);
+            var payment = await _context.PaymentMethods.FindAsync(id);
             if (payment == null) return false;
 
-            _context.Payment.Remove(payment);
+            _context.PaymentMethods.Remove(payment);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Payment deleted: {PaymentId}", id);
@@ -86,7 +86,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<bool> PaymentExistsAsync(int id)
         {
-            return await _context.Payment.AnyAsync(c => c.Id == id);
+            return await _context.PaymentMethods.AnyAsync(c => c.Id == id);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
-    /// Participant: Representasi sebuah pengguna yang mengikuti sebuah kelas di satu jadwal<br />
-    /// Many-to-One dengan User (Many Participant, One user)
-    /// Many-to-One dengan Schedule (Many Participant, One Schedule)
+    /// MyClass: Representasi sebuah jadwal kelas yang diikuti pengguna<br />
+    /// Many-to-One dengan User (Many MyClass, One user)
+    /// Many-to-One dengan Schedule (Many MyClass, One Schedule)
     /// </summary>
     public class MyClass
     {
@@ -12,23 +12,21 @@
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Foreign key ke User
+        /// UserId (foreign key): Id pengguna yang terkait
         /// </summary>
         public int UserId { get; set; }
-
         /// <summary>
-        /// Foreign key ke Schedule
-        /// </summary>
-        public int ScheduleId { get; set; }
-
-        /// <summary>
-        /// User: Pengguna yang terkait (Navigasi)
+        /// Virtual field untuk User: Pengguna yang terkait
         /// </summary>
         public virtual User User { get; set; } = null!;
-        public virtual Schedule Schedule { get; set; } = null!;
         /// <summary>
-        /// Schedule: Jadwal kelas yang terkait (Navigasi)
+        /// ScheduleId (foreign key): Id jadwal kelas yang terkait
         /// </summary>
+        public int ScheduleId { get; set; }
+        /// <summary>
+        /// Virtual field untuk Schedule: Jadwal kelas yang terkait
+        /// </summary>
+        public virtual Schedule Schedule { get; set; } = null!;
     
     }
 }

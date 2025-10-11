@@ -25,14 +25,14 @@ namespace MyApp.WebAPI.Data
         public AppleMusicDbContext(DbContextOptions<AppleMusicDbContext> options) : base(options)
         {
         }
-        public DbSet<Course> Course { get; set; }
+        public DbSet<Course> Courses { get; set; }
     
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<PaymentMethod> Payment { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<MyClass> MyClass { get; set; } //Participans = MyClass
-        public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
+        public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
    
         /// <summary>
@@ -72,7 +72,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("Course");
+                entity.ToTable("Courses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -98,7 +98,7 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Course)
+                        .WithMany(e => e.Courses)
                         .HasForeignKey(e => e.CategoryId)
                         .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
@@ -266,7 +266,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<MyClass>(entity =>
             {
-                entity.ToTable("MyClass");
+                entity.ToTable("MyClasses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties

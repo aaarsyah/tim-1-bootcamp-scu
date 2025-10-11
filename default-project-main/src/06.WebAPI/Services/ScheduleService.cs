@@ -26,7 +26,7 @@ namespace MyApp.WebAPI.Services
    
         public async Task<IEnumerable<ScheduleDto>> GetAllScheduleAsync()
         {
-            var schedule = await _context.Schedule
+            var schedule = await _context.Schedules
                         .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
                         .ToListAsync();
             return _mapper.Map<IEnumerable<ScheduleDto>>(schedule);
@@ -35,7 +35,7 @@ namespace MyApp.WebAPI.Services
    
         public async Task<ScheduleDto?> GetScheduleByIdAsync(int id)
         {
-            var schedule = await _context.Schedule
+            var schedule = await _context.Schedules
                         .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
                         .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -46,7 +46,7 @@ namespace MyApp.WebAPI.Services
         public async Task<ScheduleDto> CreateScheduleAsync(CreateScheduleDto createScheduleDto)
         {
             // Validate course exists
-            var courseExists = await _context.Course.AnyAsync(c => c.Id == createScheduleDto.CourseId);
+            var courseExists = await _context.Courses.AnyAsync(c => c.Id == createScheduleDto.CourseId);
             if (!courseExists)
             {
                 //Eror Handling
@@ -55,7 +55,7 @@ namespace MyApp.WebAPI.Services
 
             var schedule = _mapper.Map<Schedule>(createScheduleDto);
             
-            _context.Schedule.Add(schedule);
+            _context.Schedules.Add(schedule);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Schedule created with ID: {ScheduleId}", 
@@ -67,7 +67,7 @@ namespace MyApp.WebAPI.Services
 
         public async Task<ScheduleDto?> UpdateScheduleAsync(int id, UpdateScheduleDto updateScheduleDto)
         {
-            var schedule = await _context.Schedule
+            var schedule = await _context.Schedules
                         .Include(p => p.Course)
                         .FirstOrDefaultAsync(p => p.Id == id); //update Schedule by ScheduleId
 
@@ -76,7 +76,7 @@ namespace MyApp.WebAPI.Services
             // Validate course exists if changed
             if (updateScheduleDto.CourseId != schedule.CourseId)
             {
-                var courseExists = await _context.Course.AnyAsync(c => c.Id == updateScheduleDto.CourseId);
+                var courseExists = await _context.Courses.AnyAsync(c => c.Id == updateScheduleDto.CourseId);
                 if (!courseExists)
                 {
                     //Eror Handling
@@ -103,10 +103,10 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeleteScheduleAsync(int id)
         {
-            var schedule = await _context.Schedule.FindAsync(id);
+            var schedule = await _context.Schedules.FindAsync(id);
             if (schedule == null) return false;
 
-            _context.Schedule.Remove(schedule);
+            _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Schedule deleted: {ScheduleId}", id);
@@ -117,7 +117,7 @@ namespace MyApp.WebAPI.Services
      
         public async Task<bool> ScheduleExistsAsync(int id)
         {
-            return await _context.Schedule.AnyAsync(c => c.Id == id);
+            return await _context.Schedules.AnyAsync(c => c.Id == id);
         }
     }
 }

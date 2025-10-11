@@ -332,9 +332,6 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric(10)");
 
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -344,7 +341,7 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Course", null, t =>
+                    b.ToTable("Courses", null, t =>
                         {
                             t.HasCheckConstraint("CK_Price", "[Price] >= 0");
                         });
@@ -360,7 +357,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Kursus Drummer Special Coach (Eno Netral)",
                             Price = 8500000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -373,7 +369,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "[Beginner] Guitar class for kids",
                             Price = 1600000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -386,7 +381,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Biola Mid-Level Course",
                             Price = 3000000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -399,7 +393,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Drummer for kids (Level Basic/1)",
                             Price = 2200000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -412,7 +405,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Kursu Piano : From Zero to Pro (Full Package)",
                             Price = 11650000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -425,7 +417,6 @@ namespace MyApp.WebAPI.Migrations
                             IsActive = true,
                             Name = "Expert Level Saxophone",
                             Price = 7350000m,
-                            ScheduleId = 0,
                             UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
@@ -509,7 +500,7 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MyClass", (string)null);
+                    b.ToTable("MyClasses", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.PaymentMethod", b =>
@@ -677,6 +668,9 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateOnly>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("date")
@@ -696,6 +690,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -703,6 +698,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -710,6 +706,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -717,6 +714,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -724,6 +722,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -731,6 +730,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             CourseId = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -738,6 +738,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 7,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -745,6 +746,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 8,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -752,6 +754,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 9,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -759,6 +762,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 10,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -766,6 +770,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 11,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -773,6 +778,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 12,
                             CourseId = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -780,6 +786,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 13,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -787,6 +794,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 14,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -794,6 +802,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 15,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -801,6 +810,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 16,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -808,6 +818,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 17,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -815,6 +826,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 18,
                             CourseId = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -822,6 +834,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 19,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -829,6 +842,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 20,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -836,6 +850,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 21,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -843,6 +858,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 22,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -850,6 +866,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 23,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -857,6 +874,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 24,
                             CourseId = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -864,6 +882,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 25,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -871,6 +890,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 26,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -878,6 +898,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 27,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -885,6 +906,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 28,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -892,6 +914,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 29,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -899,6 +922,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 30,
                             CourseId = 5,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -906,6 +930,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 31,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -913,6 +938,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 32,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -920,6 +946,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 33,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -927,6 +954,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 34,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -934,6 +962,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 35,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -941,6 +970,7 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 36,
                             CourseId = 6,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -1242,7 +1272,7 @@ namespace MyApp.WebAPI.Migrations
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Course", b =>
                 {
                     b.HasOne("MyApp.WebAPI.Models.Entities.Category", "Category")
-                        .WithMany("Course")
+                        .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1313,20 +1343,9 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.UserClaim", b =>
-                {
-                    b.HasOne("MyApp.WebAPI.Models.Entities.User", "User")
-                        .WithMany("UserClaims")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Category", b =>
                 {
-                    b.Navigation("Course");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Course", b =>
