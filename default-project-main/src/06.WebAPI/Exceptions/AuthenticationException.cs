@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Exception untuk akses yang belum diotorisasi (misalnya belum login)<br />
-    /// Tujuan: Untuk mengingatkan client bahwa server tidak dapat authenticate client<br />
+    /// Tujuan: Untuk mengingatkan client bahwa server tidak dapat authenticate client (dan mengarahkan client ke login page)<br />
     /// HTTP Status: 401 Unauthorized<br />
     /// <br />
     /// Dipakai ketika:<br />

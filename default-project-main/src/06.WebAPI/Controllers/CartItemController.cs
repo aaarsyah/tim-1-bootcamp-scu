@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
-using MyApp.WebAPI.Models;
-
 using MyApp.WebAPI.Services;
 using System.Net;
+using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -75,20 +75,26 @@ namespace MyApp.WebAPI.Controllers
         /// }
         /// </summary>
         [HttpPost("checkout")]
+        [Authorize]
         [ProducesResponseType(typeof(ApiResponse<CheckoutResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        public async Task<ApiResponse<CheckoutResponseDto>> TransferMoney(
+        public async Task<ApiResponse<CheckoutResponseDto>> CheckoutItems(
             [FromBody] CheckoutRequestDto request)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
             _logger.LogInformation(
                 "Checkout request received for {UserId} checking out {ItemCartIds.Count} items",
                 request.ItemCartIds.Count,
-                request.UserId);
+                userId);
 
             // Call service - no try-catch needed!
             // Exceptions handled by GlobalExceptionHandlingMiddleware
-            var result = await _cartItemService.CheckoutItemsAsync(request);
+            var result = await _cartItemService.CheckoutItemsAsync(userId, request);
 
             // Buat success response dengan custom message
             return ApiResponse<CheckoutResponseDto>.SuccessResult(result);
@@ -99,25 +105,37 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <param name="parameters">Query parameters untuk filtering, sorting, dan pagination</param>
         /// <returns>Paginated list berisi ProductDto objects</returns>
-        [HttpGet] // HTTP GET method
+        [HttpGet("cart")] // HTTP GET method
+        [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<CartItemResponseDto>>), StatusCodes.Status200OK)] // Swagger documentation
         [Produces("application/json")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetAllCartItem()
+        public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetMyCartItems()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
             // Panggil service method untuk get products dengan filtering
-            var result = await _cartItemService.GetAllCartItemAsync();
+            var result = await _cartItemService.GetCartItemsByUserIdAsync(userId);
 
             // Return 200 OK
             return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
         }
         [HttpGet("add")] // HTTP GET method
+        [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<object>>> AddCourseToCart(int userId, [FromQuery] int scheduleid)
+        public async Task<ActionResult<ApiResponse<object>>> AddCourseToCart([FromQuery] int scheduleid)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
@@ -128,10 +146,16 @@ namespace MyApp.WebAPI.Controllers
             return Ok(ApiResponse<object>.SuccessResult());
         }
         [HttpGet("remove")] // HTTP GET method
+        [Authorize]
         [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart(int userId, [FromQuery] int cartid)
+        public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart([FromQuery] int cartid)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 

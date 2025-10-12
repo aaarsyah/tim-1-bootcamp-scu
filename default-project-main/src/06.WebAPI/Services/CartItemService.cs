@@ -56,12 +56,12 @@ namespace MyApp.WebAPI.Services
         /// <br />
         /// If ANY step fails -> ROLLBACK (nothing saved)
         /// </summary>
-        public async Task<CheckoutResponseDto> CheckoutItemsAsync(CheckoutRequestDto request)
+        public async Task<CheckoutResponseDto> CheckoutItemsAsync(int userId, CheckoutRequestDto request)
         {
             _logger.LogInformation(
                 "Checking out {ItemCartIds.Count} items for {UserId}",
                 request.ItemCartIds.Count,
-                request.UserId);
+                userId);
             // ===== VALIDATION: Cart item is not empty =====
             // Business Rule: Cannot check out empty cart
             if (request.ItemCartIds.Count == 0)
@@ -80,12 +80,12 @@ namespace MyApp.WebAPI.Services
                 {
                     // ===== STEP 2 =====
                     var user = await _context.Users
-                        .Where(a => a.Id == request.UserId)
+                        .Where(a => a.Id == userId)
                         .FirstOrDefaultAsync();
                     if (user == null)
                     {
                         throw new ValidationException(
-                            $"Invalid UserId {request.UserId} ");
+                            $"Invalid UserId {userId} ");
                     }
                     // ===== STEP 3 =====
                     if (!user.EmailConfirmed)
@@ -98,7 +98,7 @@ namespace MyApp.WebAPI.Services
                     foreach (var itemcartid in request.ItemCartIds)
                     {
                         var item = await _context.CartItems
-                            .Where(a => a.UserId == user.Id && a.ScheduleId == itemcartid)
+                            .Where(a => a.UserId == user.Id && a.Id == itemcartid)
                             .FirstOrDefaultAsync();
                         if (item == null)
                         {
@@ -168,11 +168,10 @@ namespace MyApp.WebAPI.Services
             });
         }
         /// <summary>
-        /// Get all items in all users<br />
-        /// Use case:<br />
-        /// None<br />
+        /// Dapatkan semua item dari semua keranjang pengguna
         /// </summary>
-        public async Task<IEnumerable<CartItemResponseDto>> GetAllCartItemAsync()
+        [Obsolete]
+        public async Task<IEnumerable<CartItemResponseDto>> GetAllCartItemsAsync()
         {
             var categories = await _context.CartItems
                 .Include(c => c.Schedule)
@@ -180,10 +179,19 @@ namespace MyApp.WebAPI.Services
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
         }
-
-        public async Task<IEnumerable<CartItemResponseDto>> GetCartItemByIdAsync(int userId)
+        /// <summary>
+        /// Dapatkan semua item dalam keranjang pengguna berdasarkan dari userId yang diberikan
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<CartItemResponseDto>> GetCartItemsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            var categories = await _context.CartItems
+                .Where(c => c.UserId == userId)
+                .Include(c => c.Schedule)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
         }
         /// <summary>
         /// Tambankan course ke dalam cart user<br />

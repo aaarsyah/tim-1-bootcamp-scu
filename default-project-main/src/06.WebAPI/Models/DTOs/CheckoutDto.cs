@@ -15,8 +15,6 @@ namespace MyApp.WebAPI.Models.DTOs
     /// </summary>
     public class CheckoutRequestDto
     {
-        [Required(ErrorMessage = "UserId is required")]
-        public int? UserId { get; set; }
         [Required(ErrorMessage = "ItemCartIds is required")]
         public List<int> ItemCartIds { get; set; } = null!;
         [Required(ErrorMessage = "PaymentMethodId is required")]

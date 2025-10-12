@@ -33,10 +33,10 @@ namespace MyApp.WebAPI.Services
         /// Returns: Transaction details with unique ID
         /// Throws: NotFoundException, InsufficientBalanceException, BusinessLogicException
         /// </summary>
-        Task<CheckoutResponseDto> CheckoutItemsAsync(CheckoutRequestDto request);
+        Task<CheckoutResponseDto> CheckoutItemsAsync(int userId, CheckoutRequestDto request);
         ///
-        Task<IEnumerable<CartItemResponseDto>> GetAllCartItemAsync();
-        Task<IEnumerable<CartItemResponseDto>> GetCartItemByIdAsync(int userId);
+        Task<IEnumerable<CartItemResponseDto>> GetAllCartItemsAsync();
+        Task<IEnumerable<CartItemResponseDto>> GetCartItemsByUserIdAsync(int userId);
 
         Task<bool> AddCourseToCartAsync(int userId, int scheduleid);
         Task<bool> RemoveCourseFromCartAsync(int userId, int cartid);

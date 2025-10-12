@@ -140,7 +140,6 @@ namespace MyApp.WebAPI.Controllers
             {
                 throw new AuthenticationException("Token is invalid");
             }
-            // TODO: Is there token validation?
             var profile = await _userManagementService.GetUserProfileAsync(userId);
             if (profile == null)
             {
