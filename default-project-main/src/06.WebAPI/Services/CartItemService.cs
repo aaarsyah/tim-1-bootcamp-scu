@@ -88,7 +88,7 @@ namespace MyApp.WebAPI.Services
                             $"Invalid UserId {request.UserId} ");
                     }
                     // ===== STEP 3 =====
-                    if (!user.IsActive)
+                    if (!user.EmailConfirmed)
                     {
                         throw new PermissionException(
                             $"UserId {user.Id} not active");
@@ -210,7 +210,7 @@ namespace MyApp.WebAPI.Services
                     $"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
-            if (!user.IsActive)
+            if (!user.EmailConfirmed)
             {
                 throw new PermissionException(
                     $"UserId {user.Id} not active");
@@ -260,7 +260,7 @@ namespace MyApp.WebAPI.Services
                     $"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
-            if (!user.IsActive)
+            if (!user.EmailConfirmed)
             {
                 throw new PermissionException(
                     $"UserId {user.Id} not active");

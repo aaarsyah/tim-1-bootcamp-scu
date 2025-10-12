@@ -64,10 +64,9 @@ namespace MyApp.WebAPI.Models.DTOs
     public class UserDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public bool IsActive { get; set; } = false; //email-confirm
-        public bool IsAdmin { get; set; } = false; //blm digunakan
+        public bool EmailConfirmed { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<string> Roles { get; set; } = new List<string>();

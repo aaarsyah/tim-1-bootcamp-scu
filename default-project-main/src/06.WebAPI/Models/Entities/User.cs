@@ -9,20 +9,9 @@ namespace MyApp.WebAPI.Models.Entities
     /// </summary>
     public class User : IdentityUser<int>
     {
-        
         // Refresh token untuk JWT authentication
         public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
-
-        /// <summary>
-        /// Name: Nama pengguna
-        /// </summary>
-        public string Name { get; set; } = string.Empty;
-        /// <summary>
-        /// IsAdmin: Apakah pengguna adalah admin?
-        /// </summary>
-        public bool IsAdmin { get; set; } = false;
-        public bool IsActive { get; set; } = true;
+        public DateTime RefreshTokenExpiryTime { get; set; } = DateTime.MinValue;
         /// <summary>
         /// CreatedAt: Tangal pembuatan pengguna
         /// Catatan: Digunakan pada page Admin
@@ -36,7 +25,7 @@ namespace MyApp.WebAPI.Models.Entities
 
         
         // Navigation properties
-        public ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
+        public virtual ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
     }
 
      /// <summary>

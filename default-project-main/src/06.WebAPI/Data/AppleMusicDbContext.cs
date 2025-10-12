@@ -187,10 +187,10 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(50);
                 entity.Property(e => e.RefreshToken)
                         .HasMaxLength(500);
-                entity.Property(e => e.Name)
-                        .IsRequired()
+                entity.Property(e => e.UserName)
+                        .IsRequired() // UserName bisa null di code namun diharuskan dalam database
                         .HasMaxLength(20);
-                entity.Property(e => e.IsActive)
+                entity.Property(e => e.EmailConfirmed)
                         .IsRequired()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
@@ -737,10 +737,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 1,
                     ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "Super Admin",
+                    UserName = "Super Admin",
                     Email = "admin@applemusic.com",
-                    IsActive = true,
-                    IsAdmin = true,
+                    NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -748,10 +748,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 2,
                     ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "Nur Imam Iskandar",
+                    UserName = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
@@ -760,10 +760,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 3,
                     ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "Iskandar",
+                    UserName = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -771,10 +771,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 4,
                     ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "Dummy User",
+                    UserName = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
-                    IsActive = false,
-                    IsAdmin = false,
+                    NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
+                    EmailConfirmed = false,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -782,10 +782,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 5,
                     ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "yusri sahrul",
+                    UserName = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -793,10 +793,10 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 6,
                     ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    Name = "yusri sahrul test",
+                    UserName = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
-                    IsActive = true,
-                    IsAdmin = true,
+                    NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }

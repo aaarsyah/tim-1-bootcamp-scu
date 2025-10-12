@@ -1002,26 +1002,15 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -1059,8 +1048,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -1085,15 +1075,14 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = true,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Super Admin",
+                            NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Super Admin"
                         },
                         new
                         {
@@ -1102,15 +1091,14 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Nur Imam Iskandar",
+                            NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Nur Imam Iskandar"
                         },
                         new
                         {
@@ -1119,15 +1107,14 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Iskandar",
+                            NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Iskandar"
                         },
                         new
                         {
@@ -1137,14 +1124,13 @@ namespace MyApp.WebAPI.Migrations
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
                             EmailConfirmed = false,
-                            IsActive = false,
-                            IsAdmin = false,
                             LockoutEnabled = false,
-                            Name = "Dummy User",
+                            NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Dummy User"
                         },
                         new
                         {
@@ -1153,15 +1139,14 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "yusri sahrul",
+                            NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "yusri sahrul"
                         },
                         new
                         {
@@ -1170,15 +1155,14 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = true,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "yusri sahrul test",
+                            NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "yusri sahrul test"
                         });
                 });
 

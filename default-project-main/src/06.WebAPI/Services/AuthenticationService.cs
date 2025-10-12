@@ -63,9 +63,8 @@ namespace MyApp.WebAPI.Services
             // Create new user
             var user = new User
             {
-                UserName = request.Email,
+                UserName = request.Name,
                 Email = request.Email,
-                Name = request.Name,
                 EmailConfirmed = true // For demo purposes, set to true
             };
 
@@ -122,7 +121,7 @@ namespace MyApp.WebAPI.Services
 
             // Cari user berdasarkan email
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null || !user.IsActive)
+            if (user == null || !user.EmailConfirmed)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
                 //return new AuthResponseDto
@@ -307,10 +306,9 @@ namespace MyApp.WebAPI.Services
             return new UserDto
             {
                 Id = user.Id,
-                Name = user.Name,
+                Name = user.UserName,
                 Email = user.Email ?? string.Empty,
-                IsActive = user.IsActive,
-                IsAdmin = user.IsAdmin,
+                EmailConfirmed = user.EmailConfirmed,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
                 Roles = roles.ToList(),
