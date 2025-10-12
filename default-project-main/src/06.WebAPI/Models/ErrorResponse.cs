@@ -24,8 +24,9 @@ namespace MyApp.WebAPI.Models
     /// </summary>
     public class ErrorResponse
     {
-        // ErrorCode dan Message sudah ada di ApiResponse
-        
+        // ErrorCode sudah ada di ApiResponse bernama StatusCode
+        // Message sudah ada di ApiResponse bernama ErrorMessage
+
         /// <summary>
         /// Additional error context (optional)
         /// Purpose: Provide specific details for debugging

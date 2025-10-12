@@ -50,7 +50,7 @@ namespace MyApp.WebAPI.Models.DTOs
     /// </summary>
     public class AuthResponseDto
     {
-        public bool Success { get; set; }
+        // Status "Success" sudah ada di ApiResponse bernama StatusCode
         public string Message { get; set; } = string.Empty;
         public string AccessToken { get; set; } = string.Empty;
         public string RefreshToken { get; set; } = string.Empty;

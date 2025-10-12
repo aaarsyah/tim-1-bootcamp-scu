@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
-using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models.DTOs;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using MyApp.WebAPI.Configuration;
+using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Exceptions;
 
 namespace MyApp.WebAPI.Services
 {
@@ -50,11 +52,12 @@ namespace MyApp.WebAPI.Services
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser != null)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "User with this email already exists"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "User with this email already exists"
+                //};
+                throw new ValidationException("User with this email already exists");
             }
 
             // Create new user
@@ -74,11 +77,12 @@ namespace MyApp.WebAPI.Services
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 _logger.LogWarning("User registration failed for {Email}: {Errors}", request.Email, errors);
                 
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = $"Registration failed: {errors}"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = $"Registration failed: {errors}"
+                //};
+                throw new ValidationException($"Registration failed: {errors}");
             }
 
             // Assign default role "User"
@@ -100,7 +104,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Registration successful",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -122,11 +125,12 @@ namespace MyApp.WebAPI.Services
             if (user == null || !user.IsActive)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid email or password"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "Invalid email or password"
+                //};
+                throw new ValidationException("Invalid email or password");
             }
 
             // Validasi password dengan lockout protection
@@ -137,18 +141,20 @@ namespace MyApp.WebAPI.Services
                 
                 if (result.IsLockedOut)
                 {
-                    return new AuthResponseDto
-                    {
-                        Success = false,
-                        Message = "Account is locked out. Please try again later."
-                    };
+                    //return new AuthResponseDto
+                    //{
+                    //    Success = false,
+                    //    Message = "Account is locked out. Please try again later."
+                    //};
+                    throw new ValidationException("Account is locked out. Please try again later.");
                 }
 
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid email or password"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "Invalid email or password"
+                //};
+                throw new ValidationException("Invalid email or password");
             }
 
             // Generate JWT tokens
@@ -164,7 +170,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Login successful",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -183,21 +188,23 @@ namespace MyApp.WebAPI.Services
             var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
             if (principal == null)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid access token"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "Invalid access token"
+                //};
+                throw new ValidationException("Invalid access token");
             }
 
             var userIdClaim = principal.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid token claims"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "Invalid token claims"
+                //};
+                throw new ValidationException("Invalid token claims");
             }
 
             // Validasi refresh token
@@ -205,11 +212,12 @@ namespace MyApp.WebAPI.Services
             if (user == null || !user.IsActive || user.RefreshToken != request.RefreshToken ||
                 user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid refresh token"
-                };
+                //return new AuthResponseDto
+                //{
+                //    Success = false,
+                //    Message = "Invalid refresh token"
+                //};
+                throw new ValidationException("Invalid refresh token");
             }
 
             // Generate tokens baru
@@ -223,7 +231,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Token refreshed successfully",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -239,18 +246,17 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> LogoutAsync(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user != null)
+            if (user == null)
             {
-                // Invalidate refresh token
-                user.RefreshToken = null;
-                user.RefreshTokenExpiryTime = DateTime.UtcNow;
-                await _userManager.UpdateAsync(user);
-                
-                _logger.LogInformation("User logged out: {UserId}", userId);
-                return true;
+                throw new AuthenticationException("Token is invalid");
             }
+            // Invalidate refresh token
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
 
-            return false;
+            _logger.LogInformation("User logged out: {UserId}", userId);
+            return true;
         }
 
         /// <summary>
@@ -262,18 +268,19 @@ namespace MyApp.WebAPI.Services
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
-                return false;
+                throw new AuthenticationException("Token is invalid");
             }
-
+            
             var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
-                return true;
+                _logger.LogWarning("Password change failed for user: {UserId}", userId);
+                throw new ValidationException("Password change failed");
             }
 
-            _logger.LogWarning("Password change failed for user: {UserId}", userId);
-            return false;
+            _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
+            return true;
+            
         }
 
         /// <summary>

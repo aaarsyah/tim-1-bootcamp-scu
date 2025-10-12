@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
 using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Exceptions;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -45,13 +46,8 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Register([FromBody] RegisterRequestDto request)
         {
             var result = await _authenticationService.RegisterAsync(request);
-            
-            if (result.Success)
-            {
-                return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
-            }
-
-            return BadRequest(ApiResponse<AuthResponseDto>.ErrorResult("Registration failed"));
+            return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+            // Semua error akan throw exception dan akan di catch di middleware
         }
 
         /// <summary>
@@ -60,17 +56,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPost("login")]
         [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Login([FromBody] LoginRequestDto request)
         {
             var result = await _authenticationService.LoginAsync(request);
-            
-            if (result.Success)
-            {
-                return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
-            }
-
-            return Unauthorized(ApiResponse<AuthResponseDto>.ErrorResult("Invalid credentials"));
+            return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+            // Semua error akan throw exception dan akan di catch di middleware
         }
 
         /// <summary>
@@ -79,17 +70,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPost("refresh-token")]
         [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> RefreshToken([FromBody] RefreshTokenRequestDto request)
         {
             var result = await _authenticationService.RefreshTokenAsync(request);
-            
-            if (result.Success)
-            {
-                return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
-            }
-
-            return Unauthorized(ApiResponse<AuthResponseDto>.ErrorResult("Unauthorized access"));
+            return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+            // Semua error akan throw exception dan akan di catch di middleware
         }
 
         /// <summary>
@@ -100,13 +86,14 @@ namespace MyApp.WebAPI.Controllers
         [HttpPost("logout")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ApiResponse<bool>>> Logout()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return BadRequest(ApiResponse<bool>.ErrorResult("Invalid user ID"));
+                throw new AuthenticationException("Token is invalid");
             }
 
             var result = await _authenticationService.LogoutAsync(userId);
@@ -128,7 +115,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return BadRequest(ApiResponse<bool>.ErrorResult("Invalid user ID"));
+                throw new AuthenticationException("Token is invalid");
             }
 
             var result = await _authenticationService.ChangePasswordAsync(userId, request);
@@ -151,13 +138,13 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return BadRequest(ApiResponse<UserDto>.ErrorResult("Invalid user ID"));
+                throw new AuthenticationException("Token is invalid");
             }
-
+            // TODO: Is there token validation?
             var profile = await _userManagementService.GetUserProfileAsync(userId);
             if (profile == null)
             {
-                return NotFound(ApiResponse<UserDto>.ErrorResult("User Profile not found"));
+                throw new NotFoundException("User Profile not found");
             }
 
             return Ok(ApiResponse<UserDto>.SuccessResult(profile));

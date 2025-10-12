@@ -33,7 +33,7 @@ namespace MyApp.WebAPI.Middleware
         private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            WriteIndented = true //lebih mudah dibaca
         };
 
         public GlobalExceptionHandlingMiddleware(
