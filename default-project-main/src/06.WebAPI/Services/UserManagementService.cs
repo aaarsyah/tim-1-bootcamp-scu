@@ -38,7 +38,7 @@ namespace MyApp.WebAPI.Services
             return new UserDto
             {
                 Id = user.Id,
-                Name = user.UserName,
+                Name = user.UserName ?? string.Empty,
                 Email = user.Email ?? string.Empty,
                 Roles = roles.ToList(),
                 Claims = claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList()
@@ -64,7 +64,7 @@ namespace MyApp.WebAPI.Services
                 userProfiles.Add(new UserDto
                 {
                     Id = user.Id,
-                    Name = user.UserName,
+                    Name = user.UserName ?? string.Empty,
                     Email = user.Email ?? string.Empty,
                     Roles = roles.ToList(),
                     Claims = claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList()

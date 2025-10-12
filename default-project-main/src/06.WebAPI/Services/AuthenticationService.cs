@@ -219,7 +219,7 @@ namespace MyApp.WebAPI.Services
                 //};
                 throw new AuthenticationException("Token is invalid");
             }
-            if (await _userManager.IsEmailConfirmedAsync(user))
+            if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 throw new AuthenticationException("User has not confirmed email");
             }
