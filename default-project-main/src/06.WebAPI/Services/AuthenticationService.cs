@@ -157,6 +157,8 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException("Invalid email or password");
             }
 
+            // TODO: Use the rememberMe field
+            
             // Generate JWT tokens
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -193,7 +195,7 @@ namespace MyApp.WebAPI.Services
                 //    Success = false,
                 //    Message = "Invalid access token"
                 //};
-                throw new ValidationException("Invalid access token");
+                throw new AuthenticationException("Invalid access token");
             }
 
             var userIdClaim = principal.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -204,22 +206,33 @@ namespace MyApp.WebAPI.Services
                 //    Success = false,
                 //    Message = "Invalid token claims"
                 //};
-                throw new ValidationException("Invalid token claims");
+                throw new AuthenticationException("Invalid token claims");
             }
 
             // Validasi refresh token
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null || !user.IsActive || user.RefreshToken != request.RefreshToken ||
-                user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            if (user == null)
             {
                 //return new AuthResponseDto
                 //{
                 //    Success = false,
                 //    Message = "Invalid refresh token"
                 //};
-                throw new ValidationException("Invalid refresh token");
+                throw new AuthenticationException("Token is invalid");
+            }
+            if (await _userManager.IsEmailConfirmedAsync(user))
+            {
+                throw new AuthenticationException("User has not confirmed email");
             }
 
+            if (user.RefreshToken != request.RefreshToken)
+            {
+                throw new AuthenticationException("Refresh token is invalid");
+            }
+            if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            {
+                throw new AuthenticationException("Refresh token has expired");
+            }
             // Generate tokens baru
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = _tokenService.GenerateRefreshToken();

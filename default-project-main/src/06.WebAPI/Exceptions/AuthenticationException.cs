@@ -23,7 +23,7 @@
         /// <param name="message">Pesan mengenai exception</param>
         /// <param name="details">Informasi detil mengenai exception (bisa berupa List bila lebih dari satu)</param>
         public AuthenticationException(string message, object? details = null)
-            : base(StatusCodes.Status401Unauthorized, "NOT_AUTHORIZED", message, details)
+            : base(StatusCodes.Status401Unauthorized, "NOT_AUTHENTICATED", message, details)
         {
         }
     }
