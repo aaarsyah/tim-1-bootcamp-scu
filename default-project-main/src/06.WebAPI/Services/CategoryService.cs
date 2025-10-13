@@ -42,7 +42,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get category by ID
         /// </summary>
-        public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
+        public async Task<CategoryDto> GetCategoryByIdAsync(int id)
         {
             var category = await _context.Categories
                 .Include(c => c.Courses)
@@ -73,9 +73,10 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Update category
         /// </summary>
-        public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
+        public async Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories
+                .FindAsync(id);
             if (category == null)
             {
                 throw new NotFoundException($"Category Id {id} not found");
@@ -96,7 +97,8 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories
+                .FindAsync(id);
             if (category == null)
             {
                 throw new NotFoundException($"Category Id {id} not found");

@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
 
 
 namespace MyApp.WebAPI.Controllers
@@ -25,103 +26,60 @@ namespace MyApp.WebAPI.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<PaymentDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PaymentDto>>> GetPayment()
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<PaymentDto>>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<IEnumerable<PaymentDto>>>> GetAllPaymentMethods()
         {
-            try
-            {
-                var payment = await _paymentService.GetAllPaymentAsync();
-                return Ok(payment);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving payment");
-                return StatusCode(500, "Internal server error");
-            }
+            var result = await _paymentService.GetAllPaymentAsync();
+            return Ok(ApiResponse<IEnumerable<PaymentDto>>.SuccessResult(result));
         }
 
       
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PaymentDto>> GetPayment(int id)
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<PaymentDto>>> GetPayment(int id)
         {
-            try
-            {
-                var payment = await _paymentService.GetPaymentByIdAsync(id);
-                if (payment == null)
-                {
-                    return NotFound($"Payment with ID {id} not found");
-                }
-                return Ok(payment);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving payment {PaymentId}", id);
-                return StatusCode(500, "Internal server error");
-            }
+            var result = await _paymentService.GetPaymentByIdAsync(id);
+            return Ok(ApiResponse<PaymentDto>.SuccessResult(result));
         }
 
       
         [HttpPost]
-        [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PaymentDto>> CreatePayment(CreatePaymentDto createPaymentDto)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse<PaymentDto>>> CreatePayment(CreatePaymentDto createPaymentDto)
         {
-            try
-            {
-                var payment = await _paymentService.CreatePaymentAsync(createPaymentDto);
-                return CreatedAtAction(nameof(GetPayment), new { id = payment.Id }, payment);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error creating payment");
-                return StatusCode(500, "Internal server error");
-            }
+            var result = await _paymentService.CreatePaymentAsync(createPaymentDto);
+            return CreatedAtAction(nameof(GetPayment), new { id = result.Id }, ApiResponse<PaymentDto>.SuccessResult(result));
         }
 
       
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PaymentDto>> UpdatePayment(int id, UpdatePaymentDto updatePaymentDto)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<PaymentDto>>> UpdatePayment(int id, UpdatePaymentDto updatePaymentDto)
         {
-            try
-            {
-                var payment = await _paymentService.UpdatePaymentAsync(id, updatePaymentDto);
-                if (payment == null)
-                {
-                    return NotFound($"Payment with ID {id} not found");
-                }
-                return Ok(payment);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error updating payment {PaymentId}", id);
-                return StatusCode(500, "Internal server error");
-            }
+            var result = await _paymentService.UpdatePaymentAsync(id, updatePaymentDto);
+            return Ok(ApiResponse<PaymentDto>.SuccessResult(result));
         }
 
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeletePayment(int id)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<object>>> DeletePayment(int id)
         {
-            try
+            var result = await _paymentService.DeletePaymentAsync(id);
+            if (!result)
             {
-                var result = await _paymentService.DeletePaymentAsync(id);
-                if (!result)
-                {
-                    return NotFound($"Payment with ID {id} not found");
-                }
-                return NoContent();
+                return NotFound(ApiResponse<object>.ErrorResult($"PaymentMethod with ID {id} not found"));
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error deleting payment {PaymentId}", id);
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }

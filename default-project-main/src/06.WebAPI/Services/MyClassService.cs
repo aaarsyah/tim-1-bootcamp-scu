@@ -95,8 +95,12 @@ namespace MyApp.WebAPI.Services
      
         public async Task<MyClassDto?> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto)
         {
-            var myclass = await _context.MyClasses.FindAsync(id);
-            if (myclass == null) return null;
+            var myclass = await _context.MyClasses
+                .FindAsync(id);
+            if (myclass == null)
+            {
+                throw new NotFoundException($"MyClass Id {id} not found");
+            }
 
             // Validate user exists if changed
             if (updateMyClassDto.UserId != myclass.UserId)
@@ -137,8 +141,12 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeleteMyClassAsync(int id)
         {
-            var myclass = await _context.MyClasses.FindAsync(id);
-            if (myclass == null) return false;
+            var myclass = await _context.MyClasses
+                .FindAsync(id);
+            if (myclass == null)
+            {
+                throw new NotFoundException($"MyClass Id {id} not found");
+            }
 
             _context.MyClasses.Remove(myclass);
             await _context.SaveChangesAsync();

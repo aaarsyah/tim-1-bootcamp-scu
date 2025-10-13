@@ -79,10 +79,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<MyClassDto>> UpdateMyClass(int id, UpdateMyClassDto updateMyClassDto)
         {
             var result = await _myclassService.UpdateMyClassAsync(id, updateMyClassDto);
-            if (result == null)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
-            }
             return Ok(ApiResponse<MyClassDto>.SuccessResult(result));
         }
 
@@ -91,12 +87,12 @@ namespace MyApp.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteMyClass(int id)
+        public async Task<ActionResult<ApiResponse<object>>> DeleteMyClass(int id)
         {
             var result = await _myclassService.DeleteMyClassAsync(id);
             if (!result)
             {
-                return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
+                return NotFound(ApiResponse<object>.ErrorResult($"MyClass with ID {id} not found"));
             }
             return Ok(ApiResponse<object>.SuccessResult());
         }

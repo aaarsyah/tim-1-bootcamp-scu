@@ -45,7 +45,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpGet] // HTTP GET method
         [AllowAnonymous]
         [ProducesResponseType(typeof(PagedResponse<IEnumerable<CourseDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<PagedResponse<IEnumerable<CourseDto>>>> GetCourse([FromQuery] CourseQueryParameters parameters)
+        public async Task<ActionResult<PagedResponse<IEnumerable<CourseDto>>>> GetAllCourses([FromQuery] CourseQueryParameters parameters)
         {
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -67,8 +67,8 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="404">Product not found</response>
         [HttpGet("{id}")] // Route template dengan parameter: api/products/{id}
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)] // Success response type
-        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Error response type
+        [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> GetCourse(int id)
         {
             var result = await _courseService.GetCourseByIdAsync(id);
@@ -108,18 +108,8 @@ namespace MyApp.WebAPI.Controllers
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseDto updateCourseDto)
         {
-            // Panggil service untuk update product
-            // Service akan return null jika product dengan ID tersebut tidak ditemukan
-            var course = await _courseService.UpdateCourseAsync(id, updateCourseDto);
-            
-            if (course == null)
-            {
-                // Return 404 jika course tidak ditemukan
-                return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
-            }
-
-            // Return 200 OK dengan updated product data
-            return Ok(ApiResponse<CourseDto>.SuccessResult(course));
+            var result = await _courseService.UpdateCourseAsync(id, updateCourseDto);
+            return Ok(ApiResponse<CourseDto>.SuccessResult(result));
         }
 
         /// <summary>

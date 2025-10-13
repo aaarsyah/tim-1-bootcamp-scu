@@ -36,7 +36,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<CategoryDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<IEnumerable<CategoryDto>>>> GetCategories()
+        public async Task<ActionResult<ApiResponse<IEnumerable<CategoryDto>>>> GetAllCategories()
         {
             var result = await _categoryService.GetAllCategoriesAsync();
             return Ok(ApiResponse<IEnumerable<CategoryDto>>.SuccessResult(result));
@@ -112,7 +112,7 @@ namespace MyApp.WebAPI.Controllers
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (!result)
             {
-                return NotFound($"Category with ID {id} not found");
+                return NotFound(ApiResponse<object>.ErrorResult($"Category with ID {id} not found"));
             }
             return Ok(ApiResponse<object>.SuccessResult());
         }

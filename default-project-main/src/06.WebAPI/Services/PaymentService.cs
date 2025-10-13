@@ -1,9 +1,10 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MyApp.WebAPI.Services
 {
@@ -31,12 +32,15 @@ namespace MyApp.WebAPI.Services
         }
 
    
-        public async Task<PaymentDto?> GetPaymentByIdAsync(int id)
+        public async Task<PaymentDto> GetPaymentByIdAsync(int id)
         {
             var payment = await _context.PaymentMethods
-            .FirstOrDefaultAsync(c => c.Id == id);
-
-            return payment != null ? _mapper.Map<PaymentDto>(payment) : null;
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (payment == null)
+            {
+                throw new NotFoundException($"PaymentMethod Id {id} not found");
+            }
+            return _mapper.Map<PaymentDto>(payment);
         }
 
       
@@ -56,8 +60,12 @@ namespace MyApp.WebAPI.Services
      
         public async Task<PaymentDto?> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto)
         {
-            var payment = await _context.PaymentMethods.FindAsync(id);
-            if (payment == null) return null;
+            var payment = await _context.PaymentMethods
+                .FindAsync(id);
+            if (payment == null)
+            {
+                throw new NotFoundException($"PaymentMethod Id {id} not found");
+            }
 
             _mapper.Map(updatePaymentDto, payment);
             payment.UpdatedAt = DateTime.UtcNow;
@@ -72,8 +80,12 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeletePaymentAsync(int id)
         {
-            var payment = await _context.PaymentMethods.FindAsync(id);
-            if (payment == null) return false;
+            var payment = await _context.PaymentMethods
+                .FindAsync(id);
+            if (payment == null)
+            {
+                throw new NotFoundException($"PaymentMethod Id {id} not found");
+            }
 
             _context.PaymentMethods.Remove(payment);
             await _context.SaveChangesAsync();

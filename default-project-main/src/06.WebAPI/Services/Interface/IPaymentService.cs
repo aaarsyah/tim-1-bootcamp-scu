@@ -10,11 +10,11 @@ namespace MyApp.WebAPI.Services
     {
         Task<IEnumerable<PaymentDto>> GetAllPaymentAsync();
      
-        Task<PaymentDto?> GetPaymentByIdAsync(int id);
+        Task<PaymentDto> GetPaymentByIdAsync(int id);
    
         Task<PaymentDto> CreatePaymentAsync(CreatePaymentDto createPaymentDto);
         
-        Task<PaymentDto?> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto);
+        Task<PaymentDto> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto);
         
 
         Task<bool> DeletePaymentAsync(int id);
