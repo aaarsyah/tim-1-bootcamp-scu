@@ -135,7 +135,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get product by ID
         /// </summary>
-        public async Task<CourseDto?> GetCourseByIdAsync(int id)
+        public async Task<CourseDto> GetCourseByIdAsync(int id)
         {
             var course = await _context.Courses
                 .Include(p => p.Category)
@@ -157,7 +157,7 @@ namespace MyApp.WebAPI.Services
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
             if (!categoryExists)
             {
-                throw new ArgumentException($"Category with ID {createCourseDto.CategoryId} does not exist");
+                throw new ValidationException($"Category with ID {createCourseDto.CategoryId} does not exist");
             }
 
             var course = _mapper.Map<Course>(createCourseDto);
@@ -177,7 +177,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Update product
         /// </summary>
-        public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
+        public async Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
             var course = await _context.Courses
                 .Include(p => p.Category)
@@ -193,7 +193,7 @@ namespace MyApp.WebAPI.Services
                 var categoryExists = await _context.Categories.AnyAsync(c => c.Id == updateCourseDto.CategoryId);
                 if (!categoryExists)
                 {
-                    throw new ArgumentException($"Category with ID {updateCourseDto.CategoryId} does not exist");
+                    throw new ValidationException($"Category with ID {updateCourseDto.CategoryId} does not exist");
                 }
             }
 

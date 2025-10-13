@@ -9,11 +9,11 @@ namespace MyApp.WebAPI.Services
     {
         Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId);
      
-        Task<MyClassDto?> GetMyClassByIdAsync(int id);
+        Task<MyClassDto> GetMyClassByIdAsync(int id);
    
         Task<MyClassDto> CreateMyClassAsync(CreateMyClassDto createMyClassDto);
         
-        Task<MyClassDto?> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto);
+        Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto);
         
 
         Task<bool> DeleteMyClassAsync(int id);

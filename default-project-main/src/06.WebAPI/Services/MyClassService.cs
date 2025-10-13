@@ -37,7 +37,7 @@ namespace MyApp.WebAPI.Services
         }
 
    
-        public async Task<MyClassDto?> GetMyClassByIdAsync(int id)
+        public async Task<MyClassDto> GetMyClassByIdAsync(int id)
         {
             var myclass = await _context.MyClasses
                 .Include(m => m.Schedule)
@@ -58,15 +58,14 @@ namespace MyApp.WebAPI.Services
             var userExists = await _context.Users.AnyAsync(c => c.Id == createMyClassDto.UserId);
             if (!userExists)
             {
-                //Eror Handling
-                throw new ArgumentException($"User with ID {createMyClassDto.UserId} does not exist");
+                throw new ValidationException($"User with ID {createMyClassDto.UserId} does not exist");
             }
 
             // Validate ScheduleId exists       
             var scheduleExists = await _context.Schedules.AnyAsync(s => s.Id == createMyClassDto.ScheduleId);
             if (!scheduleExists)
             {
-                throw new ArgumentException($"Schedule with ID {createMyClassDto.ScheduleId} does not exist");
+                throw new ValidationException($"Schedule with ID {createMyClassDto.ScheduleId} does not exist");
             }
 
             var myclass = _mapper.Map<MyClass>(createMyClassDto);
@@ -93,7 +92,7 @@ namespace MyApp.WebAPI.Services
         }
 
      
-        public async Task<MyClassDto?> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto)
+        public async Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto)
         {
             var myclass = await _context.MyClasses
                 .FindAsync(id);
@@ -109,7 +108,7 @@ namespace MyApp.WebAPI.Services
                 if (!userExists)
                 {
                     //Error Handling
-                    throw new ArgumentException($"User with ID {updateMyClassDto.UserId} does not exist");
+                    throw new ValidationException($"User with ID {updateMyClassDto.UserId} does not exist");
                 }
             }
 
@@ -117,7 +116,7 @@ namespace MyApp.WebAPI.Services
             var scheduleExists = await _context.Schedules.AnyAsync(s => s.Id == updateMyClassDto.ScheduleId);
             if (!scheduleExists)
             {
-                throw new ArgumentException($"Schedule with ID {updateMyClassDto.ScheduleId} does not exist");
+                throw new ValidationException($"Schedule with ID {updateMyClassDto.ScheduleId} does not exist");
             }
             
             await _context.SaveChangesAsync();

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
@@ -62,7 +63,7 @@ namespace MyApp.WebAPI.Controllers
 
       
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<MyClassDto>> CreateMyClass(CreateMyClassDto createMyClassDto)
@@ -73,7 +74,7 @@ namespace MyApp.WebAPI.Controllers
 
       
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<MyClassDto>> UpdateMyClass(int id, UpdateMyClassDto updateMyClassDto)
@@ -84,7 +85,7 @@ namespace MyApp.WebAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<object>>> DeleteMyClass(int id)

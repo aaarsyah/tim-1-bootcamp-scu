@@ -1,9 +1,10 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MyApp.WebAPI.Services
 {
@@ -27,19 +28,22 @@ namespace MyApp.WebAPI.Services
         public async Task<IEnumerable<ScheduleDto>> GetAllScheduleAsync()
         {
             var schedule = await _context.Schedules
-                        .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
-                        .ToListAsync();
+                .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
+                .ToListAsync();
             return _mapper.Map<IEnumerable<ScheduleDto>>(schedule);
         }
 
    
-        public async Task<ScheduleDto?> GetScheduleByIdAsync(int id)
+        public async Task<ScheduleDto> GetScheduleByIdAsync(int id)
         {
             var schedule = await _context.Schedules
-                        .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
-                        .FirstOrDefaultAsync(s => s.Id == id);
-
-            return schedule != null ? _mapper.Map<ScheduleDto>(schedule) : null;
+                .Include(s => s.Course)   // include Course supaya CourseName bisa diakses
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (schedule == null)
+            {
+                throw new NotFoundException($"Schedule Id {id} not found");
+            }
+            return _mapper.Map<ScheduleDto>(schedule);
         }
 
       
@@ -49,8 +53,7 @@ namespace MyApp.WebAPI.Services
             var courseExists = await _context.Courses.AnyAsync(c => c.Id == createScheduleDto.CourseId);
             if (!courseExists)
             {
-                //Eror Handling
-                throw new ArgumentException($"Course with ID {createScheduleDto.CourseId} does not exist");
+                throw new ValidationException($"Course with ID {createScheduleDto.CourseId} does not exist");
             }
 
             var schedule = _mapper.Map<Schedule>(createScheduleDto);
@@ -65,13 +68,16 @@ namespace MyApp.WebAPI.Services
         }
 
 
-        public async Task<ScheduleDto?> UpdateScheduleAsync(int id, UpdateScheduleDto updateScheduleDto)
+        public async Task<ScheduleDto> UpdateScheduleAsync(int id, UpdateScheduleDto updateScheduleDto)
         {
             var schedule = await _context.Schedules
                         .Include(p => p.Course)
                         .FirstOrDefaultAsync(p => p.Id == id); //update Schedule by ScheduleId
 
-            if (schedule == null) return null;
+            if (schedule == null)
+            {
+                throw new NotFoundException($"Schedule Id {id} not found");
+            }
 
             // Validate course exists if changed
             if (updateScheduleDto.CourseId != schedule.CourseId)
@@ -80,7 +86,7 @@ namespace MyApp.WebAPI.Services
                 if (!courseExists)
                 {
                     //Eror Handling
-                    throw new ArgumentException($"Course with ID {updateScheduleDto.CourseId} does not exist");
+                    throw new ValidationException($"Course with ID {updateScheduleDto.CourseId} does not exist");
                 }
             }
 
@@ -103,8 +109,12 @@ namespace MyApp.WebAPI.Services
       
         public async Task<bool> DeleteScheduleAsync(int id)
         {
-            var schedule = await _context.Schedules.FindAsync(id);
-            if (schedule == null) return false;
+            var schedule = await _context.Schedules
+                .FindAsync(id);
+            if (schedule == null)
+            {
+                throw new NotFoundException($"Schedule Id {id} not found");
+            }
 
             _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();

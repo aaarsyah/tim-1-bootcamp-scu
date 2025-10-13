@@ -18,7 +18,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get product by ID
         /// </summary>
-        Task<CourseDto?> GetCourseByIdAsync(int id);
+        Task<CourseDto> GetCourseByIdAsync(int id);
         
         /// <summary>
         /// Create new product
@@ -28,7 +28,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Update product
         /// </summary>
-        Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto);
+        Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto);
         
         /// <summary>
         /// Delete product

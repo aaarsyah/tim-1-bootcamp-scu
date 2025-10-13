@@ -1,6 +1,7 @@
 // Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Models;
 // Import DTOs untuk request/response objects
 using MyApp.WebAPI.Models.DTOs;
@@ -84,7 +85,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="201">Product created successfully</response>
         /// <response code="400">Invalid input data</response>
         [HttpPost] // HTTP POST method untuk create operation
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> CreateCourse(CreateCourseDto createCourseDto)
@@ -103,7 +104,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Product updated successfully</response>
         /// <response code="404">Product not found</response>
         [HttpPut("{id}")] // HTTP PUT method dengan ID parameter
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseDto updateCourseDto)
@@ -121,7 +122,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="204">Product deleted successfully</response>
         /// <response code="404">Product not found</response>
         [HttpDelete("{id}")] // HTTP DELETE method
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<object>>> DeleteCourse(int id)

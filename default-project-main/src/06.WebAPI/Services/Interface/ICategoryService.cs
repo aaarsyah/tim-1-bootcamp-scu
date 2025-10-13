@@ -18,7 +18,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get category by ID
         /// </summary>
-        Task<CategoryDto?> GetCategoryByIdAsync(int id);
+        Task<CategoryDto> GetCategoryByIdAsync(int id);
         
         /// <summary>
         /// Create new category
@@ -28,7 +28,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Update category
         /// </summary>
-        Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto);
+        Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto);
         
         /// <summary>
         /// Delete category

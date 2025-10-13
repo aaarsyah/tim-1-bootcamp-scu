@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
-
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -47,7 +47,7 @@ namespace MyApp.WebAPI.Controllers
 
       
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<PaymentDto>>> CreatePayment(CreatePaymentDto createPaymentDto)
@@ -58,7 +58,7 @@ namespace MyApp.WebAPI.Controllers
 
       
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<PaymentDto>>> UpdatePayment(int id, UpdatePaymentDto updatePaymentDto)
@@ -69,7 +69,7 @@ namespace MyApp.WebAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<object>>> DeletePayment(int id)

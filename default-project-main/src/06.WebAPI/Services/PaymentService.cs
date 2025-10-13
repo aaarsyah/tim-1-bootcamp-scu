@@ -27,7 +27,8 @@ namespace MyApp.WebAPI.Services
    
         public async Task<IEnumerable<PaymentDto>> GetAllPaymentAsync()
         {
-            var payments = await _context.PaymentMethods.ToListAsync();
+            var payments = await _context.PaymentMethods
+                .ToListAsync();
             return _mapper.Map<IEnumerable<PaymentDto>>(payments);
         }
 
@@ -58,7 +59,7 @@ namespace MyApp.WebAPI.Services
         }
 
      
-        public async Task<PaymentDto?> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto)
+        public async Task<PaymentDto> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto)
         {
             var payment = await _context.PaymentMethods
                 .FindAsync(id);

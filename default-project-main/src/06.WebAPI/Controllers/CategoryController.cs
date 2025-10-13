@@ -1,6 +1,7 @@
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
@@ -67,7 +68,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="201">Category created successfully</response>
         /// <response code="400">Invalid input data</response>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryDto createCategoryDto, HttpStatusCode statusCode = HttpStatusCode.Created)
@@ -87,7 +88,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Category updated successfully</response>
         /// <response code="404">Category not found</response>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
@@ -104,7 +105,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="204">Category deleted successfully</response>
         /// <response code="404">Category not found</response>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<object>>> DeleteCategory(int id)
