@@ -147,7 +147,7 @@ namespace MyApp.WebAPI.Controllers
         }
         [HttpGet("remove")] // HTTP GET method
         [Authorize]
-        [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
         public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart([FromQuery] int cartid)
         {

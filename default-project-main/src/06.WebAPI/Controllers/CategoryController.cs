@@ -1,8 +1,9 @@
+using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
-
 using System.Net;
 
 namespace MyApp.WebAPI.Controllers
@@ -13,15 +14,15 @@ namespace MyApp.WebAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class CategoriesController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-        private readonly ILogger<CategoriesController> _logger;
+        private readonly ILogger<CategoryController> _logger;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public CategoriesController(ICategoryService categoryService, ILogger<CategoriesController> logger)
+        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
         {
             _categoryService = categoryService;
             _logger = logger;
@@ -33,7 +34,8 @@ namespace MyApp.WebAPI.Controllers
         /// <returns>List of categories</returns>
         /// <response code="200">Returns the list of categories</response>
         [HttpGet]
-        [ProducesResponseType(typeof(ActionResult<ApiResponse<IEnumerable<CategoryDto>>>), StatusCodes.Status200OK)] // Swagger documentation
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<CategoryDto>>), StatusCodes.Status200OK)] // Swagger documentation
         public async Task<ActionResult<ApiResponse<IEnumerable<CategoryDto>>>> GetCategories()
         {
             var result = await _categoryService.GetAllCategoriesAsync();
@@ -48,23 +50,11 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Returns the category</response>
         /// <response code="404">Category not found</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ActionResult<ApiResponse<CategoryDto>>), StatusCodes.Status200OK)] // Swagger documentation
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CategoryDto>>> GetCategory(int id)
         {
-            //try
-            //{
-            //    var category = await _categoryService.GetCategoryByIdAsync(id);
-            //    if (category == null)
-            //    {
-            //        return NotFound($"Category with ID {id} not found");
-            //    }
-            //    return Ok(category);
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error retrieving category {CategoryId}", id);
-            //    return StatusCode(500, "Internal server error");
-            //}
             var result = await _categoryService.GetCategoryByIdAsync(id);
             return Ok(ApiResponse<CategoryDto>.SuccessResult(result));
         }
@@ -77,22 +67,15 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="201">Category created successfully</response>
         /// <response code="400">Invalid input data</response>
         [HttpPost]
-        [ProducesResponseType(typeof(ActionResult<ApiResponse<CategoryDto>>), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryDto createCategoryDto, HttpStatusCode statusCode = HttpStatusCode.Created)
         {
-            //try
-            //{
-            //    var category = await _categoryService.CreateCategoryAsync(createCategoryDto);
-            //    return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex, "Error creating category");
-            //    return StatusCode(500, "Internal server error");
-            //}
             var result = await _categoryService.CreateCategoryAsync(createCategoryDto);
-            return Ok(ApiResponse<CategoryDto>.SuccessResult(result));
+            //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
+            return CreatedAtAction(nameof(GetCategory), new { id = result.Id }, ApiResponse<CategoryDto>.SuccessResult(result));
+
         }
 
         /// <summary>
@@ -104,8 +87,9 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Category updated successfully</response>
         /// <response code="404">Category not found</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ActionResult<ApiResponse<CategoryDto>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
         {
             var result = await _categoryService.UpdateCategoryAsync(id, updateCategoryDto);
@@ -120,16 +104,17 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="204">Category deleted successfully</response>
         /// <response code="404">Category not found</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteCategory(int id)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<object>>> DeleteCategory(int id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (!result)
             {
                 return NotFound($"Category with ID {id} not found");
             }
-            return NoContent();
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }

@@ -80,8 +80,7 @@ namespace MyApp.WebAPI.Services
                 {
                     // ===== STEP 2 =====
                     var user = await _context.Users
-                        .Where(a => a.Id == userId)
-                        .FirstOrDefaultAsync();
+                        .FirstOrDefaultAsync(a => a.Id == userId);
                     if (user == null)
                     {
                         throw new ValidationException(
@@ -98,8 +97,7 @@ namespace MyApp.WebAPI.Services
                     foreach (var itemcartid in request.ItemCartIds)
                     {
                         var item = await _context.CartItems
-                            .Where(a => a.UserId == user.Id && a.Id == itemcartid)
-                            .FirstOrDefaultAsync();
+                            .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == itemcartid);
                         if (item == null)
                         {
                             throw new ValidationException(
@@ -109,8 +107,7 @@ namespace MyApp.WebAPI.Services
                     }
                     // ===== STEP 5 =====
                     var paymentmethod = await _context.PaymentMethods
-                        .Where(a => a.Id == request.PaymentMethodId)
-                        .FirstOrDefaultAsync();
+                        .FirstOrDefaultAsync(a => a.Id == request.PaymentMethodId);
                     if (paymentmethod == null)
                     {
                         throw new ValidationException(
@@ -210,8 +207,7 @@ namespace MyApp.WebAPI.Services
         {
             // ===== STEP 1 =====
             var user = await _context.Users
-                .Where(a => a.Id == userId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
                 throw new ValidationException(
@@ -225,8 +221,7 @@ namespace MyApp.WebAPI.Services
             }
             // ===== STEP 3 =====
             var schedule = await _context.Schedules
-                .Where(a => a.Id == scheduleid)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.Id == scheduleid);
             if (schedule == null)
             {
                 throw new ValidationException(
@@ -260,8 +255,7 @@ namespace MyApp.WebAPI.Services
         {
             // ===== STEP 1 =====
             var user = await _context.Users
-                .Where(a => a.Id == userId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
                 throw new ValidationException(
@@ -275,8 +269,7 @@ namespace MyApp.WebAPI.Services
             }
             // ===== STEP 3 =====
             var cartitem = await _context.CartItems
-                .Where(a => a.Id == cartItemId && a.UserId == userId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.Id == cartItemId && a.UserId == userId);
             if (cartitem == null)
             {
                 throw new ValidationException(

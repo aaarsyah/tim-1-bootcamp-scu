@@ -24,15 +24,16 @@ namespace MyApp.WebAPI.Services
         }
 
    
-        public async Task<IEnumerable<MyClassDto>> GetAllMyClassAsync()
+        public async Task<IEnumerable<MyClassDto>> GetAllMyClassAsync(int userId)
         {
             var myclass = await _context.MyClasses.ToListAsync();
             //Query Response
-                var myClasses = await _context.MyClasses
-                                .Include(m => m.Schedule)
-                                    .ThenInclude(s => s.Course)
-                                        .ThenInclude(c => c.Category)
-                                .ToListAsync();
+            var myClasses = await _context.MyClasses
+                            .Where(m => m.UserId == userId)
+                            .Include(m => m.Schedule)
+                                .ThenInclude(s => s.Course)
+                                    .ThenInclude(c => c.Category)
+                            .ToListAsync();
             return _mapper.Map<IEnumerable<MyClassDto>>(myclass);
         }
 

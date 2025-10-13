@@ -47,8 +47,11 @@ namespace MyApp.WebAPI.Services
             var category = await _context.Categories
                 .Include(c => c.Courses)
                 .FirstOrDefaultAsync(c => c.Id == id);
-
-            return category != null ? _mapper.Map<CategoryDto>(category) : null;
+            if (category == null)
+            {
+                throw new NotFoundException($"Category Id {id} not found");
+            }
+            return _mapper.Map<CategoryDto>(category);
         }
 
         /// <summary>
@@ -73,7 +76,10 @@ namespace MyApp.WebAPI.Services
         public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) throw new NotFoundException($"Invalid Id {id}");
+            if (category == null)
+            {
+                throw new NotFoundException($"Category Id {id} not found");
+            }
 
             _mapper.Map(updateCategoryDto, category);
             category.UpdatedAt = DateTime.UtcNow;
@@ -91,7 +97,10 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            if (category == null) throw new NotFoundException($"Invalid Id {id}");
+            if (category == null)
+            {
+                throw new NotFoundException($"Category Id {id} not found");
+            }
 
             // Check if category has products
             var hasProducts = await _context.Courses.AnyAsync(p => p.CategoryId == id);

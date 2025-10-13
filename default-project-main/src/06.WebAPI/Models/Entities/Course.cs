@@ -52,8 +52,8 @@ namespace MyApp.WebAPI.Models.Entities
         /// </summary>
         public virtual Category Category { get; set; } = null!;
         /// <summary>
-        /// Schedules: Jadwal-jadwal kelas yang terkait
+        /// Virtual field untuk Schedules: Jadwal-jadwal kelas yang terkait
         /// </summary>
-        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     }
 }

@@ -85,9 +85,9 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPost("logout")]
         [Authorize]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<ApiResponse<bool>>> Logout()
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ApiResponse<object>>> Logout()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -97,8 +97,8 @@ namespace MyApp.WebAPI.Controllers
             }
 
             var result = await _authenticationService.LogoutAsync(userId);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPost("change-password")]
         [Authorize]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse<bool>>> ChangePassword([FromBody] ChangePasswordRequestDto request)
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse<object>>> ChangePassword([FromBody] ChangePasswordRequestDto request)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
@@ -119,8 +119,8 @@ namespace MyApp.WebAPI.Controllers
             }
 
             var result = await _authenticationService.ChangePasswordAsync(userId, request);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>

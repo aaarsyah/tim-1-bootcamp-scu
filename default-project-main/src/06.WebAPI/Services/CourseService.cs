@@ -43,7 +43,7 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         /// <param name="parameters">Parameter untuk filtering dan pagination</param>
         /// <returns>PagedResponse berisi products dan pagination info</returns>
-        public async Task<PagedResponse<IEnumerable<CourseDto>>> GetCourseAsync(CourseQueryParameters parameters)
+        public async Task<PagedResponse<IEnumerable<CourseDto>>> GetAllCoursesPaginatedAsync(CourseQueryParameters parameters)
         {
             // Buat base query dengan Include untuk eager loading Category data
             // AsQueryable() memungkinkan kita untuk chain multiple LINQ operations
@@ -141,8 +141,11 @@ namespace MyApp.WebAPI.Services
                 .Include(p => p.Category)
                 .Include(p => p.Schedules) 
                 .FirstOrDefaultAsync(p => p.Id == id);
-
-            return course != null ? _mapper.Map<CourseDto>(course) : null;
+            if (course == null)
+            {
+                throw new NotFoundException($"Course Id {id} not found");
+            }
+            return _mapper.Map<CourseDto>(course);
         }
 
         /// <summary>
@@ -181,7 +184,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (course == null)
             {
-                throw new NotFoundException($"Invalid Id {id}");
+                throw new NotFoundException($"Course Id {id} not found");
             }
 
             // Validate category exists if changed
@@ -219,7 +222,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (course == null)
             {
-                throw new NotFoundException($"Invalid Id {id}");
+                throw new NotFoundException($"Course Id {id} not found");
             }
 
             _context.Courses.Remove(course);

@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
+using System.Security.Claims;
 
 
 namespace MyApp.WebAPI.Controllers
@@ -25,12 +28,18 @@ namespace MyApp.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<MyClassDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<MyClassDto>>> GetMyClass()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
             try
             {
-                var myclass = await _myclassService.GetAllMyClassAsync();
+                var myclass = await _myclassService.GetAllMyClassAsync(userId);
                 return Ok(myclass);
             }
             catch (Exception ex)

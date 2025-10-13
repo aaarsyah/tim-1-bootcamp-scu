@@ -1,10 +1,11 @@
 // Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.WebAPI.Models;
 // Import DTOs untuk request/response objects
 using MyApp.WebAPI.Models.DTOs;
 // Import Services untuk business logic
 using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
 
 
 namespace MyApp.WebAPI.Controllers
@@ -42,6 +43,7 @@ namespace MyApp.WebAPI.Controllers
         /// <param name="parameters">Query parameters untuk filtering, sorting, dan pagination</param>
         /// <returns>Paginated list berisi ProductDto objects</returns>
         [HttpGet] // HTTP GET method
+        [AllowAnonymous]
         [ProducesResponseType(typeof(PagedResponse<IEnumerable<CourseDto>>), StatusCodes.Status200OK)] // Swagger documentation
         public async Task<ActionResult<PagedResponse<IEnumerable<CourseDto>>>> GetCourse([FromQuery] CourseQueryParameters parameters)
         {
@@ -49,7 +51,7 @@ namespace MyApp.WebAPI.Controllers
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
             
             // Panggil service method untuk get products dengan filtering
-            var result = await _courseService.GetCourseAsync(parameters);
+            var result = await _courseService.GetAllCoursesPaginatedAsync(parameters);
             
             // Return 200 OK dengan paginated response
             return Ok(result);
@@ -64,25 +66,13 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Returns the product</response>
         /// <response code="404">Product not found</response>
         [HttpGet("{id}")] // Route template dengan parameter: api/products/{id}
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)] // Success response type
-        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)] // Error response type
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Error response type
         public async Task<ActionResult<ApiResponse<CourseDto>>> GetCourse(int id)
         {
-            // Panggil service untuk mencari product berdasarkan ID
-            // Service akan return null jika product tidak ditemukan
-            var course = await _courseService.GetCourseByIdAsync(id);
-            
-            // Cek apakah product ditemukan
-            if (course == null)
-            {
-                // Return 404 Not Found dengan error message yang konsisten
-                // ApiResponse.ErrorResult membuat response wrapper yang standar
-                return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
-            }
-
-            // Return 200 OK dengan product data yang di-wrap dalam ApiResponse
-            // ApiResponse.SuccessResult membuat response wrapper untuk success case
-            return Ok(ApiResponse<CourseDto>.SuccessResult(course));
+            var result = await _courseService.GetCourseByIdAsync(id);
+            return Ok(ApiResponse<CourseDto>.SuccessResult(result));
         }
 
         /// <summary>
@@ -94,23 +84,13 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="201">Product created successfully</response>
         /// <response code="400">Invalid input data</response>
         [HttpPost] // HTTP POST method untuk create operation
-        [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)] // Success response
-        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)] // Validation error response
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> CreateCourse(CreateCourseDto createCourseDto)
         {
-            // [FromBody] implicit - ASP.NET Core otomatis bind JSON body ke object
-            // FluentValidation akan otomatis validate createProductDto sebelum masuk ke method ini
-            
-            // Panggil service untuk create product baru
-            // Service akan handle business logic dan validation
-            var course = await _courseService.CreateCourseAsync(createCourseDto);
-            
-            // Buat success response dengan custom message
-            var response = ApiResponse<CourseDto>.SuccessResult(course);
-            
-            // Return 201 Created dengan Location header yang menunjuk ke GET endpoint
-            // CreatedAtAction akan generate URL: api/Course/{id} di Location header
-            return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, response);
+            var result = await _courseService.CreateCourseAsync(createCourseDto);
+            return CreatedAtAction(nameof(GetCourse), new { id = result.Id }, ApiResponse<CourseDto>.SuccessResult(result));
         }
 
         /// <summary>
@@ -123,8 +103,9 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Product updated successfully</response>
         /// <response code="404">Product not found</response>
         [HttpPut("{id}")] // HTTP PUT method dengan ID parameter
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseDto updateCourseDto)
         {
             // Panggil service untuk update product
@@ -150,9 +131,10 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="204">Product deleted successfully</response>
         /// <response code="404">Product not found</response>
         [HttpDelete("{id}")] // HTTP DELETE method
-        [ProducesResponseType(StatusCodes.Status204NoContent)] // Success response tanpa body
-        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteCourse(int id)
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<object>>> DeleteCourse(int id)
         {
             // Panggil service untuk delete product
             // Service akan return false jika product tidak ditemukan
@@ -166,7 +148,7 @@ namespace MyApp.WebAPI.Controllers
 
             // Return 204 No Content untuk successful deletion
             // No Content berarti operasi berhasil tapi tidak ada data untuk dikembalikan
-            return NoContent();
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     } // End of ProductsController class
 } // End of namespace

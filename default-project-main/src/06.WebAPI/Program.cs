@@ -6,12 +6,8 @@ using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Extensions;
 // Import custom middleware dari folder Middleware
 using MyApp.WebAPI.Middleware;
-using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Models.Entities;
-// Import FluentValidation core library
-using FluentValidation;
 // Import FluentValidation ASP.NET Core integration
 using FluentValidation.AspNetCore;
 // Import System.Reflection untuk assembly operations
