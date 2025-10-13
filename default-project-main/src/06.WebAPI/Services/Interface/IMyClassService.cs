@@ -7,7 +7,7 @@ namespace MyApp.WebAPI.Services
 {
     public interface IMyClassService
     {
-        Task<IEnumerable<MyClassDto>> GetAllMyClassAsync(int userId);
+        Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId);
      
         Task<MyClassDto?> GetMyClassByIdAsync(int id);
    

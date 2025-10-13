@@ -1,9 +1,10 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MyApp.WebAPI.Services
 {
@@ -24,35 +25,36 @@ namespace MyApp.WebAPI.Services
         }
 
    
-        public async Task<IEnumerable<MyClassDto>> GetAllMyClassAsync(int userId)
+        public async Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId)
         {
-            var myclass = await _context.MyClasses.ToListAsync();
-            //Query Response
             var myClasses = await _context.MyClasses
-                            .Where(m => m.UserId == userId)
-                            .Include(m => m.Schedule)
-                                .ThenInclude(s => s.Course)
-                                    .ThenInclude(c => c.Category)
-                            .ToListAsync();
-            return _mapper.Map<IEnumerable<MyClassDto>>(myclass);
+                .Where(m => m.UserId == userId)
+                .Include(m => m.Schedule)
+                .ThenInclude(s => s.Course)
+                .ThenInclude(c => c.Category)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<MyClassDto>>(myClasses);
         }
 
    
         public async Task<MyClassDto?> GetMyClassByIdAsync(int id)
         {
             var myclass = await _context.MyClasses
-                        .Include(m => m.Schedule)
-                            .ThenInclude(s => s.Course)
-                                .ThenInclude(c => c.Category)
-                        .FirstOrDefaultAsync(c => c.Id == id); // filter di database
-
-            return myclass != null ? _mapper.Map<MyClassDto>(myclass) : null;
+                .Include(m => m.Schedule)
+                .ThenInclude(s => s.Course)
+                .ThenInclude(c => c.Category)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (myclass == null)
+            {
+                throw new NotFoundException($"MyClass Id {id} not found");
+            }
+            return _mapper.Map<MyClassDto>(myclass);
         }
 
       
         public async Task<MyClassDto> CreateMyClassAsync(CreateMyClassDto createMyClassDto)
         {
-             // Validate userId exists
+            // Validate userId exists
             var userExists = await _context.Users.AnyAsync(c => c.Id == createMyClassDto.UserId);
             if (!userExists)
             {
@@ -102,7 +104,7 @@ namespace MyApp.WebAPI.Services
                 var userExists = await _context.Users.AnyAsync(c => c.Id == updateMyClassDto.UserId);
                 if (!userExists)
                 {
-                    //Eror Handling
+                    //Error Handling
                     throw new ArgumentException($"User with ID {updateMyClassDto.UserId} does not exist");
                 }
             }

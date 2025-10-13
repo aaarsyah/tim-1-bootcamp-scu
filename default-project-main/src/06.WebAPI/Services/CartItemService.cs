@@ -52,7 +52,8 @@ namespace MyApp.WebAPI.Services
         /// 5. Validate apakah payment method ada dan tersedia<br />
         /// 6. Hapus barang yang dicheckout dari keranjang<br />
         /// 7. Buat invoice beserta detilnya<br />
-        /// 8. COMMIT transaction<br />
+        /// 8. Tambahkan jadwal ke dalam daftar kelas user<br />
+        /// 9. COMMIT transaction<br />
         /// <br />
         /// If ANY step fails -> ROLLBACK (nothing saved)
         /// </summary>
@@ -136,11 +137,18 @@ namespace MyApp.WebAPI.Services
                             ScheduleId = item.ScheduleId
                         });
                     }
-
-                    await _context.SaveChangesAsync();
-
                     // ===== STEP 8 =====
+                    foreach (CartItem item in items)
+                    {
+                        _context.MyClasses.Add(new MyClass
+                        {
+                            UserId = user.Id,
+                            ScheduleId = item.ScheduleId
+                        });
+                    }
+                    // ===== STEP 9 =====
                     // All operations succeeded, make permanent
+                    await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
                     _logger.LogInformation(

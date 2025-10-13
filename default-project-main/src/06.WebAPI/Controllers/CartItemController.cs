@@ -37,42 +37,7 @@ namespace MyApp.WebAPI.Controllers
             _logger = logger;
         }
         /// <summary>
-        /// Transfer money between accounts
-        /// 
-        /// POST /api/transaction/transfer
-        /// 
-        /// Request Body:
-        /// {
-        ///   "fromAccountNumber": "ACC001",
-        ///   "toAccountNumber": "ACC002",
-        ///   "amount": 100.50,
-        ///   "description": "Payment for invoice"
-        /// }
-        /// 
-        /// Success Response (200):
-        /// {
-        ///   "success": true,
-        ///   "data": {
-        ///     "transactionId": "TXN202510051230451234",
-        ///     "fromAccountNumber": "ACC001",
-        ///     "toAccountNumber": "ACC002",
-        ///     "amount": 100.50,
-        ///     "status": "Completed",
-        ///     "createdAt": "2025-10-05T12:30:45Z"
-        ///   },
-        ///   "message": "Transfer completed successfully"
-        /// }
-        /// 
-        /// Error Response (400 - Insufficient Balance):
-        /// {
-        ///   "errorCode": "INSUFFICIENT_BALANCE",
-        ///   "message": "Insufficient balance in account ACC001",
-        ///   "details": {
-        ///     "currentBalance": 50.00,
-        ///     "requestedAmount": 100.50
-        ///   },
-        ///   "traceId": "abc12345"
-        /// }
+        /// Checkout items
         /// </summary>
         [HttpPost("checkout")]
         [Authorize]
@@ -109,7 +74,7 @@ namespace MyApp.WebAPI.Controllers
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<CartItemResponseDto>>), StatusCodes.Status200OK)] // Swagger documentation
         [Produces("application/json")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetMyCartItems()
+        public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetOwnCartItems()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
