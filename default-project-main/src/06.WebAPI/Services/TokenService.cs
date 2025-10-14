@@ -19,6 +19,8 @@ namespace MyApp.WebAPI.Services
         string GenerateRefreshToken();
         ClaimsPrincipal? GetPrincipalFromExpiredToken(string token);
         Task<bool> IsTokenValidAsync(string token);
+        Task<string> GenerateEmailConfirmationTokenAsync();
+        Task<string> GeneratePasswordResetTokenAsync();
     }
 
     /// <summary>
@@ -59,7 +61,7 @@ namespace MyApp.WebAPI.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes), //Expired
                 Issuer = _jwtSettings.Issuer,
                 Audience = _jwtSettings.Audience,
                 SigningCredentials = new SigningCredentials(
@@ -178,6 +180,16 @@ namespace MyApp.WebAPI.Services
             claims.AddRange(userClaims);
 
             return claims;
+        }
+
+        public Task<string> GenerateEmailConfirmationTokenAsync()
+        {
+            return Task.FromResult(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)));
+        }
+
+        public Task<string> GeneratePasswordResetTokenAsync()
+        {
+            return Task.FromResult(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)));
         }
     }
 }

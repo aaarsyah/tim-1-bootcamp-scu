@@ -38,7 +38,7 @@ namespace MyApp.WebAPI.Services
             return new UserDto
             {
                 Id = user.Id,
-                Name = user.Name,
+                Name = user.UserName,
                 Email = user.Email ?? string.Empty,
                 Roles = roles.ToList(),
                 Claims = claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList()
@@ -48,7 +48,7 @@ namespace MyApp.WebAPI.Services
         public async Task<List<UserDto>> GetAllUsersAsync(int page = 1, int pageSize = 10)
         {
             var users = await _userManager.Users
-                .Where(u => u.IsActive)
+                .Where(u => u.EmailConfirmed)
                 .OrderBy(u => u.CreatedAt)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -64,7 +64,7 @@ namespace MyApp.WebAPI.Services
                 userProfiles.Add(new UserDto
                 {
                     Id = user.Id,
-                    Name = user.Name,
+                    Name = user.UserName,
                     Email = user.Email ?? string.Empty,
                     Roles = roles.ToList(),
                     Claims = claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList()
@@ -150,7 +150,7 @@ namespace MyApp.WebAPI.Services
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null) return false;
 
-            user.IsActive = false;
+            user.EmailConfirmed = false;
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = DateTime.UtcNow;
 

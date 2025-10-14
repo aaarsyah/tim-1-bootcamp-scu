@@ -47,7 +47,7 @@ namespace MyApp.WebAPI.Services
         {
             // Buat base query dengan Include untuk eager loading Category data
             // AsQueryable() memungkinkan kita untuk chain multiple LINQ operations
-            var query = _context.Course
+            var query = _context.Courses
                 .Include(p => p.Category) // Eager load Category untuk avoid N+1 problem
                 .Include(p => p.Schedules) 
                 .AsQueryable();
@@ -137,7 +137,7 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<CourseDto?> GetCourseByIdAsync(int id)
         {
-            var course = await _context.Course
+            var course = await _context.Courses
                 .Include(p => p.Category)
                 .Include(p => p.Schedules) 
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -159,7 +159,7 @@ namespace MyApp.WebAPI.Services
 
             var course = _mapper.Map<Course>(createCourseDto);
             
-            _context.Course.Add(course);
+            _context.Courses.Add(course);
             await _context.SaveChangesAsync();
             
             // Reload with category for DTO mapping
@@ -176,11 +176,15 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<CourseDto?> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
         {
-            var course = await _context.Course
-                        .Include(p => p.Category)
-                        .FirstOrDefaultAsync(p => p.Id == id);
-            if (course == null) return null;
-
+            var course = await _context.Courses
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+                
+            if (course == null)
+            {
+                throw new NotFoundException($"Invalid Id {id}");
+            }
+            
             // Validate category exists if changed
             if (updateCourseDto.CategoryId != course.CategoryId)
             {
@@ -212,10 +216,10 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<bool> DeleteCourseAsync(int id)
         {
-            var course = await _context.Course.FindAsync(id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null) return false;
 
-            _context.Course.Remove(course);
+            _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             
             _logger.LogInformation("Course deleted: {CourseId}", id);

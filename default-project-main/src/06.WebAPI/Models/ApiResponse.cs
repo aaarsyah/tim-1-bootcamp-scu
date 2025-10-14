@@ -8,9 +8,10 @@ namespace MyApp.WebAPI.Models
     /// <typeparam name="T">Response data type</typeparam>
     public class ApiResponse<T>
     {
-        /// Whether the request was successful
-        /// </summary>
-        /// </summary>
+        /// <summary>
+        /// Machine-readable status code
+        /// Purpose: Frontend can handle specific errors programmatically
+        /// Examples: "NOT_FOUND", "SUCCESS", "VALIDATION_ERROR"
         public string StatusCode { get; set; } = string.Empty;
         /// <summary>
         /// Response data
@@ -30,15 +31,26 @@ namespace MyApp.WebAPI.Models
         /// <summary>
         /// Create successful response
         /// </summary>
-        public static ApiResponse<T> SuccessResult(T data)
+        public static ApiResponse<T> SuccessResult(T? data)
         {
             return new ApiResponse<T>
             {
-                StatusCode = "Success",
+                StatusCode = "SUCCESS",
                 Data = data
             };
         }
         /// <summary>
+        
+        /// Create successful response with no data
+        /// </summary>
+        public static ApiResponse<object> SuccessResult()
+        {
+            return new ApiResponse<object>
+            {
+                StatusCode = "SUCCESS",
+                Data = null
+            };
+        }
         /// Create error response
         /// </summary>
         public static ApiResponse<T> ErrorResult(string message, object? errors = null)

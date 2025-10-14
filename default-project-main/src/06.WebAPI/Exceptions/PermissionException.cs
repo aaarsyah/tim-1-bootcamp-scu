@@ -8,8 +8,8 @@
     /// Dipakai ketika:<br />
     /// - User yang login mencoba untuk mengakses halaman admin<br />
     /// <b>Tidak</b> dipakai ketika:<br />
-    /// - User yang belum login mencoba untuk melakukan checkout (gunakan AuthorizationException)<br />
-    /// <br />
+    /// - User yang belum login mencoba untuk melakukan checkout <br />
+    /// - Token yang dipakai user expired atau invalid (gunakan AuthenticationException)<br />
     /// Contoh:<br />
     /// throw new PermissionException($"Access is denied.");<br />
     /// </summary>

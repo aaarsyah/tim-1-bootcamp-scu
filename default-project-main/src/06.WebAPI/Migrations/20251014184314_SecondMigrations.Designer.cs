@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251011074833_authsecmigration")]
-    partial class authsecmigration
+    [Migration("20251014184314_SecondMigrations")]
+    partial class SecondMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -347,7 +347,7 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Course", null, t =>
+                    b.ToTable("Courses", null, t =>
                         {
                             t.HasCheckConstraint("CK_Price", "[Price] >= 0");
                         });
@@ -512,7 +512,7 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MyClass", (string)null);
+                    b.ToTable("MyClasses", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.PaymentMethod", b =>
@@ -626,9 +626,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -653,17 +650,15 @@ namespace MyApp.WebAPI.Migrations
                             ConcurrencyStamp = "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                             CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Administrator with management access",
-                            IsActive = true,
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 2,
                             ConcurrencyStamp = "d4e5f6a7-b8c9-0123-def1-234567890123",
                             CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Standard user with basic access",
-                            IsActive = true,
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -974,15 +969,13 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("EmailConfirmationToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EmailConfirmationTokenExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -991,21 +984,11 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -1037,8 +1020,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -1060,109 +1044,91 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e875bbb0-1dd8-4ed0-b6a7-9f0e6db7134d",
+                            ConcurrencyStamp = "f92b61fe-2fe1-4e8d-9af8-b8f8f730c2d8",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = true,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Super Admin",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Super Admin"
                         },
                         new
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1b728d7b-d3f9-4552-ab8e-55ed7cf26518",
+                            ConcurrencyStamp = "114854e6-6917-40c2-860d-d71bba5a7d4f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Nur Imam Iskandar",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Nur Imam Iskandar"
                         },
                         new
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "258a3806-1c44-4b21-96e2-2702ffad8869",
+                            ConcurrencyStamp = "fbacc9bb-56eb-410d-9fe3-1dcbf8d7ba4d",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Iskandar",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Iskandar"
                         },
                         new
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37702938-cc5d-41f4-84f9-e8910b94b912",
+                            ConcurrencyStamp = "9b171829-53f2-4ebd-89a1-b67bd567f864",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = false,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Dummy User",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "Dummy User"
                         },
                         new
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2afac984-6d9a-4311-94cb-b901c2f8b4e0",
+                            ConcurrencyStamp = "03ad3e68-984b-4e12-a7b8-66c28726a999",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "yusri sahrul",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "yusri sahrul"
                         },
                         new
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cf704c0e-9448-4b19-9a19-ce496141fad8",
+                            ConcurrencyStamp = "a79252dc-6c52-4cba-81cd-2262d179204c",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
-                            EmailConfirmed = false,
-                            IsActive = true,
-                            IsAdmin = true,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "yusri sahrul test",
-                            Password = "password",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UserName = "yusri sahrul test"
                         });
                 });
 
@@ -1172,9 +1138,6 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.HasIndex("UserId");
 
@@ -1245,7 +1208,7 @@ namespace MyApp.WebAPI.Migrations
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Course", b =>
                 {
                     b.HasOne("MyApp.WebAPI.Models.Entities.Category", "Category")
-                        .WithMany("Course")
+                        .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1329,7 +1292,7 @@ namespace MyApp.WebAPI.Migrations
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Category", b =>
                 {
-                    b.Navigation("Course");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Course", b =>

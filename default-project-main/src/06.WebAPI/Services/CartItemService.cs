@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
@@ -78,7 +79,7 @@ namespace MyApp.WebAPI.Services
                 try
                 {
                     // ===== STEP 2 =====
-                    var user = await _context.User
+                    var user = await _context.Users
                         .Where(a => a.Id == request.UserId)
                         .FirstOrDefaultAsync();
                     if (user == null)
@@ -87,7 +88,7 @@ namespace MyApp.WebAPI.Services
                             $"Invalid UserId {request.UserId} ");
                     }
                     // ===== STEP 3 =====
-                    if (!user.IsActive)
+                    if (!user.EmailConfirmed)
                     {
                         throw new PermissionException(
                             $"UserId {user.Id} not active");
@@ -107,7 +108,7 @@ namespace MyApp.WebAPI.Services
                         items.Add(item);
                     }
                     // ===== STEP 5 =====
-                    var paymentmethod = await _context.Payment
+                    var paymentmethod = await _context.PaymentMethods
                         .Where(a => a.Id == request.PaymentMethodId)
                         .FirstOrDefaultAsync();
                     if (paymentmethod == null)
@@ -200,7 +201,7 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> AddCourseToCartAsync(int userId, int scheduleid)
         {
             // ===== STEP 1 =====
-            var user = await _context.User
+            var user = await _context.Users
                 .Where(a => a.Id == userId)
                 .FirstOrDefaultAsync();
             if (user == null)
@@ -209,13 +210,13 @@ namespace MyApp.WebAPI.Services
                     $"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
-            if (!user.IsActive)
+            if (!user.EmailConfirmed)
             {
                 throw new PermissionException(
                     $"UserId {user.Id} not active");
             }
             // ===== STEP 3 =====
-            var schedule = await _context.Schedule
+            var schedule = await _context.Schedules
                 .Where(a => a.Id == scheduleid)
                 .FirstOrDefaultAsync();
             if (schedule == null)
@@ -250,7 +251,7 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> RemoveCourseFromCartAsync(int userId, int cartItemId)
         {
             // ===== STEP 1 =====
-            var user = await _context.User
+            var user = await _context.Users
                 .Where(a => a.Id == userId)
                 .FirstOrDefaultAsync();
             if (user == null)
@@ -259,7 +260,7 @@ namespace MyApp.WebAPI.Services
                     $"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
-            if (!user.IsActive)
+            if (!user.EmailConfirmed)
             {
                 throw new PermissionException(
                     $"UserId {user.Id} not active");
@@ -282,17 +283,13 @@ namespace MyApp.WebAPI.Services
         }
         /// <summary>
         /// Generate unique transaction ID<br />
-        /// Format: TXN{yyyyMMddHHmmss}{random 6 digits}<br />
-        /// Example: TXN20251005123059012345
+        /// Format: APM{yyyyMMddHHmmss}{random 6 digits}<br />
+        /// Example: APM20251005123059012345
         /// </summary>
         private string GenerateInvoiceId()
         {
-            return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
+            return $"APM{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
         }
-        //private string GenerateInvoiceId_GUID()
-        //{
-        //    var a = new BigInteger(Guid.NewGuid().ToByteArray().Concat(new byte[] { 0 }).ToArray()).ToString("D", CultureInfo.InvariantCulture);
-        //    return $"TXN{a}";
-        //}
+       
     }
 }

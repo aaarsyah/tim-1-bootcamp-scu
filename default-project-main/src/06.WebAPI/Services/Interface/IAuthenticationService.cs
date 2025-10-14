@@ -16,5 +16,7 @@ namespace MyApp.WebAPI.Services
         Task<AuthResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request);
         Task<bool> LogoutAsync(int userId);
         Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request);
+        Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request);
+        Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request);
     }
 }

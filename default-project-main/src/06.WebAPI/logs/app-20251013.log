@@ -1,0 +1,20 @@
+2025-10-13 01:35:53.945 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-13 01:35:58.808 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:35:59.502 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:02.594 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.489 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 0 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.504 +07:00 [INF] ✅ AppleMusicDbContext is already up to date {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.523 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.538 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.540 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.554 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.557 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.572 +07:00 [INF] ✅ Up to date: 1 (AppleMusicDbContext) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.589 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.595 +07:00 [INF] ❌ Errors: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.607 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.674 +07:00 [INF] ✨ All migrations completed successfully! {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.683 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-13 01:36:06.960 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-13 01:36:07.247 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-13 01:36:07.251 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}

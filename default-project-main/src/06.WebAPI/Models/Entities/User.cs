@@ -9,20 +9,20 @@ namespace MyApp.WebAPI.Models.Entities
     /// </summary>
     public class User : IdentityUser<int>
     {
-        
+        // public string Email { get; set; } = string.Empty;
+    
+
         // Refresh token untuk JWT authentication
         public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; } = DateTime.MinValue;
 
         /// <summary>
         /// Name: Nama pengguna
         /// </summary>
         public string Name { get; set; } = string.Empty;
-        /// <summary>
-        /// IsAdmin: Apakah pengguna adalah admin?
-        /// </summary>
-        public bool IsAdmin { get; set; } = false;
-        public bool IsActive { get; set; } = true;
+        public bool EmailConfirmed { get; set; }
+        public string? EmailConfirmationToken { get; set; }
+        public DateTime? EmailConfirmationTokenExpiry { get; set; }
         /// <summary>
         /// CreatedAt: Tangal pembuatan pengguna
         /// Catatan: Digunakan pada page Admin
@@ -36,7 +36,7 @@ namespace MyApp.WebAPI.Models.Entities
 
         
         // Navigation properties
-        public ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
+        public virtual ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
     }
 
      /// <summary>
@@ -47,14 +47,12 @@ namespace MyApp.WebAPI.Models.Entities
     {
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsActive { get; set; } = true;
     }
 
 
     public class UserClaim : IdentityUserClaim<int>
     {
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsActive { get; set; } = true;
         
         // Navigation property
         public User User { get; set; } = null!;

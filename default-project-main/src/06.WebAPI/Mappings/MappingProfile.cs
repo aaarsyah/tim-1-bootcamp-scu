@@ -22,8 +22,10 @@ namespace MyApp.WebAPI.Mappings
 
             // Course mappings
             CreateMap<Course, CourseDto>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.ScheduleDates, opt => opt.MapFrom(src => src.Schedules.Select(s => s.Date).ToList()));
+                .ForMember(dest => dest.CategoryName,
+                    opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.ScheduleDates, 
+                    opt => opt.MapFrom(src => src.Schedules.Select(s => s.Date).ToList()));
 
             CreateMap<CreateCourseDto, Course>();
             CreateMap<UpdateCourseDto, Course>();

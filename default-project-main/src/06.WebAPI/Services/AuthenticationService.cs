@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using MyApp.WebAPI.Models.Entities;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Configuration;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using MyApp.WebAPI.Exceptions;
 
 namespace MyApp.WebAPI.Services
 {
@@ -23,19 +25,24 @@ namespace MyApp.WebAPI.Services
         private readonly ITokenService _tokenService;
         private readonly JwtSettings _jwtSettings;
         private readonly ILogger<AuthenticationService> _logger;
+        private readonly IEmailService _emailService;
 
         public AuthenticationService(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ITokenService tokenService,
             JwtSettings jwtSettings,
-            ILogger<AuthenticationService> logger)
+            ILogger<AuthenticationService> logger,
+            IEmailService emailService
+        )
+            
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _jwtSettings = jwtSettings;
             _logger = logger;
+            _emailService = emailService; //confirm-email
         }
 
         /// <summary>
@@ -50,20 +57,21 @@ namespace MyApp.WebAPI.Services
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser != null)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "User with this email already exists"
-                };
+                throw new ValidationException("User with this email already exists");
             }
+
+            // Generate email confirmation token
+            var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
 
             // Create new user
             var user = new User
             {
-                UserName = request.Email,
+                UserName = request.Name,
                 Email = request.Email,
-                Name = request.Name,
-                EmailConfirmed = true // For demo purposes, set to true
+                EmailConfirmed = false, //true if user already confirmed email
+                EmailConfirmationToken = confirmationToken,
+                EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
+                CreatedAt = DateTime.UtcNow
             };
 
             // Create user dengan password
@@ -74,11 +82,7 @@ namespace MyApp.WebAPI.Services
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 _logger.LogWarning("User registration failed for {Email}: {Errors}", request.Email, errors);
                 
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = $"Registration failed: {errors}"
-                };
+                throw new ValidationException($"Registration failed: {errors}");
             }
 
             // Assign default role "User"
@@ -86,6 +90,10 @@ namespace MyApp.WebAPI.Services
 
             // Add default claims
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("can_view_profile", "true"));
+
+            // Kirim email konfirmasi
+            var confirmationLink = $"https://localhost:5099/confirm-email?email={user.Email}&token={confirmationToken}";
+            await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
 
             _logger.LogInformation("User registration successful for email: {Email}", request.Email);
 
@@ -100,7 +108,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Registration successful",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -119,14 +126,10 @@ namespace MyApp.WebAPI.Services
 
             // Cari user berdasarkan email
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null || !user.IsActive)
+            if (user == null || !user.EmailConfirmed)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid email or password"
-                };
+                  throw new ValidationException("Invalid email or password");
             }
 
             // Validasi password dengan lockout protection
@@ -137,18 +140,10 @@ namespace MyApp.WebAPI.Services
                 
                 if (result.IsLockedOut)
                 {
-                    return new AuthResponseDto
-                    {
-                        Success = false,
-                        Message = "Account is locked out. Please try again later."
-                    };
+                    throw new ValidationException("Account is locked out. Please try again later.");
                 }
 
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid email or password"
-                };
+                throw new ValidationException("Invalid email or password");
             }
 
             // Generate JWT tokens
@@ -164,7 +159,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Login successful",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -183,33 +177,21 @@ namespace MyApp.WebAPI.Services
             var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
             if (principal == null)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid access token"
-                };
+                throw new ValidationException("Invalid access token");
             }
 
             var userIdClaim = principal.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid token claims"
-                };
+                throw new ValidationException("Invalid token claims");
             }
 
             // Validasi refresh token
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null || !user.IsActive || user.RefreshToken != request.RefreshToken ||
+            if (user == null || !user.EmailConfirmed || user.RefreshToken != request.RefreshToken ||
                 user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
-                return new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "Invalid refresh token"
-                };
+                throw new ValidationException("Invalid refresh token");
             }
 
             // Generate tokens baru
@@ -223,7 +205,6 @@ namespace MyApp.WebAPI.Services
 
             return new AuthResponseDto
             {
-                Success = true,
                 Message = "Token refreshed successfully",
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
@@ -239,22 +220,22 @@ namespace MyApp.WebAPI.Services
         public async Task<bool> LogoutAsync(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user != null)
+            if (user == null)
             {
-                // Invalidate refresh token
-                user.RefreshToken = null;
-                user.RefreshTokenExpiryTime = DateTime.UtcNow;
-                await _userManager.UpdateAsync(user);
-                
-                _logger.LogInformation("User logged out: {UserId}", userId);
-                return true;
+                throw new AuthenticationException("Token is invalid");
             }
 
-            return false;
+            // Invalidate refresh token
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
+
+            _logger.LogInformation("User logged out: {UserId}", userId);
+            return true;
         }
 
-        /// <summary>
-        /// Change Password
+        /// <summary> 
+        /// Change Password for authenticated user (POST)
         /// Ubah password user yang sudah login
         /// </summary>
         public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request)
@@ -262,19 +243,89 @@ namespace MyApp.WebAPI.Services
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
-                return false;
+                throw new AuthenticationException("Token is invalid");
             }
 
             var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
-            if (result.Succeeded)
+
+            if (!result.Succeeded)
             {
-                _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
+                _logger.LogWarning("Password change failed for user: {UserId}", userId);
+                throw new ValidationException("Password change failed");
+            }
+
+            _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
+            return true;
+        }
+
+        //Forgot Password = Request password reset
+        //Langsung Menggunakan HTTPClient - Service nya di Blazor UI
+        public async Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request)
+        {
+            _logger.LogInformation("Forgot password requested for email: {Email}", request.Email);
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            //Menghindari Email Enumeration Attack (menghindari hacker mengetahui email mana yang valid)
+            if (user == null)
+            {
+                _logger.LogWarning("Forgot password requested for non-existing email: {Email}", request.Email);
+                // Demi keamanan: tetap return sukses tanpa memberitahu apakah email valid
                 return true;
             }
 
-            _logger.LogWarning("Password change failed for user: {UserId}", userId);
-            return false;
+            // Generate token reset password
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Buat link reset (menuju frontend URL BlazorUI)
+            var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+
+
+            // Jika email terdaftar dalam database, Kirim email reset password
+            await _emailService.SendPasswordResetAsync(user.Email, user.Name, resetLink); 
+
+            _logger.LogInformation("Password reset email sent to {Email}", user.Email);
+
+            return true;
         }
+
+        /// <summary>
+        /// Reset password menggunakan token dari email
+        /// </summary>
+        public async Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request)
+        {
+            _logger.LogInformation("Reset password attempt for email: {Email}", request.Email);
+
+            if (request.NewPassword != request.ConfirmPassword)
+            {
+                _logger.LogWarning("Password confirmation mismatch for {Email}", request.Email);
+                throw new ValidationException("Password and confirmation password do not match.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
+                throw new AuthenticationException("Invalid token or user.");
+            }
+
+            // Jalankan proses reset password
+            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
+                throw new ValidationException($"Password reset failed: {errors}");
+            }
+
+            // Kirim email notifikasi berhasil
+            await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.UserName ?? "User");
+
+            _logger.LogInformation("Password reset successful for {Email}", request.Email);
+
+            return true;
+        }
+    
 
         /// <summary>
         /// Map User entity to UserDto
@@ -289,8 +340,7 @@ namespace MyApp.WebAPI.Services
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email ?? string.Empty,
-                IsActive = user.IsActive,
-                IsAdmin = user.IsAdmin,
+                EmailConfirmed = user.EmailConfirmed,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
                 Roles = roles.ToList(),

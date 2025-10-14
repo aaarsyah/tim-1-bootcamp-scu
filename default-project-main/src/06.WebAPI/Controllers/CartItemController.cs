@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
-
+using MyApp.WebAPI.Models.DTOs;
+using System.Net;
 using MyApp.WebAPI.Services;
 
 namespace MyApp.WebAPI.Controllers
@@ -50,7 +51,7 @@ namespace MyApp.WebAPI.Controllers
         /// {
         ///   "success": true,
         ///   "data": {
-        ///     "transactionId": "TXN202510051230451234",
+        ///     "transactionId": "APM202510051230451234",
         ///     "fromAccountNumber": "ACC001",
         ///     "toAccountNumber": "ACC002",
         ///     "amount": 100.50,
@@ -110,6 +111,7 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
         }
+
         [HttpGet("add")] // HTTP GET method
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
@@ -119,11 +121,12 @@ namespace MyApp.WebAPI.Controllers
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
             // Panggil service method untuk get products dengan filtering
-            var result = await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
+            await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
+
         [HttpGet("remove")] // HTTP GET method
         [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
@@ -133,10 +136,10 @@ namespace MyApp.WebAPI.Controllers
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
             // Panggil service method untuk get products dengan filtering
-            var result = await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
+            await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }

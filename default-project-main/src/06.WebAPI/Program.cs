@@ -160,7 +160,8 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new() { 
+        c.SwaggerDoc("v1", new()
+        {
             Title = "API - Apple Music",     // Nama API
             Version = "v1",                 // Versi API
             Description = "A simple e-commerce Course API for Apple Music Website", // Deskripsi API
@@ -175,7 +176,7 @@ try
         {
             c.IncludeXmlComments(xmlPath);
         }
-        
+
         // Add JWT Authentication to Swagger
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -207,6 +208,15 @@ try
         });
     });
 
+    // // Register MediatR for CQRS
+    // builder.Services.AddMediatR(cfg => 
+    //     cfg.RegisterServicesFromAssembly(typeof(MyApp.Application.Services.IJwtTokenService).Assembly));
+
+    // // Register FluentValidation
+    // builder.Services.AddValidatorsFromAssembly(typeof(MyApp.Application.Services.IJwtTokenService).Assembly);
+
+    // // Register Caching
+    // builder.Services.AddMemoryCache();
 
     var app = builder.Build();
 
@@ -264,7 +274,7 @@ try
     }
 
     // Ini akan catch semua unhandled exceptions dan return response yang konsisten
-    app.UseMiddleware<ExceptionHandlingMiddleware>();
+    app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
     // Add Correlation ID to each request
     app.UseMiddleware<CorrelationIdMiddleware>();

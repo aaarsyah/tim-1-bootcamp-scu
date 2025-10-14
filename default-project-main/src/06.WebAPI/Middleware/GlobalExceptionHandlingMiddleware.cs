@@ -194,7 +194,7 @@ namespace MyApp.WebAPI.Middleware
             var jsonResponse = JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
+                WriteIndented = true //lebih mudah dibaca
             });
 
             // Send error response

@@ -24,6 +24,6 @@ namespace MyApp.WebAPI.Models.Entities
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public virtual ICollection<Course> Course { get; set; } = new List<Course>();
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

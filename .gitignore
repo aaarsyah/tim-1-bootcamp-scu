@@ -7,3 +7,6 @@ obj/
 
 # file buatan dari Visual Studio?
 *.vs
+
+# file dari merge confilct resolution dan tidak perlu masuk ke repositori
+*.orig

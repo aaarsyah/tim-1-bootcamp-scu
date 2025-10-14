@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyApp.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class authmigration : Migration
+    public partial class SecondMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,6 @@ namespace MyApp.WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -75,17 +74,15 @@ namespace MyApp.WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RefreshToken = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    EmailConfirmationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -124,7 +121,7 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
+                name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -141,10 +138,10 @@ namespace MyApp.WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.Id);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                     table.CheckConstraint("CK_Price", "[Price] >= 0");
                     table.ForeignKey(
-                        name: "FK_Course_Categories_CategoryId",
+                        name: "FK_Courses_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -161,8 +158,7 @@ namespace MyApp.WebAPI.Migrations
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -281,9 +277,9 @@ namespace MyApp.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedules_Course_CourseId",
+                        name: "FK_Schedules_Courses_CourseId",
                         column: x => x.CourseId,
-                        principalTable: "Course",
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -341,7 +337,7 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MyClass",
+                name: "MyClasses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -351,15 +347,15 @@ namespace MyApp.WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MyClass", x => x.Id);
+                    table.PrimaryKey("PK_MyClasses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MyClass_Schedules_ScheduleId",
+                        name: "FK_MyClasses_Schedules_ScheduleId",
                         column: x => x.ScheduleId,
                         principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MyClass_Users_UserId",
+                        name: "FK_MyClasses_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -368,11 +364,11 @@ namespace MyApp.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "CreatedAt", "Description", "IsActive", "Name", "NormalizedName" },
+                columns: new[] { "Id", "ConcurrencyStamp", "CreatedAt", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "b2c3d4e5-f6a7-8901-bcde-f12345678901", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Administrator with management access", true, "Admin", "ADMIN" },
-                    { 4, "d4e5f6a7-b8c9-0123-def1-234567890123", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Standard user with basic access", true, "User", "USER" }
+                    { 1, "b2c3d4e5-f6a7-8901-bcde-f12345678901", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Administrator with management access", "Admin", "ADMIN" },
+                    { 2, "d4e5f6a7-b8c9-0123-def1-234567890123", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Standard user with basic access", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -405,30 +401,19 @@ namespace MyApp.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "IsActive", "IsAdmin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "7f520b27-049d-411a-b99c-87fbe16068e8", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "admin@applemusic.com", false, true, true, false, null, "Super Admin", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null },
-                    { 2, 0, "dd92ffef-028b-40d5-8c1e-fee28a425eae", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "nurimamiskandar@gmail.com", false, true, false, false, null, "Nur Imam Iskandar", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null },
-                    { 3, 0, "b0da0459-a6d9-431a-8c19-e72eceb39bcb", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "imam.stmik15@gmail.com", false, true, false, false, null, "Iskandar", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null }
+                    { 1, 0, "f92b61fe-2fe1-4e8d-9af8-b8f8f730c2d8", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "admin@applemusic.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Super Admin" },
+                    { 2, 0, "114854e6-6917-40c2-860d-d71bba5a7d4f", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "nurimamiskandar@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Nur Imam Iskandar" },
+                    { 3, 0, "fbacc9bb-56eb-410d-9fe3-1dcbf8d7ba4d", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "imam.stmik15@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Iskandar" },
+                    { 4, 0, "9b171829-53f2-4ebd-89a1-b67bd567f864", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "iniemaildummysaya@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Dummy User" },
+                    { 5, 0, "03ad3e68-984b-4e12-a7b8-66c28726a999", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusrisahrul.works@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul" },
+                    { 6, 0, "a79252dc-6c52-4cba-81cd-2262d179204c", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusribootcamp@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul test" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "IsAdmin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
-                values: new object[] { 4, 0, "8006b0b0-9d66-4d8c-9762-393623c0842b", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "iniemaildummysaya@gmail.com", false, false, false, null, "Dummy User", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "IsActive", "IsAdmin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
-                values: new object[,]
-                {
-                    { 5, 0, "709f3997-22ff-4297-bb8e-7d425d667c5b", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusrisahrul.works@gmail.com", false, true, false, false, null, "yusri sahrul", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null },
-                    { 6, 0, "98cff2b3-9436-428d-bd3f-9aa67754dfbc", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusribootcamp@gmail.com", false, true, true, false, null, "yusri sahrul test", null, null, "password", null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Course",
+                table: "Courses",
                 columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "ImageUrl", "IsActive", "Name", "Price", "ScheduleId", "UpdatedAt" },
                 values: new object[,]
                 {
@@ -521,8 +506,8 @@ namespace MyApp.WebAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_CategoryId",
-                table: "Course",
+                name: "IX_Courses_CategoryId",
+                table: "Courses",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -552,13 +537,13 @@ namespace MyApp.WebAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyClass_ScheduleId",
-                table: "MyClass",
+                name: "IX_MyClasses_ScheduleId",
+                table: "MyClasses",
                 column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyClass_UserId",
-                table: "MyClass",
+                name: "IX_MyClasses_UserId",
+                table: "MyClasses",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -604,7 +589,7 @@ namespace MyApp.WebAPI.Migrations
                 name: "InvoiceDetail");
 
             migrationBuilder.DropTable(
-                name: "MyClass");
+                name: "MyClasses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -622,7 +607,7 @@ namespace MyApp.WebAPI.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Categories");

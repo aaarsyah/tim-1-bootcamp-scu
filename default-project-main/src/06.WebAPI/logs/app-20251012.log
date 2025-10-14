@@ -1,0 +1,461 @@
+2025-10-12 17:59:13.480 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 17:59:19.612 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:19.639 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:23.463 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-12 17:59:29.874 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:29.889 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:30.144 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:30.148 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:31.509 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-12 17:59:31.770 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:31.834 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.013 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.055 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.093 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.135 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.215 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.221 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.516 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.551 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.564 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:32.574 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 17:59:33.097 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-12 17:59:33.455 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-12 17:59:33.460 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-12 18:01:13.511 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG9FQ8HKRGU:00000001","RequestPath":"/api/CartItem/remove","ConnectionId":"0HNG9FQ8HKRGU","CorrelationId":"5c2a3b62","Application":"AppleMusicAPI"}
+2025-10-12 18:01:27.025 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRGU:00000001","RequestPath":"/api/CartItem/remove","ConnectionId":"0HNG9FQ8HKRGU","CorrelationId":"5c2a3b62","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: cartItemId 1 not found
+   at MyApp.WebAPI.Services.CartItemService.RemoveCourseFromCartAsync(Int32 userId, Int32 cartItemId) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\CartItemService.cs:line 274
+   at MyApp.WebAPI.Controllers.CartItemController.RemoveCourseFromCart(Int32 userId, Int32 cartid) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\CartItemController.cs:line 139
+   at lambda_method286(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:01:58.962 +07:00 [INF] User registration attempt for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5e82bf5d-2a32-4c9d-887b-11c7ca39eb71","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRGV:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9FQ8HKRGV","CorrelationId":"b403f204","Application":"AppleMusicAPI"}
+2025-10-12 18:02:03.543 +07:00 [INF] User registration successful for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5e82bf5d-2a32-4c9d-887b-11c7ca39eb71","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRGV:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9FQ8HKRGV","CorrelationId":"b403f204","Application":"AppleMusicAPI"}
+2025-10-12 18:02:32.486 +07:00 [INF] Login attempt for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH0:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH0","CorrelationId":"97eedac0","Application":"AppleMusicAPI"}
+2025-10-12 18:02:33.255 +07:00 [INF] Login successful for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH0:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH0","CorrelationId":"97eedac0","Application":"AppleMusicAPI"}
+2025-10-12 18:02:44.460 +07:00 [INF] Login attempt for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH1:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH1","CorrelationId":"3b85d217","Application":"AppleMusicAPI"}
+2025-10-12 18:02:45.690 +07:00 [WRN] Login failed for email: Siapa@example.com. Reason: Failed {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH1:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH1","CorrelationId":"3b85d217","Application":"AppleMusicAPI"}
+2025-10-12 18:02:45.858 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRH1:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH1","CorrelationId":"3b85d217","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 132
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method954(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:03:43.437 +07:00 [WRN] JWT authentication failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'BCp95SUcnUcDDipzjPfmo3pICBynbNBgMniAuJvU23o'. , KeyId: 
+'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details. {"CorrelationId":"69d5f626","RequestId":"0HNG9FQ8HKRH4:00000001","RequestPath":"/api/Auth/profile","ConnectionId":"0HNG9FQ8HKRH4","Application":"AppleMusicAPI"}
+2025-10-12 18:04:01.751 +07:00 [WRN] JWT authentication failed: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'BCp95SUcnUcDDipzjPfmo3pICBynbNBgMniAuJvU23o'. , KeyId: 
+'.
+Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'.
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details. {"CorrelationId":"269636c2","RequestId":"0HNG9FQ8HKRH5:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH5","Application":"AppleMusicAPI"}
+2025-10-12 18:04:01.989 +07:00 [INF] Login attempt for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH5:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH5","CorrelationId":"269636c2","Application":"AppleMusicAPI"}
+2025-10-12 18:04:03.386 +07:00 [INF] Login successful for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH5:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRH5","CorrelationId":"269636c2","Application":"AppleMusicAPI"}
+2025-10-12 18:04:29.787 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"24b3033b","RequestId":"0HNG9FQ8HKRH6:00000001","RequestPath":"/api/Auth/profile","ConnectionId":"0HNG9FQ8HKRH6","Application":"AppleMusicAPI"}
+2025-10-12 18:04:47.037 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"bf34f46d","RequestId":"0HNG9FQ8HKRH7:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH7","Application":"AppleMusicAPI"}
+2025-10-12 18:04:47.271 +07:00 [WRN] Failed to get principal from expired token {"SourceContext":"MyApp.WebAPI.Services.TokenService","ActionId":"db66aaef-1b6c-4f9c-8f8d-3a1b31561db2","ActionName":"MyApp.WebAPI.Controllers.AuthController.RefreshToken (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH7:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH7","CorrelationId":"bf34f46d","Application":"AppleMusicAPI"}
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX12741: JWT must have three segments (JWS) or five segments (JWE).
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at MyApp.WebAPI.Services.TokenService.GetPrincipalFromExpiredToken(String token) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\TokenService.cs:line 107
+2025-10-12 18:04:47.512 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRH7:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH7","CorrelationId":"bf34f46d","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid access token
+   at MyApp.WebAPI.Services.AuthenticationService.RefreshTokenAsync(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 166
+   at MyApp.WebAPI.Controllers.AuthController.RefreshToken(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 78
+   at lambda_method1025(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:04:59.035 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"c82d5def","RequestId":"0HNG9FQ8HKRH8:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH8","Application":"AppleMusicAPI"}
+2025-10-12 18:04:59.836 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRH8:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH8","CorrelationId":"c82d5def","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid refresh token
+   at MyApp.WebAPI.Services.AuthenticationService.RefreshTokenAsync(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 180
+   at MyApp.WebAPI.Controllers.AuthController.RefreshToken(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 78
+   at lambda_method1025(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:05:10.894 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"0926bfe3","RequestId":"0HNG9FQ8HKRH9:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH9","Application":"AppleMusicAPI"}
+2025-10-12 18:05:11.320 +07:00 [WRN] Failed to get principal from expired token {"SourceContext":"MyApp.WebAPI.Services.TokenService","ActionId":"db66aaef-1b6c-4f9c-8f8d-3a1b31561db2","ActionName":"MyApp.WebAPI.Controllers.AuthController.RefreshToken (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRH9:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH9","CorrelationId":"0926bfe3","Application":"AppleMusicAPI"}
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX12709: CanReadToken() returned false. JWT is not well formed.
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ReadJwtToken(String token)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.GetJwtSecurityTokenFromToken(String token, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateJWS(String token, TokenValidationParameters validationParameters, BaseConfiguration currentConfiguration, SecurityToken& signatureValidatedToken, ExceptionDispatchInfo& exceptionThrown)
+--- End of stack trace from previous location ---
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, JwtSecurityToken outerToken, TokenValidationParameters validationParameters, SecurityToken& signatureValidatedToken)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at MyApp.WebAPI.Services.TokenService.GetPrincipalFromExpiredToken(String token) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\TokenService.cs:line 107
+2025-10-12 18:05:11.835 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRH9:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRH9","CorrelationId":"0926bfe3","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid access token
+   at MyApp.WebAPI.Services.AuthenticationService.RefreshTokenAsync(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 166
+   at MyApp.WebAPI.Controllers.AuthController.RefreshToken(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 78
+   at lambda_method1025(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:05:57.230 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"49b060cd","RequestId":"0HNG9FQ8HKRHA:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRHA","Application":"AppleMusicAPI"}
+2025-10-12 18:05:57.382 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9FQ8HKRHA:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRHA","CorrelationId":"49b060cd","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid refresh token
+   at MyApp.WebAPI.Services.AuthenticationService.RefreshTokenAsync(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 180
+   at MyApp.WebAPI.Controllers.AuthController.RefreshToken(RefreshTokenRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 78
+   at lambda_method1025(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 18:06:08.613 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"2be38140","RequestId":"0HNG9FQ8HKRHB:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRHB","Application":"AppleMusicAPI"}
+2025-10-12 18:06:53.595 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"7ce72203","RequestId":"0HNG9FQ8HKRHC:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRHC","Application":"AppleMusicAPI"}
+2025-10-12 18:06:53.777 +07:00 [INF] Login attempt for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRHC:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRHC","CorrelationId":"7ce72203","Application":"AppleMusicAPI"}
+2025-10-12 18:06:56.390 +07:00 [INF] Login successful for email: Siapa@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"a3f83f88-2565-4ded-97e5-eb3008cd5268","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9FQ8HKRHC:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9FQ8HKRHC","CorrelationId":"7ce72203","Application":"AppleMusicAPI"}
+2025-10-12 18:07:16.041 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"9f9b8e8a","RequestId":"0HNG9FQ8HKRHD:00000001","RequestPath":"/api/Auth/refresh-token","ConnectionId":"0HNG9FQ8HKRHD","Application":"AppleMusicAPI"}
+2025-10-12 20:04:41.828 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 20:05:00.603 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:04.998 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:12.900 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-12 20:05:22.051 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 2 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:22.065 +07:00 [INF] 📋 Applying 2 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:22.072 +07:00 [INF]   → 20251011073502_authmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:22.076 +07:00 [INF]   → 20251011074833_authsecmigration {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:22.985 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-12 20:05:23.127 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.138 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.154 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.157 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.168 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.174 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.179 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.192 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.204 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.207 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.216 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.251 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:05:23.673 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-12 20:05:24.032 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-12 20:05:24.054 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-12 20:46:08.440 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 20:46:18.455 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-12 20:47:36.327 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 20:47:37.336 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-12 20:47:46.378 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 20:47:46.459 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 211
+2025-10-12 20:49:40.175 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 20:49:42.496 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:43.916 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:48.256 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-12 20:49:53.640 +07:00 [ERR] ❌ Cannot connect to database for AppleMusicDbContext {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:55.666 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:55.860 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:55.893 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:56.978 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.095 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.145 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.163 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.192 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.224 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.241 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.275 +07:00 [WRN]   → AppleMusicDbContext: Cannot connect to database {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.304 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 20:49:57.703 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-12 20:50:06.472 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-12 20:50:06.629 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-12 20:52:17.398 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG9IQ2CAFD2:00000001","RequestPath":"/api/UserManagement/users","ConnectionId":"0HNG9IQ2CAFD2","CorrelationId":"75586ec2","Application":"AppleMusicAPI"}
+2025-10-12 20:53:14.247 +07:00 [INF] User registration attempt for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"31edff6b-c1ba-4e1c-a7e4-f94b901d7c68","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD4:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9IQ2CAFD4","CorrelationId":"7f32c8db","Application":"AppleMusicAPI"}
+2025-10-12 20:53:19.618 +07:00 [INF] User registration successful for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"31edff6b-c1ba-4e1c-a7e4-f94b901d7c68","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD4:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9IQ2CAFD4","CorrelationId":"7f32c8db","Application":"AppleMusicAPI"}
+2025-10-12 20:53:44.267 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"e182d335","RequestId":"0HNG9IQ2CAFD5:00000001","RequestPath":"/api/UserManagement/users","ConnectionId":"0HNG9IQ2CAFD5","Application":"AppleMusicAPI"}
+2025-10-12 20:54:21.648 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"cfb3fac8","RequestId":"0HNG9IQ2CAFD6:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD6","Application":"AppleMusicAPI"}
+2025-10-12 20:54:22.239 +07:00 [INF] Login attempt for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD6:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD6","CorrelationId":"cfb3fac8","Application":"AppleMusicAPI"}
+2025-10-12 20:54:24.347 +07:00 [WRN] Login failed: User not found or inactive for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD6:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD6","CorrelationId":"cfb3fac8","Application":"AppleMusicAPI"}
+2025-10-12 20:54:24.391 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9IQ2CAFD6:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD6","CorrelationId":"cfb3fac8","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 118
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method711(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 20:54:41.440 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"68aabc5c","RequestId":"0HNG9IQ2CAFD7:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD7","Application":"AppleMusicAPI"}
+2025-10-12 20:54:41.762 +07:00 [INF] Login attempt for email: String@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD7:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD7","CorrelationId":"68aabc5c","Application":"AppleMusicAPI"}
+2025-10-12 20:54:41.879 +07:00 [WRN] Login failed: User not found or inactive for email: String@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD7:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD7","CorrelationId":"68aabc5c","Application":"AppleMusicAPI"}
+2025-10-12 20:54:43.278 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9IQ2CAFD7:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD7","CorrelationId":"68aabc5c","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 118
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method711(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 20:58:45.521 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"0831ecda","RequestId":"0HNG9IQ2CAFD8:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD8","Application":"AppleMusicAPI"}
+2025-10-12 20:58:46.148 +07:00 [INF] Login attempt for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD8:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD8","CorrelationId":"0831ecda","Application":"AppleMusicAPI"}
+2025-10-12 20:58:47.290 +07:00 [WRN] Login failed: User not found or inactive for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD8:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD8","CorrelationId":"0831ecda","Application":"AppleMusicAPI"}
+2025-10-12 20:58:47.779 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9IQ2CAFD8:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD8","CorrelationId":"0831ecda","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 118
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method711(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 20:59:29.346 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"b1dd57a9","RequestId":"0HNG9IQ2CAFD9:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD9","Application":"AppleMusicAPI"}
+2025-10-12 20:59:30.345 +07:00 [INF] Login attempt for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD9:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD9","CorrelationId":"b1dd57a9","Application":"AppleMusicAPI"}
+2025-10-12 20:59:30.911 +07:00 [WRN] Login failed: User not found or inactive for email: string@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"d5992069-1abf-456f-b89c-1f80ea220afd","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9IQ2CAFD9:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD9","CorrelationId":"b1dd57a9","Application":"AppleMusicAPI"}
+2025-10-12 20:59:31.425 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9IQ2CAFD9:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9IQ2CAFD9","CorrelationId":"b1dd57a9","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 118
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method711(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 21:02:32.869 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 21:02:36.877 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:36.962 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:40.697 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-12 21:02:45.763 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 0 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:48.131 +07:00 [INF] ✅ AppleMusicDbContext is already up to date {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:48.787 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.053 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.118 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.148 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.182 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.318 +07:00 [INF] ✅ Up to date: 1 (AppleMusicDbContext) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.515 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.538 +07:00 [INF] ❌ Errors: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.583 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.633 +07:00 [INF] ✨ All migrations completed successfully! {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:49.746 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 21:02:50.066 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-12 21:02:50.383 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-12 21:02:50.386 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
+2025-10-12 21:04:42.355 +07:00 [WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNG9J151UHDH:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9J151UHDH","CorrelationId":"d93e25b8","Application":"AppleMusicAPI"}
+2025-10-12 21:04:42.927 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"d93e25b8","RequestId":"0HNG9J151UHDH:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9J151UHDH","Application":"AppleMusicAPI"}
+2025-10-12 21:04:53.571 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"9b7c98f7","RequestId":"0HNG9J151UHDI:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9J151UHDI","Application":"AppleMusicAPI"}
+2025-10-12 21:04:54.222 +07:00 [INF] User registration attempt for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"0e6f8cba-9df8-4bce-86db-1c358c88b022","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9J151UHDI:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9J151UHDI","CorrelationId":"9b7c98f7","Application":"AppleMusicAPI"}
+2025-10-12 21:05:03.346 +07:00 [INF] User registration successful for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"0e6f8cba-9df8-4bce-86db-1c358c88b022","ActionName":"MyApp.WebAPI.Controllers.AuthController.Register (MyApp.WebAPI)","RequestId":"0HNG9J151UHDI:00000001","RequestPath":"/api/Auth/register","ConnectionId":"0HNG9J151UHDI","CorrelationId":"9b7c98f7","Application":"AppleMusicAPI"}
+2025-10-12 21:05:34.492 +07:00 [INF] JWT token validated for user: 7 {"CorrelationId":"58ed44cb","RequestId":"0HNG9J151UHDJ:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDJ","Application":"AppleMusicAPI"}
+2025-10-12 21:05:34.682 +07:00 [INF] Login attempt for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDJ:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDJ","CorrelationId":"58ed44cb","Application":"AppleMusicAPI"}
+2025-10-12 21:05:35.839 +07:00 [INF] Login successful for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDJ:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDJ","CorrelationId":"58ed44cb","Application":"AppleMusicAPI"}
+2025-10-12 21:06:35.779 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"ff36a67b","RequestId":"0HNG9J151UHDK:00000001","RequestPath":"/api/UserManagement/users/4/roles","ConnectionId":"0HNG9J151UHDK","Application":"AppleMusicAPI"}
+2025-10-12 21:06:47.428 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"8ea342cc","RequestId":"0HNG9J151UHDL:00000001","RequestPath":"/api/UserManagement/users/8/roles","ConnectionId":"0HNG9J151UHDL","Application":"AppleMusicAPI"}
+2025-10-12 21:07:30.884 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"49a53ee8","RequestId":"0HNG9J151UHDM:00000001","RequestPath":"/api/UserManagement/users/8/claims","ConnectionId":"0HNG9J151UHDM","Application":"AppleMusicAPI"}
+2025-10-12 21:10:08.588 +07:00 [INF] Login attempt for email: admin3@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDP:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDP","CorrelationId":"5aabbcaa","Application":"AppleMusicAPI"}
+2025-10-12 21:10:09.790 +07:00 [WRN] Login failed: User not found or inactive for email: admin3@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDP:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDP","CorrelationId":"5aabbcaa","Application":"AppleMusicAPI"}
+2025-10-12 21:10:10.123 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9J151UHDP:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDP","CorrelationId":"5aabbcaa","Application":"AppleMusicAPI"}
+MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
+   at MyApp.WebAPI.Services.AuthenticationService.LoginAsync(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\AuthenticationService.cs:line 118
+   at MyApp.WebAPI.Controllers.AuthController.Login(LoginRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\AuthController.cs:line 63
+   at lambda_method697(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 21:10:16.460 +07:00 [INF] Login attempt for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDP:00000002","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDP","CorrelationId":"66cc39aa","Application":"AppleMusicAPI"}
+2025-10-12 21:10:17.725 +07:00 [INF] Login successful for email: admin@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"5f88b817-f7eb-4ec7-9a0e-16c9e295fc84","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNG9J151UHDP:00000002","RequestPath":"/api/Auth/login","ConnectionId":"0HNG9J151UHDP","CorrelationId":"66cc39aa","Application":"AppleMusicAPI"}
+2025-10-12 21:11:07.247 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"5533b8a1","RequestId":"0HNG9J151UHDQ:00000001","RequestPath":"/api/UserManagement/users","ConnectionId":"0HNG9J151UHDQ","Application":"AppleMusicAPI"}
+2025-10-12 21:11:35.773 +07:00 [INF] JWT token validated for user: 8 {"CorrelationId":"67cc826b","RequestId":"0HNG9J151UHDQ:00000002","RequestPath":"/api/UserManagement/users/4/roles","ConnectionId":"0HNG9J151UHDQ","Application":"AppleMusicAPI"}
+2025-10-12 21:11:39.624 +07:00 [ERR] An unhandled exception occurred {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9J151UHDQ:00000002","RequestPath":"/api/UserManagement/users/4/roles","ConnectionId":"0HNG9J151UHDQ","CorrelationId":"67cc826b","Application":"AppleMusicAPI"}
+System.InvalidOperationException: User security stamp cannot be null.
+   at Microsoft.AspNetCore.Identity.UserManager`1.GetSecurityStampAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.ValidateUserAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.UpdateUserAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at MyApp.WebAPI.Services.UserManagementService.AssignRoleToUserAsync(Int32 userId, String roleName) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\UserManagementService.cs:line 85
+   at MyApp.WebAPI.Controllers.UserManagementController.AssignRole(Int32 userId, AssignRoleRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\UserManagementController.cs:line 86
+   at lambda_method764(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 21:11:42.285 +07:00 [ERR] Internal server error occurred. TraceId: 0HNG9J151UHDQ:00000002 {"SourceContext":"MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware","RequestId":"0HNG9J151UHDQ:00000002","RequestPath":"/api/UserManagement/users/4/roles","ConnectionId":"0HNG9J151UHDQ","CorrelationId":"67cc826b","Application":"AppleMusicAPI"}
+System.InvalidOperationException: User security stamp cannot be null.
+   at Microsoft.AspNetCore.Identity.UserManager`1.GetSecurityStampAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.ValidateUserAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.UpdateUserAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.AddToRoleAsync(TUser user, String role)
+   at MyApp.WebAPI.Services.UserManagementService.AssignRoleToUserAsync(Int32 userId, String roleName) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Services\UserManagementService.cs:line 85
+   at MyApp.WebAPI.Controllers.UserManagementController.AssignRole(Int32 userId, AssignRoleRequestDto request) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Controllers\UserManagementController.cs:line 86
+   at lambda_method764(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
+2025-10-12 22:00:03.082 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-12 22:00:19.124 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:00:32.072 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:00:51.255 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-12 22:01:17.273 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 0 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:18.612 +07:00 [INF] ✅ AppleMusicDbContext is already up to date {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:18.787 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:18.962 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.328 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.362 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.623 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.675 +07:00 [INF] ✅ Up to date: 1 (AppleMusicDbContext) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.708 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.789 +07:00 [INF] ❌ Errors: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.809 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.917 +07:00 [INF] ✨ All migrations completed successfully! {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:19.925 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-12 22:01:20.481 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-12 22:01:20.821 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-12 22:01:20.823 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}

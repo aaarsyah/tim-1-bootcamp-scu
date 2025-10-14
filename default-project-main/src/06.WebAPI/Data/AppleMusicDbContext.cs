@@ -25,14 +25,14 @@ namespace MyApp.WebAPI.Data
         public AppleMusicDbContext(DbContextOptions<AppleMusicDbContext> options) : base(options)
         {
         }
-        public DbSet<Course> Course { get; set; }
+        public DbSet<Course> Courses { get; set; }
     
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<PaymentMethod> Payment { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<MyClass> MyClass { get; set; } //Participans = MyClass
-        public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods  { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
+        public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
    
         /// <summary>
@@ -72,7 +72,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<Course>(entity =>
             {
-                entity.ToTable("Course");
+                entity.ToTable("Courses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -98,7 +98,7 @@ namespace MyApp.WebAPI.Data
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Course)
+                        .WithMany(e => e.Courses)
                         .HasForeignKey(e => e.CategoryId)
                         .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
@@ -185,15 +185,11 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.Email)
                         .IsRequired()
                         .HasMaxLength(50);
-                entity.Property(e => e.RefreshToken)
-                        .HasMaxLength(500);
-                entity.Property(e => e.Name)
+                entity.Property(e => e.UserName)
                         .IsRequired()
                         .HasMaxLength(20);
-                entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                entity.Property(e => e.RefreshToken)
+                        .HasMaxLength(500);
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -224,7 +220,8 @@ namespace MyApp.WebAPI.Data
             // Configure Role entity for Identity
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.Description)
+                .HasMaxLength(500);
             });
 
             // ===== USER CLAIM CONFIGURATION =====
@@ -266,7 +263,7 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<MyClass>(entity =>
             {
-                entity.ToTable("MyClass");
+                entity.ToTable("MyClasses");
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
@@ -736,20 +733,18 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 1,
-                    Name = "Super Admin",
+                    UserName = "Super Admin",
                     Email = "admin@applemusic.com",
-                    IsActive = true,
-                    IsAdmin = true,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
                     Id = 2,
-                    Name = "Nur Imam Iskandar",
+                    UserName = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
@@ -757,40 +752,36 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 3,
-                    Name = "Iskandar",
+                    UserName = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
                     Id = 4,
-                    Name = "Dummy User",
+                    UserName = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
-                    IsActive = false,
-                    IsAdmin = false,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
                     Id = 5,
-                    Name = "yusri sahrul",
+                    UserName = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
-                    IsActive = true,
-                    IsAdmin = false,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new User
                 {
                     Id = 6,
-                    Name = "yusri sahrul test",
+                    UserName = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
-                    IsActive = true,
-                    IsAdmin = true,
+                    EmailConfirmed = true,
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
@@ -809,7 +800,7 @@ namespace MyApp.WebAPI.Data
                 },
                 new Role
                 {
-                    Id = 4,
+                    Id = 2,
                     Name = "User",
                     NormalizedName = "USER",
                     Description = "Standard user with basic access",
