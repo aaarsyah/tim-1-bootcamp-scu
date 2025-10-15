@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.DTOs;
+using System.Net;
 using MyApp.WebAPI.Services;
 using System.Net;
 using System.Security.Claims;
@@ -90,6 +91,7 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
         }
+
         [HttpGet("add")] // HTTP GET method
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
@@ -110,6 +112,7 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<object>.SuccessResult());
         }
+
         [HttpGet("remove")] // HTTP GET method
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation

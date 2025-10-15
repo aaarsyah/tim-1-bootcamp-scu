@@ -4,7 +4,10 @@ using System.Security.Claims;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Services;
 using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Validators;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -12,6 +15,7 @@ namespace MyApp.WebAPI.Controllers
     /// Authentication Controller
     /// Menangani semua endpoint untuk authentication:
     /// - Register: Membuat user baru
+    /// - Confirm-Email : EmailConfirmed = true
     /// - Login: Authenticate dan dapat JWT token
     /// - Refresh Token: Perpanjang session
     /// - Logout: Invalidate session
@@ -25,15 +29,19 @@ namespace MyApp.WebAPI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserManagementService _userManagementService;
         private readonly ILogger<AuthController> _logger;
+        private readonly UserManager<User> _userManager;
+        
 
         public AuthController(
             IAuthenticationService authenticationService,
             IUserManagementService userManagementService,
-            ILogger<AuthController> logger)
+            ILogger<AuthController> logger,
+            UserManager<User> userManager)
         {
             _authenticationService = authenticationService;
             _userManagementService = userManagementService;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -46,9 +54,28 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Register([FromBody] RegisterRequestDto request)
         {
             var result = await _authenticationService.RegisterAsync(request);
+            
             return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
             // Semua error akan throw exception dan akan di catch di middleware
         }
+
+        //TODO : Still cannot confirm-email
+        // [HttpGet("confirm-email")]
+        // public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string token)
+        // {
+        //     var user = await _userManager.FindByEmailAsync(email);
+        //     if (user == null)
+        //         return BadRequest("Invalid email");
+
+        //     var decodedToken = Uri.UnescapeDataString(token);
+
+        //     var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+        //     if (!result.Succeeded)
+        //         return BadRequest("Invalid or expired token");
+
+        //     return Ok("Email confirmed successfully");
+        // }
 
         /// <summary>
         /// Login
@@ -60,7 +87,8 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Login([FromBody] LoginRequestDto request)
         {
             var result = await _authenticationService.LoginAsync(request);
-            return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+            
+           return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
             // Semua error akan throw exception dan akan di catch di middleware
         }
 
@@ -74,6 +102,7 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<AuthResponseDto>>> RefreshToken([FromBody] RefreshTokenRequestDto request)
         {
             var result = await _authenticationService.RefreshTokenAsync(request);
+            
             return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
             // Semua error akan throw exception dan akan di catch di middleware
         }
@@ -121,6 +150,46 @@ namespace MyApp.WebAPI.Controllers
             var result = await _authenticationService.ChangePasswordAsync(userId, request);
 
             return Ok(ApiResponse<object>.SuccessResult());
+        }
+
+        /// <summary>
+        /// Request password reset new
+        /// </summary>
+        [HttpPost("forgot-password")]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDto request)
+        {
+            var validator = new ForgotPasswordRequestValidator();
+            var validationResult = await validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
+            }
+            var result = await _authenticationService.ForgotPasswordAsync(request);
+            return Ok(ApiResponse<bool>.SuccessResult(result));
+        }
+
+        /// <summary>
+        /// Reset password with token
+        /// </summary>
+        [HttpPost("reset-password")]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDto request)
+        {
+            var validator = new ResetPasswordRequestValidator();
+            var validationResult = await validator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+                throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
+
+            var result = await _authenticationService.ResetPasswordAsync(request); //Service belum ada
+            return Ok(ApiResponse<bool>.SuccessResult(result));
+
+            // var command = new ResetPasswordCommand { Request = request };
+            // var result = await _mediator.Send(command);
+            
         }
 
         /// <summary>

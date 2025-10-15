@@ -12,6 +12,8 @@ namespace MyApp.WebAPI.Models.Entities
         // Refresh token untuk JWT authentication
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; } = DateTime.MinValue;
+        public string? EmailConfirmationToken { get; set; }
+        public DateTime EmailConfirmationTokenExpiry { get; set; } = DateTime.MinValue;
         /// <summary>
         /// CreatedAt: Tangal pembuatan pengguna
         /// Catatan: Digunakan pada page Admin
@@ -36,14 +38,12 @@ namespace MyApp.WebAPI.Models.Entities
     {
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsActive { get; set; } = true;
     }
 
 
     public class UserClaim : IdentityUserClaim<int>
     {
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsActive { get; set; } = true;
         
         // Navigation property
         public User User { get; set; } = null!;

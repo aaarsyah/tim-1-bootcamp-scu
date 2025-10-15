@@ -292,17 +292,13 @@ namespace MyApp.WebAPI.Services
         }
         /// <summary>
         /// Generate unique transaction ID<br />
-        /// Format: TXN{yyyyMMddHHmmss}{random 6 digits}<br />
-        /// Example: TXN20251005123059012345
+        /// Format: APM{yyyyMMddHHmmss}{random 6 digits}<br />
+        /// Example: APM20251005123059012345
         /// </summary>
         private string GenerateInvoiceId()
         {
-            return $"TXN{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
+            return $"APM{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
         }
-        //private string GenerateInvoiceId_GUID()
-        //{
-        //    var a = new BigInteger(Guid.NewGuid().ToByteArray().Concat(new byte[] { 0 }).ToArray()).ToString("D", CultureInfo.InvariantCulture);
-        //    return $"TXN{a}";
-        //}
+       
     }
 }

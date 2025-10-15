@@ -16,6 +16,7 @@
     /// Contoh:<br />
     /// throw new NotFoundException($"Page not found.");<br />
     /// </summary>
+    /// </summary>
     public class NotFoundException : BaseApiException
     {
         /// <summary>

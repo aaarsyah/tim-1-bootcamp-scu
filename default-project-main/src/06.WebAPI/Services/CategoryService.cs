@@ -5,6 +5,7 @@ using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
+using MyApp.WebAPI.Models;
 
 namespace MyApp.WebAPI.Services
 {

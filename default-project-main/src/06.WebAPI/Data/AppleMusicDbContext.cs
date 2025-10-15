@@ -182,14 +182,26 @@ namespace MyApp.WebAPI.Data
                 // Primary key
                 entity.HasKey(e => e.Id);
                 // Properties
-                entity.Property(e => e.Email)
-                        .IsRequired()
-                        .HasMaxLength(50);
                 entity.Property(e => e.RefreshToken)
-                        .HasMaxLength(500);
+                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                entity.Property(e => e.RefreshTokenExpiryTime)
+                        .IsRequired();
+                entity.Property(e => e.EmailConfirmationToken)
+                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                entity.Property(e => e.EmailConfirmationTokenExpiry)
+                        .IsRequired();
                 entity.Property(e => e.UserName)
                         .IsRequired() // UserName bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(20);
+                        .HasMaxLength(30);
+                entity.Property(e => e.NormalizedUserName)
+                        .IsRequired() // UserName bisa null di code namun diharuskan dalam database
+                        .HasMaxLength(30);
+                entity.Property(e => e.Email)
+                        .IsRequired()  // Email bisa null di code namun diharuskan dalam database
+                        .HasMaxLength(70);
+                entity.Property(e => e.NormalizedEmail)
+                        .IsRequired()  // Email bisa null di code namun diharuskan dalam database
+                        .HasMaxLength(70);
                 entity.Property(e => e.EmailConfirmed)
                         .IsRequired()
                         .HasColumnType("bit")
@@ -224,7 +236,8 @@ namespace MyApp.WebAPI.Data
             // Configure Role entity for Identity
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.Property(e => e.Description).HasMaxLength(500);
+                entity.Property(e => e.Description)
+                .HasMaxLength(500);
             });
 
             // ===== USER CLAIM CONFIGURATION =====
@@ -738,6 +751,7 @@ namespace MyApp.WebAPI.Data
                     Id = 1,
                     ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "Super Admin",
+                    NormalizedUserName = "SUPER ADMIN",
                     Email = "admin@applemusic.com",
                     NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                     EmailConfirmed = true,
@@ -749,6 +763,7 @@ namespace MyApp.WebAPI.Data
                     Id = 2,
                     ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "Nur Imam Iskandar",
+                    NormalizedUserName = "NUR IMAM ISKANDAR",
                     Email = "nurimamiskandar@gmail.com",
                     NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                     EmailConfirmed = true,
@@ -761,6 +776,7 @@ namespace MyApp.WebAPI.Data
                     Id = 3,
                     ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "Iskandar",
+                    NormalizedUserName = "ISKANDAR",
                     Email = "imam.stmik15@gmail.com",
                     NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                     EmailConfirmed = true,
@@ -772,6 +788,7 @@ namespace MyApp.WebAPI.Data
                     Id = 4,
                     ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "Dummy User",
+                    NormalizedUserName = "DUMMY USER",
                     Email = "iniemaildummysaya@gmail.com",
                     NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
                     EmailConfirmed = false,
@@ -783,6 +800,7 @@ namespace MyApp.WebAPI.Data
                     Id = 5,
                     ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "yusri sahrul",
+                    NormalizedUserName = "YUSRI SAHRUL",
                     Email = "yusrisahrul.works@gmail.com",
                     NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                     EmailConfirmed = true,
@@ -794,6 +812,7 @@ namespace MyApp.WebAPI.Data
                     Id = 6,
                     ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624", // GUID dibuat static supaya database seed tidak berubah-ubah
                     UserName = "yusri sahrul test",
+                    NormalizedUserName = "YUSRI SAHRUL TEST",
                     Email = "yusribootcamp@gmail.com",
                     NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                     EmailConfirmed = true,
@@ -815,7 +834,7 @@ namespace MyApp.WebAPI.Data
                 },
                 new Role
                 {
-                    Id = 4,
+                    Id = 2,
                     Name = "User",
                     NormalizedName = "USER",
                     Description = "Standard user with basic access",
