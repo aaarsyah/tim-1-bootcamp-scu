@@ -30,6 +30,19 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<CartItem, CartItemResponseDto>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Schedule.Course.Name));
+
+            // Invoice -> InvoiceResponseDto
+            CreateMap<Invoice, InvoiceResponseDto>();
+            CreateMap<User, UserDto>();
+            CreateMap<PaymentMethod, PaymentMethodDto>();
+            CreateMap<InvoiceDetail, InvoiceDetailDto>();
+
+            // InvoiceDetail -> InvoiceDetailDto
+            CreateMap<InvoiceDetail, InvoiceDetailDto>()
+                .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.ScheduleId))
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Schedule != null && src.Schedule.Course != null
+                    ? src.Schedule.Course.Name
+                    : null));
         }
     }
 }

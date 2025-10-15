@@ -40,6 +40,10 @@
         /// <summary>
         /// InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>
+
+        public int JumlahKursus { get; set; }
+        public decimal TotalHarga { get; set; }
+
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah saja
 
     }

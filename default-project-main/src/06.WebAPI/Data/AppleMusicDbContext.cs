@@ -53,7 +53,7 @@ namespace MyApp.WebAPI.Data
         /// <summary>
         /// DbSet untuk InvoiceDetails table
         /// </summary>
-        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails{ get; set; }
         /// <summary>
         /// DbSet untuk PaymentMethods table
         /// </summary>
@@ -292,10 +292,15 @@ namespace MyApp.WebAPI.Data
                 // Properties
                 entity.Property(e => e.RefCode)
                         .IsRequired()
-                        .HasMaxLength(32);
+                        .HasMaxLength(50);
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.JumlahKursus)
+                        .IsRequired();
+                entity.Property(e => e.TotalHarga)
+                        .IsRequired()
+                        .HasColumnType("decimal(18,2)");
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan PaymentMethod
                 entity.HasOne(e => e.PaymentMethod)

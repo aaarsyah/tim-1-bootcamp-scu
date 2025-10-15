@@ -71,9 +71,9 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/invoice");
         }
 
-        public void GoToDetailsInvoice()
+        public void GoToRincianInvoice()
         {
-            _navigation.NavigateTo("/details-invoice");
+            _navigation.NavigateTo("/RincianInvoice");
         }
 
         public void GoToDashboard()

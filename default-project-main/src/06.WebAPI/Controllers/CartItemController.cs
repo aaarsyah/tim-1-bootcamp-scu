@@ -123,7 +123,7 @@ namespace MyApp.WebAPI.Controllers
             await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult());
+            return Ok(ApiResponse<object>.SuccessResult(null));
         }
         [HttpGet("remove")] // HTTP GET method
         [ProducesResponseType(typeof(ActionResult<ApiResponse<object>>), StatusCodes.Status200OK)] // Swagger documentation
@@ -137,7 +137,7 @@ namespace MyApp.WebAPI.Controllers
             await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
 
             // Return 200 OK
-            return Ok(ApiResponse<object>.SuccessResult());
+            return Ok(ApiResponse<object>.SuccessResult(null));
         }
     }
 }

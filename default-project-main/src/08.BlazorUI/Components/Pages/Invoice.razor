@@ -1,0 +1,150 @@
+﻿@page "/Invoice"
+
+
+<style>
+/* Selang-seling warna baris */
+.mud-table tr:nth-child(even) {
+    background-color: rgba(184, 134, 11, 0.2) !important; /* Kuning tua transparan */
+}
+
+
+</style>
+
+<PageTitle>Home</PageTitle>
+<MudContainer class="mt-20">
+    <MudItem xs="12" sm="4">
+    <MudText Typo="Typo.subtitle1">
+     <MudLink Href="/"><b style="color: gray;">Beranda ></b></MudLink>
+    <MudLink Href="/invoice"><b> Invoice</b></MudLink>
+</MudText>
+
+    </MudItem>
+</MudContainer>
+    
+<MudContainer class="mt-16">
+    <MudItem xs="12" sm="4">
+    <MudText Typo="Typo.subtitle1"><b>Menu Invoice</b></MudText>
+</MudItem>
+
+<MudTable T="Element" Items="@Elements.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
+          RowClass="cursor-pointer" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
+   
+    <HeaderContent>
+        <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">No.Invoice</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Tanggal Beli</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Jumlah Kursus</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Total Harga</MudTh>
+        <MudTh Style="background-color: #F8D24B; color: black;">Action</MudTh>
+    </HeaderContent>
+
+    <RowTemplate>
+    <MudTd DataLabel="No">@context.Number</MudTd>
+    <MudTd DataLabel="No.Invoice">@context.NoInvoice</MudTd>
+    <MudTd DataLabel="Tanggal Beli">@context.TanggalBeli</MudTd>
+    <MudTd DataLabel="Jumlah Kursus">@context.JumlahKursus</MudTd>
+    <MudTd DataLabel="Total Harga">@context.TotalHarga</MudTd>
+    <MudTd DataLabel="Action">
+       <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Href="/RincianInvoice">
+    Rincian
+</MudButton>
+    </MudTd>
+</RowTemplate>
+</MudTable>
+
+</MudContainer>
+
+
+
+@code {
+    private int selectedRowNumber = -1;
+    private MudTable<Element> mudTable;
+    private List<string> clickedEvents = new();
+    private IEnumerable<Element> Elements = new List<Element>()
+    {
+           new Element()
+                {
+                    Number = 1,
+                    NoInvoice = "AB00003",
+                    TanggalBeli = "25 Juli 2026",
+                    JumlahKursus = 1,
+                    TotalHarga = "IDR. 2.500.000"
+                },
+            new Element()
+             {
+                 Number = 2,
+                 NoInvoice = "AB00004",
+                 TanggalBeli = "25 September 2026",
+                 JumlahKursus = 2,
+                 TotalHarga = "IDR. 4.500.000"
+             },
+            new Element()
+             {
+                 Number = 3,
+                 NoInvoice = "AB00005",
+                 TanggalBeli = "25 Desember 2026",
+                 JumlahKursus = 3,
+                 TotalHarga = "IDR. 11.500.000"
+             },
+            new Element()
+           {
+               Number = 4,
+               NoInvoice = "AB00006",
+               TanggalBeli = "25 Desember 2026",
+               JumlahKursus = 3,
+               TotalHarga = "IDR. 11.500.000"
+           },
+              new Element()
+           {
+               Number = 5,
+               NoInvoice = "AB00007",
+               TanggalBeli = "25 Desember 2026",
+               JumlahKursus = 3,
+               TotalHarga = "IDR. 11.500.000"
+           }
+    };
+
+    private void RowClickEvent(TableRowClickEventArgs<Element> tableRowClickEventArgs)
+    {
+        clickedEvents.Add("Row has been clicked");
+    }
+
+    private string SelectedRowClassFunc(Element element, int rowNumber)
+    {
+        if (selectedRowNumber == rowNumber)
+        {
+            selectedRowNumber = -1;
+            clickedEvents.Add("Selected Row: None");
+            return string.Empty;
+        }
+        else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
+        {
+            selectedRowNumber = rowNumber;
+            clickedEvents.Add($"Selected Row: {rowNumber}");
+            return "selected";
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+
+    public class Element
+    {
+        public int Number { get; set; }
+        public string NoInvoice { get; set; }
+        public string TanggalBeli { get; set; }
+        public int JumlahKursus { get; set; }
+        public string TotalHarga { get; set; }
+    }
+
+    private void ShowDetail(Element element)
+    {
+        // Misalnya log ke event panel
+        clickedEvents.Add($"Detail clicked for: {element.NoInvoice}");
+
+        // Atau redirect ke halaman detail jika kamu pakai NavigationManager
+        // navigationManager.NavigateTo($"/detail/{element.Number}");
+    }
+
+}

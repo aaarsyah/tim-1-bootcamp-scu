@@ -101,8 +101,7 @@ namespace MyApp.WebAPI.Services
                             .Where(a => a.UserId == user.Id && a.ScheduleId == itemcartid)
                             .FirstOrDefaultAsync();
                         if (item == null)
-                        {
-                            throw new ValidationException(
+                        {                            throw new ValidationException(
                                 $"ScheduleId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
                         }
                         items.Add(item);

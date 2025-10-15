@@ -13,6 +13,9 @@ using FluentValidation.AspNetCore;
 // Import System.Reflection untuk assembly operations
 using System.Reflection;
 
+using MyApp.WebAPI.Services;
+
+
 // Buat WebApplicationBuilder - pattern builder untuk konfigurasi aplikasi
 // args adalah command line arguments yang diterima aplikasi
 var builder = WebApplication.CreateBuilder(args);
@@ -50,8 +53,12 @@ builder.Services.AddCorsPolicy();
 // Diperlukan untuk generate OpenAPI specification
 builder.Services.AddEndpointsApiExplorer();
 
+//konfigurasi Invoice
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+
 // Konfigurasi Swagger UI dan OpenAPI
 builder.Services.AddSwaggerGen(c =>
+
 {
     // Definisikan dokumen OpenAPI
     c.SwaggerDoc("v1", new() { 
@@ -127,6 +134,12 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Swagger UI at root
     });
 }
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
 
 // ========== MIDDLEWARE PIPELINE (URUTAN PENTING!) ==========
 
