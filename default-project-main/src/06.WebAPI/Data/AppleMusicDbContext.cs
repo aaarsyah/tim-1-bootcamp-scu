@@ -187,7 +187,7 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(50);
                 entity.Property(e => e.UserName)
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(256);
                 entity.Property(e => e.RefreshToken)
                         .HasMaxLength(500);
                 entity.Property(e => e.CreatedAt)

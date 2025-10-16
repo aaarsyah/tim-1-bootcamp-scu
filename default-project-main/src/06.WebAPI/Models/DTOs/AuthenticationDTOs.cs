@@ -57,7 +57,7 @@ namespace MyApp.WebAPI.Models.DTOs
     public class ResetPasswordRequestDto
     {
         public string Email { get; set; } = string.Empty;
-        public string Token { get; set; } = string.Empty;
+        public string AccessToken { get; set; } = string.Empty;
         public string NewPassword { get; set; } = string.Empty;
         public string ConfirmPassword { get; set; } = string.Empty;
     }
@@ -66,7 +66,7 @@ namespace MyApp.WebAPI.Models.DTOs
     public class ConfirmEmailRequestDto
     {
         public string Email { get; set; } = string.Empty;
-        public string Token { get; set; } = string.Empty;
+        public string AccessToken { get; set; } = string.Empty;
     }
 
     /// <summary>

@@ -90,7 +90,7 @@ namespace MyApp.WebAPI.Validators
                 .NotEmpty().WithMessage("Email is required")
                 .EmailAddress().WithMessage("Invalid email format");
 
-            RuleFor(x => x.Token)
+            RuleFor(x => x.AccessToken)
                 .NotEmpty().WithMessage("Token is required");
 
             RuleFor(x => x.NewPassword)

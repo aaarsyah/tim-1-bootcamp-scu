@@ -235,7 +235,7 @@ namespace MyApp.WebAPI.Services
         }
 
         /// <summary> 
-        /// Change Password for authenticated user (POST)
+        /// Change Password for authenticated user = change password ketika sudah login di profile misalnya
         /// Ubah password user yang sudah login
         /// </summary>
         public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request)
@@ -258,7 +258,7 @@ namespace MyApp.WebAPI.Services
             return true;
         }
 
-        //Forgot Password = Request password reset
+        //Forgot Password = Request password reset 
         //Langsung Menggunakan HTTPClient - Service nya di Blazor UI
         public async Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request)
         {
@@ -276,13 +276,16 @@ namespace MyApp.WebAPI.Services
 
             // Generate token reset password
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
+
+            user.PasswordResetToken = token;
 
             // Buat link reset (menuju frontend URL BlazorUI)
             var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
 
             // Jika email terdaftar dalam database, Kirim email reset password
-            await _emailService.SendPasswordResetAsync(user.Email, user.Name, resetLink); 
+            await _emailService.SendPasswordResetAsync(user.Email, user.UserName, resetLink); 
 
             _logger.LogInformation("Password reset email sent to {Email}", user.Email);
 
@@ -310,7 +313,7 @@ namespace MyApp.WebAPI.Services
             }
 
             // Jalankan proses reset password
-            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, request.AccessToken, request.NewPassword);
             if (!result.Succeeded)
             {
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));

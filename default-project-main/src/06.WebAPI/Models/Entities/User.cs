@@ -23,6 +23,17 @@ namespace MyApp.WebAPI.Models.Entities
         public bool EmailConfirmed { get; set; }
         public string? EmailConfirmationToken { get; set; }
         public DateTime? EmailConfirmationTokenExpiry { get; set; }
+        // Password Reset
+        public string? PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpiry { get; set; }
+        
+        // Security
+        public int FailedLoginAttempts { get; set; } //untuk fe
+        public DateTime? LockoutEnd { get; set; } //gagal login
+        
+        // Last Login
+        public DateTime? LastLoginAt { get; set; }
+        
         /// <summary>
         /// CreatedAt: Tangal pembuatan pengguna
         /// Catatan: Digunakan pada page Admin

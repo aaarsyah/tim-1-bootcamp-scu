@@ -975,11 +975,17 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("FailedLoginAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("LockoutEnd")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -995,6 +1001,12 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -1022,8 +1034,8 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -1045,10 +1057,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "90502986-c010-4719-b3e7-85cc1a910198",
+                            ConcurrencyStamp = "4b7209da-bace-4541-b9ce-ccddcb27376c",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,
@@ -1061,10 +1074,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "88c83be4-dd37-42cf-b7ac-190506324c40",
+                            ConcurrencyStamp = "b213049e-9445-4639-a0e8-cb1aa51826df",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,
@@ -1077,10 +1091,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa9498e5-34e4-47bb-a28a-91ee32b098d9",
+                            ConcurrencyStamp = "31a9ce59-5d5f-4c69-97c9-419c351fbe1f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,
@@ -1093,10 +1108,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "63193ef7-de64-4042-916f-3fe1556465cc",
+                            ConcurrencyStamp = "764b2b87-560f-4e49-93f4-edeb21f04a0d",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,
@@ -1109,10 +1125,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1874e1a6-0cbc-4560-a0cd-a5e9e050bed6",
+                            ConcurrencyStamp = "29c86f41-7333-4ae0-b500-f3e641b0e81c",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,
@@ -1125,10 +1142,11 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "316ac85f-d6fa-438a-8556-6d2dc7387874",
+                            ConcurrencyStamp = "5f5d8c4c-26ce-4f7b-9e52-b2e4560a55e5",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             Name = "",
                             PhoneNumberConfirmed = false,

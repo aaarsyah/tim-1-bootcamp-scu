@@ -74,12 +74,18 @@ namespace MyApp.WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RefreshToken = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     EmailConfirmationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailConfirmationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FailedLoginAttempts = table.Column<int>(type: "int", nullable: false),
+                    LockoutEnd = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -89,7 +95,6 @@ namespace MyApp.WebAPI.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
@@ -401,15 +406,15 @@ namespace MyApp.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "FailedLoginAttempts", "LastLoginAt", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "f92b61fe-2fe1-4e8d-9af8-b8f8f730c2d8", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "admin@applemusic.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Super Admin" },
-                    { 2, 0, "114854e6-6917-40c2-860d-d71bba5a7d4f", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "nurimamiskandar@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Nur Imam Iskandar" },
-                    { 3, 0, "fbacc9bb-56eb-410d-9fe3-1dcbf8d7ba4d", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "imam.stmik15@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Iskandar" },
-                    { 4, 0, "9b171829-53f2-4ebd-89a1-b67bd567f864", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "iniemaildummysaya@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Dummy User" },
-                    { 5, 0, "03ad3e68-984b-4e12-a7b8-66c28726a999", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusrisahrul.works@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul" },
-                    { 6, 0, "a79252dc-6c52-4cba-81cd-2262d179204c", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusribootcamp@gmail.com", null, null, true, false, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul test" }
+                    { 1, 0, "4b7209da-bace-4541-b9ce-ccddcb27376c", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "admin@applemusic.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Super Admin" },
+                    { 2, 0, "b213049e-9445-4639-a0e8-cb1aa51826df", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "nurimamiskandar@gmail.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Nur Imam Iskandar" },
+                    { 3, 0, "31a9ce59-5d5f-4c69-97c9-419c351fbe1f", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "imam.stmik15@gmail.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Iskandar" },
+                    { 4, 0, "764b2b87-560f-4e49-93f4-edeb21f04a0d", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "iniemaildummysaya@gmail.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Dummy User" },
+                    { 5, 0, "29c86f41-7333-4ae0-b500-f3e641b0e81c", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusrisahrul.works@gmail.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul" },
+                    { 6, 0, "5f5d8c4c-26ce-4f7b-9e52-b2e4560a55e5", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusribootcamp@gmail.com", null, null, true, 0, null, false, null, "", null, null, null, null, null, null, false, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusri sahrul test" }
                 });
 
             migrationBuilder.InsertData(

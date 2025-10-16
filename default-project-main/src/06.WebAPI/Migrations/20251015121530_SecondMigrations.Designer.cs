@@ -12,7 +12,7 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251014184314_SecondMigrations")]
+    [Migration("20251015121530_SecondMigrations")]
     partial class SecondMigrations
     {
         /// <inheritdoc />
@@ -978,11 +978,21 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("FailedLoginAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("LockoutEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -994,6 +1004,12 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -1021,8 +1037,8 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -1044,11 +1060,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f92b61fe-2fe1-4e8d-9af8-b8f8f730c2d8",
+                            ConcurrencyStamp = "4b7209da-bace-4541-b9ce-ccddcb27376c",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "admin@applemusic.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1059,11 +1077,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "114854e6-6917-40c2-860d-d71bba5a7d4f",
+                            ConcurrencyStamp = "b213049e-9445-4639-a0e8-cb1aa51826df",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "nurimamiskandar@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1074,11 +1094,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fbacc9bb-56eb-410d-9fe3-1dcbf8d7ba4d",
+                            ConcurrencyStamp = "31a9ce59-5d5f-4c69-97c9-419c351fbe1f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "imam.stmik15@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1089,11 +1111,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b171829-53f2-4ebd-89a1-b67bd567f864",
+                            ConcurrencyStamp = "764b2b87-560f-4e49-93f4-edeb21f04a0d",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "iniemaildummysaya@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1104,11 +1128,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "03ad3e68-984b-4e12-a7b8-66c28726a999",
+                            ConcurrencyStamp = "29c86f41-7333-4ae0-b500-f3e641b0e81c",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusrisahrul.works@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1119,11 +1145,13 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a79252dc-6c52-4cba-81cd-2262d179204c",
+                            ConcurrencyStamp = "5f5d8c4c-26ce-4f7b-9e52-b2e4560a55e5",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "yusribootcamp@gmail.com",
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
+                            Name = "",
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
