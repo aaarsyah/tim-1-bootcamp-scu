@@ -1,4 +1,4 @@
-namespace MyApp.WebAPI.Models.DTOs
+namespace MyApp.Shared.DTOs
 {
     /// <summary>
     /// Product data transfer object

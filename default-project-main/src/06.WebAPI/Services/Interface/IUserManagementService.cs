@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 
 namespace MyApp.WebAPI.Services
 {

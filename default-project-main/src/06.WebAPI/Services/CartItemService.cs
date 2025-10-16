@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Models.Entities;
 using System.Globalization;
 using System.Numerics;

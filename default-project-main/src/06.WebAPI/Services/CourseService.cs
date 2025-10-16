@@ -8,7 +8,7 @@ using MyApp.WebAPI.Exceptions;
 // Import DTOs untuk data transfer objects
 // Import Models untuk entities dan response wrappers
 using MyApp.WebAPI.Models;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services

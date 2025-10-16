@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using MyApp.WebAPI.Configuration;
-using MyApp.WebAPI.Models.DTOs;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Configuration;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using MyApp.WebAPI.Exceptions;

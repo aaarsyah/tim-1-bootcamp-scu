@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
 using System.Security.Claims;
 

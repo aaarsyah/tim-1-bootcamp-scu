@@ -1,5 +1,5 @@
 using AutoMapper;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Models.Entities;
 

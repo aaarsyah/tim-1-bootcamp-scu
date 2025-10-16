@@ -3,7 +3,7 @@ using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Exceptions;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Models.Entities;
 using MyApp.WebAPI.Models;
 

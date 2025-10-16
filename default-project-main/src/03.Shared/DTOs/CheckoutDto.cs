@@ -1,7 +1,6 @@
-﻿using MyApp.WebAPI.Models.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyApp.WebAPI.Models.DTOs
+namespace MyApp.Shared.DTOs
 {
     /// <summary>
     /// Transfer Request DTO

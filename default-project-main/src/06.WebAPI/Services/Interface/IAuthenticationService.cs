@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using MyApp.WebAPI.Models.Entities;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Configuration;
 
 namespace MyApp.WebAPI.Services

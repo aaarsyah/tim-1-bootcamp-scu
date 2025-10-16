@@ -30,7 +30,7 @@ namespace MyApp.WebAPI.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
         public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }

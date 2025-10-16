@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Models;
 // Import DTOs untuk request/response objects
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 // Import Services untuk business logic
 using MyApp.WebAPI.Services;
 

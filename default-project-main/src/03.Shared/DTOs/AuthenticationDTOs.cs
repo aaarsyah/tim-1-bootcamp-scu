@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MyApp.WebAPI.Models.DTOs
+namespace MyApp.Shared.DTOs
 {
     /// <summary>
     /// Request DTO untuk registrasi user baru

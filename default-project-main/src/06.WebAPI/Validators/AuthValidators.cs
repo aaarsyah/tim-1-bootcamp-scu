@@ -1,5 +1,5 @@
 using FluentValidation;
-using MyApp.WebAPI.Models.DTOs;
+using MyApp.Shared.DTOs;
 
 namespace MyApp.WebAPI.Validators
 {
