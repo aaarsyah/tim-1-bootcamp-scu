@@ -1,10 +1,13 @@
 @page "/login"
 @using System.ComponentModel.DataAnnotations
-@using MudBlazor.Services;
-@using Microsoft.Extensions.Localization;
-@using MyApp.BlazorUI.Components;
-
-@inject NavigationManagerExt Navigation;
+@using MudBlazor.Services
+@using Microsoft.Extensions.Localization
+@using MyApp.BlazorUI.Components
+@using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
+@inject IAuthService AuthService
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
 
 <PageTitle>Login</PageTitle>
 
@@ -29,6 +32,16 @@
                       Required="true"
                       RequiredError="Password Harus Diisi!"
                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" />
+
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
+        }
+
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+        }
 
 
     <!-- Forgot password link -->
@@ -55,13 +68,10 @@
 
 @code {
     private MudForm _form;
-    private LoginModel _loginModel = new();
-   
-    public class LoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+    private LoginRequestDto _loginModel { get; set; } = new();
+
+    private bool _isLoading = false;
+    private string _errorMessage = string.Empty;
 
     private IEnumerable<string> PasswordStrength(string pw)
     {
@@ -74,10 +84,48 @@
 
     private async Task OnConfirm()
     {
-        await _form.Validate();
-        if (_form.IsValid)
+        // await _form.Validate();
+        // if (_form.IsValid)
+        // {
+        //     Navigation.GoToHome();
+        // }
+        _isLoading = true;
+        _errorMessage = string.Empty;
+
+        try
         {
-            Navigation.GoToHome();
+            // Debug: Check if model has values
+            Console.WriteLine($"DEBUG - Email: '{_loginModel.Email}', Password: '{_loginModel.Password}'");
+
+            if (string.IsNullOrEmpty(_loginModel.Email) || string.IsNullOrEmpty(_loginModel.Password))
+            {
+                _errorMessage = "Please fill in all fields";
+                Snackbar.Add("Please fill in all fields", Severity.Warning);
+                return;
+            }
+
+            var result = await AuthService.LoginAsync(_loginModel);
+
+            if (result != null)
+            {
+                Snackbar.Add("Login successful!", Severity.Success);
+                Navigation.GoToHome();
+            }
+            else
+            {
+                _errorMessage = "Invalid email or password";
+                Snackbar.Add("Login failed", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = "An error occurred during login";
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+            Console.WriteLine($"ERROR: {ex}");
+        }
+        finally
+        {
+            _isLoading = false;
         }
     }
 }

@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Http;
-
-namespace MyApp.WebAPI.Models
+namespace MyApp.Shared.DTOs
 {
     /// <summary>
     /// Standard API response wrapper

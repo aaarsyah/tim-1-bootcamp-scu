@@ -1,8 +1,8 @@
 using MyApp.WebAPI.Exceptions;
-using MyApp.WebAPI.Models;
-using System;
+using MyApp.Shared.DTOs;
 using System.Net;
 using System.Text.Json;
+using MyApp.WebAPI.Models;
 
 namespace MyApp.WebAPI.Middleware
 {

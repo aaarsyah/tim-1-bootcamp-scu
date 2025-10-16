@@ -6,6 +6,7 @@
 
 @inject NavigationManagerExt Navigation;
 @inject IUserService UserService
+@inject IAuthService AuthService
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
 <MudPopoverProvider /> 
@@ -30,7 +31,7 @@
 
             <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
-                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="Logout">Logout</MudButton>
+                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="HandleLogout">Logout</MudButton>
             </MudDrawer>
 
             <MudMainContent Class="pa-4 pt-6">
@@ -55,7 +56,7 @@
             </MudButton>
             <MudText Class="mx-2">|</MudText>
             <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="Logout"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
         </MudAppBar>
         }
 
@@ -195,9 +196,10 @@
     [Parameter] 
     public Role UserRole { get; set; } = Role.User; //role user
     private bool Loggedin = true;
-    private void Logout()
+    private async Task HandleLogout()
     {
-        Loggedin = false;
+        await AuthService.LogoutAsync();
+        Navigation.GoToLogin();
     }
 
     private bool _drawerOpen = true;

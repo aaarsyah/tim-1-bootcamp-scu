@@ -194,10 +194,10 @@ namespace MyApp.WebAPI.Controllers
 
         /// <summary>
         /// Get Current User Profile
-        /// GET /api/auth/profile
+        /// GET /api/auth/me
         /// Requires: JWT Token
         /// </summary>
-        [HttpGet("profile")]
+        [HttpGet("me")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status400BadRequest)]

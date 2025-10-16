@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using MudBlazor.Services;
 
 using MyApp.BlazorUI.Components; 
@@ -12,6 +13,15 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Add Blazored LocalStorage
+builder.Services.AddBlazoredLocalStorage();
+
+// Configure HttpClient for API calls
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269")
+});
+
 // Add navigation service
 builder.Services.AddScoped<NavigationManagerExt>();
 
@@ -21,6 +31,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+
+//Auth
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 
