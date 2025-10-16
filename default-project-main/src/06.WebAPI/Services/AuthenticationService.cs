@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using MyApp.WebAPI.Configuration;
-using MyApp.WebAPI.Models.Entities;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Configuration;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {
@@ -284,7 +285,7 @@ namespace MyApp.WebAPI.Services
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             //Menghindari Email Enumeration Attack (menghindari hacker mengetahui email mana yang valid)
-            if (user == null)
+            if (user == null || user.Email == null)
             {
                 _logger.LogWarning("Forgot password requested for non-existing email: {Email}", request.Email);
                 // Demi keamanan: tetap return sukses tanpa memberitahu apakah email valid
@@ -293,6 +294,11 @@ namespace MyApp.WebAPI.Services
 
             // Generate token reset password
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            user.PasswordResetToken = token;
+            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
+
+            var a = await _userManager.UpdateAsync(user);
 
             // Buat link reset (menuju frontend URL BlazorUI)
             var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
@@ -320,10 +326,18 @@ namespace MyApp.WebAPI.Services
             }
 
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null)
+            if (user == null || user.Email == null)
             {
                 _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
-                throw new AuthenticationException("Invalid token or user.");
+                throw new AuthenticationException("Invalid user or token.");
+            }
+
+            // ✅ Validasi token buatan sendiri
+            if (user.PasswordResetToken != request.Token ||
+                user.PasswordResetTokenExpiry < DateTime.UtcNow)
+            {
+                _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
+                throw new ValidationException("Invalid or expired reset token.");
             }
 
             // Jalankan proses reset password
@@ -334,6 +348,16 @@ namespace MyApp.WebAPI.Services
                 _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
                 throw new ValidationException($"Password reset failed: {errors}");
             }
+
+            //// ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)
+            //var passwordHasher = new PasswordHasher<User>();
+            //user.PasswordHash = passwordHasher.HashPassword(user, request.NewPassword);
+
+            // ✅ Reset field token agar tidak bisa digunakan lagi
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpiry = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
 
             // Kirim email notifikasi berhasil
             await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.UserName ?? "User");

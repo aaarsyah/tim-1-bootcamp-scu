@@ -9,11 +9,13 @@ namespace MyApp.BlazorUI.Services
     {
         Task<AuthResponseDto?> LoginAsync(LoginRequestDto request);
         Task<AuthResponseDto?> RegisterAsync(RegisterRequestDto request);
+        Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request);
         Task<bool> ChangePasswordAsync(ChangePasswordRequestDto request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request);
         Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request);
         Task<UserDto?> GetCurrentUserAsync();
         Task LogoutAsync();
+        bool IsLoggedIn();
     }
     public class AuthService : IAuthService
     {
@@ -92,19 +94,36 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
+        public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/auth/confirm-email", request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public async Task<bool> ChangePasswordAsync(ChangePasswordRequestDto request)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/change-password", request);
 
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                    return apiResponse?.StatusCode == "SUCCESS";
+                    return false;
                 }
-
-                return false;
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch
             {
@@ -117,13 +136,12 @@ namespace MyApp.BlazorUI.Services
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/forgot-password", request);
 
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
-                    return apiResponse?.StatusCode == "SUCCESS";
+                    return false;
                 }
-
-                return false;
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch
             {
@@ -136,13 +154,12 @@ namespace MyApp.BlazorUI.Services
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/reset-password", request);
 
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
-                    return apiResponse?.StatusCode == "SUCCESS";
+                    return false;
                 }
-
-                return false;
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch
             {
@@ -208,7 +225,11 @@ namespace MyApp.BlazorUI.Services
                 // lost connection? Don't logout users yet.
                 return;
             }
-            
+
+        }
+        public bool IsLoggedIn()
+        {
+            return _httpClient.DefaultRequestHeaders.Authorization != null;
         }
     }
 }

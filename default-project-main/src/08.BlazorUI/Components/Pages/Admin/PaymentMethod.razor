@@ -112,7 +112,7 @@
             FullWidth = true
         };
 
-        var dialog = DialogService.Show<PaymentDialog>("Payment Form", parameters, options);
+        var dialog = await DialogService.ShowAsync<PaymentDialog>("Payment Form", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled && result.Data is PaymentItem)

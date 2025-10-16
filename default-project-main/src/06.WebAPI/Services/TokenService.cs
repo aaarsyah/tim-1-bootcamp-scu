@@ -82,7 +82,7 @@ namespace MyApp.WebAPI.Services
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            return Base64UrlEncoder.Encode(randomNumber);
         }
 
         /// <summary>
@@ -184,12 +184,12 @@ namespace MyApp.WebAPI.Services
 
         public Task<string> GenerateEmailConfirmationTokenAsync()
         {
-            return Task.FromResult(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)));
+            return Task.FromResult(Base64UrlEncoder.Encode(RandomNumberGenerator.GetBytes(64)));
         }
 
         public Task<string> GeneratePasswordResetTokenAsync()
         {
-            return Task.FromResult(Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)));
+            return Task.FromResult(Base64UrlEncoder.Encode(RandomNumberGenerator.GetBytes(64)));
         }
     }
 }

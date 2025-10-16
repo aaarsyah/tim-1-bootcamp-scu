@@ -3,7 +3,11 @@
 @using System.ComponentModel.DataAnnotations
 @using MudBlazor.Services;
 @using Microsoft.Extensions.Localization;
-@inject NavigationManagerExt Navigation;
+@using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
+@inject IAuthService AuthService
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
 
 <PageTitle>Confirm Email Success</PageTitle>
 
@@ -13,3 +17,66 @@
     <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-4">Silahkan Login terlebih dahulu untuk masuk ke aplikasi</MudText>
     <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Style="width: 176px; height: 55px; border-radius: 6px">Masuk Sekarang</MudButton>
 </MudContainer>
+
+@code {
+
+    private ConfirmEmailRequestDto _confirmEmailModel { get; set; } = new();
+    private bool _isTokenValid = true;
+
+    [SupplyParameterFromQuery(Name = "email")]
+    private string? Email { get; set; }
+
+    [SupplyParameterFromQuery(Name = "token")]
+    private string? Token { get; set; }
+    //Cek apakah token verifikasi email valid ketika user meng-load page ini
+    protected override async Task OnInitializedAsync()
+    {
+        _confirmEmailModel ??= new ConfirmEmailRequestDto();
+
+        // Validate that we have email and token from query string
+        if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Token))
+        {
+            _isTokenValid = false;
+            return;
+        }
+
+        // Set email and token from query parameters
+        _confirmEmailModel.Email = Email;
+        _confirmEmailModel.Token = Token;
+
+
+        try
+        {
+            // Debug: Check if model has values
+            Console.WriteLine($"DEBUG - Email: '{_confirmEmailModel.Email}', Token: '{_confirmEmailModel.Token}'");
+
+            if (string.IsNullOrEmpty(_confirmEmailModel.Email) ||
+                string.IsNullOrEmpty(_confirmEmailModel.Token))
+            {
+                Snackbar.Add("Email confirmation token invalid.", Severity.Warning);
+                return;
+            }
+
+            var result = await AuthService.ConfirmEmailAsync(_confirmEmailModel);
+
+            if (result)
+            {
+                Snackbar.Add("Email successfully confirmed!", Severity.Success);
+
+                // Wait 2 seconds then redirect to login
+                await Task.Delay(2000);
+                Navigation.GoToHome();
+            }
+            else
+            {
+                Snackbar.Add("Failed to confirm email. Email confirmation token may be invalid.", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+            Console.WriteLine($"ERROR: {ex}");
+        }
+        await base.OnInitializedAsync();
+    }
+}

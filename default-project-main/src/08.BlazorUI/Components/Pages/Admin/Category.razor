@@ -114,7 +114,7 @@
             FullWidth = true
         };
 
-        var dialog = DialogService.Show<CategoryDialog>("Category Form", parameters, options);
+        var dialog = await DialogService.ShowAsync<CategoryDialog>("Category Form", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled && result.Data is CategoryItem)

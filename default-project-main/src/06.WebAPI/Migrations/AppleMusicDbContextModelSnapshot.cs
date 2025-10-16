@@ -1027,6 +1027,12 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PasswordResetTokenExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -1083,6 +1089,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                             NormalizedUserName = "SUPER ADMIN",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1101,6 +1108,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                             NormalizedUserName = "NUR IMAM ISKANDAR",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1119,6 +1127,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                             NormalizedUserName = "ISKANDAR",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1137,6 +1146,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
                             NormalizedUserName = "DUMMY USER",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1155,6 +1165,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                             NormalizedUserName = "YUSRI SAHRUL",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
@@ -1173,6 +1184,7 @@ namespace MyApp.WebAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                             NormalizedUserName = "YUSRI SAHRUL TEST",
+                            PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumberConfirmed = false,
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,

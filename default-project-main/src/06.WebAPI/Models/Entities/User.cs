@@ -14,6 +14,8 @@ namespace MyApp.WebAPI.Models.Entities
         public DateTime RefreshTokenExpiryTime { get; set; } = DateTime.MinValue;
         public string? EmailConfirmationToken { get; set; }
         public DateTime EmailConfirmationTokenExpiry { get; set; } = DateTime.MinValue;
+        public string? PasswordResetToken { get; set; }
+        public DateTime PasswordResetTokenExpiry { get; set; } = DateTime.MinValue;
         /// <summary>
         /// CreatedAt: Tangal pembuatan pengguna
         /// Catatan: Digunakan pada page Admin

@@ -114,7 +114,7 @@
             FullWidth = true
         };
 
-        var dialog = DialogService.Show<UserDialog>("User Form", parameters, options);
+        var dialog = await DialogService.ShowAsync<UserDialog>("User Form", parameters, options);
         var result = await dialog.Result;
 
         if (!result.Canceled && result.Data is UserItem)

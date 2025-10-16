@@ -60,22 +60,33 @@ namespace MyApp.WebAPI.Controllers
         }
 
         //TODO : Still cannot confirm-email
-        // [HttpGet("confirm-email")]
-        // public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string token)
-        // {
-        //     var user = await _userManager.FindByEmailAsync(email);
-        //     if (user == null)
-        //         return BadRequest("Invalid email");
+        [HttpPost("confirm-email")]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse<object>>> ConfirmEmail([FromBody] ConfirmEmailRequestDto request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+                return BadRequest("Invalid email");
 
-        //     var decodedToken = Uri.UnescapeDataString(token);
-
-        //     var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
-
-        //     if (!result.Succeeded)
-        //         return BadRequest("Invalid or expired token");
-
-        //     return Ok("Email confirmed successfully");
-        // }
+            //     var decodedToken = Uri.UnescapeDataString(token);
+            // Cek token valid dan belum expired
+            if (user.EmailConfirmationToken != request.Token || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
+            {
+                return BadRequest("Invalid or expired confirmation token");
+            }
+            //     var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            // Tandai email sebagai terverifikasi
+            user.EmailConfirmed = true;
+            user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
+            user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
+            //     if (!result.Succeeded)
+            //         return BadRequest("Invalid or expired token");
+            await _userManager.UpdateAsync(user);
+            //     return Ok("Email confirmed successfully");
+            // }
+            return Ok("Email has been successfully confirmed. You can now log in.");
+        }
 
         /// <summary>
         /// Login

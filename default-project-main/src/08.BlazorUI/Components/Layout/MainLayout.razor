@@ -14,7 +14,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-@if (Loggedin)
+@if (AuthService.IsLoggedIn())
     {
         @if (UserRole == Role.Admin)
         {

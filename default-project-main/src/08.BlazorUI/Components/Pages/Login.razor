@@ -33,15 +33,15 @@
                       RequiredError="Password Harus Diisi!"
                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" />
 
-        @if (_isLoading)
-        {
-            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
-        }
+                          @if (_isLoading)
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
+            }
 
-        @if (!string.IsNullOrEmpty(_errorMessage))
-        {
-            <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
-        }
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+            }
 
 
     <!-- Forgot password link -->
@@ -84,11 +84,11 @@
 
     private async Task OnConfirm()
     {
-        // await _form.Validate();
-        // if (_form.IsValid)
-        // {
-        //     Navigation.GoToHome();
-        // }
+        await _form.Validate();
+        if (!_form.IsValid)
+        {
+            return;
+        }
         _isLoading = true;
         _errorMessage = string.Empty;
 
