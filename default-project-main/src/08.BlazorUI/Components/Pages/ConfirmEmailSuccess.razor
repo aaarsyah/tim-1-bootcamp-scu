@@ -41,8 +41,8 @@
         }
 
         // Set email and token from query parameters
-        _confirmEmailModel.Email = Email;
-        _confirmEmailModel.Token = Token;
+        _confirmEmailModel.Email = Uri.UnescapeDataString(Email ?? string.Empty);
+        _confirmEmailModel.Token = Uri.UnescapeDataString(Token ?? string.Empty);
 
 
         try

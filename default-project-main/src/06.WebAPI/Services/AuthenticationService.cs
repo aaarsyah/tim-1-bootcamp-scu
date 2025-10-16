@@ -95,10 +95,15 @@ namespace MyApp.WebAPI.Services
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("can_view_profile", "true"));
 
             // Kirim email konfirmasi
-            var confirmationLink = $"https://localhost:5099/confirm-email?email={user.Email}&token={confirmationToken}";
+            var confirmationLink = $"https://localhost:5099/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
             await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
 
             _logger.LogInformation("User registration successful for email: {Email}", request.Email);
+
+
+
+
+
 
             // Generate JWT tokens
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
