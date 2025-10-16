@@ -276,10 +276,11 @@ namespace MyApp.WebAPI.Services
 
             // Generate token reset password
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
 
             user.PasswordResetToken = token;
-
+            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
+            await _userManager.UpdateAsync(user);
+            
             // Buat link reset (menuju frontend URL BlazorUI)
             var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
@@ -309,26 +310,37 @@ namespace MyApp.WebAPI.Services
             if (user == null)
             {
                 _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
-                throw new AuthenticationException("Invalid token or user.");
+                throw new AuthenticationException("Invalid user or token.");
             }
 
-            // Jalankan proses reset password
-            var result = await _userManager.ResetPasswordAsync(user, request.AccessToken, request.NewPassword);
-            if (!result.Succeeded)
+            // ✅ Validasi token buatan sendiri
+            if (user.PasswordResetToken != request.AccessToken ||
+                user.PasswordResetTokenExpiry == null ||
+                user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
-                throw new ValidationException($"Password reset failed: {errors}");
+                _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
+                throw new ValidationException("Invalid or expired reset token.");
             }
 
-            // Kirim email notifikasi berhasil
+            // ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)
+            var passwordHasher = new PasswordHasher<User>();
+            user.PasswordHash = passwordHasher.HashPassword(user, request.NewPassword);
+
+            // ✅ Reset field token agar tidak bisa digunakan lagi
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpiry = null;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _userManager.UpdateAsync(user);
+
+            // ✅ Kirim notifikasi email
             await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.UserName ?? "User");
 
             _logger.LogInformation("Password reset successful for {Email}", request.Email);
 
             return true;
         }
-    
+
 
         /// <summary>
         /// Map User entity to UserDto
