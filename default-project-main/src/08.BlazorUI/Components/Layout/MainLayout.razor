@@ -14,7 +14,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-@if (AuthService.IsLoggedIn())
+@if (Loggedin)
     {
         @if (UserRole == Role.Admin)
         {
@@ -195,7 +195,7 @@
 
     [Parameter] 
     public Role UserRole { get; set; } = Role.User; //role user
-    private bool Loggedin = true;
+    private bool Loggedin = false;
     private async Task HandleLogout()
     {
         await AuthService.LogoutAsync();
@@ -206,7 +206,7 @@
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
 
-     private string? currentPath;
+    private string? currentPath;
 
     // ====== Lifecycle ======
     protected override void OnInitialized()
@@ -227,6 +227,11 @@
             PaletteLight = _lightPalette,
             LayoutProperties = new LayoutProperties()
         };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Loggedin = await AuthService.IsLoggedIn();
     }
 
     // ====== Logic Visibility ======

@@ -72,5 +72,9 @@ namespace MyApp.BlazorUI.Services
             var token = handler.ReadJwtToken(jwt);
             return token.Claims;
         }
+        public async Task<bool> isLoggedInAsync()
+        {
+            return await GetAuthenticationStateAsync() != _anonymous;
+        }
     }
 }

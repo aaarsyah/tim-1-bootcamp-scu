@@ -15,7 +15,7 @@ namespace MyApp.BlazorUI.Services
         Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request);
         Task<UserDto?> GetCurrentUserAsync();
         Task LogoutAsync();
-        bool IsLoggedIn();
+        Task<bool> IsLoggedIn();
     }
     public class AuthService : IAuthService
     {
@@ -227,9 +227,9 @@ namespace MyApp.BlazorUI.Services
             }
 
         }
-        public bool IsLoggedIn()
+        public async Task<bool> IsLoggedIn()
         {
-            return _httpClient.DefaultRequestHeaders.Authorization != null;
+            return await ((CustomAuthStateProvider)_authStateProvider).isLoggedInAsync();
         }
     }
 }
