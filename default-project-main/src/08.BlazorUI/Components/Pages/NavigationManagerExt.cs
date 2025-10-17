@@ -26,6 +26,14 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/");
         }
 
+        /// <summary>
+        /// Versi GoToHome() lain untuk force refresh (untuk update state ketika login/logout)
+        /// </summary>
+        public void GoToHome2()
+        {
+            _navigation.NavigateTo("/",true);
+        }
+
         public void GoToForgotPass()
         {
             _navigation.NavigateTo("/forgot-password");

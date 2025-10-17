@@ -338,20 +338,20 @@ namespace MyApp.WebAPI.Services
             }
 
             // ✅ Validasi token buatan sendiri
-            if (user.PasswordResetToken != request.Token ||
+            if (user.PasswordResetToken != request.AccessToken ||
                 user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {
                 _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
                 throw new ValidationException("Invalid or expired reset token.");
             }
 
-            // ✅ Validasi token buatan sendiri
-            if (user.PasswordResetToken != request.AccessToken ||
-                user.PasswordResetTokenExpiry == null ||
-                user.PasswordResetTokenExpiry < DateTime.UtcNow)
+            // Jalankan proses reset password
+            var result = await _userManager.ResetPasswordAsync(user, request.AccessToken, request.NewPassword);
+            if (!result.Succeeded)
             {
-                _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
-                throw new ValidationException("Invalid or expired reset token.");
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
+                throw new ValidationException($"Password reset failed: {errors}");
             }
 
             //// ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)

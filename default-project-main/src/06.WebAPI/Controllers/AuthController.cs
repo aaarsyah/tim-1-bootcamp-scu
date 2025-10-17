@@ -71,7 +71,7 @@ namespace MyApp.WebAPI.Controllers
 
             //     var decodedToken = Uri.UnescapeDataString(token);
             // Cek token valid dan belum expired
-            if (user.EmailConfirmationToken != request.Token || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
+            if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
             {
                 return BadRequest("Invalid or expired confirmation token");
             }

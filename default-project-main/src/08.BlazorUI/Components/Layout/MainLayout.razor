@@ -196,10 +196,15 @@
     [Parameter] 
     public Role UserRole { get; set; } = Role.User; //role user
     private bool Loggedin = false;
+
+    /// <summary>
+    /// Handle user menekan tombol logout
+    /// </summary>
+    /// <returns></returns>
     private async Task HandleLogout()
     {
         await AuthService.LogoutAsync();
-        Navigation.GoToLogin();
+        Navigation.GoToHome2(); //Logout balik ke home page
     }
 
     private bool _drawerOpen = true;
