@@ -273,3 +273,142 @@ MyApp.WebAPI.Exceptions.ValidationException: Invalid email or password
    at MyApp.WebAPI.Middleware.GlobalExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Middleware\GlobalExceptionHandlingMiddleware.cs:line 51
 2025-10-16 16:13:34.136 +07:00 [INF] Login attempt for email: stringg@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"06af82b0-06a6-41a8-9802-b02f93a0d114","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNGCIF4ACHO0:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNGCIF4ACHO0","CorrelationId":"08253968","Application":"AppleMusicAPI"}
 2025-10-16 16:13:35.703 +07:00 [INF] Login successful for email: stringg@example.com {"SourceContext":"MyApp.WebAPI.Services.AuthenticationService","ActionId":"06af82b0-06a6-41a8-9802-b02f93a0d114","ActionName":"MyApp.WebAPI.Controllers.AuthController.Login (MyApp.WebAPI)","RequestId":"0HNGCIF4ACHO0:00000001","RequestPath":"/api/Auth/login","ConnectionId":"0HNGCIF4ACHO0","CorrelationId":"08253968","Application":"AppleMusicAPI"}
+2025-10-16 19:16:38.563 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-16 19:16:50.632 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:17:02.326 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:17:21.313 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-16 19:18:01.045 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 1 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:03.929 +07:00 [INF] 📋 Applying 1 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:05.811 +07:00 [INF]   → 20251015121530_SecondMigrations {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:10.302 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-16 19:18:16.264 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:17.110 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:17.726 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:18.421 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:19.704 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:21.336 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:21.796 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:24.156 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:25.410 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:25.661 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:25.952 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:27.673 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:18:29.971 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-16 19:19:38.299 +07:00 [ERR] Failed executing DbCommand (67,880ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0 {"EventId":{"Id":20102,"Name":"Microsoft.EntityFrameworkCore.Database.Command.CommandError"},"SourceContext":"Microsoft.EntityFrameworkCore.Database.Command","Application":"AppleMusicAPI"}
+2025-10-16 19:20:02.668 +07:00 [ERR] Error creating database {"Application":"AppleMusicAPI"}
+Microsoft.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+ ---> System.ComponentModel.Win32Exception (258): The wait operation timed out.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ThrowExceptionAndWarning(Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteScalar(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.<HasTables>b__13_0(ISqlServerConnection connection)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass28_0`2.<Execute>b__0(DbContext context, TState state)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementation[TState,TResult](Func`3 operation, Func`3 verifySucceeded, TState state)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.HasTables()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreated()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 303
+ClientConnectionId:c0ca753d-cfc5-4a28-b7a9-8c7ff0637a15
+Error Number:-2,State:0,Class:11
+2025-10-16 19:20:10.706 +07:00 [FTL] Application terminated unexpectedly {"Application":"AppleMusicAPI"}
+Microsoft.Data.SqlClient.SqlException (0x80131904): Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+ ---> System.ComponentModel.Win32Exception (258): The wait operation timed out.
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ThrowExceptionAndWarning(Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ReadSniError(TdsParserStateObject stateObj, UInt32 error)
+   at Microsoft.Data.SqlClient.TdsParserStateObject.ReadSniSyncOverAsync()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryReadNetworkPacket()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryPrepareBuffer()
+   at Microsoft.Data.SqlClient.TdsParserStateObject.TryReadByte(Byte& value)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at Microsoft.Data.SqlClient.SqlDataReader.get_MetaData()
+   at Microsoft.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean isAsync, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at Microsoft.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteScalar(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.<HasTables>b__13_0(ISqlServerConnection connection)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass28_0`2.<Execute>b__0(DbContext context, TState state)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementation[TState,TResult](Func`3 operation, Func`3 verifySucceeded, TState state)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.HasTables()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreated()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated()
+   at Program.<Main>$(String[] args) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Program.cs:line 303
+ClientConnectionId:c0ca753d-cfc5-4a28-b7a9-8c7ff0637a15
+Error Number:-2,State:0,Class:11
+2025-10-16 19:22:31.272 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-16 19:22:35.757 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 19:22:39.541 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:07:47.063 +07:00 [INF] Starting  AppleMusic API {"Application":"AppleMusicAPI"}
+2025-10-16 20:08:16.426 +07:00 [INF] 🗄️ Starting database migration for 1 DbContext(s)... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:16.588 +07:00 [INF] 🔄 Processing AppleMusicDbContext... {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:23.720 +07:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development. {"EventId":{"Id":10400,"Name":"Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning"},"SourceContext":"Microsoft.EntityFrameworkCore.Model.Validation","Application":"AppleMusicAPI"}
+2025-10-16 20:08:49.642 +07:00 [INF] 📊 AppleMusicDbContext: 0 applied, 1 pending migration(s) {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:51.089 +07:00 [INF] 📋 Applying 1 migration(s) to AppleMusicDbContext: {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:53.659 +07:00 [INF]   → 20251015121530_SecondMigrations {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:57.509 +07:00 [ERR] ❌ Error migrating AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+System.InvalidOperationException: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'.
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExtensions.NonDeterministicModel(IDiagnosticsLogger`1 diagnostics, Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.ValidateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateAsync(String targetMigration, CancellationToken cancellationToken)
+   at MyApp.WebAPI.Extensions.DatabaseExtensions.MigrateDbContextAsync(IServiceProvider serviceProvider, Type contextType, ILogger logger, MigrationResult result) in E:\Documents\KULIAH S1 TEKNIK INFORMATIKA\IT DEVELOPER BOOTCAMP (PT SCU)\FIX UI\applemusic-tim1\default-project-main\src\06.WebAPI\Extentions\DatabaseExtensions.cs:line 157
+2025-10-16 20:08:57.785 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:57.823 +07:00 [INF] 📊 MIGRATION SUMMARY {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:08:57.844 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:02.224 +07:00 [INF] Total DbContexts found: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:02.484 +07:00 [INF] ✅ Migrated: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:02.619 +07:00 [INF] ✅ Up to date: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:02.824 +07:00 [INF] ⚠️ Skipped: 0 () {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:02.894 +07:00 [INF] ❌ Errors: 1 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:03.824 +07:00 [INF] 📈 Total migrations applied: 0 {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:05.527 +07:00 [WRN] ⚠️ Migration completed with 1 error(s): {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:05.601 +07:00 [WRN]   → AppleMusicDbContext: An error was generated for warning 'Microsoft.EntityFrameworkCore.Migrations.PendingModelChangesWarning': The model for context 'AppleMusicDbContext' changes each time it is built. This is usually caused by dynamic values used in a 'HasData' call (e.g. `new DateTime()`, `Guid.NewGuid()`). Add a new migration and examine its contents to locate the cause, and replace the dynamic call with a static, hardcoded value. See https://aka.ms/efcore-docs-pending-changes. This exception can be suppressed or logged by passing event ID 'RelationalEventId.PendingModelChangesWarning' to the 'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 'AddDbContext'. {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:05.943 +07:00 [INF] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ {"SourceContext":"Program","Application":"AppleMusicAPI"}
+2025-10-16 20:09:07.341 +07:00 [INF] Ensuring database is created... {"Application":"AppleMusicAPI"}
+2025-10-16 20:09:10.224 +07:00 [INF] Database ready with Identity tables and default roles {"Application":"AppleMusicAPI"}
+2025-10-16 20:09:12.442 +07:00 [INF] Application started successfully with Authentication & Authorization {"Application":"AppleMusicAPI"}
