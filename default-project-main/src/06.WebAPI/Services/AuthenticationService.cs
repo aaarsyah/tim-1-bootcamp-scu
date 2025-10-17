@@ -258,7 +258,7 @@ namespace MyApp.WebAPI.Services
         }
 
         /// <summary> 
-        /// Change Password for authenticated user (POST)
+        /// Change Password for authenticated user = change password ketika sudah login di profile misalnya
         /// Ubah password user yang sudah login
         /// </summary>
         public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request)
@@ -281,7 +281,7 @@ namespace MyApp.WebAPI.Services
             return true;
         }
 
-        //Forgot Password = Request password reset
+        //Forgot Password = Request password reset 
         //Langsung Menggunakan HTTPClient - Service nya di Blazor UI
         public async Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request)
         {
@@ -345,13 +345,13 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException("Invalid or expired reset token.");
             }
 
-            // Jalankan proses reset password
-            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
-            if (!result.Succeeded)
+            // ✅ Validasi token buatan sendiri
+            if (user.PasswordResetToken != request.AccessToken ||
+                user.PasswordResetTokenExpiry == null ||
+                user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
-                throw new ValidationException($"Password reset failed: {errors}");
+                _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
+                throw new ValidationException("Invalid or expired reset token.");
             }
 
             //// ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)
@@ -371,7 +371,7 @@ namespace MyApp.WebAPI.Services
 
             return true;
         }
-    
+
 
         /// <summary>
         /// Map User entity to UserDto

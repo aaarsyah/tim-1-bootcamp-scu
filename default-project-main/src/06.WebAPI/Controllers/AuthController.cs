@@ -195,7 +195,7 @@ namespace MyApp.WebAPI.Controllers
             if (!validationResult.IsValid)
                 throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
 
-            var result = await _authenticationService.ResetPasswordAsync(request); //Service belum ada
+            var result = await _authenticationService.ResetPasswordAsync(request);
             return Ok(ApiResponse<bool>.SuccessResult(result));
 
             // var command = new ResetPasswordCommand { Request = request };

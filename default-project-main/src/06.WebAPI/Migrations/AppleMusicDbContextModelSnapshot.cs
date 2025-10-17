@@ -1008,11 +1008,17 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<int>("FailedLoginAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("LockoutEnd")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
                         .IsRequired()
@@ -1086,6 +1092,7 @@ namespace MyApp.WebAPI.Migrations
                             Email = "admin@applemusic.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                             NormalizedUserName = "SUPER ADMIN",
@@ -1105,6 +1112,7 @@ namespace MyApp.WebAPI.Migrations
                             Email = "nurimamiskandar@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                             NormalizedUserName = "NUR IMAM ISKANDAR",
@@ -1124,6 +1132,7 @@ namespace MyApp.WebAPI.Migrations
                             Email = "imam.stmik15@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                             NormalizedUserName = "ISKANDAR",
@@ -1162,6 +1171,7 @@ namespace MyApp.WebAPI.Migrations
                             Email = "yusrisahrul.works@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                             NormalizedUserName = "YUSRI SAHRUL",
@@ -1181,6 +1191,7 @@ namespace MyApp.WebAPI.Migrations
                             Email = "yusribootcamp@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
+                            FailedLoginAttempts = 0,
                             LockoutEnabled = false,
                             NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                             NormalizedUserName = "YUSRI SAHRUL TEST",
