@@ -88,7 +88,9 @@ try
 
         // User settings
         options.User.RequireUniqueEmail = true;
-        options.SignIn.RequireConfirmedEmail = false; // For demo purposes
+        options.SignIn.RequireConfirmedEmail = false; // set true untuk demo
+
+        options.User.AllowedUserNameCharacters += " "; // Izinkan huruf spasi dalam Username
     })
     .AddEntityFrameworkStores<AppleMusicDbContext>()
     .AddDefaultTokenProviders();

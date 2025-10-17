@@ -745,7 +745,7 @@ namespace MyApp.WebAPI.Data
                     CourseId = 6
                 }
             );
-            modelBuilder.Entity<User>().HasData(    
+            modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     Id = 1,
@@ -755,6 +755,7 @@ namespace MyApp.WebAPI.Data
                     Email = "admin@applemusic.com",
                     NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                     EmailConfirmed = true,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -767,6 +768,7 @@ namespace MyApp.WebAPI.Data
                     Email = "nurimamiskandar@gmail.com",
                     NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                     EmailConfirmed = true,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
@@ -780,6 +782,7 @@ namespace MyApp.WebAPI.Data
                     Email = "imam.stmik15@gmail.com",
                     NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                     EmailConfirmed = true,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -792,6 +795,7 @@ namespace MyApp.WebAPI.Data
                     Email = "iniemaildummysaya@gmail.com",
                     NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
                     EmailConfirmed = false,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -804,6 +808,7 @@ namespace MyApp.WebAPI.Data
                     Email = "yusrisahrul.works@gmail.com",
                     NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                     EmailConfirmed = true,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -816,6 +821,7 @@ namespace MyApp.WebAPI.Data
                     Email = "yusribootcamp@gmail.com",
                     NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                     EmailConfirmed = true,
+                    SecurityStamp = string.Empty, // akan error jika null
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
