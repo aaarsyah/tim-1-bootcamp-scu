@@ -58,7 +58,7 @@ namespace MyApp.WebAPI.Extensions
             // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
             // Cocok untuk demo dan testing, tidak untuk Production
             services.AddDbContext<AppleMusicDbContext>(options =>
-                options.UseInMemoryDatabase("AppleMusicDb")); // "CourseApiDb" adalah nama database
+                options.UseInMemoryDatabase("AppleMusicDb")); // "AppleMusicDb" adalah nama database
             
             // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
             // services.AddDbContext<ProductDbContext>(options =>

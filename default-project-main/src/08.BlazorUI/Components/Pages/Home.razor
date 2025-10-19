@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using MudBlazor
-
+@using MyApp.Shared.DTOs
+@inject HttpClient _httpClient
 @inject NavigationManagerExt Navigation;
 
 <PageTitle>Home Apple Music</PageTitle>
@@ -68,57 +69,75 @@
     </MudContainer>
 </MudContainer>
 
-<!-- Explore Kelas Favorite -->
+<!-- ====== Explore Kelas Favorit ====== -->
 <MudContainer MaxWidth="MaxWidth.Large" Class="py-5">
-            <MudStack Spacing="4">
-                <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
-                <b>Explore kelas favorit</b>
-                </MudText>
+    <MudStack Spacing="4">
+        <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
+            <b>Explore kelas favorit</b>
+        </MudText>
 
-                <MudGrid Class="mb-20 mt-4 gap-10 d-flex justify-space-evenly">
-                    @foreach (var course in FeaturedCourses)
-                    {
-                        <MudItem xs="12" sm="6" md="4" lg="3">
-                            <MudPaper Class="course-card" Elevation="0">
-                            <MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
+        <MudGrid Class="mb-20 mt-4 gap-10 d-flex justify-space-evenly">
+            @if (FeaturedCourses is null)
+            {
+                //Jika null maka akan menampilkan loading indicator
+                <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+            }
+            else
+            {
+                @foreach (var course in FeaturedCourses)
+                {
+                    <MudItem xs="12" sm="6" md="4" lg="3">
+                        <MudPaper Class="course-card" Elevation="0">
+                            <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id.Value))" Color="Color.Default">
                                 <MudImage Src="@course.Image"
                                           Class="w-100 mb-2"
-                                          Alt="@course.Title"/>
-                                    <MudText Class="category color-gray-3">@course.Category</MudText>
-                                    <MudText Class="name color-gray-1"><b>@course.Title</b></MudText>
-                                    <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>@course.Price</b></MudText>
+                                          Alt="@course.Title" />
+                                <MudText Class="category color-gray-3">@course.Category</MudText>
+                                <MudText Class="name color-gray-1"><b>@course.Title</b></MudText>
+                                <MudText Class="name color-iris pt-10" Color="Color.Primary">
+                                    <b>@course.Price</b>
+                                </MudText>
                             </MudLink>    
-                            </MudPaper>
-                        </MudItem>
-                    }
-                </MudGrid>
-            </MudStack>
+                        </MudPaper>
+                    </MudItem>
+                }
+            }
+        </MudGrid>
+    </MudStack>
 </MudContainer>
 
-<!-- Pilih Kelas Impian Kamu -->
+
+<!-- ====== Pilih Kelas Impian Kamu ====== -->
 <div class="pa-0 ma-n4">
-        <MudContainer MaxWidth="MaxWidth.False" Style="background-color: lightblue;" Class="category-section py-8" DisableGutters="true">
+    <MudContainer MaxWidth="MaxWidth.False" Style="background-color: lightblue;" Class="category-section py-8" DisableGutters="true">
         <MudStack Spacing="2">
             <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
                 <b>Pilih kelas impian kamu</b>
-                <br/>
             </MudText>
 
             <MudGrid Spacing="3" Class="mt-4 mb-20">
-                @foreach (var category in Categories)
+                @if (Categories is null)
                 {
-                    <MudItem xs="3" sm="3" md="3" lg="3" Class="d-flex justify-space-evenly">
-                    <MudLink OnClick="Navigation.GoToListMenu" Color="Color.Default">
-                        <MudImage Class="w-100 mb-2" 
-                                  Src="@category.Image" 
-                                  Alt="@category.Name" />
-                        <MudText Align="Align.Center" Typo="Typo.body2"><b>@category.Name</b></MudText>
-                    </MudLink>    
-                    </MudItem>
+                    //Jika null maka akan menampilkan loading indicator
+                    <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+                }
+                else
+                {
+                    @foreach (var category in Categories)
+                    {
+                        <MudItem xs="3" sm="3" md="3" lg="3" Class="d-flex justify-space-evenly">
+                            <MudLink OnClick="@(() => Navigation.GoToListMenu(category.Id.Value))" Color="Color.Default">
+                                <MudImage Class="w-100 mb-2"
+                                          Src="@category.Image"
+                                          Alt="@category.Name" />
+                                <MudText Align="Align.Center" Typo="Typo.body2"><b>@category.Name</b></MudText>
+                            </MudLink>    
+                        </MudItem>
+                    }
                 }
             </MudGrid>
-            </MudStack>
-        </MudContainer>
+        </MudStack>
+    </MudContainer>
 </div>
 
 <!-- Benefit -->
@@ -148,29 +167,49 @@
 
 
 @code {
-    private record CourseCard(string Category, string Title, string Price, string Image);
-    private record CategoryItem(string Name, string Image);
+    private record CourseCard(string Category, string Title, string Price, string Image, int? Id = null); // Tambahkan Id untuk navigasi
+    private record CategoryItem(string Name, string Image, int? Id = null); // Tambahkan Id untuk navigasi
 
-    private IEnumerable<CourseCard> FeaturedCourses => new[]
-    {
-        new CourseCard("Drum", "Kursus Drummer Special Coach (Eno Netral)", "IDR 8.500.000", "img/Landing1.svg"),
-        new CourseCard("Gitar", "[Beginner] Guitar class for kids", "IDR 1.600.000", "img/Landing2.svg"),
-        new CourseCard("Biola", "Biola Mid-Level Course", "IDR 3.000.000", "img/Landing3.svg"),
-        new CourseCard("Drum", "Drummer for kids (Level Basic/1)", "IDR 2.200.000", "img/Landing4.svg"),
-        new CourseCard("Piano", "Kursus Piano: From Zero to Pro (Full Package)", "IDR 11.650.000", "img/Landing5.svg"),
-        new CourseCard("Saxophone", "Expert Level Saxophone", "IDR 7.350.000", "img/Landing6.svg")
-    };
+    private IEnumerable<CourseCard>? FeaturedCourses;
+    private IEnumerable<CategoryItem>? Categories;
 
-    private IEnumerable<CategoryItem> Categories => new[]
+    protected override async Task OnInitializedAsync()
     {
-        new CategoryItem("Drum", "img/Class1.svg"),
-        new CategoryItem("Piano", "img/Class2.svg"),
-        new CategoryItem("Gitar", "img/Class3.svg"),
-        new CategoryItem("Bass", "img/Class4.svg"),
-        new CategoryItem("Biola", "img/Class5.svg"),
-        new CategoryItem("Menyanyi", "img/Class6.svg"),
-        new CategoryItem("Flute", "img/Class7.svg"),
-        new CategoryItem("Saxophone", "img/Class8.svg")
-    };
+        try
+        {
+            // Ambil courses
+            var courseResponseMsg = await _httpClient.GetAsync("api/Course");
+            if (courseResponseMsg.IsSuccessStatusCode)
+            {
+                var courseApiResponse = await courseResponseMsg.Content.ReadFromJsonAsync<ApiResponse<List<CourseDto>>>();
+                FeaturedCourses = courseApiResponse?.Data
+                    .Where(c => c.IsActive)
+                    .Select(c => new CourseCard(
+                        Category: c.CategoryName,
+                        Title: c.Name,
+                        Price: $"IDR {c.Price:N0}",
+                        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
+                        Id: c.Id
+                    ));
+            }
+
+            // Ambil categories
+            var categoryResponseMsg = await _httpClient.GetAsync("api/Category");
+            if (categoryResponseMsg.IsSuccessStatusCode)
+            {
+                var categoryApiResponse = await categoryResponseMsg.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
+                Categories = categoryApiResponse?.Data
+                    .Where(c => c.IsActive)
+                    .Select(c => new CategoryItem(
+                        Name: c.Name,
+                        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-category.svg" : c.ImageUrl,
+                        Id: c.Id
+                    ));
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+    }
 }
-

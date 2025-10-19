@@ -92,7 +92,10 @@ namespace MyApp.WebAPI.Controllers
             return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
         }
 
-        [HttpGet("add")] // HTTP GET method
+         /// <summary>
+        /// Add course to cart by scheduleId
+        /// </summary>
+        [HttpPut("{scheduleid}")] 
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
@@ -112,8 +115,11 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<object>.SuccessResult());
         }
-
-        [HttpGet("remove")] // HTTP GET method
+        
+        /// <summary>
+        /// Remove by cartId
+        /// </summary>
+        [HttpDelete("{cartid}")] 
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
@@ -133,5 +139,25 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<object>.SuccessResult());
         }
+
+        // /// <summary>
+        // /// Remove course from cart by scheduleId
+        // /// </summary>
+        // [HttpDelete("schedule/{scheduleId}")]
+        // [Authorize]
+        // [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        // [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        // public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCartByScheduleId(int scheduleId)
+        // {
+        //     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        //     if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        //         throw new AuthenticationException("Token is invalid");
+
+        //     _logger.LogInformation("User {UserId} is removing item from cart with ScheduleId={ScheduleId}", userId, scheduleId);
+
+        //     await _cartItemService.RemoveCourseFromCartByScheduleIdAsync(userId, scheduleId);
+
+        //     return Ok(ApiResponse<object>.SuccessResult());
+        // }
     }
 }

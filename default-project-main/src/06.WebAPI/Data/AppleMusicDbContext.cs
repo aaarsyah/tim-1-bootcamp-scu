@@ -384,7 +384,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Drum",
                     LongName = "Drummer class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class1.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -394,7 +394,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Piano",
                     LongName = "Pianist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class2.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -404,7 +404,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Gitar",
                     LongName = "Guitarist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class3.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -414,7 +414,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Bass",
                     LongName = "Bassist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class4.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -424,7 +424,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Biola",
                     LongName = "Violinist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class5.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -434,7 +434,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Menyanyi",
                     LongName = "Singer class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class6.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -444,7 +444,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Flute",
                     LongName = "Flutist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class7.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
@@ -454,7 +454,7 @@ namespace MyApp.WebAPI.Data
                     Name = "Saxophone",
                     LongName = "Saxophonist class",
                     Description = placeholder,
-                    ImageUrl = "img/ListMenuBanner.svg",
+                    ImageUrl = "img/Class8.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }

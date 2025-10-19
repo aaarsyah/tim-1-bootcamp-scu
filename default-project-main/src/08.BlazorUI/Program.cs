@@ -20,7 +20,7 @@ builder.Services.AddBlazoredLocalStorage();
 // Configure HttpClient for API calls
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269")
+    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "http://localhost:5099")
 });
 
 // Add navigation service

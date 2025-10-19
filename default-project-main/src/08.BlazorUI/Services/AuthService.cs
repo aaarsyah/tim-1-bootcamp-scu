@@ -170,7 +170,7 @@ namespace MyApp.BlazorUI.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync("api/auth/me");
+                var response = await _httpClient.GetAsync("api/auth/profile");
 
                 if (response.IsSuccessStatusCode)
                 {

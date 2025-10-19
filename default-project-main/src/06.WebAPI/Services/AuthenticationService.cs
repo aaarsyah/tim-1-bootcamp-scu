@@ -95,15 +95,10 @@ namespace MyApp.WebAPI.Services
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("can_view_profile", "true"));
 
             // Kirim email konfirmasi
-            var confirmationLink = $"https://localhost:5099/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
+            var confirmationLink = $"http://localhost:5070/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
             await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
 
             _logger.LogInformation("User registration successful for email: {Email}", request.Email);
-
-
-
-
-
 
             // Generate JWT tokens
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
@@ -306,7 +301,7 @@ namespace MyApp.WebAPI.Services
             var a = await _userManager.UpdateAsync(user);
 
             // Buat link reset (menuju frontend URL BlazorUI)
-            var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+            var resetLink = $"http://localhost:5070/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
 
             // Jika email terdaftar dalam database, Kirim email reset password
@@ -337,7 +332,7 @@ namespace MyApp.WebAPI.Services
                 throw new AuthenticationException("Invalid user or token.");
             }
 
-            // ✅ Validasi token buatan sendiri
+            // Validasi token buatan sendiri
             if (user.PasswordResetToken != request.AccessToken ||
                 user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {
@@ -354,11 +349,7 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException($"Password reset failed: {errors}");
             }
 
-            //// ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)
-            //var passwordHasher = new PasswordHasher<User>();
-            //user.PasswordHash = passwordHasher.HashPassword(user, request.NewPassword);
-
-            // ✅ Reset field token agar tidak bisa digunakan lagi
+            // Reset field token agar tidak bisa digunakan lagi
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpiry = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;

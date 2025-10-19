@@ -28,8 +28,8 @@ namespace MyApp.WebAPI.Services
             
             _smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com";
             _smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "465"); //587
-            //_smtpUser = _configuration["EmailSettings:SmtpUser"] ?? "addindaarsyah@gmail.com";
-            _smtpUser = string.Empty; // di-set empty untuk kepentingan demo
+            _smtpUser = _configuration["EmailSettings:SmtpUser"] ?? "addindaarsyah@gmail.com";
+            // _smtpUser = string.Empty; // di-set empty untuk kepentingan demo
             _smtpPassword = _configuration["EmailSettings:SmtpPassword"] ?? "mjru kfkz ibks wfwz";
             _fromEmail = _configuration["EmailSettings:FromEmail"] ?? _smtpUser;
             _fromName = _configuration["EmailSettings:FromName"] ?? "AppleMusic Support";

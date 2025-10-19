@@ -29,19 +29,22 @@
                         @bind-Value="_registerModel.Email"
                         Required="true" 
                         RequiredError="Email Harus diisi!"
-                        Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
+                        Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})"/>
 
     
                     <MudTextField T="string" 
                         Label="Masukkan Password" 
                         @bind-Value="_registerModel.Password"
-                        HelperText="Choose a strong password" 
                         Variant="Variant.Outlined"
                         @ref="pwField1"
-                        InputType="InputType.Password"
+                        InputType="@_passwordInputType"
                         Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
                         Required="true"
-                        RequiredError="Password Harus Diisi!"/>
+                        Adornment="Adornment.End"
+                        AdornmentIcon="@_passwordIcon"
+                        OnAdornmentClick="TogglePasswordVisibility"
+                        RequiredError="Password Harus Diisi!"
+                        HelperText="Min 8 characters, uppercase, lowercase, number, special char"/>
 
 
                     <MudTextField T="string"
@@ -49,7 +52,12 @@
                             Variant="Variant.Outlined"
                             @bind-Value="_registerModel.ConfirmPassword"
                             HelperText="Repeat the password" 
-                            InputType="InputType.Password"
+                            InputType="@_confirmPasswordInputType"
+                            Adornment="Adornment.End"
+                            AdornmentIcon="@_confirmPasswordIcon"
+                            OnAdornmentClick="ToggleConfirmPasswordVisibility"
+                            Required="true"
+                            RequiredError="Konfirmasi Password Harus Diisi!"
                             Validation="@(new Func<string, string>(PasswordMatch))"/>
 
                     @if (_isLoading)
@@ -92,8 +100,40 @@
     private bool _isLoading = false;
     private string _errorMessage = string.Empty;
     private string _successMessage = string.Empty;
+    private InputType _passwordInputType = InputType.Password;
+    private string _passwordIcon = Icons.Material.Filled.VisibilityOff;
+    private InputType _confirmPasswordInputType = InputType.Password;
+    private string _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
 
     private RegisterRequestDto _registerModel = new();
+
+    private void TogglePasswordVisibility()
+    {
+        if (_passwordInputType == InputType.Password)
+        {
+            _passwordInputType = InputType.Text;
+            _passwordIcon = Icons.Material.Filled.Visibility;
+        }
+        else
+        {
+            _passwordInputType = InputType.Password;
+            _passwordIcon = Icons.Material.Filled.VisibilityOff;
+        }
+    }
+
+    private void ToggleConfirmPasswordVisibility()
+    {
+        if (_confirmPasswordInputType == InputType.Password)
+        {
+            _confirmPasswordInputType = InputType.Text;
+            _confirmPasswordIcon = Icons.Material.Filled.Visibility;
+        }
+        else
+        {
+            _confirmPasswordInputType = InputType.Password;
+            _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
+        }
+    }
 
     private IEnumerable<string> PasswordStrength(string pw)
     {
@@ -163,4 +203,63 @@
         }
     }
 }
+
+
+        @* try
+        //coba regis dengan email-confirm langsung melalui email selum login
+        {
+            var result = await AuthService.RegisterAsync(_registerModel);
+
+            if (result != null)
+            {
+                _successMessage = "Registration successful! Please check your email to confirm your account.";
+
+                // Automatically confirm email after registration
+                if (!string.IsNullOrEmpty(_registerModel.Email))
+                {
+                    var confirmRequest = new ConfirmEmailRequestDto
+                    {
+                        Email = _registerModel.Email,
+                        AccessToken = result.AccessToken
+                    };
+
+                    var confirmResult = await AuthService.ConfirmEmailAsync(confirmRequest);
+
+                    if (confirmResult)
+                    {
+                        _successMessage = "Email confirmed successfully!";
+                        Snackbar.Add("Email confirmed successfully!", Severity.Success);
+
+                        await Task.Delay(1500);
+                        Navigation.GoToEmailConfirmSuccess();
+                        return;
+                    }
+                    else
+                    {
+                        _errorMessage = "Failed to confirm email. Please try again.";
+                        Snackbar.Add(_errorMessage, Severity.Error);
+                    }
+                }
+                else
+                {
+                    _successMessage = "Please confirm your email from the inbox before login.";
+                }
+            }
+            else
+            {
+                _errorMessage = "Registration failed. Please check your information and try again.";
+                Snackbar.Add("Registration failed", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = "An error occurred during registration";
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+} *@
 

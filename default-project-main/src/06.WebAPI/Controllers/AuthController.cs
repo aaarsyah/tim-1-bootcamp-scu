@@ -59,7 +59,6 @@ namespace MyApp.WebAPI.Controllers
             // Semua error akan throw exception dan akan di catch di middleware
         }
 
-        //TODO : Still cannot confirm-email
         [HttpPost("confirm-email")]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
@@ -69,22 +68,18 @@ namespace MyApp.WebAPI.Controllers
             if (user == null)
                 return BadRequest("Invalid email");
 
-            //     var decodedToken = Uri.UnescapeDataString(token);
             // Cek token valid dan belum expired
             if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
             {
                 return BadRequest("Invalid or expired confirmation token");
             }
-            //     var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
             // Tandai email sebagai terverifikasi
             user.EmailConfirmed = true;
             user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
             user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
-            //     if (!result.Succeeded)
-            //         return BadRequest("Invalid or expired token");
+
             await _userManager.UpdateAsync(user);
-            //     return Ok("Email confirmed successfully");
-            // }
+    
             return Ok("Email has been successfully confirmed. You can now log in.");
         }
 

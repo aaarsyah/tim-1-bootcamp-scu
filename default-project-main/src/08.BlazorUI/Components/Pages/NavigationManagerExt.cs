@@ -31,7 +31,7 @@ namespace MyApp.BlazorUI.Components
         /// </summary>
         public void GoToHome2()
         {
-            _navigation.NavigateTo("/",true);
+            _navigation.NavigateTo("/", true);
         }
 
         public void GoToForgotPass()
@@ -41,12 +41,12 @@ namespace MyApp.BlazorUI.Components
 
         public void GoToNewPass()
         {
-            _navigation.NavigateTo("/new-password");
+            _navigation.NavigateTo("/reset-password");
         }
 
         public void GoToEmailConfirmSuccess()
         {
-            _navigation.NavigateTo("/email-confirm");
+            _navigation.NavigateTo("/confirm-email");
         }
 
         public void GoToSuccessPurchase()
@@ -56,7 +56,7 @@ namespace MyApp.BlazorUI.Components
 
         public void GoToKelasKu()
         {
-            _navigation.NavigateTo("/myclass");
+            _navigation.NavigateTo("/MyClass");
         }
 
         public void GoToCheckout()
@@ -64,15 +64,15 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/checkout");
         }
 
-        public void GoToDetail()
-        {
-            _navigation.NavigateTo("/detail");
-        }
+        // public void GoToDetail()
+        // {
+        //     _navigation.NavigateTo("/detail");
+        // }
 
-        public void GoToListMenu()
-        {
-            _navigation.NavigateTo("/listmenu");
-        }
+        // public void GoToListMenu()
+        // {
+        //     _navigation.NavigateTo("/listmenu");
+        // }
 
         public void GoToInvoice()
         {
@@ -119,5 +119,16 @@ namespace MyApp.BlazorUI.Components
         // {
         //     _navigation.NavigateTo($"/detail/{id}");
         // }
+
+        public void GoToListMenu(int categoryId)
+        {
+            _navigation.NavigateTo($"/listmenu/{categoryId}");
+        }
+
+        public void GoToDetail(int courseId)
+        {
+            _navigation.NavigateTo($"/detail/{courseId}");
+        }
     }
 }
+
