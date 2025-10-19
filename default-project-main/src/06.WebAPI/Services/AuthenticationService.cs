@@ -111,7 +111,7 @@ namespace MyApp.WebAPI.Services
 
             // Save refresh token ke database
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
             await _userManager.UpdateAsync(user);
 
             return new AuthResponseDto
@@ -160,7 +160,7 @@ namespace MyApp.WebAPI.Services
 
             // Save refresh token
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation("Login successful for email: {Email}", request.Email);
@@ -214,7 +214,7 @@ namespace MyApp.WebAPI.Services
             {
                 throw new AuthenticationException("Refresh token is invalid");
             }
-            if (user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            if (user.RefreshTokenExpiry <= DateTime.UtcNow)
             {
                 throw new AuthenticationException("Refresh token has expired");
             }
@@ -224,7 +224,7 @@ namespace MyApp.WebAPI.Services
 
             // Update refresh token
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
             await _userManager.UpdateAsync(user);
 
             return new AuthResponseDto
@@ -250,7 +250,7 @@ namespace MyApp.WebAPI.Services
             }
             // Invalidate refresh token
             user.RefreshToken = null;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow;
+            user.RefreshTokenExpiry = DateTime.UtcNow;
             await _userManager.UpdateAsync(user);
 
             _logger.LogInformation("User logged out: {UserId}", userId);

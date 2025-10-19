@@ -15,7 +15,7 @@ namespace MyApp.WebAPI.Data
     /// Application Database Context with Identity Support
     /// Purpose: Central point for database operations and configuration
 
-    public class AppleMusicDbContext : IdentityDbContext<User, Role, int>
+    public class AppleMusicDbContext : DbContext
     {
         /// <summary>
         /// Constructor - Menerima DbContextOptions untuk dependency injection
@@ -30,7 +30,7 @@ namespace MyApp.WebAPI.Data
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public override DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -73,12 +73,15 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.ToTable("Courses");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(150);
+                    .IsRequired()
+                    .HasMaxLength(150);
                 entity.Property(e => e.Description)
                         .HasMaxLength(3000);
                 entity.Property(e => e.ImageUrl)
@@ -121,8 +124,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Categories");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 entity.Property(e => e.Name)
                         .IsRequired()
@@ -157,8 +163,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.ToTable("Schedules");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 entity.Property(e => e.Date)
                         .IsRequired()
@@ -179,29 +188,26 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 entity.Property(e => e.RefreshToken)
                         .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
-                entity.Property(e => e.RefreshTokenExpiryTime)
+                entity.Property(e => e.RefreshTokenExpiry)
                         .IsRequired();
                 entity.Property(e => e.EmailConfirmationToken)
                         .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.EmailConfirmationTokenExpiry)
                         .IsRequired();
-                entity.Property(e => e.UserName)
+                entity.Property(e => e.Name)
                         .IsRequired() // UserName bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(30);
-                entity.Property(e => e.NormalizedUserName)
-                        .IsRequired() // UserName bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(30);
+                        .HasMaxLength(50);
                 entity.Property(e => e.Email)
                         .IsRequired()  // Email bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(70);
-                entity.Property(e => e.NormalizedEmail)
-                        .IsRequired()  // Email bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(70);
+                        .HasMaxLength(100);
                 entity.Property(e => e.EmailConfirmed)
                         .IsRequired()
                         .HasColumnType("bit")
@@ -236,6 +242,12 @@ namespace MyApp.WebAPI.Data
             // Configure Role entity for Identity
             modelBuilder.Entity<Role>(entity =>
             {
+                // Base Entity
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
+                // ?
                 entity.Property(e => e.Description)
                 .HasMaxLength(500);
             });
@@ -244,6 +256,11 @@ namespace MyApp.WebAPI.Data
             // Configure UserClaim relationship
             modelBuilder.Entity<UserClaim>(entity =>
             {
+                // Base Entity
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Relationship dengan User
                 entity.HasOne(e => e.User)
                     .WithMany(u => u.UserClaims)
@@ -260,8 +277,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<CartItem>(entity =>
             {
                 entity.ToTable("CartItems");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan Schedule
@@ -280,8 +300,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<MyClass>(entity =>
             {
                 entity.ToTable("MyClasses");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan Schedule
@@ -300,8 +323,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.ToTable("Invoices");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Unique Index
                 entity.HasIndex(e => e.RefCode).IsUnique();
                 // Properties
@@ -333,8 +359,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
                 entity.ToTable("InvoiceDetail");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 // Tak usah configure relationship sama Invoice lagi
                 // Relationship dengan Schedule
@@ -354,8 +383,11 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<PaymentMethod>(entity =>
             {
                 entity.ToTable("PaymentMethods");
-                // Primary key
+                // Base Entity
                 entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
                 // Properties
                 entity.Property(e => e.Name)
                         .IsRequired()
@@ -375,7 +407,7 @@ namespace MyApp.WebAPI.Data
         private void SeedData(ModelBuilder modelBuilder)
         {
             string placeholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            var seedDate = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var seedDate = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc);
             
             modelBuilder.Entity<Category>().HasData(
                 new Category
@@ -385,8 +417,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Drummer class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -395,8 +427,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Pianist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -405,8 +437,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Guitarist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -415,8 +447,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Bassist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -425,8 +457,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Violinist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -435,8 +467,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Singer class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -445,8 +477,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Flutist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new Category
                 {
@@ -455,8 +487,8 @@ namespace MyApp.WebAPI.Data
                     LongName = "Saxophonist class",
                     Description = placeholder,
                     ImageUrl = "img/ListMenuBanner.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 }
             );
             modelBuilder.Entity<Course>().HasData(
@@ -749,81 +781,57 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 1,
-                    ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "Super Admin",
-                    NormalizedUserName = "SUPER ADMIN",
+                    Name = "Super Admin",
                     Email = "admin@applemusic.com",
-                    NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new User
                 {
                     Id = 2,
-                    ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "Nur Imam Iskandar",
-                    NormalizedUserName = "NUR IMAM ISKANDAR",
+                    Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
-                    NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 }
                 ,
                 new User
                 {
                     Id = 3,
-                    ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "Iskandar",
-                    NormalizedUserName = "ISKANDAR",
+                    Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
-                    NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new User
                 {
                     Id = 4,
-                    ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "Dummy User",
-                    NormalizedUserName = "DUMMY USER",
+                    Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
-                    NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
                     EmailConfirmed = false,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new User
                 {
                     Id = 5,
-                    ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "yusri sahrul",
-                    NormalizedUserName = "YUSRI SAHRUL",
+                    Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
-                    NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new User
                 {
                     Id = 6,
-                    ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624", // GUID dibuat static supaya database seed tidak berubah-ubah
-                    UserName = "yusri sahrul test",
-                    NormalizedUserName = "YUSRI SAHRUL TEST",
+                    Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
-                    NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
                     EmailConfirmed = true,
-                    SecurityStamp = string.Empty, // akan error jika null
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 }
             );
 
@@ -833,19 +841,13 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 1,
                     Name = "Admin",
-                    NormalizedName = "ADMIN",
-                    Description = "Administrator with management access",
-                    CreatedAt = seedDate,
-                    ConcurrencyStamp = "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+                    Description = "Administrator with management access"
                 },
                 new Role
                 {
                     Id = 2,
                     Name = "User",
-                    NormalizedName = "USER",
-                    Description = "Standard user with basic access",
-                    CreatedAt = seedDate,
-                    ConcurrencyStamp = "d4e5f6a7-b8c9-0123-def1-234567890123"
+                    Description = "Standard user with basic access"
                 }
             );
 
@@ -856,48 +858,48 @@ namespace MyApp.WebAPI.Data
                     Id = 1,
                     Name = "Gopay",
                     LogoUrl = "img/Payment1.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new PaymentMethod
                 {
                     Id = 2,
                     Name = "OVO",
                     LogoUrl = "img/Payment2.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new PaymentMethod
                 {
                     Id = 3,
                     Name = "DANA",
                     LogoUrl = "img/Payment3.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new PaymentMethod
                 {
                     Id = 4,
                     Name = "Mandiri",
                     LogoUrl = "img/Payment4.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new PaymentMethod
                 {
                     Id = 5,
                     Name = "BCA",
                     LogoUrl = "img/Payment5.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 },
                 new PaymentMethod
                 {
                     Id = 6,
                     Name = "BNI",
                     LogoUrl = "img/Payment6.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedAt = seedDate,
+                    UpdatedAt = seedDate
                 }
             );
         }

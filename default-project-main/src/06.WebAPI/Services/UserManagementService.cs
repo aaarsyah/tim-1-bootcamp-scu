@@ -152,7 +152,7 @@ namespace MyApp.WebAPI.Services
 
             user.EmailConfirmed = false;
             user.RefreshToken = null;
-            user.RefreshTokenExpiryTime = DateTime.UtcNow;
+            user.RefreshTokenExpiry = DateTime.UtcNow;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

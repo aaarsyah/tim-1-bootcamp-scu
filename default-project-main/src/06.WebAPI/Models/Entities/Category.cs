@@ -5,12 +5,8 @@ namespace MyApp.WebAPI.Models.Entities
     /// Class ini akan di-map ke tabel "Categories" oleh Entity Framework
     /// One-to-Many relationship dengan Product (1 Category -> Many Products)
     /// </summary>
-    public class Category
+    public class Category : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// Name: Nama kategori
         /// </summary>

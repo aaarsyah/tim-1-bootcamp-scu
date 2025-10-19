@@ -5,12 +5,8 @@ namespace MyApp.WebAPI.Models.Entities
     /// Many-to-One dengan Course (Many Schedules, One Course)
     /// Many-to-One dengan Schedule (Many CartItem, One Schedule)
     /// </summary>
-    public class Schedule
+    public class Schedule : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// Date: Tanggal mulai kelas
         /// </summary>

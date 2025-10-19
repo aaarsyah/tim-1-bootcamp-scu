@@ -4,12 +4,8 @@
     /// PaymentMethod: Representasi sebuah metode pembayaran<br />
     /// One-to-Many dengan Invoice (One PaymentMethod, Many Invoice)
     /// </summary>
-    public class PaymentMethod
+    public class PaymentMethod : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// Name: Nama metode pembayaran
         /// </summary>

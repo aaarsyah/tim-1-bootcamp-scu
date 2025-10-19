@@ -5,12 +5,8 @@ namespace MyApp.WebAPI.Models.Entities
     /// Demonstrates Many-to-One (with Department), One-to-Many (with Enrollments),
     /// and Many-to-Many (with Instructors) relationships
     /// </summary>
-    public class Course
+    public class Course : BaseEntity
     {
-        /// <summary>
-        /// Primary Key - Auto-increment ID
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// Name: Nama kelas pelajaran
         /// </summary>

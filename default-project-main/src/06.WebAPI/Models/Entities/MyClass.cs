@@ -5,12 +5,8 @@
     /// Many-to-One dengan User (Many MyClass, One user)
     /// Many-to-One dengan Schedule (Many MyClass, One Schedule)
     /// </summary>
-    public class MyClass
+    public class MyClass : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// UserId (foreign key): Id pengguna yang terkait
         /// </summary>

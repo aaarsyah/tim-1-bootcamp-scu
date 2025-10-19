@@ -5,12 +5,8 @@
     /// Many-to-One dengan User (Many Invoice, One user)
     /// Many-to-One dengan Schedule (Many Invoice, One Schedule)
     /// </summary>
-    public class Invoice
+    public class Invoice : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// RefCode: Kode bukti pembelian
         /// </summary>

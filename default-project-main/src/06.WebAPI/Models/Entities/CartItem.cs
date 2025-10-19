@@ -5,12 +5,8 @@
     /// Many-to-One dengan User (Many CartItem, One user)
     /// Many-to-One dengan Schedule (Many CartItem, One Schedule)
     /// </summary>
-    public class CartItem
+    public class CartItem : BaseEntity
     {
-        /// <summary>
-        /// Id: Primary key
-        /// </summary>
-        public int Id { get; set; }
         /// <summary>
         /// User (foreign key): Pengguna yang terkait
         /// </summary>
