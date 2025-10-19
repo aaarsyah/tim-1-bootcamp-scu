@@ -53,7 +53,7 @@
                                FitContent="true">
                         @foreach (var d in ScheduleDates)
                         {
-                            <MudSelectItem Value="d">@d.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
+                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
                         }
                     </MudSelect>
 
@@ -118,8 +118,7 @@
                 Course = response.Data;
 
                ScheduleDates = Course.ScheduleDates
-                    @* .Select(s => DateOnly.ParseExact(s, "dd/MM/yyyy", CultureInfo.InvariantCulture)) *@ 
-                    .Where(d => d >= DateOnly.FromDateTime(DateTime.Today)) //TODO: Masih belum bisa menampilkan format tanggal yang sesuai db
+                    @* .Where(d => d >= DateOnly.FromDateTime(DateTime.Now)) *@
                     .ToArray();
 
                 if (ScheduleDates.Length > 0)

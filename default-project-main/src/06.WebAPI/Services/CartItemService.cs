@@ -180,6 +180,7 @@ namespace MyApp.WebAPI.Services
         {
             var categories = await _context.CartItems
                 .Include(c => c.Schedule)
+                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
@@ -194,6 +195,7 @@ namespace MyApp.WebAPI.Services
             var categories = await _context.CartItems
                 .Where(c => c.UserId == userId)
                 .Include(c => c.Schedule)
+                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);

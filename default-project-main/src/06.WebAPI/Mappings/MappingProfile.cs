@@ -38,6 +38,16 @@ namespace MyApp.WebAPI.Mappings
             // // User mappings
             // CreateMap<User, UserDto>();
 
+            // User CartItem
+            CreateMap<CartItem, CartItemResponseDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+                .ForMember(dest => dest.CourseName,
+                           opt => opt.MapFrom(src => src.Schedule.Course.Name));
+                // .ForMember(dest => dest.ScheduleDate, opt => opt.MapFrom(src => src.Schedule.Date))
+                // .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))
+                // .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Schedule.Course.Price))
+                // .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Schedule.Course.ImageUrl));
+
             // MyClass mappings
             CreateMap<MyClass, MyClassDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))

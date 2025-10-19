@@ -51,9 +51,15 @@ namespace MyApp.Shared.DTOs
         /// Schedule (foreign key): Jadwal kelas yang terkait
         /// </summary>
         public int ScheduleId { get; set; }
+
         /// <summary>
-        /// Schedule: Jadwal kelas yang terkait
+        /// Nama Course
         /// </summary>
         public string CourseName { get; set; } = string.Empty;
+
+        // /// <summary>
+        // /// Nama Kategori Kelas
+        // /// </summary>
+        // public string CategoryName { get; set; } = string.Empty;
     }
 }
