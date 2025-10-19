@@ -1,7 +1,6 @@
 ﻿// Import Entity Framework Core untuk database operations
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MyApp.WebAPI.Models.Entities;
 using System.Text.Json;
 
@@ -17,6 +16,10 @@ namespace MyApp.WebAPI.Data
 
     public class AppleMusicDbContext : DbContext
     {
+        private const int MAX_USERNAME_LENGTH = 64;
+        private const int MAX_EMAIL_LENGTH = 256; // Mengikuti jawaban ini: https://stackoverflow.com/a/7717596
+        private const int MAX_URL_LENGTH = 256;
+        private const int MAX_DESCRIPTION_LENGTH = 4000;
         /// <summary>
         /// Constructor - Menerima DbContextOptions untuk dependency injection
         /// Options akan dikonfigurasi di Program.cs dengan connection string dan provider
@@ -31,6 +34,11 @@ namespace MyApp.WebAPI.Data
 
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<RoleClaim> RoleClaims { get; set; }
+
         public DbSet<MyClass> MyClasses { get; set; } //Participans = MyClass
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -53,6 +61,7 @@ namespace MyApp.WebAPI.Data
             ConfigureSchedule(modelBuilder);
             // User
             ConfigureUser(modelBuilder);
+            ConfigureUserRole(modelBuilder);
             ConfigureCartItem(modelBuilder);
             ConfigureMyClass(modelBuilder);
             // Invoice
@@ -60,6 +69,8 @@ namespace MyApp.WebAPI.Data
             ConfigureInvoiceDetail(modelBuilder);
             // Payment Method
             ConfigurePaymentMethod(modelBuilder);
+            // Audit Log
+            ConfigureAuditLog(modelBuilder);
             // Data seeding
             SeedData(modelBuilder);
         }
@@ -75,7 +86,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("Courses");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -83,9 +95,9 @@ namespace MyApp.WebAPI.Data
                     .IsRequired()
                     .HasMaxLength(150);
                 entity.Property(e => e.Description)
-                        .HasMaxLength(3000);
+                        .HasMaxLength(MAX_DESCRIPTION_LENGTH);
                 entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(256);
+                        .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.Price)
                         .IsRequired()
                         .HasColumnType("numeric(10)");
@@ -126,7 +138,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("Categories");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -137,9 +150,9 @@ namespace MyApp.WebAPI.Data
                         .IsRequired()
                         .HasMaxLength(50);
                 entity.Property(e => e.Description)
-                        .HasMaxLength(1000);
+                        .HasMaxLength(MAX_DESCRIPTION_LENGTH);
                 entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(256);
+                        .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.IsActive)
                         .IsRequired()
                         .HasColumnType("bit")
@@ -165,7 +178,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("Schedules");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -188,11 +202,21 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
-                // Base Entity
+                // Auditable Entity
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH)
+                    .HasDefaultValue("System");
+                entity.Property(e => e.UpdatedAt);
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Properties
                 entity.Property(e => e.RefreshToken)
                         .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
@@ -202,22 +226,21 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.EmailConfirmationTokenExpiry)
                         .IsRequired();
+                entity.Property(e => e.PasswordResetToken)
+                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                entity.Property(e => e.PasswordResetTokenExpiry)
+                        .IsRequired();
                 entity.Property(e => e.Name)
-                        .IsRequired() // UserName bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(50);
+                        .IsRequired()
+                        .HasMaxLength(MAX_USERNAME_LENGTH);
                 entity.Property(e => e.Email)
-                        .IsRequired()  // Email bisa null di code namun diharuskan dalam database
-                        .HasMaxLength(100);
+                        .IsRequired()
+                        .HasMaxLength(MAX_EMAIL_LENGTH);
                 entity.Property(e => e.EmailConfirmed)
                         .IsRequired()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-                entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                
                 // Relationship dengan ItemCart
                 entity.HasMany<CartItem>()
                         .WithOne(e => e.User)
@@ -238,36 +261,124 @@ namespace MyApp.WebAPI.Data
                         "CK_Email", "[Email] LIKE '%@%.%'"));
             });
 
+            
+        }
+        /// <summary>
+        /// Configure Role entity dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+
+        private void ConfigureUserRole(ModelBuilder modelBuilder)
+        {
             // ===== ROLE CONFIGURATION =====
             // Configure Role entity for Identity
             modelBuilder.Entity<Role>(entity =>
             {
-                // Base Entity
+                entity.ToTable("Roles");
+                // Auditable Entity
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH)
+                    .HasDefaultValue("System");
+                entity.Property(e => e.UpdatedAt);
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // ?
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30);
                 entity.Property(e => e.Description)
-                .HasMaxLength(500);
+                    .HasMaxLength(300);
             });
-
+            // ===== USER ROLE CONFIGURATION =====
+            // Configure User role many-to-many
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.ToTable("UserRoles");
+                // Auditable Entity
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH)
+                    .HasDefaultValue("System");
+                entity.Property(e => e.UpdatedAt);
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
+                // Relationship dengan ItemCart
+                entity.HasOne(e => e.User)
+                    .WithMany(e => e.UserRoles)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan User bila ada UserRoles yang terhubung
+                // Relationship dengan Participant
+                entity.HasOne(e => e.Role)
+                    .WithMany(e => e.UserRoles)
+                    .HasForeignKey(e => e.RoleId)
+                    .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Role bila ada UserRoles yang terhubung
+            });
             // ===== USER CLAIM CONFIGURATION =====
             // Configure UserClaim relationship
             modelBuilder.Entity<UserClaim>(entity =>
             {
-                // Base Entity
+                entity.ToTable("UserClaims");
+                // Auditable Entity
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH)
+                    .HasDefaultValue("System");
+                entity.Property(e => e.UpdatedAt);
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Relationship dengan User
                 entity.HasOne(e => e.User)
-                    .WithMany(u => u.UserClaims)
+                    .WithMany(e2 => e2.UserClaims)
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+            modelBuilder.Entity<RoleClaim>(entity =>
+            {
+                entity.ToTable("RoleClaims");
+                // Auditable Entity
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH)
+                    .HasDefaultValue("System");
+                entity.Property(e => e.UpdatedAt);
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
+                // Relationship dengan User
+                entity.HasOne(e => e.Role)
+                    .WithMany(u => u.RoleClaims)
+                    .HasForeignKey(e => e.RoleId)
+                    .OnDelete(DeleteBehavior.Restrict);  // Larang penghapusan Role bila ada RoleClaims yang terhubung
+            });
         }
+
         /// <summary>
         /// Configure CartItem entity dengan advanced Fluent API features
         /// </summary>
@@ -279,7 +390,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("CartItems");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -302,7 +414,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("MyClasses");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -325,11 +438,13 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("Invoices");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Unique Index
-                entity.HasIndex(e => e.RefCode).IsUnique();
+                entity.HasIndex(e => e.RefCode)
+                    .IsUnique();
                 // Properties
                 entity.Property(e => e.RefCode)
                         .IsRequired()
@@ -361,7 +476,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("InvoiceDetail");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -385,7 +501,8 @@ namespace MyApp.WebAPI.Data
                 entity.ToTable("PaymentMethods");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId).IsUnique();
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -393,7 +510,7 @@ namespace MyApp.WebAPI.Data
                         .IsRequired()
                         .HasMaxLength(20);
                 entity.Property(e => e.LogoUrl)
-                        .HasMaxLength(256);
+                        .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -401,6 +518,52 @@ namespace MyApp.WebAPI.Data
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Invoice lagi
+            });
+        }
+
+
+        /// <summary>
+        /// Configure Audit log dengan advanced Fluent API features
+        /// </summary>
+        /// <param name="modelBuilder">ModelBuilder instance</param>
+
+        private void ConfigureAuditLog(ModelBuilder modelBuilder)
+        {
+            // ===== ROLE CONFIGURATION =====
+            // Configure Role entity for Identity
+            modelBuilder.Entity<AuditLog>(entity =>
+            {
+                entity.ToTable("AuditLogs");
+                // Base Entity
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.RefId)
+                    .IsUnique();
+                entity.Property(e => e.RefId)
+                    .IsRequired();
+                // Properties
+                entity.Property(e => e.Action)
+                    .HasMaxLength(300);
+                entity.Property(e => e.TimeOfAction)
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.EntityName)
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
+                entity.Property(e => e.OldValues)
+                    .HasMaxLength(300);
+                entity.Property(e => e.NewValues)
+                    .HasMaxLength(300);
+                entity.Property(e => e.IpAddress)
+                    .IsRequired()
+                    .HasMaxLength(300);
+                entity.Property(e => e.UserAgent)
+                    .IsRequired()
+                    .HasMaxLength(300);
+                // Relationship dengan User
+                entity.HasOne<User>()
+                    .WithMany()
+                    .HasForeignKey(e => e.EntityId)
+                    .OnDelete(DeleteBehavior.SetNull); // Putuskan semua AuditLog yang terhubung bila User dihapus
             });
         }
 

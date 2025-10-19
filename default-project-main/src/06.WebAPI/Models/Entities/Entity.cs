@@ -24,17 +24,17 @@ public abstract class AuditableEntity : BaseEntity
     /// <summary>
     /// CreatedAt: Tanggal dan waktu entity dibuat
     /// </summary>
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     /// <summary>
     /// CreatedBy: Pelaku entity dibuat
     /// </summary>
-    public virtual string CreatedBy { get; set; } = string.Empty;
+    public string CreatedBy { get; set; } = string.Empty;
     /// <summary>
     /// UpdatedAt: Tanggal dan waktu entity diubah
     /// </summary>
-    public virtual DateTime? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     /// <summary>
     /// UpdatedBy: Pelaku entity diubah
     /// </summary>
-    public virtual string? UpdatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
 }

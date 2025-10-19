@@ -30,7 +30,6 @@ namespace MyApp.WebAPI.Controllers
         private readonly IUserManagementService _userManagementService;
         private readonly ILogger<AuthController> _logger;
         private readonly UserManager<User> _userManager;
-        
 
         public AuthController(
             IAuthenticationService authenticationService,

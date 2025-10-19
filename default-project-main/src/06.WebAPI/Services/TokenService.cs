@@ -1,11 +1,14 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MyApp.Shared.DTOs;
+using MyApp.WebAPI.Configuration;
+using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Models.Entities;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using MyApp.WebAPI.Configuration;
-using MyApp.WebAPI.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace MyApp.WebAPI.Services
 {
@@ -16,9 +19,9 @@ namespace MyApp.WebAPI.Services
     public interface ITokenService
     {
         Task<string> GenerateAccessTokenAsync(User user);
-        string GenerateRefreshToken();
         ClaimsPrincipal? GetPrincipalFromExpiredToken(string token);
         Task<bool> IsTokenValidAsync(string token);
+        Task<string> GenerateRefreshTokenAsync();
         Task<string> GenerateEmailConfirmationTokenAsync();
         Task<string> GeneratePasswordResetTokenAsync();
     }
@@ -35,14 +38,14 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public class TokenService : ITokenService
     {
+        private readonly AppleMusicDbContext _context;
         private readonly JwtSettings _jwtSettings;
-        private readonly UserManager<User> _userManager;
         private readonly ILogger<TokenService> _logger;
 
-        public TokenService(JwtSettings jwtSettings, UserManager<User> userManager, ILogger<TokenService> logger)
+        public TokenService(AppleMusicDbContext context, JwtSettings jwtSettings, ILogger<TokenService> logger)
         {
+            _context = context;
             _jwtSettings = jwtSettings;
-            _userManager = userManager;
             _logger = logger;
         }
 
@@ -71,18 +74,6 @@ namespace MyApp.WebAPI.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
-        }
-
-        /// <summary>
-        /// Generate Refresh Token
-        /// Token random untuk memperbarui access token yang expired
-        /// </summary>
-        public string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[32];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-            return Base64UrlEncoder.Encode(randomNumber);
         }
 
         /// <summary>
@@ -166,22 +157,40 @@ namespace MyApp.WebAPI.Services
             {
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Email, user.Email ?? string.Empty),
-                new(ClaimTypes.Name, user.UserName ?? string.Empty),
+                new(ClaimTypes.Name, user.Name ?? string.Empty),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), //guid
                 new(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };
 
             // Add roles ke claims
-            var roles = await _userManager.GetRolesAsync(user);
+            //var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _context.UserRoles
+                .Where(a => a.UserId == user.Id)
+                .Include(a => a.Role)
+                .Select(a => a.Role.Name)
+                .ToListAsync();
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             // Add user custom claims
-            var userClaims = await _userManager.GetClaimsAsync(user);
+            //var userClaims = await _userManager.GetClaimsAsync(user);
+            //var claims = await _userManager.GetClaimsAsync(user);
+            var userClaims = await _context.UserClaims
+                .Where(a => a.UserId == user.Id)
+                .Select(a => new Claim(a.ClaimType, a.ClaimValue))
+                .ToListAsync();
             claims.AddRange(userClaims);
 
             return claims;
         }
 
+        /// <summary>
+        /// Generate Refresh Token
+        /// Token random untuk memperbarui access token yang expired
+        /// </summary>
+        public Task<string> GenerateRefreshTokenAsync()
+        {
+            return Task.FromResult(Base64UrlEncoder.Encode(RandomNumberGenerator.GetBytes(64)));
+        }
         public Task<string> GenerateEmailConfirmationTokenAsync()
         {
             return Task.FromResult(Base64UrlEncoder.Encode(RandomNumberGenerator.GetBytes(64)));

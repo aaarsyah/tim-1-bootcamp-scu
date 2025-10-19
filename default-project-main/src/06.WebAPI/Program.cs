@@ -71,7 +71,7 @@ try
 
     // ===== STEP 5: CONFIGURE IDENTITY =====
     // Purpose: Setup ASP.NET Core Identity for user management
-    builder.Services.AddIdentity<User, Role>(options =>
+    /*builder.Services.AddIdentity<User, Role>(options =>
     {
         // Password settings
         options.Password.RequiredLength = 8;
@@ -93,7 +93,7 @@ try
         options.User.AllowedUserNameCharacters += " "; // Izinkan huruf spasi dalam Username
     })
     .AddEntityFrameworkStores<AppleMusicDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders();*/
 
     // ===== STEP 6: CONFIGURE JWT AUTHENTICATION =====
     // Purpose: Setup JWT Bearer authentication

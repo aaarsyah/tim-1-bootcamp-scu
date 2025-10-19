@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Identity;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Configuration;
-using MyApp.WebAPI.Configuration;
+using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.Entities;
 
@@ -23,29 +21,32 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly AppleMusicDbContext _context;
         private readonly ITokenService _tokenService;
         private readonly JwtSettings _jwtSettings;
         private readonly ILogger<AuthenticationService> _logger;
         private readonly IEmailService _emailService;
+        private readonly IPasswordService _passwordService;
+
+        private const int MAX_FAILED_ATTEMPTS = 5;
+        private const int LOCKOUT_TIME_MINUTES = 15;
 
         public AuthenticationService(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
+            AppleMusicDbContext context,
             ITokenService tokenService,
             JwtSettings jwtSettings,
             ILogger<AuthenticationService> logger,
-            IEmailService emailService
+            IEmailService emailService,
+            IPasswordService passwordService
         )
             
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _context = context;
             _tokenService = tokenService;
             _jwtSettings = jwtSettings;
             _logger = logger;
             _emailService = emailService; //confirm-email
+            _passwordService = passwordService;
         }
 
         /// <summary>
@@ -54,74 +55,104 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request)
         {
-            _logger.LogInformation("User registration attempt for email: {Email}", request.Email);
-
             // Cek apakah email sudah terdaftar
-            var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            //var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            var existingUser = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == request.Email);
             if (existingUser != null)
             {
                 throw new ValidationException("User with this email already exists");
             }
 
-            // Generate email confirmation token
-            var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
+            _logger.LogInformation("User registration attempt for email: {Email}", request.Email);
 
-            // Create new user
-            var user = new User
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                UserName = request.Name,
-                Email = request.Email,
-                EmailConfirmed = false, //true if user already confirmed email
-                EmailConfirmationToken = confirmationToken,
-                EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
-                CreatedAt = DateTime.UtcNow
-            };
+                // Generate email confirmation token
+                var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
 
-            // Create user dengan password
-            var result = await _userManager.CreateAsync(user, request.Password);
+                // Create new user
+                var user = new User
+                {
+                    Name = request.Name,
+                    Email = request.Email,
+                    PasswordHash = _passwordService.HashPassword(request.Password),
+                    EmailConfirmed = false,
+                    EmailConfirmationToken = confirmationToken,
+                    EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System"
+                };
 
-            if (!result.Succeeded)
-            {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                _logger.LogWarning("User registration failed for {Email}: {Errors}", request.Email, errors);
-                
-                throw new ValidationException($"Registration failed: {errors}");
+                //await _unitOfWork.Users.AddAsync(user);
+                //await _unitOfWork.CompleteAsync();
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync(); //Id di auto-generate setelah di save
+
+                // Assign default role "User"
+
+                var userRole = new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = 1, // User role
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System"
+                };
+
+                // Add default claims
+                var userClaim = new UserClaim
+                {
+                    UserId = user.Id,
+                    ClaimType = "can_view_profile",
+                    ClaimValue = "true",
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System"
+                };
+
+                // Save user role dan claims
+                await _context.UserRoles.AddAsync(userRole); // TODO: Await all to make it faster
+                await _context.UserClaims.AddAsync(userClaim);
+                await _context.SaveChangesAsync();
+
+                // Kirim email konfirmasi
+                var confirmationLink = $"https://localhost:5099/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
+                await _emailService.SendEmailConfirmationAsync(user.Email, user.Name, confirmationLink);
+
+                _logger.LogInformation("User registration successful for email: {Email}", request.Email);
+
+                // Generate JWT tokens
+                var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
+                var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
+
+                // Save refresh token
+                // TODO: Shouldn't refresh token be given after email is confirmed?
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+
+                // ===== STEP 9 =====
+                // All operations succeeded, make permanent
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return new AuthResponseDto
+                {
+                    Message = "Registration successful",
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
+                    User = await MapToUserDto(user)
+                };
             }
-
-            // Assign default role "User"
-            await _userManager.AddToRoleAsync(user, "User");
-
-            // Add default claims
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("can_view_profile", "true"));
-
-            // Kirim email konfirmasi
-            var confirmationLink = $"https://localhost:5099/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
-            await _emailService.SendEmailConfirmationAsync(user.Email, user.UserName, confirmationLink);
-
-            _logger.LogInformation("User registration successful for email: {Email}", request.Email);
-
-
-
-
-
-
-            // Generate JWT tokens
-            var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
-            var refreshToken = _tokenService.GenerateRefreshToken();
-
-            // Save refresh token ke database
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
-            await _userManager.UpdateAsync(user);
-
-            return new AuthResponseDto
+            catch (Exception ex)
             {
-                Message = "Registration successful",
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
-                User = await MapToUserDto(user)
-            };
+                // ===== ROLLBACK ON ERROR =====
+                // Any exception -> undo all changes
+                await transaction.RollbackAsync();
+                _logger.LogError("Register failed, transaction rolled back");
+                throw; // Re-throw to be handled by middleware
+            }
         }
 
         /// <summary>
@@ -133,35 +164,55 @@ namespace MyApp.WebAPI.Services
             _logger.LogInformation("Login attempt for email: {Email}", request.Email);
 
             // Cari user berdasarkan email
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            //var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == request.Email);
             if (user == null || !user.EmailConfirmed)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
                 throw new ValidationException("Invalid email or password");
             }
-
-            // Validasi password dengan lockout protection
-            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
-            if (!result.Succeeded)
+            // Check account lockout
+            if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
             {
-                _logger.LogWarning("Login failed for email: {Email}. Reason: {Reason}", request.Email, result.ToString());
-                
-                if (result.IsLockedOut)
+                var remainingTime = (user.LockoutEnd.Value - DateTime.UtcNow).TotalMinutes;
+                throw new ValidationException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes");
+            }
+
+            // Verify password
+            if (!_passwordService.VerifyPassword(request.Password, user.PasswordHash))
+            {
+                // Increment failed attempts
+                user.FailedLoginAttempts++;
+                //_logger.LogWarning("Login failed for email: {Email}. Reason: {Reason}", request.Email, result.ToString());
+
+                if (user.FailedLoginAttempts >= MAX_FAILED_ATTEMPTS)
                 {
-                    throw new ValidationException("Account is locked out. Please try again later.");
+                    user.LockoutEnd = DateTime.UtcNow.AddMinutes(LOCKOUT_TIME_MINUTES);
+                    _logger.LogWarning($"Account locked for user: {user.Email}");
                 }
+
+                await _context.SaveChangesAsync();
 
                 throw new ValidationException("Invalid email or password");
             }
+
+            // Reset failed attempts on successful login
+            user.FailedLoginAttempts = 0;
+            user.LockoutEnd = DateTime.UtcNow;
+            user.LastLoginAt = DateTime.UtcNow;
+
             // TODO: Use the rememberMe field?
             // Generate JWT tokens
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
-            var refreshToken = _tokenService.GenerateRefreshToken();
+            var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
 
             // Save refresh token
             user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
-            await _userManager.UpdateAsync(user);
+            user.RefreshTokenExpiry = request.RememberMe
+                ? DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenRememberMeExpirationDays)
+                : DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+            await _context.SaveChangesAsync();
 
             _logger.LogInformation("Login successful for email: {Email}", request.Email);
 
@@ -195,7 +246,9 @@ namespace MyApp.WebAPI.Services
             }
 
             // Validasi refresh token
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            //var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
                 //return new AuthResponseDto
@@ -205,7 +258,7 @@ namespace MyApp.WebAPI.Services
                 //};
                 throw new AuthenticationException("Token is invalid");
             }
-            if (!await _userManager.IsEmailConfirmedAsync(user))
+            if (!user.EmailConfirmed)
             {
                 throw new AuthenticationException("User has not confirmed email");
             }
@@ -220,12 +273,12 @@ namespace MyApp.WebAPI.Services
             }
             // Generate tokens baru
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
-            var refreshToken = _tokenService.GenerateRefreshToken();
+            var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
 
             // Update refresh token
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
-            await _userManager.UpdateAsync(user);
+            await _context.SaveChangesAsync();
 
             return new AuthResponseDto
             {
@@ -243,7 +296,8 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<bool> LogoutAsync(int userId)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
                 throw new AuthenticationException("Token is invalid");
@@ -251,7 +305,7 @@ namespace MyApp.WebAPI.Services
             // Invalidate refresh token
             user.RefreshToken = null;
             user.RefreshTokenExpiry = DateTime.UtcNow;
-            await _userManager.UpdateAsync(user);
+            await _context.SaveChangesAsync();
 
             _logger.LogInformation("User logged out: {UserId}", userId);
             return true;
@@ -263,19 +317,30 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request)
         {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
                 throw new AuthenticationException("Token is invalid");
             }
-            
-            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
 
-            if (!result.Succeeded)
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                _logger.LogWarning("Password confirmation mismatch for {Email}", user.Email);
+                throw new ValidationException("Password and confirmation password do not match.");
+            }
+
+            // Verify password
+            if (!_passwordService.VerifyPassword(request.NewPassword, user.PasswordHash))
             {
                 _logger.LogWarning("Password change failed for user: {UserId}", userId);
                 throw new ValidationException("Password change failed");
             }
+
+            //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            user.PasswordHash = _passwordService.HashPassword(request.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedBy = user.Name;
 
             _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
             return true;
@@ -287,10 +352,11 @@ namespace MyApp.WebAPI.Services
         {
             _logger.LogInformation("Forgot password requested for email: {Email}", request.Email);
 
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == request.Email);
 
             //Menghindari Email Enumeration Attack (menghindari hacker mengetahui email mana yang valid)
-            if (user == null || user.Email == null)
+            if (user == null)
             {
                 _logger.LogWarning("Forgot password requested for non-existing email: {Email}", request.Email);
                 // Demi keamanan: tetap return sukses tanpa memberitahu apakah email valid
@@ -298,19 +364,18 @@ namespace MyApp.WebAPI.Services
             }
 
             // Generate token reset password
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
+            var token = await _tokenService.GeneratePasswordResetTokenAsync();
             user.PasswordResetToken = token;
             user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
 
-            var a = await _userManager.UpdateAsync(user);
+            await _context.SaveChangesAsync();
 
             // Buat link reset (menuju frontend URL BlazorUI)
             var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
 
             // Jika email terdaftar dalam database, Kirim email reset password
-            await _emailService.SendPasswordResetAsync(user.Email, user.UserName ?? string.Empty, resetLink); 
+            await _emailService.SendPasswordResetAsync(user.Email, user.Name ?? string.Empty, resetLink); 
 
             _logger.LogInformation("Password reset email sent to {Email}", user.Email);
 
@@ -330,8 +395,9 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException("Password and confirmation password do not match.");
             }
 
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null || user.Email == null)
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == request.Email);
+            if (user == null)
             {
                 _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
                 throw new AuthenticationException("Invalid user or token.");
@@ -345,27 +411,27 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException("Invalid or expired reset token.");
             }
 
-            // Jalankan proses reset password
-            var result = await _userManager.ResetPasswordAsync(user, request.AccessToken, request.NewPassword);
-            if (!result.Succeeded)
+            // Verify password
+            if (!_passwordService.VerifyPassword(request.NewPassword, user.PasswordHash))
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                _logger.LogWarning("Password reset failed for {Email}: {Errors}", request.Email, errors);
-                throw new ValidationException($"Password reset failed: {errors}");
+                _logger.LogWarning("Password reset failed for user: {UserId}", user.Id);
+                throw new ValidationException("Password reset failed");
             }
 
-            //// ✅ Hash password baru manual (karena tidak pakai ResetPasswordAsync)
-            //var passwordHasher = new PasswordHasher<User>();
-            //user.PasswordHash = passwordHasher.HashPassword(user, request.NewPassword);
+            //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            user.PasswordHash = _passwordService.HashPassword(request.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedBy = user.Name;
 
-            // ✅ Reset field token agar tidak bisa digunakan lagi
+            // Reset password reset token
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpiry = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;
-            await _userManager.UpdateAsync(user);
+
+            await _context.SaveChangesAsync();
 
             // Kirim email notifikasi berhasil
-            await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.UserName ?? "User");
+            await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.Name ?? "User");
 
             _logger.LogInformation("Password reset successful for {Email}", request.Email);
 
@@ -378,19 +444,30 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         private async Task<UserDto> MapToUserDto(User user)
         {
-            var roles = await _userManager.GetRolesAsync(user);
-            var claims = await _userManager.GetClaimsAsync(user);
+            var usera = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == user.Email);
+            //var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _context.UserRoles
+                .Where(a => a.UserId == user.Id)
+                .Include(a => a.Role)
+                .Select(a => a.Role.Name)
+                .ToListAsync();
+            //var claims = await _userManager.GetClaimsAsync(user);
+            var claims = await _context.UserClaims
+                .Where(a => a.UserId == user.Id)
+                .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
+                .ToListAsync();
 
             return new UserDto
             {
                 Id = user.Id,
-                Name = user.UserName,
+                Name = user.Name,
                 Email = user.Email ?? string.Empty,
                 EmailConfirmed = user.EmailConfirmed,
                 CreatedAt = user.CreatedAt,
-                UpdatedAt = user.UpdatedAt,
-                Roles = roles.ToList(),
-                Claims = claims.Select(c => new ClaimDto { Type = c.Type, Value = c.Value }).ToList()
+                UpdatedAt = user.UpdatedAt ?? DateTime.MinValue,
+                Roles = roles,
+                Claims = claims
             };
         }
     }
