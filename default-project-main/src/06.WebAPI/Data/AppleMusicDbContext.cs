@@ -218,6 +218,10 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.UpdatedBy)
                     .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Properties
+                entity.Property(e => e.IsActive)
+                        .IsRequired()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
                 entity.Property(e => e.RefreshToken)
                         .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.RefreshTokenExpiry)
@@ -236,11 +240,22 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.Email)
                         .IsRequired()
                         .HasMaxLength(MAX_EMAIL_LENGTH);
+                entity.Property(e => e.PasswordHash)
+                        .IsRequired()
+                        .HasMaxLength(256); // berapa panjangnya ya?
                 entity.Property(e => e.EmailConfirmed)
                         .IsRequired()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-                
+                entity.Property(e => e.FailedLoginAttempts)
+                        .IsRequired()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+                entity.Property(e => e.LockoutEnd)
+                        .HasDefaultValueSql(null);
+                entity.Property(e => e.LastLoginAt)
+                        .HasDefaultValueSql(null);
+
                 // Relationship dengan ItemCart
                 entity.HasMany<CartItem>()
                         .WithOne(e => e.User)
@@ -290,7 +305,7 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.UpdatedAt);
                 entity.Property(e => e.UpdatedBy)
                     .HasMaxLength(MAX_USERNAME_LENGTH);
-                // ?
+                // Properties
                 entity.Property(e => e.Name)
                     .HasMaxLength(30);
                 entity.Property(e => e.Description)
@@ -576,149 +591,163 @@ namespace MyApp.WebAPI.Data
                 new Category
                 {
                     Id = 1,
+                    RefId = new Guid("a2f2a74c-9819-4051-852e-93e859c54661"),
                     Name = "Drum",
                     LongName = "Drummer class",
                     Description = placeholder,
                     ImageUrl = "img/Class1.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 2,
+                    RefId = new Guid("407c4bf0-7f0c-44fc-b3ad-9a4f18a75f29"),
                     Name = "Piano",
                     LongName = "Pianist class",
                     Description = placeholder,
                     ImageUrl = "img/Class2.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 3,
+                    RefId = new Guid("90aa4952-165f-4225-98e4-5a569b83aa8c"),
                     Name = "Gitar",
                     LongName = "Guitarist class",
                     Description = placeholder,
                     ImageUrl = "img/Class3.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 4,
+                    RefId = new Guid("3b470c4e-d847-43b1-9784-a8cc2082cf9e"),
                     Name = "Bass",
                     LongName = "Bassist class",
                     Description = placeholder,
                     ImageUrl = "img/Class4.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 5,
+                    RefId = new Guid("9b648b45-327b-44ce-853a-c4ce17b7fd20"),
                     Name = "Biola",
                     LongName = "Violinist class",
                     Description = placeholder,
                     ImageUrl = "img/Class5.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 6,
+                    RefId = new Guid("e4ea4121-bf90-4ba9-bc87-2c106c6acbbe"),
                     Name = "Menyanyi",
                     LongName = "Singer class",
                     Description = placeholder,
                     ImageUrl = "img/Class6.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 7,
+                    RefId = new Guid("595b8600-4d24-44dc-9e40-6dfd87892cfa"),
                     Name = "Flute",
                     LongName = "Flutist class",
                     Description = placeholder,
                     ImageUrl = "img/Class7.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 },
                 new Category
                 {
                     Id = 8,
+                    RefId = new Guid("e17ec48c-b705-4448-b916-9867d292e517"),
                     Name = "Saxophone",
                     LongName = "Saxophonist class",
                     Description = placeholder,
                     ImageUrl = "img/Class8.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
+                    CreatedBy = "System"
                 }
             );
             modelBuilder.Entity<Course>().HasData(
                 new Course
                 {
                     Id = 1,
+                    RefId = new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1"),
                     Name = "Kursus Drummer Special Coach (Eno Netral)",
                     Description = placeholder,
                     ImageUrl = "img/Landing1.svg",
                     Price = 8500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 1
                 },
                 new Course
                 {
                     Id = 2,
+                    RefId = new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2"),
                     Name = "[Beginner] Guitar class for kids",
                     Description = placeholder,
                     ImageUrl = "img/Landing2.svg",
                     Price = 1600000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 3
                 },
                 new Course
                 {
                     Id = 3,
+                    RefId = new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1"),
                     Name = "Biola Mid-Level Course",
                     Description = placeholder,
                     ImageUrl = "img/Landing3.svg",
                     Price = 3000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 5
                 },
                 new Course
                 {
                     Id = 4,
+                    RefId = new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928"),
                     Name = "Drummer for kids (Level Basic/1)",
                     Description = placeholder,
                     ImageUrl = "img/Landing4.svg",
                     Price = 2200000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 1
                 },
                 new Course
                 {
                     Id = 5,
+                    RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"),
                     Name = "Kursu Piano : From Zero to Pro (Full Package)",
                     Description = placeholder,
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 2
                 },
                 new Course
                 {
                     Id = 6,
+                    RefId = new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee"),
                     Name = "Expert Level Saxophone",
                     Description = placeholder,
                     ImageUrl = "img/Landing6.svg",
                     Price = 7350000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
                     CategoryId = 8
                 }
             );
@@ -726,216 +755,252 @@ namespace MyApp.WebAPI.Data
                 new Schedule
                 {
                     Id = 1,
+                    RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 2,
+                    RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 3,
+                    RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 4,
+                    RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 5,
+                    RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 6,
+                    RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 1
                 },
                 new Schedule
                 {
                     Id = 7,
+                    RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 8,
+                    RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 9,
+                    RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 10,
+                    RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 11,
+                    RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 12,
+                    RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 2
                 },
                 new Schedule
                 {
                     Id = 13,
+                    RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 14,
+                    RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 15,
+                    RefId = new Guid("dc795a78-c93b-4499-a412-07a036e87ee4"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 16,
+                    RefId = new Guid("3b9a7f70-e5f6-4dcb-a6af-72c4b3d305f4"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 17,
+                    RefId = new Guid("7aa4ec20-b332-4329-8aa4-b8b76e097cd9"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 18,
+                    RefId = new Guid("b1a31b4c-17ea-47ba-948c-e282a019f510"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 3
                 },
                 new Schedule
                 {
                     Id = 19,
+                    RefId = new Guid("1984127d-79e4-4221-954b-127718857bc0"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 20,
+                    RefId = new Guid("1fd6f30b-a51f-4de7-ab35-e309cc988c20"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 21,
+                    RefId = new Guid("deb1a633-2e59-4ebc-b55e-d65170b94207"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 22,
+                    RefId = new Guid("8b3e9524-7183-41b8-ab76-3bef3a804bfd"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 23,
+                    RefId = new Guid("571039cd-eb6e-468a-af34-3fe5a2f19d1e"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 24,
+                    RefId = new Guid("e0f2ae70-0d8f-42bc-b003-53b70f0e59e3"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 4
                 },
                 new Schedule
                 {
                     Id = 25,
+                    RefId = new Guid("989ce1b3-83f7-49c5-833b-13e40facbb08"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 26,
+                    RefId = new Guid("562fd502-1fd0-4fe6-b013-effb8435d3b4"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 27,
+                    RefId = new Guid("50d7486f-de76-43c9-87f0-3fc55c65289b"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 28,
+                    RefId = new Guid("f545d7cf-26ce-4532-98b5-f17b980307c7"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 29,
+                    RefId = new Guid("761b4c9a-60fb-4809-b1b0-66b37c7d3c59"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 30,
+                    RefId = new Guid("02176419-f3d0-4c9a-b6c7-60f8f84fc203"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 5
                 },
                 new Schedule
                 {
                     Id = 31,
+                    RefId = new Guid("92dfcd88-5914-4575-b2ac-bce04478c74a"),
                     Date = new DateOnly(2022, 10, 25),
                     CourseId = 6
                 },
                 new Schedule
                 {
                     Id = 32,
+                    RefId = new Guid("8bc96c9b-25da-44e4-a83b-1bada63f6b81"),
                     Date = new DateOnly(2022, 10, 26),
                     CourseId = 6
                 },
                 new Schedule
                 {
                     Id = 33,
+                    RefId = new Guid("1d64c39e-9857-4e86-9668-8c8b38b2f0d8"),
                     Date = new DateOnly(2022, 10, 27),
                     CourseId = 6
                 },
                 new Schedule
                 {
                     Id = 34,
+                    RefId = new Guid("e577aaaf-dea3-4aaf-9a07-4143686e56ba"),
                     Date = new DateOnly(2022, 10, 28),
                     CourseId = 6
                 },
                 new Schedule
                 {
                     Id = 35,
+                    RefId = new Guid("6929f28a-4f23-4d42-bd27-a5ab1eca0eda"),
                     Date = new DateOnly(2022, 10, 29),
                     CourseId = 6
                 },
                 new Schedule
                 {
                     Id = 36,
+                    RefId = new Guid("4dcce0fa-717d-440e-b5b7-ce7b59f781b4"),
                     Date = new DateOnly(2022, 10, 30),
                     CourseId = 6
                 }
@@ -944,57 +1009,119 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 1,
+                    RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
                     Name = "Super Admin",
                     Email = "admin@applemusic.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new User
                 {
                     Id = 2,
+                    RefId = new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"),
                     Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 }
                 ,
                 new User
                 {
                     Id = 3,
+                    RefId = new Guid("17039ada-1855-41f1-9bec-15c24acada86"),
                     Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new User
                 {
                     Id = 4,
+                    RefId = new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"),
                     Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
                     EmailConfirmed = false,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new User
                 {
                     Id = 5,
+                    RefId = new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"),
                     Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new User
                 {
                     Id = 6,
+                    RefId = new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"),
                     Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
+                }
+            );
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole
+                {
+                    Id = 1,
+                    RefId = new Guid("40d61f76-7458-4f51-b7be-f665eaaf53f3"),
+                    UserId = 1,
+                    RoleId = 2,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
+                },
+                new UserRole
+                {
+                    Id = 2,
+                    RefId = new Guid("58536f91-0d39-4144-9092-2a587203054b"),
+                    UserId = 2,
+                    RoleId = 1,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
+                },
+                new UserRole
+                {
+                    Id = 3,
+                    RefId = new Guid("bee22858-a299-4adc-9349-d0d27146b2aa"),
+                    UserId = 3,
+                    RoleId = 1,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
+                },
+                new UserRole
+                {
+                    Id = 4,
+                    RefId = new Guid("12a54832-934c-4a98-96a7-3d0343f87568"),
+                    UserId = 4,
+                    RoleId = 1,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
+                },
+                new UserRole
+                {
+                    Id = 5,
+                    RefId = new Guid("435bcec6-301f-48c0-aeb5-72e275dc500a"),
+                    UserId = 5,
+                    RoleId = 1,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
+                },
+                new UserRole
+                {
+                    Id = 6,
+                    RefId = new Guid("d493a9b6-1f7e-45a7-8482-32636583e8f3"),
+                    UserId = 6,
+                    RoleId = 2,
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
                 }
             );
 
@@ -1003,15 +1130,22 @@ namespace MyApp.WebAPI.Data
                 new Role
                 {
                     Id = 1,
-                    Name = "Admin",
-                    Description = "Administrator with management access"
+                    RefId = new Guid("e7b86411-acc4-4e6f-b132-8349974d973b"),
+                    Name = "User",
+                    Description = "Standard user with basic access",
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
                 },
                 new Role
                 {
                     Id = 2,
-                    Name = "User",
-                    Description = "Standard user with basic access"
+                    RefId = new Guid("c444bd50-1a9d-4a33-a0d9-b9b375e81a68"),
+                    Name = "Admin",
+                    Description = "Administrator with management access",
+                    CreatedAt = seedDate,
+                    CreatedBy = "System"
                 }
+                
             );
 
 
@@ -1019,50 +1153,56 @@ namespace MyApp.WebAPI.Data
                 new PaymentMethod
                 {
                     Id = 1,
+                    RefId = new Guid("43380776-ac70-4350-a64b-82050eb436c7"),
                     Name = "Gopay",
                     LogoUrl = "img/Payment1.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new PaymentMethod
                 {
                     Id = 2,
+                    RefId = new Guid("17604b46-fd7f-41fd-8a5b-9281a3de15b1"),
                     Name = "OVO",
                     LogoUrl = "img/Payment2.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new PaymentMethod
                 {
                     Id = 3,
+                    RefId = new Guid("4aa1dd7f-8c22-446d-a3f5-a25548068daf"),
                     Name = "DANA",
                     LogoUrl = "img/Payment3.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new PaymentMethod
                 {
                     Id = 4,
+                    RefId = new Guid("11816d5a-aa8d-4363-95dc-2edcabc66fd5"),
                     Name = "Mandiri",
                     LogoUrl = "img/Payment4.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new PaymentMethod
                 {
                     Id = 5,
+                    RefId = new Guid("e4788b84-999f-43ee-b6fe-dead0c41c189"),
                     Name = "BCA",
                     LogoUrl = "img/Payment5.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 },
                 new PaymentMethod
                 {
                     Id = 6,
+                    RefId = new Guid("6a63902e-c624-41b7-b47a-a57c14514efb"),
                     Name = "BNI",
                     LogoUrl = "img/Payment6.svg",
                     CreatedAt = seedDate,
-                    UpdatedAt = seedDate
+                    CreatedBy = "System"
                 }
             );
         }

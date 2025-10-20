@@ -199,7 +199,7 @@ namespace MyApp.WebAPI.Services
 
             // Reset failed attempts on successful login
             user.FailedLoginAttempts = 0;
-            user.LockoutEnd = DateTime.UtcNow;
+            //user.LockoutEnd = null; // Tidak perlu reset LockoutEnd, karena lockout sudah expired ketika user sudah bisa login
             user.LastLoginAt = DateTime.UtcNow;
 
             // TODO: Use the rememberMe field?

@@ -4,7 +4,7 @@
     /// PaymentMethod: Representasi sebuah metode pembayaran<br />
     /// One-to-Many dengan Invoice (One PaymentMethod, Many Invoice)
     /// </summary>
-    public class PaymentMethod : BaseEntity
+    public class PaymentMethod : AuditableEntity
     {
         /// <summary>
         /// Name: Nama metode pembayaran
@@ -14,16 +14,6 @@
         /// LogoUrl: URL logo metode pembayaran
         /// </summary>
         public string LogoUrl { get; set; } = string.Empty;
-        /// <summary>
-        /// CreatedAt: Tangal pembuatan metode pembayaran
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        /// <summary>
-        /// UpdatedAt: Tangal perubahan metode pembayaran
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime UpdatedAt { get; set; }
         /// <summary>
         /// IsActive: Apakah metode pembayaran aktif?
         /// Catatan: Digunakan pada page Admin

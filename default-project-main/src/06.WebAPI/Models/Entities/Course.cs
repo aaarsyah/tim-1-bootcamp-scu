@@ -5,7 +5,7 @@ namespace MyApp.WebAPI.Models.Entities
     /// Demonstrates Many-to-One (with Department), One-to-Many (with Enrollments),
     /// and Many-to-Many (with Instructors) relationships
     /// </summary>
-    public class Course : BaseEntity
+    public class Course : AuditableEntity
     {
         /// <summary>
         /// Name: Nama kelas pelajaran
@@ -29,16 +29,6 @@ namespace MyApp.WebAPI.Models.Entities
         /// Catatan: Digunakan pada page Admin
         /// </summary>
         public bool IsActive { get; set; } = true;
-        /// <summary>
-        /// CreatedAt: Tangal pembuatan kelas pelajaran<br />
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        /// <summary>
-        /// UpdatedAt: Tangal perubahan kelas pelajaran<br />
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         /// <summary>
         /// CategoryId (foreign key): Id kategori kelas pelajaran yang terkait
         /// </summary>

@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251018175116_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251020013815_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace MyApp.WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.AuditLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,106 +33,53 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("Action")
                         .IsRequired()
-                        .HasMaxLength(34)
-                        .HasColumnType("nvarchar(34)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("EntityId")
                         .HasColumnType("int");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("NewValues")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("OldValues")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("TimeOfAction")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("UserAgent")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.HasIndex("EntityId");
 
-                    b.HasDiscriminator().HasValue("IdentityUserClaim<int>");
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AuditLogs", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.CartItem", b =>
@@ -143,6 +90,9 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
@@ -150,6 +100,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.HasIndex("ScheduleId");
 
@@ -171,10 +124,14 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -196,12 +153,21 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.ToTable("Categories", (string)null);
 
@@ -210,89 +176,97 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class1.svg",
                             IsActive = true,
                             LongName = "Drummer class",
                             Name = "Drum",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("a2f2a74c-9819-4051-852e-93e859c54661")
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class2.svg",
                             IsActive = true,
                             LongName = "Pianist class",
                             Name = "Piano",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("407c4bf0-7f0c-44fc-b3ad-9a4f18a75f29")
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class3.svg",
                             IsActive = true,
                             LongName = "Guitarist class",
                             Name = "Gitar",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("90aa4952-165f-4225-98e4-5a569b83aa8c")
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class4.svg",
                             IsActive = true,
                             LongName = "Bassist class",
                             Name = "Bass",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("3b470c4e-d847-43b1-9784-a8cc2082cf9e")
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class5.svg",
                             IsActive = true,
                             LongName = "Violinist class",
                             Name = "Biola",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("9b648b45-327b-44ce-853a-c4ce17b7fd20")
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class6.svg",
                             IsActive = true,
                             LongName = "Singer class",
                             Name = "Menyanyi",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("e4ea4121-bf90-4ba9-bc87-2c106c6acbbe")
                         },
                         new
                         {
                             Id = 7,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class7.svg",
                             IsActive = true,
                             LongName = "Flutist class",
                             Name = "Flute",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("595b8600-4d24-44dc-9e40-6dfd87892cfa")
                         },
                         new
                         {
                             Id = 8,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/ListMenuBanner.svg",
+                            ImageUrl = "img/Class8.svg",
                             IsActive = true,
                             LongName = "Saxophonist class",
                             Name = "Saxophone",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("e17ec48c-b705-4448-b916-9867d292e517")
                         });
                 });
 
@@ -312,10 +286,14 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -335,14 +313,23 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric(10)");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.ToTable("Courses", null, t =>
                         {
@@ -355,72 +342,78 @@ namespace MyApp.WebAPI.Migrations
                             Id = 1,
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing1.svg",
                             IsActive = true,
                             Name = "Kursus Drummer Special Coach (Eno Netral)",
                             Price = 8500000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1")
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 3,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing2.svg",
                             IsActive = true,
                             Name = "[Beginner] Guitar class for kids",
                             Price = 1600000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2")
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 5,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing3.svg",
                             IsActive = true,
                             Name = "Biola Mid-Level Course",
                             Price = 3000000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1")
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing4.svg",
                             IsActive = true,
                             Name = "Drummer for kids (Level Basic/1)",
                             Price = 2200000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928")
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 2,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing5.svg",
                             IsActive = true,
                             Name = "Kursu Piano : From Zero to Pro (Full Package)",
                             Price = 11650000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9")
                         },
                         new
                         {
                             Id = 6,
                             CategoryId = 8,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing6.svg",
                             IsActive = true,
                             Name = "Expert Level Saxophone",
                             Price = 7350000m,
-                            UpdatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee")
                         });
                 });
 
@@ -445,6 +438,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
@@ -453,6 +449,9 @@ namespace MyApp.WebAPI.Migrations
                     b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("RefCode")
+                        .IsUnique();
+
+                    b.HasIndex("RefId")
                         .IsUnique();
 
                     b.HasIndex("UserId");
@@ -471,12 +470,18 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<int?>("InvoiceId")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.HasIndex("ScheduleId");
 
@@ -491,6 +496,9 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
@@ -498,6 +506,9 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.HasIndex("ScheduleId");
 
@@ -519,6 +530,10 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -532,12 +547,21 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.ToTable("PaymentMethods", (string)null);
 
@@ -546,55 +570,61 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment1.svg",
                             Name = "Gopay",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("43380776-ac70-4350-a64b-82050eb436c7")
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment2.svg",
                             Name = "OVO",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("17604b46-fd7f-41fd-8a5b-9281a3de15b1")
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment3.svg",
                             Name = "DANA",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("4aa1dd7f-8c22-446d-a3f5-a25548068daf")
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment4.svg",
                             Name = "Mandiri",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("11816d5a-aa8d-4363-95dc-2edcabc66fd5")
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment5.svg",
                             Name = "BCA",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("e4788b84-999f-43ee-b6fe-dead0c41c189")
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment6.svg",
                             Name = "BNI",
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc)
+                            RefId = new Guid("6a63902e-c624-41b7-b47a-a57c14514efb")
                         });
                 });
 
@@ -606,53 +636,115 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Administrator with management access",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Standard user with basic access",
+                            Name = "User",
+                            RefId = new Guid("e7b86411-acc4-4e6f-b132-8349974d973b")
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "d4e5f6a7-b8c9-0123-def1-234567890123",
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Standard user with basic access",
-                            Name = "User",
-                            NormalizedName = "USER"
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Administrator with management access",
+                            Name = "Admin",
+                            RefId = new Guid("c444bd50-1a9d-4a33-a0d9-b9b375e81a68")
                         });
+                });
+
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasDefaultValue("System");
+
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Schedule", b =>
@@ -674,12 +766,18 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("date")
                         .HasDefaultValueSql("CONVERT (DATE, GETUTCDATE())");
 
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.ToTable("Schedules", (string)null);
 
@@ -690,6 +788,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -698,6 +797,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -706,6 +806,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -714,6 +815,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -722,6 +824,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -730,6 +833,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -738,6 +842,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -746,6 +851,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -754,6 +860,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -762,6 +869,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -770,6 +878,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -778,6 +887,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -786,6 +896,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -794,6 +905,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -802,6 +914,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("dc795a78-c93b-4499-a412-07a036e87ee4"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -810,6 +923,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("3b9a7f70-e5f6-4dcb-a6af-72c4b3d305f4"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -818,6 +932,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("7aa4ec20-b332-4329-8aa4-b8b76e097cd9"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -826,6 +941,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("b1a31b4c-17ea-47ba-948c-e282a019f510"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -834,6 +950,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("1984127d-79e4-4221-954b-127718857bc0"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -842,6 +959,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("1fd6f30b-a51f-4de7-ab35-e309cc988c20"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -850,6 +968,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("deb1a633-2e59-4ebc-b55e-d65170b94207"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -858,6 +977,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("8b3e9524-7183-41b8-ab76-3bef3a804bfd"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -866,6 +986,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("571039cd-eb6e-468a-af34-3fe5a2f19d1e"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -874,6 +995,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("e0f2ae70-0d8f-42bc-b003-53b70f0e59e3"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -882,6 +1004,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("989ce1b3-83f7-49c5-833b-13e40facbb08"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -890,6 +1013,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("562fd502-1fd0-4fe6-b013-effb8435d3b4"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -898,6 +1022,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("50d7486f-de76-43c9-87f0-3fc55c65289b"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -906,6 +1031,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("f545d7cf-26ce-4532-98b5-f17b980307c7"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -914,6 +1040,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("761b4c9a-60fb-4809-b1b0-66b37c7d3c59"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -922,6 +1049,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("02176419-f3d0-4c9a-b6c7-60f8f84fc203"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -930,6 +1058,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("92dfcd88-5914-4575-b2ac-bce04478c74a"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -938,6 +1067,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("8bc96c9b-25da-44e4-a83b-1bada63f6b81"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -946,6 +1076,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("1d64c39e-9857-4e86-9668-8c8b38b2f0d8"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -954,6 +1085,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 28),
+                            RefId = new Guid("e577aaaf-dea3-4aaf-9a07-4143686e56ba"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -962,6 +1094,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 29),
+                            RefId = new Guid("6929f28a-4f23-4d42-bd27-a5ab1eca0eda"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -970,6 +1103,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 30),
+                            RefId = new Guid("4dcce0fa-717d-440e-b5b7-ce7b59f781b4"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -982,22 +1116,22 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasDefaultValue("System");
+
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("EmailConfirmationToken")
                         .HasMaxLength(100)
@@ -1011,68 +1145,60 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                    b.Property<int>("FailedLoginAttempts")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LockoutEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordResetToken")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("PasswordResetTokenExpiry")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RefreshToken")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                    b.Property<DateTime>("RefreshTokenExpiry")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.ToTable("Users", null, t =>
                         {
@@ -1083,177 +1209,262 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa1d2205-2888-40cc-89ab-6cc77359b442",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "admin@applemusic.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@APPLEMUSIC.COM",
-                            NormalizedUserName = "SUPER ADMIN",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "Super Admin",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "Super Admin"
+                            RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "0090b440-14cd-4b62-a18a-8bb7385dda8f",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "nurimamiskandar@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "NURIMAMISKANDAR@GMAIL.COM",
-                            NormalizedUserName = "NUR IMAM ISKANDAR",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "Nur Imam Iskandar",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "Nur Imam Iskandar"
+                            RefId = new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "33462271-0ff4-44bb-92bc-d21292725a8a",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "imam.stmik15@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "IMAM.STMIK15@GMAIL.COM",
-                            NormalizedUserName = "ISKANDAR",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "Iskandar",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "Iskandar"
+                            RefId = new Guid("17039ada-1855-41f1-9bec-15c24acada86"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "14a2685e-9aba-48f8-8245-48ca94320551",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "iniemaildummysaya@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "INIEMAILDUMMYSAYA@GMAIL.COM",
-                            NormalizedUserName = "DUMMY USER",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "Dummy User",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "Dummy User"
+                            RefId = new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f45a10e-8bed-407d-ba76-5e443d458c72",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "yusrisahrul.works@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "YUSRISAHRUL.WORKS@GMAIL.COM",
-                            NormalizedUserName = "YUSRI SAHRUL",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "yusri sahrul",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "yusri sahrul"
+                            RefId = new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "aef5f553-4d33-4539-9c51-94f9eb2e8624",
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
                             Email = "yusribootcamp@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "YUSRIBOOTCAMP@GMAIL.COM",
-                            NormalizedUserName = "YUSRI SAHRUL TEST",
+                            FailedLoginAttempts = 0,
+                            IsActive = false,
+                            Name = "yusri sahrul test",
+                            PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UserName = "yusri sahrul test"
+                            RefId = new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"),
+                            RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.UserClaim", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasDefaultValue("System");
+
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.HasDiscriminator().HasValue("UserClaim");
+                    b.ToTable("UserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.UserRole", b =>
                 {
-                    b.HasOne("MyApp.WebAPI.Models.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasDefaultValue("System");
+
+                    b.Property<Guid>("RefId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("40d61f76-7458-4f51-b7be-f665eaaf53f3"),
+                            RoleId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("58536f91-0d39-4144-9092-2a587203054b"),
+                            RoleId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("bee22858-a299-4adc-9349-d0d27146b2aa"),
+                            RoleId = 1,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("12a54832-934c-4a98-96a7-3d0343f87568"),
+                            RoleId = 1,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("435bcec6-301f-48c0-aeb5-72e275dc500a"),
+                            RoleId = 1,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            RefId = new Guid("d493a9b6-1f7e-45a7-8482-32636583e8f3"),
+                            RoleId = 2,
+                            UserId = 6
+                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.AuditLog", b =>
                 {
                     b.HasOne("MyApp.WebAPI.Models.Entities.User", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("MyApp.WebAPI.Models.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyApp.WebAPI.Models.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("MyApp.WebAPI.Models.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.CartItem", b =>
@@ -1338,6 +1549,17 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.RoleClaim", b =>
+                {
+                    b.HasOne("MyApp.WebAPI.Models.Entities.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Schedule", b =>
                 {
                     b.HasOne("MyApp.WebAPI.Models.Entities.Course", "Course")
@@ -1360,6 +1582,25 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.UserRole", b =>
+                {
+                    b.HasOne("MyApp.WebAPI.Models.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MyApp.WebAPI.Models.Entities.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Category", b =>
                 {
                     b.Navigation("Courses");
@@ -1375,9 +1616,18 @@ namespace MyApp.WebAPI.Migrations
                     b.Navigation("InvoiceDetails");
                 });
 
+            modelBuilder.Entity("MyApp.WebAPI.Models.Entities.Role", b =>
+                {
+                    b.Navigation("RoleClaims");
+
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.User", b =>
                 {
                     b.Navigation("UserClaims");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

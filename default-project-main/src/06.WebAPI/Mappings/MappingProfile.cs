@@ -40,7 +40,7 @@ namespace MyApp.WebAPI.Mappings
 
             // User CartItem
             CreateMap<CartItem, CartItemResponseDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.CourseName,
                            opt => opt.MapFrom(src => src.Schedule.Course.Name));
                 // .ForMember(dest => dest.ScheduleDate, opt => opt.MapFrom(src => src.Schedule.Date))

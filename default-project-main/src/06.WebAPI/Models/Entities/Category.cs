@@ -5,7 +5,7 @@ namespace MyApp.WebAPI.Models.Entities
     /// Class ini akan di-map ke tabel "Categories" oleh Entity Framework
     /// One-to-Many relationship dengan Product (1 Category -> Many Products)
     /// </summary>
-    public class Category : BaseEntity
+    public class Category : AuditableEntity
     {
         /// <summary>
         /// Name: Nama kategori
@@ -31,16 +31,6 @@ namespace MyApp.WebAPI.Models.Entities
         /// Catatan: Digunakan pada page Admin
         /// </summary>
         public bool IsActive { get; set; } = true;
-        /// <summary>
-        /// CreatedAt: Tangal pembuatan kategori<br />
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime CreatedAt { get; set; }
-        /// <summary>
-        /// UpdatedAt: Tangal perubahan kategori<br />
-        /// Catatan: Digunakan pada page Admin
-        /// </summary>
-        public DateTime UpdatedAt { get; set; }
         /// <summary>
         /// Virtual field untuk Courses: Kelas-kelas pelajaran yang terkait
         /// </summary>
