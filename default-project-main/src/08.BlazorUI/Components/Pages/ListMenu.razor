@@ -1,61 +1,115 @@
-@page "/listmenu"
-@inject NavigationManagerExt Navigation;
+@page "/listmenu/{CategoryId:int}"
+
+@using MyApp.Shared.DTOs
+
+@inject HttpClient _httpClient
+@inject NavigationManagerExt Navigation
 
 <PageTitle>Daftar Kelas</PageTitle>
 
-	<div class="pa-0 ma-n4">
-		<MudImage Class="" Src="img/ListMenuBanner.svg" Alt="List Menu Banner" Style="width: 100%;"></MudImage>
-	</div> 
-	<br />
+<div class="pa-0 ma-n4">
+    <MudImage Class="" Src="@CategoryImage" Alt="Category Banner" Style="width: 100%; height: 334px;"></MudImage>
+</div> 
+<br />
 
 <MudContainer>
-	<MudText Class="mt-8" Typo="Typo.h5" >
-		<b>Drumming class</b>
-	</MudText>
-	<MudText Class="desc mt-8">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	</MudText>
+    @if (CategoryName != null)
+    {
+        <MudText Class="mt-8" Typo="Typo.h5">
+            <b>@CategoryName</b>
+        </MudText>
+        <MudText Class="desc mt-8">@CategoryDescription</MudText>
+    }
+    else if (IsCategoryLoading)
+    {
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+    }
 
-	<MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
-		<b>Kelas yang tersedia</b>
-	</MudText>
+    <MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
+        <b>Kelas yang tersedia</b>
+    </MudText>
 
-	<MudGrid Class="mb-20 mt-4 gap-10 gap-x-20 d-flex justify-start">
-		<MudItem xs="12" sm="6" md="4" lg="3">
-			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-				<MudImage Src="img/ListMenu1.svg" Class="w-100 mb-2"></MudImage>
-				<MudText Class="category color-gray-3">Drum</MudText>
-				<MudText Class="name color-gray-1"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-				<MudText Class="name color-iris pt-10" Color="Color.Primary"><b>IDR 8.500.000</b></MudText>
-			</MudLink>
-		</MudItem>
-		<MudItem xs="12" sm="6" md="4" lg="3">
-			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-				<MudImage Src="img/ListMenu2.svg" Class="w-100 mb-2"></MudImage>
-				<MudText class="">Drum</MudText>
-				<MudText class=""><b>Expert Level Drummer Lessons</b></MudText>
-				<MudText class="pt-10" Color="Color.Primary"><b>IDR 5.450.000</b></MudText>
-			</MudLink>
-		</MudItem>
-		<MudItem xs="12" sm="6" md="4" lg="3">
-			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-				<MudImage Src="img/ListMenu3.svg" Class="w-100 mb-2"></MudImage>
-				<MudText class="">Drum</MudText>
-				<MudText class=""><b>From Zero to Professional Drummer (Complit Package)</b></MudText>
-				<MudText class="pt-10" Color="Color.Primary"><b>IDR 13.000.000</b></MudText>
-			</MudLink>
-		</MudItem>
-		<MudItem xs="12" sm="6" md="4" lg="3">
-			<MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-				<MudImage Src="img/ListMenu4.svg" Class="w-100 mb-2"></MudImage>
-				<MudText class="">Drum</MudText>
-				<MudText class=""><b>Drummer for kids (Level Basic/1)</b></MudText>
-				<MudText class="pt-10" Color="Color.Primary"><b>IDR 2.200.000</b></MudText>
-			</MudLink>
-		</MudItem>
-	</MudGrid>
+    <MudGrid Class="mb-20 mt-4 gap-10 gap-x-20 d-flex justify-start">
+        @if (Courses != null)
+        {
+            @foreach (var course in Courses)
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id))" Color="Color.Default">
+                        <MudImage Src="@(!string.IsNullOrEmpty(course.ImageUrl) ? course.ImageUrl : "img/default-course.svg")" Class="w-100 mb-2" />
+                        <MudText Class="category color-gray-3">@course.CategoryName</MudText>
+                        <MudText Class="name color-gray-1"><b>@course.Name</b></MudText>
+                        <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>IDR @course.Price:N0</b></MudText>
+                    </MudLink>
+                </MudItem>
+            }
+        }
+        else if (IsCourseLoading)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else
+        {
+            <MudText>Tidak ada kelas tersedia.</MudText>
+        }
+    </MudGrid>
 </MudContainer>
 
 @code {
+    [Parameter]
+    public int CategoryId { get; set; }
 
+    private string? CategoryName;
+    private string? CategoryDescription;
+    private string? CategoryImage;
+
+    private List<CourseDto>? Courses;
+
+    private bool IsCategoryLoading = true;
+    private bool IsCourseLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch Category by Id
+        try
+        {
+            var categoryResponse = await _httpClient.GetFromJsonAsync<ApiResponse<CategoryDto>>($"api/Category/{CategoryId}");
+            if (categoryResponse?.Data != null)
+            {
+                CategoryName = categoryResponse.Data.Name;
+                CategoryDescription = categoryResponse.Data.Description;
+                CategoryImage = !string.IsNullOrEmpty(categoryResponse.Data.ImageUrl)
+                                ? categoryResponse.Data.ImageUrl
+                                : "img/Class1.svg";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading category: {ex.Message}");
+        }
+        finally
+        {
+            IsCategoryLoading = false;
+        }
+
+        // Fetch all courses
+        try
+        {
+            var courseResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CourseDto>>>("api/Course");
+            if (courseResponse?.Data != null)
+            {
+                Courses = courseResponse.Data
+                    .Where(c => c.IsActive && c.CategoryId == CategoryId) // filter by category
+                    .ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading courses: {ex.Message}");
+        }
+        finally
+        {
+            IsCourseLoading = false;
+        }
+    }
 }

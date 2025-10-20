@@ -1,112 +1,142 @@
-@page "/detail"
+@page "/detail/{CourseId:int}"
 @using System.Globalization
-
-@inject NavigationManagerExt Navigation;
+@using MyApp.Shared.DTOs
+@inject HttpClient _httpClient
+@inject NavigationManagerExt Navigation
 
 <PageTitle>Detail Kelas</PageTitle>
 
 <MudContainer Class="mt-10">
-    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-        <MudStack Row="true">
-            <MudImage Src="img/ListMenu1.svg"></MudImage>
-            <MudContainer>
-                <MudText class="">Drum</MudText>
-                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
-                <MudSelect Class="mt-2" @bind-Value="_date"
-                           Label="Tanggal Kursus"
-                           FitContent="true">
-                    @foreach (var _date in _dates)
-                    {
-                        <MudSelectItem Value="_date">@_date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Masukkan Keranjang</MudText>
-                </MudButton>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Beli Sekarang</MudText>
-                </MudButton>
-            </MudContainer>
-        </MudStack>
-    </MudHidden>
+    @if (Course is null)
+    {
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+    }
+    else
+    {
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudStack Row="true">
+                <MudImage Src="@Course.ImageUrl" />
+                <MudContainer>
+                    <MudText>@Course.CategoryName</MudText>
+                    <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
 
-    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-        <MudStack>
-            <MudImage Src="img/ListMenu1.svg"></MudImage>
-            <MudContainer>
-                <MudText class="">Drum</MudText>
-                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
-                <MudSelect Class="mt-2" @bind-Value="_date"
-                           Label="Tanggal Kursus"
-                           FitContent="true">
-                    @foreach (var _date in _dates)
-                    {
-                        <MudSelectItem Value="_date">@_date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Masukkan Keranjang</MudText>
-                </MudButton>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Beli Sekarang</MudText>
-                </MudButton>
-            </MudContainer>
-        </MudStack>
-    </MudHidden>
+                    <MudSelect Class="mt-2" @bind-Value="_date"
+                               Label="Tanggal Kursus"
+                               FitContent="true">
+                        @foreach (var d in ScheduleDates)
+                        {
+                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
+                        }
+                    </MudSelect>
 
-    
-    <MudText Class="mt-8" Typo="Typo.h5" >
-        <b>Deskripsi</b>
-    </MudText>
-    <MudText Class="desc mt-8">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </MudText>
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                        <MudText>Masukkan Keranjang</MudText>
+                    </MudButton>
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                        <MudText>Beli Sekarang</MudText>
+                    </MudButton>
+                </MudContainer>
+            </MudStack>
+        </MudHidden>
 
-    <MudContainer>
-        <MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
-            <b>Kelas lain yang mungkin kamu suka</b>
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudStack>
+                <MudImage Src="@Course.ImageUrl"></MudImage>
+                <MudContainer>
+                    <MudText>@Course.CategoryName</MudText>
+                    <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
+
+                    <MudSelect Class="mt-2" @bind-Value="_date"
+                               Label="Tanggal Kursus"
+                               FitContent="true">
+                        @foreach (var d in ScheduleDates)
+                        {
+                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                        <MudText>Masukkan Keranjang</MudText>
+                    </MudButton>
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                        <MudText>Beli Sekarang</MudText>
+                    </MudButton>
+                </MudContainer>
+            </MudStack>
+        </MudHidden>
+
+        <MudText Class="mt-8" Typo="Typo.h5">
+            <b>Deskripsi</b>
         </MudText>
-        <MudGrid Class="mt-8">
-            <MudItem xs="12" md="6" lg="4">
-                <MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-                    <MudImage Src="img/ListMenu2.svg"></MudImage>
-                    <MudText class="">Drum</MudText>
-                    <MudText class=""><b>Expert Level Drummer Lessons</b></MudText>
-                    <MudText class="" Color="Color.Primary"><b>IDR 5.450.000</b></MudText>
-                </MudLink>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="4">
-                <MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-                    <MudImage Src="img/ListMenu3.svg"></MudImage>
-                    <MudText class="">Drum</MudText>
-                    <MudText class=""><b>From Zero to Professional Drummer (Complit Package)</b></MudText>
-                    <MudText class="" Color="Color.Primary"><b>IDR 13.000.000</b></MudText>
-                </MudLink>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="4">
-                <MudLink OnClick="Navigation.GoToDetail" Color="Color.Default">
-                    <MudImage Src="img/ListMenu4.svg"></MudImage>
-                    <MudText class="">Drum</MudText>
-                    <MudText class=""><b>Drummer for kids (Level Basic/1)</b></MudText>
-                    <MudText class="" Color="Color.Primary"><b>IDR 2.200.000</b></MudText>
-                </MudLink>
-            </MudItem>
-        </MudGrid>
-    </MudContainer>
+        <MudText Class="desc mt-8">
+            @Course.Description
+        </MudText>
+
+        <MudContainer>
+            <MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
+                <b>Kelas lain yang mungkin kamu suka</b>
+            </MudText>
+            <MudGrid Class="mt-8">
+                @if (OtherCourses != null)
+                {
+                    @foreach (var c in OtherCourses)
+                    {
+                        <MudItem xs="12" md="6" lg="4">
+                            <MudLink Color="Color.Default" OnClick="@(() => Navigation.GoToDetail(c.Id))">
+                                <MudImage Src="@c.ImageUrl"></MudImage>
+                                <MudText>@c.CategoryName</MudText>
+                                <MudText><b>@c.Name</b></MudText>
+                                <MudText Color="Color.Primary"><b>@($"IDR {c.Price:N0}")</b></MudText>
+                            </MudLink>
+                        </MudItem>
+                    }
+                }
+            </MudGrid>
+        </MudContainer>
+    }
 </MudContainer>
 
-
-
 @code {
-    private DateOnly _date = new DateOnly(2022, 10, 23);
-    private readonly DateOnly[] _dates =
+    [Parameter]
+    public int CourseId { get; set; }
+
+    private CourseDto? Course { get; set; }
+    private List<CourseDto>? OtherCourses { get; set; }
+    private DateOnly _date;
+    private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
+
+    protected override async Task OnInitializedAsync()
     {
-        new DateOnly(2022, 10, 23),
-        new DateOnly(2022, 10, 24),
-        new DateOnly(2022, 10, 25),
-        new DateOnly(2022, 10, 26),
-        new DateOnly(2022, 10, 27),
-    };
+        try
+        {
+            // Ambil data course by id
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<CourseDto>>($"api/Course/{CourseId}");
+            if (response?.Data != null)
+            {
+                Course = response.Data;
+
+               ScheduleDates = Course.ScheduleDates
+                    @* .Where(d => d >= DateOnly.FromDateTime(DateTime.Now)) *@
+                    .ToArray();
+
+                if (ScheduleDates.Length > 0)
+                    _date = ScheduleDates[0]; //dari yang 
+            }
+
+            // Ambil courses lain untuk rekomendasi
+            var otherResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CourseDto>>>("api/Course");
+            if (otherResponse?.Data != null)
+            {
+                OtherCourses = otherResponse.Data
+                    .Where(c => c.Id != CourseId && c.IsActive)
+                    .ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching course data: {ex.Message}");
+        }
+    }
 }

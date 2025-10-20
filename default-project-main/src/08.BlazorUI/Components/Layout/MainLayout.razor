@@ -247,7 +247,7 @@
         // Sembunyikan footer di halaman tertentu
         return !(path.Contains("checkout") ||
                  path.Contains("success-purchase") ||
-                 path.Contains("email-success-confirm"));
+                 path.Contains("confirm-email"));
     }
 
     private bool ShouldShowAppBar()
@@ -255,7 +255,7 @@
         var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
         // Sembunyikan AppBar di halaman tertentu
         return !(path.Contains("success-purchase") ||
-                 path.Contains("email-success-confirm"));
+                 path.Contains("confirm-email"));
     }
 
     private void DrawerToggle()

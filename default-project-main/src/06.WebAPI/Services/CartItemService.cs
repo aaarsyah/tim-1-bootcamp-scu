@@ -102,7 +102,7 @@ namespace MyApp.WebAPI.Services
                         if (item == null)
                         {
                             throw new ValidationException(
-                                $"ScheduleId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
+                                $"CartId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
                         }
                         items.Add(item);
                     }
@@ -180,6 +180,7 @@ namespace MyApp.WebAPI.Services
         {
             var categories = await _context.CartItems
                 .Include(c => c.Schedule)
+                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
@@ -194,6 +195,7 @@ namespace MyApp.WebAPI.Services
             var categories = await _context.CartItems
                 .Where(c => c.UserId == userId)
                 .Include(c => c.Schedule)
+                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);

@@ -1,57 +1,56 @@
-@page "/myclass"
+@page "/MyClass"
 @using System.Globalization
+@using MyApp.Shared.DTOs
+@inject HttpClient _httpClient
 
 <PageTitle>My Class</PageTitle>
 
 <MudContainer>
-    <MudDivider></MudDivider>
-    @foreach (ItemMy item in _itemList)
+    @if (_itemList is null)
     {
-        <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-            <MudImage Src=@item.Image></MudImage>
-            <MudContainer>
-                <MudText Style="color: #828282">@item.Category</MudText>
-                <MudText Style="color: #333333"><b>@item.Name</b></MudText>
-                <MudText Color="Color.Primary">Jadwal : @item.StartDate.ToString("D", new CultureInfo("id-ID")) </MudText>
-            </MudContainer>
-        </MudStack>
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+    }
+    else if (_itemList.Count == 0)
+    {
+        <MudText Class="mt-10" Typo="Typo.h6" Align="Align.Center">
+            Belum ada kelas yang kamu ikuti.
+        </MudText>
+    }
+    else
+    {
         <MudDivider></MudDivider>
+        @foreach (var item in _itemList)
+        {
+            <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
+                <MudImage Src="@item.ImageUrl" Style="width=200px; height=133px" />
+                <MudContainer Class="ml-4">
+                    <MudText Style="color: #828282">@item.CategoryName</MudText>
+                    <MudText Style="color: #333333"><b>@item.CourseName</b></MudText>
+                    <MudText Color="Color.Primary">
+                        Jadwal: @item.Date.ToString("d MMMM yyyy", new CultureInfo("id-ID"))
+                    </MudText>
+                </MudContainer>
+            </MudStack>
+            <MudDivider></MudDivider>
+        }
     }
 </MudContainer>
 
 @code {
-    public class ItemMy
+    private List<MyClassDto> _itemList = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        public String Image { get; set; }
-        public String Category { get; set; }
-        public String Name { get; set; }
-        public DateOnly StartDate { get; set; }
-        //Should be a DTO here
-        public ItemMy(String Image, String Category, String ShortDesc, DateOnly StartDate)
+        try
         {
-            this.Image = Image;
-            this.Category = Category;
-            this.Name = ShortDesc;
-            this.StartDate = StartDate;
+            var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
+
+             _itemList = response?.ToList() ?? new();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching MyClass data: {ex.Message}");
         }
     }
-
-    private List<ItemMy> _itemList = new List<ItemMy>();
-
-    protected override void OnInitialized()
-    {
-        _itemList.Add(new ItemMy(
-            "img/Checkout1.svg",
-            "Drum",
-            "Kursus Drummer Special Coach (Eno Netral)",
-            new DateOnly(2022, 10, 25)
-        ));
-        _itemList.Add(new ItemMy(
-            "img/Checkout2.svg",
-            "Biola",
-            "Biola Mid-Level Course",
-            new DateOnly(2022, 10, 23)
-        ));
-    }
-
 }
+    

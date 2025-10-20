@@ -117,7 +117,7 @@ namespace MyApp.WebAPI.Services
                 await _context.SaveChangesAsync();
 
                 // Kirim email konfirmasi
-                var confirmationLink = $"https://localhost:5099/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
+                var confirmationLink = $"https://localhost:5070/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
                 await _emailService.SendEmailConfirmationAsync(user.Email, user.Name, confirmationLink);
 
                 _logger.LogInformation("User registration successful for email: {Email}", request.Email);
@@ -371,7 +371,7 @@ namespace MyApp.WebAPI.Services
             await _context.SaveChangesAsync();
 
             // Buat link reset (menuju frontend URL BlazorUI)
-            var resetLink = $"https://localhost:5099/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+            var resetLink = $"http://localhost:5070/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
 
             // Jika email terdaftar dalam database, Kirim email reset password
@@ -403,7 +403,7 @@ namespace MyApp.WebAPI.Services
                 throw new AuthenticationException("Invalid user or token.");
             }
 
-            // ✅ Validasi token buatan sendiri
+            // Validasi token buatan sendiri
             if (user.PasswordResetToken != request.AccessToken ||
                 user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {

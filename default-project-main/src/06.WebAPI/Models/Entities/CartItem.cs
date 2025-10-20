@@ -23,6 +23,21 @@
         /// Virtual field untuk Schedule: Jadwal kelas yang terkait
         /// </summary>
         public virtual Schedule Schedule { get; set; } = null!;
+
+        // /// <summary>
+        // /// Virtual field untuk Schedules: Jadwal-jadwal kelas yang terkait
+        // /// </summary>
+        // public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+        // /// <summary>
+        // /// Virtual field untuk Category: Kategori kelas pelajaran yang terkait
+        // /// </summary>
+        // public virtual Category Category { get; set; } = null!;
+
+        // /// <summary>
+        // /// Virtual field untuk Course: get course name, price
+        // /// </summary>
+        // public virtual Course Course { get; set; } = null!;
         
     }
 }
