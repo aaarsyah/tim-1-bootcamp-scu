@@ -29,7 +29,7 @@
     [SupplyParameterFromQuery(Name = "token")]
     private string? Token { get; set; }
     //Cek apakah token verifikasi email valid ketika user meng-load page ini
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         _confirmEmailModel ??= new ConfirmEmailRequestDto();
 

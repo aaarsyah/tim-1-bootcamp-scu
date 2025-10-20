@@ -18,5 +18,6 @@ namespace MyApp.WebAPI.Services
         Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request);
         Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request);
+        Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request);
     }
 }

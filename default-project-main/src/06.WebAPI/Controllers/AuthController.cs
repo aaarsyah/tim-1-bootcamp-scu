@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using MyApp.Shared.DTOs;
-using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
-using MyApp.WebAPI.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Services;
 using MyApp.WebAPI.Validators;
+using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -29,18 +26,15 @@ namespace MyApp.WebAPI.Controllers
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserManagementService _userManagementService;
         private readonly ILogger<AuthController> _logger;
-        private readonly UserManager<User> _userManager;
 
         public AuthController(
             IAuthenticationService authenticationService,
             IUserManagementService userManagementService,
-            ILogger<AuthController> logger,
-            UserManager<User> userManager)
+            ILogger<AuthController> logger)
         {
             _authenticationService = authenticationService;
             _userManagementService = userManagementService;
             _logger = logger;
-            _userManager = userManager;
         }
 
         /// <summary>
@@ -63,23 +57,10 @@ namespace MyApp.WebAPI.Controllers
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<object>>> ConfirmEmail([FromBody] ConfirmEmailRequestDto request)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null)
-                return BadRequest("Invalid email");
+            var result = await _authenticationService.ConfirmEmailAsync(request);
 
-            // Cek token valid dan belum expired
-            if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
-            {
-                return BadRequest("Invalid or expired confirmation token");
-            }
-            // Tandai email sebagai terverifikasi
-            user.EmailConfirmed = true;
-            user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
-            user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
-
-            await _userManager.UpdateAsync(user);
-    
-            return Ok("Email has been successfully confirmed. You can now log in.");
+            return Ok(ApiResponse<object>.SuccessResult());
+            // Semua error akan throw exception dan akan di catch di middleware
         }
 
         /// <summary>

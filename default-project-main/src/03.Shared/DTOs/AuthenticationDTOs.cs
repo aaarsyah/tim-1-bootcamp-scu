@@ -20,11 +20,11 @@ namespace MyApp.Shared.DTOs
         // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
             ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
-        public string Password { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Confirm password is required")]
-        [Compare("Password", ErrorMessage = "Passwords do not match")]
-        public string ConfirmPassword { get; set; } = string.Empty;
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        public string ConfirmNewPassword { get; set; } = string.Empty;
 
         //ketika registrasi email-confirm = false
         //ketika confirm-email -> email-confirm = true
@@ -59,8 +59,17 @@ namespace MyApp.Shared.DTOs
     {
         public string Email { get; set; } = string.Empty;
         public string AccessToken { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
+        // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
+            ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
         public string NewPassword { get; set; } = string.Empty;
-        public string ConfirmPassword { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Confirm password is required")]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 
     // Confirm Email Request (GET) = Flow After Register
@@ -126,15 +135,16 @@ namespace MyApp.Shared.DTOs
     {
         [Required]
         public string CurrentPassword { get; set; } = string.Empty;
-        
-        [Required]
-        [StringLength(100, MinimumLength = 8)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", // TODO: FIX THIS!
-        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
+
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
+        // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
+            ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
         public string NewPassword { get; set; } = string.Empty;
-        
-        [Required]
-        [Compare("NewPassword")]
+
+        [Required(ErrorMessage = "Confirm password is required")]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 

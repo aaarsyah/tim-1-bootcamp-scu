@@ -34,7 +34,7 @@
     
                     <MudTextField T="string" 
                         Label="Masukkan Password" 
-                        @bind-Value="_registerModel.Password"
+                        @bind-Value="_registerModel.NewPassword"
                         Variant="Variant.Outlined"
                         @ref="pwField1"
                         InputType="@_passwordInputType"
@@ -50,7 +50,7 @@
                     <MudTextField T="string"
                             Label="Konfirmasi Password" 
                             Variant="Variant.Outlined"
-                            @bind-Value="_registerModel.ConfirmPassword"
+                            @bind-Value="_registerModel.ConfirmNewPassword"
                             HelperText="Repeat the password" 
                             InputType="@_confirmPasswordInputType"
                             Adornment="Adornment.End"
@@ -177,14 +177,14 @@
         {
             var result = await AuthService.RegisterAsync(_registerModel);
 
-            if (result != null)
+            if (result)
             {
                 _successMessage = "Registration successful! Please check your email to confirm your account.";
                 Snackbar.Add("Registration successful!", Severity.Success);
 
                 // Redirect to login after 2 seconds
-                await Task.Delay(2000);
-                Navigation.GoToEmailConfirmSuccess();
+                await Task.Delay(5000);
+                Navigation.GoToHome();
             }
             else
             {

@@ -65,96 +65,98 @@ namespace MyApp.WebAPI.Services
             }
 
             _logger.LogInformation("User registration attempt for email: {Email}", request.Email);
-
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
+            var strategy = _context.Database.CreateExecutionStrategy();
+            return await strategy.ExecuteAsync(async () =>
             {
-                // Generate email confirmation token
-                var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
+                await using var transaction = await _context.Database.BeginTransactionAsync();
 
-                // Create new user
-                var user = new User
+                try
                 {
-                    Name = request.Name,
-                    Email = request.Email,
-                    PasswordHash = _passwordService.HashPassword(request.Password),
-                    EmailConfirmed = false,
-                    EmailConfirmationToken = confirmationToken,
-                    EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedBy = "System"
-                };
+                    // Generate email confirmation token
+                    var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
 
-                //await _unitOfWork.Users.AddAsync(user);
-                //await _unitOfWork.CompleteAsync();
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync(); //Id di auto-generate setelah di save
+                    // Create new user
+                    var user = new User
+                    {
+                        Name = request.Name,
+                        Email = request.Email,
+                        PasswordHash = _passwordService.HashPassword(request.NewPassword),
+                        EmailConfirmed = false,
+                        EmailConfirmationToken = confirmationToken,
+                        EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
+                        CreatedAt = DateTime.UtcNow,
+                        CreatedBy = "System"
+                    };
 
-                // Assign default role "User"
+                    //await _unitOfWork.Users.AddAsync(user);
+                    //await _unitOfWork.CompleteAsync();
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync(); //Id di auto-generate setelah di save
 
-                var userRole = new UserRole
+                    // Assign default role "User"
+
+                    var userRole = new UserRole
+                    {
+                        UserId = user.Id,
+                        RoleId = 1, // User role
+                        CreatedAt = DateTime.UtcNow,
+                        CreatedBy = "System"
+                    };
+
+                    // Add default claims
+                    var userClaim = new UserClaim
+                    {
+                        UserId = user.Id,
+                        ClaimType = "can_view_profile",
+                        ClaimValue = "true",
+                        CreatedAt = DateTime.UtcNow,
+                        CreatedBy = "System"
+                    };
+
+                    // Save user role dan claims
+                    await _context.UserRoles.AddAsync(userRole); // TODO: Await all to make it faster
+                    await _context.UserClaims.AddAsync(userClaim);
+                    await _context.SaveChangesAsync();
+
+                    // Kirim email konfirmasi
+                    var confirmationLink = $"https://localhost:7069/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
+                    await _emailService.SendEmailConfirmationAsync(user.Email, user.Name, confirmationLink);
+
+                    _logger.LogInformation("User registration successful for email: {Email}", request.Email);
+
+                    // Generate JWT tokens
+                    var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
+                    var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
+
+                    // Save refresh token
+                    // TODO: Shouldn't refresh token be given after email is confirmed?
+                    user.RefreshToken = refreshToken;
+                    user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+
+                    // ===== STEP 9 =====
+                    // All operations succeeded, make permanent
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    return new AuthResponseDto
+                    {
+                        Message = "Registration successful",
+                        AccessToken = accessToken,
+                        RefreshToken = refreshToken,
+                        AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
+                        User = await MapToUserDto(user)
+                    };
+                }
+                catch (Exception ex)
                 {
-                    UserId = user.Id,
-                    RoleId = 1, // User role
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedBy = "System"
-                };
-
-                // Add default claims
-                var userClaim = new UserClaim
-                {
-                    UserId = user.Id,
-                    ClaimType = "can_view_profile",
-                    ClaimValue = "true",
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedBy = "System"
-                };
-
-                // Save user role dan claims
-                await _context.UserRoles.AddAsync(userRole); // TODO: Await all to make it faster
-                await _context.UserClaims.AddAsync(userClaim);
-                await _context.SaveChangesAsync();
-
-                // Kirim email konfirmasi
-                var confirmationLink = $"https://localhost:5070/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
-                await _emailService.SendEmailConfirmationAsync(user.Email, user.Name, confirmationLink);
-
-                _logger.LogInformation("User registration successful for email: {Email}", request.Email);
-
-                // Generate JWT tokens
-                var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
-                var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
-
-                // Save refresh token
-                // TODO: Shouldn't refresh token be given after email is confirmed?
-                user.RefreshToken = refreshToken;
-                user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
-
-                // ===== STEP 9 =====
-                // All operations succeeded, make permanent
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-
-                return new AuthResponseDto
-                {
-                    Message = "Registration successful",
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken,
-                    AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
-                    User = await MapToUserDto(user)
-                };
-            }
-            catch (Exception ex)
-            {
-                // ===== ROLLBACK ON ERROR =====
-                // Any exception -> undo all changes
-                await transaction.RollbackAsync();
-                _logger.LogError("Register failed, transaction rolled back");
-                throw; // Re-throw to be handled by middleware
-            }
+                    // ===== ROLLBACK ON ERROR =====
+                    // Any exception -> undo all changes
+                    await transaction.RollbackAsync();
+                    _logger.LogError("Register failed, transaction rolled back");
+                    throw; // Re-throw to be handled by middleware
+                }
+            });
         }
-
         /// <summary>
         /// Login User
         /// Validasi credentials dan generate JWT tokens
@@ -311,6 +313,41 @@ namespace MyApp.WebAPI.Services
             return true;
         }
 
+        /// <summary>
+        /// Logout User
+        /// Invalidate refresh token
+        /// </summary>
+        public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Email == request.Email);
+            if (user == null)
+            {
+                _logger.LogWarning("Confirm email failed: User not found or inactive for email: {Email}", request.Email);
+                throw new ValidationException("Invalid email");
+            }
+            // Uncomment bila dibutuhkan: Cek apakah user masih belum confirm email, bila sudah confirm email, batalkan
+            //if (user.EmailConfirmed)
+            //{
+            //    _logger.LogWarning("Confirm email failed: User already confirmed email: {Email}", request.Email);
+            //    throw new ValidationException("Invalid email");
+            //}
+            // Cek token valid dan belum expired
+            if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
+            {
+                throw new ValidationException("Invalid or expired confirmation token");
+            }
+            // Tandai email sebagai terverifikasi
+            user.EmailConfirmed = true;
+            user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
+            user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Confirm email success for: {Email}", request.Email);
+            return true;
+        }
+
         /// <summary> 
         /// Change Password for authenticated user = change password ketika sudah login di profile misalnya
         /// Ubah password user yang sudah login
@@ -371,7 +408,7 @@ namespace MyApp.WebAPI.Services
             await _context.SaveChangesAsync();
 
             // Buat link reset (menuju frontend URL BlazorUI)
-            var resetLink = $"http://localhost:5070/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+            var resetLink = $"https://localhost:7069/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
 
             // Jika email terdaftar dalam database, Kirim email reset password
@@ -389,7 +426,7 @@ namespace MyApp.WebAPI.Services
         {
             _logger.LogInformation("Reset password attempt for email: {Email}", request.Email);
 
-            if (request.NewPassword != request.ConfirmPassword)
+            if (request.NewPassword != request.ConfirmNewPassword)
             {
                 _logger.LogWarning("Password confirmation mismatch for {Email}", request.Email);
                 throw new ValidationException("Password and confirmation password do not match.");
@@ -411,14 +448,7 @@ namespace MyApp.WebAPI.Services
                 throw new ValidationException("Invalid or expired reset token.");
             }
 
-            // Verify password
-            if (!_passwordService.VerifyPassword(request.NewPassword, user.PasswordHash))
-            {
-                _logger.LogWarning("Password reset failed for user: {UserId}", user.Id);
-                throw new ValidationException("Password reset failed");
-            }
-
-            //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            // Ganti password baru (reset password)
             user.PasswordHash = _passwordService.HashPassword(request.NewPassword);
             user.UpdatedAt = DateTime.UtcNow;
             user.UpdatedBy = user.Name;

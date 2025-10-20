@@ -8,7 +8,7 @@ namespace MyApp.BlazorUI.Services
     public interface IAuthService
     {
         Task<AuthResponseDto?> LoginAsync(LoginRequestDto request);
-        Task<AuthResponseDto?> RegisterAsync(RegisterRequestDto request);
+        Task<bool> RegisterAsync(RegisterRequestDto request);
         Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request);
         Task<bool> ChangePasswordAsync(ChangePasswordRequestDto request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request);
@@ -63,35 +63,22 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
-        public async Task<AuthResponseDto?> RegisterAsync(RegisterRequestDto request)
+        public async Task<bool> RegisterAsync(RegisterRequestDto request)
         {
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/register", request);
 
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<AuthResponseDto>>();
-
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
-                    {
-                        await _localStorage.SetItemAsync("authToken", apiResponse.Data.AccessToken);
-                        await _localStorage.SetItemAsync("refreshToken", apiResponse.Data.RefreshToken);
-
-                        _httpClient.DefaultRequestHeaders.Authorization =
-                            new AuthenticationHeaderValue("Bearer", apiResponse.Data.AccessToken);
-
-                        ((CustomAuthStateProvider)_authStateProvider).NotifyUserAuthentication(apiResponse.Data.AccessToken);
-
-                        return apiResponse.Data;
-                    }
+                    return false;
                 }
-
-                return null;
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch
             {
-                return null;
+                return false;
             }
         }
         public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)

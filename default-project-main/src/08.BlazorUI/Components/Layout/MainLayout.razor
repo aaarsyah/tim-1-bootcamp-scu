@@ -40,25 +40,25 @@
         }
         else
         {
-        @if (ShouldShowAppBar())
-        {
-        <MudAppBar Elevation="1">
-            <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
-                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
-            </MudLink>
-            <MudSpacer />
-            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
-            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
-                <MudText>Kelasku</MudText>
-            </MudButton>
-            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
-                <MudText>Pembelian</MudText>
-            </MudButton>
-            <MudText Class="mx-2">|</MudText>
-            <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
-        </MudAppBar>
-        }
+            @if (ShouldShowAppBar())
+            {
+            <MudAppBar Elevation="1">
+                <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
+                    <MudImage Src="img/applogo.svg" Alt="App Logo"/>
+                </MudLink>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
+                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
+                    <MudText>Kelasku</MudText>
+                </MudButton>
+                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
+                    <MudText>Pembelian</MudText>
+                </MudButton>
+                <MudText Class="mx-2">|</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
+            </MudAppBar>
+            }
 
     <MudMainContent Class="pt-16 pa-4">
         @Body
