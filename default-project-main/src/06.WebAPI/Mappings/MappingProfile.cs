@@ -54,6 +54,7 @@ namespace MyApp.WebAPI.Mappings
 
             CreateMap<CreateScheduleDto, Schedule>();
             CreateMap<UpdateScheduleDto, Schedule>();
+
         }
     }
 }

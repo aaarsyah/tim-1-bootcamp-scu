@@ -36,6 +36,7 @@ namespace MyApp.WebAPI.Extensions
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ICartItemService, CartItemService>();
             services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             
