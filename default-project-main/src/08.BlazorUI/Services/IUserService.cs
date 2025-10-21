@@ -8,5 +8,6 @@ namespace MyApp.BlazorUI.Services
         Task<UserItem> CreateUserAsync(UserItem user);
         Task<UserItem> UpdateUserAsync(UserItem user);
         Task<bool> DeleteUserAsync(int id);
+        UserItem? CurrentUser { get; set; }
     }
 }

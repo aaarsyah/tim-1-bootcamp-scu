@@ -1,0 +1,48 @@
+@page "/edit-profil"
+@using MudBlazor
+@inject NavigationManager Navigation
+
+<PageTitle>Edit Profil</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+    <MudPaper Class="pa-6 rounded-lg elevation-4">
+        <MudStack Spacing="4">
+
+            <MudText Typo="Typo.h5" Align="Align.Center"><b>Edit Profil</b></MudText>
+
+            <MudTextField @bind-Value="UserName" Label="Nama Lengkap" Required="true" />
+            <MudTextField @bind-Value="UserEmail" Label="Email" Required="true" />
+                  
+            <MudDatePicker Label="Tanggal Lahir" @bind-Date="BirthDate" Required="true" />
+
+            <MudStack Direction="Row" Justify="Justify.SpaceBetween" Spacing="2" Class="mt-4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveChanges">
+                    Simpan
+                </MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="GoBack">
+                    Batal
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string UserName = "Admin";
+    private string UserEmail = "admin@email.com";
+    private DateTime? BirthDate = new DateTime(1995, 5, 12);
+
+    private void SaveChanges()
+    {
+        // Simulate saving (call API here in real app)
+        Console.WriteLine("Changes saved:");
+        Console.WriteLine($"{UserName}, {UserEmail}, {BirthDate}");
+
+        Navigation.NavigateTo("/profil"); // Redirect back to profile
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/profil");
+    }
+}

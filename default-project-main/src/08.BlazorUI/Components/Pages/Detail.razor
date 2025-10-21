@@ -5,29 +5,28 @@
 
 <PageTitle>Detail Kelas</PageTitle>
 
-<MudContainer Class="mt-10">
+<MudContainer class="mt-12">
     <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
         <MudStack Row="true">
             <MudImage Src="img/ListMenu1.svg"></MudImage>
-            <MudContainer>
-                <MudText class="">Drum</MudText>
-                <MudText class="" Typo="Typo.h5"><b>Kursus Drummer Special Coach (Eno Netral)</b></MudText>
-                <MudText class="" Typo="Typo.h5" Color="Color.Primary"><b>IDR 6.500.000</b></MudText>
-                <MudSelect Class="mt-2" @bind-Value="_date"
-                           Label="Tanggal Kursus"
-                           FitContent="true">
-                    @foreach (var _date in _dates)
-                    {
-                        <MudSelectItem Value="_date">@_date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Masukkan Keranjang</MudText>
-                </MudButton>
-                <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
-                    <MudText>Beli Sekarang</MudText>
-                </MudButton>
-            </MudContainer>
+            <MudSelect Class="mt-4"
+           @bind-Value="_date"
+           Label="Tanggal Kursus"
+           T="DateOnly"
+           Dense="true"
+           Required="true"
+           FitContent="true">
+    
+            <!-- Opsi default: "Pilih Tanggal", disabled -->
+            <MudSelectItem Value="default(DateOnly)" Disabled="true">Pilih Jadwal Kelas</MudSelectItem>
+
+            <!-- Tampilkan list tanggal -->
+            @foreach (var date in _dates)
+            {
+                <MudSelectItem Value="date">@date.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
+            }
+</MudSelect>
+
         </MudStack>
     </MudHidden>
 
@@ -100,7 +99,7 @@
 
 
 @code {
-    private DateOnly _date = new DateOnly(2022, 10, 23);
+    private DateOnly _date = default;
     private readonly DateOnly[] _dates =
     {
         new DateOnly(2022, 10, 23),

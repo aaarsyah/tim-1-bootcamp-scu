@@ -21,6 +21,16 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/register");
         }
 
+        public void GoToProfil()
+        {
+            _navigation.NavigateTo("/profil");
+        }
+
+        public void GoToEditProfil()
+        {
+            _navigation.NavigateTo("/edit-profil");
+        }
+
         public void GoToHome()
         {
             _navigation.NavigateTo("/");
