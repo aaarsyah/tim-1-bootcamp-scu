@@ -57,9 +57,22 @@ namespace MyApp.Shared.DTOs
         /// </summary>
         public string CourseName { get; set; } = string.Empty;
 
-        // /// <summary>
-        // /// Nama Kategori Kelas
-        // /// </summary>
-        // public string CategoryName { get; set; } = string.Empty;
+        /// <summary>
+        /// Nama Kategori Kelas
+        /// </summary>
+        public string CategoryName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Product price
+        /// </summary>
+        public decimal Price { get; set; }
+        
+        public List<DateOnly> ScheduleDates { get; set; } = new();
+
+        /// <summary>
+        /// Product image URL
+        /// </summary>
+        public string ImageUrl { get; set; } = string.Empty;
+
     }
 }

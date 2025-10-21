@@ -244,7 +244,7 @@
             Snackbar.Add($"Gagal menambahkan ke keranjang: {errorContent}", Severity.Error);
             return;
         }
-        
+
        var cartResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CartItemResponseDto>>>("api/CartItem/cart");
        var cartItems = cartResponse?.Data;
 
@@ -299,7 +299,7 @@
             var scheduleId = selectedSchedule.Id; 
 
             // Panggil endpoint backend
-            var response = await _httpClient.PutAsync($"scheduleid={scheduleId}", null);
+            var response = await _httpClient.PutAsync($"/api/CartItem/add?scheduleid={scheduleId}", null);
 
             if (response.IsSuccessStatusCode)
             {

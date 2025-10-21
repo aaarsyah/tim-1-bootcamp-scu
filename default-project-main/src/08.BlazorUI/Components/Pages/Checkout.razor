@@ -35,20 +35,17 @@
         {
             <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
                 <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary" />
-                @* Src="@item.Image" *@
-                <MudImage Style="width:100px; height:100px; object-fit:contain;" /> 
+                <MudImage Src="@item.Image" Style="width:100px; height:100px; object-fit:contain;" /> 
                 <MudContainer>
                     <MudText Style="color: #828282">
-                    @* @item.Category *@
+                    @item.Category
                     </MudText>
                     <MudText Style="color: #333333"><b>@item.Name</b></MudText>
                     <MudText Style="color: #4F4F4F">
-                        Jadwal :
-                        @* Jadwal : @item.StartDate.ToString("D", new CultureInfo("id-ID")) *@
+                        Jadwal : @item.ScheduleDates.ToString("D", new CultureInfo("id-ID"))
                     </MudText>
                     <MudText Color="Color.Primary">
-                        <b>IDR 
-                        @* @item.Price.ToString("N0", new CultureInfo("id-ID")) *@
+                        <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))
                         </b>
                     </MudText>
                 </MudContainer>
@@ -136,11 +133,11 @@
             {
                 _itemList = response.Data.Select(c => new ItemMy(
                     c.Id,
-                    @* c.ImageUrl,
-                    c.CategoryName, *@
-                    @* (int)c.Price, *@
-                    @* DateOnly.FromDateTime(c.ScheduleDate.ToDateTime(TimeOnly.MinValue), *@
-                    c.CourseName
+                    c.ImageUrl,
+                    c.CategoryName,
+                    c.CourseName,
+                    (int)c.Price,
+                    c.ScheduleDates.FirstOrDefault()
                 )).ToList();
 
                 UpdatePrice(); //tambahkan price di DTO
@@ -288,20 +285,20 @@
     {
         public int Id { get; set; }
         public bool Selected { get; set; }
-        @* public string Image { get; set; }
-        public string Category { get; set; } *@
+        public string Image { get; set; }
+        public string Category { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        @* public DateOnly StartDate { get; set; } *@
+        public DateOnly ScheduleDates { get; set; }
 
-        public ItemMy(int id, string name)
+        public ItemMy(int id, string image, string category, string name, int price, DateOnly scheduleDates)
         {
             Id = id;
-            @* Image = image;
-            Category = category; *@
+            Image = image;
+            Category = category;
             Name = name;
-            @* Price = price;
-            StartDate = startDate; *@
+            Price = price;
+            ScheduleDates = scheduleDates;
         }
     }
 }

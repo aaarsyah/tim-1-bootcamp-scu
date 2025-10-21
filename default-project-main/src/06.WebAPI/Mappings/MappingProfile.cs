@@ -42,11 +42,12 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<CartItem, CartItemResponseDto>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.CourseName,
-                           opt => opt.MapFrom(src => src.Schedule.Course.Name));
-            // .ForMember(dest => dest.ScheduleDate, opt => opt.MapFrom(src => src.Schedule.Date))
-            // .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))
-            // .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Schedule.Course.Price))
-            // .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Schedule.Course.ImageUrl));
+                           opt => opt.MapFrom(src => src.Schedule.Course.Name))
+                .ForMember(dest => dest.ScheduleDates, 
+                           opt => opt.MapFrom(src => new List<DateOnly> { src.Schedule.Date }))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Schedule.Course.Price))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Schedule.Course.ImageUrl));
 
             // Invoice mappings
             CreateMap<Invoice, InvoiceDto>();
