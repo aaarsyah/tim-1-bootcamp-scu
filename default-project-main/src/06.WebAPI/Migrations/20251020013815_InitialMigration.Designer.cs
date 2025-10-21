@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251020144011_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251020013815_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -451,6 +451,9 @@ namespace MyApp.WebAPI.Migrations
                     b.HasIndex("RefCode")
                         .IsUnique();
 
+                    b.HasIndex("RefId")
+                        .IsUnique();
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Invoices", (string)null);
@@ -464,15 +467,8 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("InvoiceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("RefCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
@@ -483,6 +479,9 @@ namespace MyApp.WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
+
+                    b.HasIndex("RefId")
+                        .IsUnique();
 
                     b.HasIndex("ScheduleId");
 

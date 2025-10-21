@@ -224,6 +224,7 @@
         NavManager.LocationChanged += (_, __) =>
         {
             currentPath = NavManager.Uri;
+            UpdateLogin();
             StateHasChanged(); // Refresh tampilan saat route berubah
         };
 
@@ -235,6 +236,16 @@
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Loggedin = await AuthService.IsLoggedIn();
+            Console.WriteLine(Loggedin);
+            StateHasChanged();
+        }
+    }
+
+    private async Task UpdateLogin()
     {
         Loggedin = await AuthService.IsLoggedIn();
     }

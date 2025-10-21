@@ -66,7 +66,7 @@ namespace MyApp.WebAPI.Services
             _context.InvoiceDetails.Add(invoiceDetail);
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("InvoiceDetail created: {RefCode} with ID: {Id}", invoiceDetail.RefCode, invoiceDetail.Id);
+            _logger.LogInformation("InvoiceDetail created with ID: {Id}", invoiceDetail.Id);
 
             return _mapper.Map<InvoiceDetailDto>(invoiceDetail);
         }
