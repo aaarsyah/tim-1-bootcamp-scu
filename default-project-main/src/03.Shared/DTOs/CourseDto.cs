@@ -53,6 +53,9 @@ namespace MyApp.Shared.DTOs
         public string CategoryName { get; set; } = string.Empty;
 
         public List<DateOnly> ScheduleDates { get; set; } = new();
+
+        //ScheduleId
+        public List<ScheduleDto> Schedules { get; set; } = new();
         
     }
 

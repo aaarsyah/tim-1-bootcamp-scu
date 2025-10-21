@@ -451,15 +451,10 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<Invoice>(entity =>
             {
                 entity.ToTable("Invoices");
-                // Base Entity
+                // Primary key
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
-                entity.Property(e => e.RefId)
-                    .IsRequired();
                 // Unique Index
-                entity.HasIndex(e => e.RefCode)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefCode).IsUnique();
                 // Properties
                 entity.Property(e => e.RefCode)
                         .IsRequired()
@@ -489,12 +484,8 @@ namespace MyApp.WebAPI.Data
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
                 entity.ToTable("InvoiceDetail");
-                // Base Entity
+                // Primary key
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
-                entity.Property(e => e.RefId)
-                    .IsRequired();
                 // Properties
                 // Tak usah configure relationship sama Invoice lagi
                 // Relationship dengan Schedule

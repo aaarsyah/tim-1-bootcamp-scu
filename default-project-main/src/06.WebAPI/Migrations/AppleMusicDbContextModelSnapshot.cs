@@ -448,9 +448,6 @@ namespace MyApp.WebAPI.Migrations
                     b.HasIndex("RefCode")
                         .IsUnique();
 
-                    b.HasIndex("RefId")
-                        .IsUnique();
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Invoices", (string)null);
@@ -464,8 +461,15 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("InvoiceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("RefCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
@@ -476,9 +480,6 @@ namespace MyApp.WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
-
-                    b.HasIndex("RefId")
-                        .IsUnique();
 
                     b.HasIndex("ScheduleId");
 

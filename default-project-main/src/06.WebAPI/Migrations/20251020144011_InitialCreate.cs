@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyApp.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -332,6 +332,8 @@ namespace MyApp.WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InvoiceId = table.Column<int>(type: "int", nullable: true),
+                    RefCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ScheduleId = table.Column<int>(type: "int", nullable: false),
                     RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -559,12 +561,6 @@ namespace MyApp.WebAPI.Migrations
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetail_RefId",
-                table: "InvoiceDetail",
-                column: "RefId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_InvoiceDetail_ScheduleId",
                 table: "InvoiceDetail",
                 column: "ScheduleId");
@@ -578,12 +574,6 @@ namespace MyApp.WebAPI.Migrations
                 name: "IX_Invoices_RefCode",
                 table: "Invoices",
                 column: "RefCode",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoices_RefId",
-                table: "Invoices",
-                column: "RefId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

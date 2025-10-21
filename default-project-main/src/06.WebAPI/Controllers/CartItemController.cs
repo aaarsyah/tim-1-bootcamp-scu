@@ -139,25 +139,5 @@ namespace MyApp.WebAPI.Controllers
             // Return 200 OK
             return Ok(ApiResponse<object>.SuccessResult());
         }
-
-        // /// <summary>
-        // /// Remove course from cart by scheduleId
-        // /// </summary>
-        // [HttpDelete("schedule/{scheduleId}")]
-        // [Authorize]
-        // [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
-        // [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        // public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCartByScheduleId(int scheduleId)
-        // {
-        //     var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        //     if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        //         throw new AuthenticationException("Token is invalid");
-
-        //     _logger.LogInformation("User {UserId} is removing item from cart with ScheduleId={ScheduleId}", userId, scheduleId);
-
-        //     await _cartItemService.RemoveCourseFromCartByScheduleIdAsync(userId, scheduleId);
-
-        //     return Ok(ApiResponse<object>.SuccessResult());
-        // }
     }
 }

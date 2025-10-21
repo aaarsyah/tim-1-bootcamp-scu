@@ -1,8 +1,11 @@
 @page "/detail/{CourseId:int}"
 @using System.Globalization
 @using MyApp.Shared.DTOs
+@using System.Net.Http.Json
+
 @inject HttpClient _httpClient
 @inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
 
 <PageTitle>Detail Kelas</PageTitle>
 
@@ -30,10 +33,10 @@
                         }
                     </MudSelect>
 
-                    <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddToCartAsync">
                         <MudText>Masukkan Keranjang</MudText>
                     </MudButton>
-                    <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToCheckout">
+                    <MudButton Class="px-4 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog">
                         <MudText>Beli Sekarang</MudText>
                     </MudButton>
                 </MudContainer>
@@ -98,6 +101,44 @@
     }
 </MudContainer>
 
+<!-- Dialog Metode Pembayaran -->
+<MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
+    <MessageContent>
+        <MudStack>
+            @if (payments.Count == 0)
+            {
+                <MudText>Memuat metode pembayaran...</MudText>
+            }
+            else
+            {
+                @foreach (var payment in payments)
+                {
+                    <MudButton 
+                        Variant="@GetVariant(payment.Name)"
+                        Color="@GetColor(payment.Name)"
+                        OnClick="@(() => SelectPayment(payment))"
+                        Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
+                        
+                        <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
+                        <MudText>@payment.Name</MudText>
+                    </MudButton>
+                }
+            }
+        </MudStack>
+    </MessageContent>
+
+    <NoButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="CancelPayment">
+            Batal
+        </MudButton>
+    </NoButton>
+    <YesButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">
+            Bayar
+        </MudButton>
+    </YesButton>
+</MudMessageBox>
+
 @code {
     [Parameter]
     public int CourseId { get; set; }
@@ -106,23 +147,29 @@
     private List<CourseDto>? OtherCourses { get; set; }
     private DateOnly _date;
     private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
+    private int? selectedPaymentId; //sama dengan selectedPayment
+
+    private List<PaymentDto> payments = new();
+    private PaymentDto? selectedPayment;
+    private MudMessageBox _mudMessageBox;
+
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            await LoadPaymentsAsync();
+
             // Ambil data course by id
             var response = await _httpClient.GetFromJsonAsync<ApiResponse<CourseDto>>($"api/Course/{CourseId}");
             if (response?.Data != null)
             {
                 Course = response.Data;
 
-               ScheduleDates = Course.ScheduleDates
-                    @* .Where(d => d >= DateOnly.FromDateTime(DateTime.Now)) *@
-                    .ToArray();
+                ScheduleDates = Course.ScheduleDates.ToArray();
 
                 if (ScheduleDates.Length > 0)
-                    _date = ScheduleDates[0]; //dari yang 
+                    _date = ScheduleDates[0];
             }
 
             // Ambil courses lain untuk rekomendasi
@@ -137,6 +184,107 @@
         catch (Exception ex)
         {
             Console.WriteLine($"Error fetching course data: {ex.Message}");
+        }
+    }
+
+    private async Task LoadPaymentsAsync()
+    {
+        var response = await _httpClient.GetFromJsonAsync<ApiResponse<List<PaymentDto>>>("api/payment");
+        if (response?.Data != null)
+            payments = response.Data.Where(p => p.IsActive).ToList();
+    }
+
+    private async Task ShowPaymentDialog()
+    {
+        await _mudMessageBox.ShowAsync();
+    }
+
+    private void SelectPayment(PaymentDto payment)
+    {
+        selectedPayment = payment;
+        StateHasChanged();
+    }
+
+    private Color GetColor(string name) => selectedPayment?.Name == name ? Color.Primary : Color.Default;
+    private Variant GetVariant(string name) => selectedPayment?.Name == name ? Variant.Outlined : Variant.Text;
+
+    //Cancel
+    private void CancelPayment() => _mudMessageBox.Close();
+
+    //Konfirmasi Pembayaran (Button Bayar Sekarang)
+    private async Task OnPaymentConfirmed()
+    {
+        if (selectedPaymentId == null)
+        {
+            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            return;
+        }
+        var selectedCartIds = new List<int> { CourseId };
+
+        var checkoutRequest = new CheckoutRequestDto
+        {
+            ItemCartIds = selectedCartIds,
+            PaymentMethodId = selectedPaymentId.Value
+        };
+
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/CartItem/checkout", checkoutRequest);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
+                Navigation.GoToSuccessPurchase();
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Snackbar.Add($"Checkout gagal: {content}", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
+        }
+    }
+
+    //Masukkan ke Keranjang
+    private async Task AddToCartAsync()
+    {
+        try
+        {
+            if (Course == null)
+                return;
+
+            // Ambil scheduleId dari tanggal yang dipilih (_date)
+            var selectedSchedule = Course.Schedules
+                .FirstOrDefault(s => s.Date == _date);
+
+            if (selectedSchedule == null)
+            {
+                Console.WriteLine("Schedule not found for selected date.");
+                return;
+            }
+
+            var scheduleId = selectedSchedule.Id; 
+
+            // Panggil endpoint backend
+            var response = await _httpClient.PutAsync($"api/CartItem/add?scheduleid={scheduleId}", null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Arahkan ke halaman checkout
+                Navigation.GoToCheckout();
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Failed to add cart: {error}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding to cart: {ex.Message}");
         }
     }
 }
