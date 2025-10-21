@@ -32,8 +32,6 @@
         /// Virtual field untuk Schedule: Jadwal kelas yang terkait
         /// </summary>
         public virtual Schedule Schedule { get; set; } = null!;
-
-        public Invoice Invoice { get; set; } = null!;
         
     }
 }

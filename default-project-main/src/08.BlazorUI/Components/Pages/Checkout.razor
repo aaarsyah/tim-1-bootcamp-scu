@@ -65,8 +65,7 @@
     <MudToolBar Class="mt-4">
         <MudText>Total biaya:</MudText>
         <MudText Color="Color.Primary">
-            <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price)
-                .ToString("N0", new CultureInfo("id-ID"))</b>
+            <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
         </MudText>
         <MudSpacer />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClickedAsync">
@@ -102,7 +101,9 @@
     </MessageContent>
     
     <NoButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="CancelPayment">Batal</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="CancelPayment">
+            Batal
+        </MudButton>
     </NoButton>
     <YesButton>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
@@ -190,6 +191,8 @@
 
     //Cancel
     private void CancelPayment() => _mudMessageBox.Close();    
+
+    //Button Bayar
     private async Task OnPaymentConfirmed()
     {
         if (selectedPaymentId == null)

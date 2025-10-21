@@ -202,6 +202,7 @@
     private void SelectPayment(PaymentDto payment)
     {
         selectedPayment = payment;
+        selectedPaymentId = payment.Id;
         StateHasChanged();
     }
 
@@ -212,41 +213,70 @@
     private void CancelPayment() => _mudMessageBox.Close();
 
     //Konfirmasi Pembayaran (Button Bayar Sekarang)
-    private async Task OnPaymentConfirmed()
+   private async Task OnPaymentConfirmed()
+{
+    if (selectedPaymentId == null)
     {
-        if (selectedPaymentId == null)
+        Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+        return;
+    }
+
+    try
+    {
+        // 1️⃣ Ambil scheduleId berdasarkan tanggal yang dipilih
+        var selectedSchedule = Course.Schedules.FirstOrDefault(s => s.Date == _date);
+        if (selectedSchedule == null)
         {
-            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
             return;
         }
-        var selectedCartIds = new List<int> { CourseId };
 
-        var checkoutRequest = new CheckoutRequestDto
+        var scheduleId = selectedSchedule.Id;
+        Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
+        
+
+        // 2️⃣ Tambahkan item ke cart
+        var response = await _httpClient.PutAsync($"/api/CartItem/add?scheduleid={scheduleId}", null);
+
+        if (!response.IsSuccessStatusCode)
         {
-            ItemCartIds = selectedCartIds,
+            var errorContent = await response.Content.ReadAsStringAsync();
+            Snackbar.Add($"Gagal menambahkan ke keranjang: {errorContent}", Severity.Error);
+            return;
+        }
+        
+       var cartResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CartItemResponseDto>>>("api/CartItem/cart");
+       var cartItems = cartResponse?.Data;
+
+       // Ambil item terbaru untuk scheduleId ini
+        var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
+        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
+
+
+       var checkoutRequest = new CheckoutRequestDto
+        {
+            ItemCartIds = new List<int> { lastCartItem.Id }, 
             PaymentMethodId = selectedPaymentId.Value
         };
 
-        try
+        // Checkout
+        var checkoutResponse = await _httpClient.PostAsJsonAsync("api/CartItem/checkout", checkoutRequest);
+        if (checkoutResponse.IsSuccessStatusCode)
         {
-            var response = await _httpClient.PostAsJsonAsync("api/CartItem/checkout", checkoutRequest);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
-                Navigation.GoToSuccessPurchase();
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                Snackbar.Add($"Checkout gagal: {content}", Severity.Error);
-            }
+            Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
+            Navigation.GoToSuccessPurchase();
         }
-        catch (Exception ex)
+        else
         {
-            Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
+            var content = await checkoutResponse.Content.ReadAsStringAsync();
+            Snackbar.Add($"Checkout gagal: {content}", Severity.Error);
         }
     }
+    catch (Exception ex)
+    {
+        Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
+    }
+}
 
     //Masukkan ke Keranjang
     private async Task AddToCartAsync()
@@ -269,7 +299,7 @@
             var scheduleId = selectedSchedule.Id; 
 
             // Panggil endpoint backend
-            var response = await _httpClient.PutAsync($"api/CartItem/add?scheduleid={scheduleId}", null);
+            var response = await _httpClient.PutAsync($"scheduleid={scheduleId}", null);
 
             if (response.IsSuccessStatusCode)
             {
