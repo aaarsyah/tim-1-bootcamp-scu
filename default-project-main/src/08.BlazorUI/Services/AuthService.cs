@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using MyApp.Shared.DTOs;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services
@@ -16,6 +17,7 @@ namespace MyApp.BlazorUI.Services
         Task<UserDto?> GetCurrentUserAsync();
         Task LogoutAsync();
         Task<bool> IsLoggedIn();
+        Task<bool> IsAdmin();
     }
     public class AuthService : IAuthService
     {
@@ -217,6 +219,24 @@ namespace MyApp.BlazorUI.Services
         public async Task<bool> IsLoggedIn()
         {
             return await ((CustomAuthStateProvider)_authStateProvider).isLoggedInAsync();
+        }
+        public async Task<bool> IsAdmin()
+        {
+            var token = await _localStorage.GetItemAsync<string>("authToken");
+
+            if (string.IsNullOrWhiteSpace(token))
+                return false;
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var handler = new JwtSecurityTokenHandler();
+            var claims = handler.ReadJwtToken(token).Claims;
+            var isadmin = claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            if (isadmin == null)
+            {
+                return false;
+            }
+            Console.WriteLine(isadmin);
+            return isadmin.Contains("Admin");
         }
     }
 }

@@ -7,7 +7,6 @@
 @inject NavigationManagerExt Navigation
 @inject IUserService UserService
 @inject IAuthService AuthService
-@inject NavigationManager NavManager
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
@@ -27,17 +26,21 @@
                 <MudSpacer />
                 @if (Loggedin)
                 {
+                    @if (IsAdmin)
+                    {
+                        <MudButton Variant="Variant.Text" OnClick="Navigation.GoToDashboard"><MudText>Admin</MudText></MudButton>
+                    }
                     <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout" />
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu">Kelasku</MudButton>
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice">Pembelian</MudButton>
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu"><MudText>Kelasku</MudText></MudButton>
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice"><MudText>Pembelian</MudText></MudButton>
                     <MudText>|</MudText>
-                    <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfil"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfile"/>
                     <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout" />
                 }
                 else
                 {
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister">Daftar Sekarang</MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">Masuk</MudButton>
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister"><MudText>Daftar Sekarang</MudText></MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin"><MudText>Masuk</MudText></MudButton>
                 }
             </MudAppBar>
         }
@@ -119,6 +122,7 @@
     [Parameter] 
     public Role UserRole { get; set; } = Role.User; //role user
     private bool Loggedin = false;
+    private bool IsAdmin = false;
 
     /// <summary>
     /// Handle user menekan tombol logout
@@ -130,7 +134,6 @@
         Navigation.GoToHome2(); //Logout balik ke home page
     }
 
-    private bool Loggedin = true; // Ubah sesuai autentikasi aslinya
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
@@ -160,7 +163,7 @@
     {
         if (firstRender)
         {
-            Loggedin = await AuthService.IsLoggedIn();
+            await UpdateLogin();
             Console.WriteLine(Loggedin);
             StateHasChanged();
         }
@@ -169,6 +172,7 @@
     private async Task UpdateLogin()
     {
         Loggedin = await AuthService.IsLoggedIn();
+        IsAdmin = await AuthService.IsAdmin();
     }
 
     // ====== Logic Visibility ======

@@ -43,7 +43,7 @@ namespace MyApp.WebAPI.Extensions
             services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IEmailService, EmailService>();
-
+            services.AddScoped<IPasswordService, PasswordService>();
 
 
             // Return services untuk method chaining (builder pattern)
