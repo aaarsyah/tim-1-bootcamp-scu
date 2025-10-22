@@ -145,10 +145,10 @@
         base.OnInitialized();
         currentPath = NavManager.Uri;
 
-        NavManager.LocationChanged += (_, __) =>
+        NavManager.LocationChanged += async (_, __) =>
         {
             currentPath = NavManager.Uri;
-            UpdateLogin();
+            await UpdateLogin();
             StateHasChanged(); // Refresh tampilan saat route berubah
         };
 
@@ -164,7 +164,6 @@
         if (firstRender)
         {
             await UpdateLogin();
-            Console.WriteLine(Loggedin);
             StateHasChanged();
         }
     }
@@ -206,55 +205,5 @@
         DrawerBackground = "#F8D24B",
         GrayLight = "#e8e8e8",
         GrayLighter = "#f9f9f9",
-    };
-
-    private RenderFragment RenderFooter() => __builder =>
-    {
-        __builder.AddMarkupContent(0, @"
-<MudPaper Class=""mt-12"" Style=""background-color:#F8D24B; border-radius: 0;"">
-    <MudContainer MaxWidth=""MaxWidth.Large"" Class=""py-10"">
-        <MudGrid Class=""d-flex justify-space-evenly"">
-
-            <MudItem xs=""12"" sm=""6"" md=""4"">
-                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Tentang</b></MudText>
-                <MudText Typo=""Typo.body2"">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-                </MudText>
-            </MudItem>
-
-            <MudItem xs=""12"" sm=""6"" md=""4"">
-                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Produk</b></MudText>
-                <MudStack Row=""true"" Spacing=""1"">
-                    <ul class=""ml-4"" style=""columns: 2; column-gap: 20px;"">
-                        <li>Biola</li>
-                        <li>Gitar</li>
-                        <li>Drum</li>
-                        <li>Menyanyi</li>
-                        <li>Piano</li>
-                        <li>Saxophone</li>
-                    </ul>
-                </MudStack>
-            </MudItem>
-
-            <MudItem xs=""12"" sm=""12"" md=""4"">
-                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Alamat</b></MudText>
-                <MudText Typo=""Typo.body2"" Class=""mb-2"">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                </MudText>
-
-                <MudText Typo=""Typo.h6""><b>Kontak</b></MudText>
-                <MudStack Row=""true"" Spacing=""2"">
-                    <MudLink Href=""tel:+62""><MudIconButton><img src=""img/icon-telephone.svg"" alt=""Phone"" /></MudIconButton></MudLink>
-                    <MudLink Href=""https://www.instagram.com/"" Target=""_blank""><MudIconButton><img src=""img/icon-instagram.svg"" alt=""Instagram"" /></MudIconButton></MudLink>
-                    <MudLink Href=""https://www.youtube.com/"" Target=""_blank""><MudIconButton><img src=""img/icon-youtube.svg"" alt=""YouTube"" /></MudIconButton></MudLink>
-                    <MudLink Href=""https://web.telegram.org/""><MudIconButton><img src=""img/icon-tele.svg"" alt=""Telegram"" /></MudIconButton></MudLink>
-                    <MudLink Href=""mailto:aku@gmail.com""><MudIconButton><img src=""img/icon-email.svg"" alt=""Email"" /></MudIconButton></MudLink>
-                </MudStack>
-            </MudItem>
-
-        </MudGrid>
-    </MudContainer>
-</MudPaper>
-");
     };
 }

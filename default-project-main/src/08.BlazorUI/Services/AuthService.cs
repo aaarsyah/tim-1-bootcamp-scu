@@ -218,6 +218,13 @@ namespace MyApp.BlazorUI.Services
         }
         public async Task<bool> IsLoggedIn()
         {
+            //Set Authorization header to include the access token
+            if (_httpClient.DefaultRequestHeaders.Authorization == null)
+            {
+                var token = await _localStorage.GetItemAsync<string>("authToken");
+                _httpClient.DefaultRequestHeaders.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+            }
             return await ((CustomAuthStateProvider)_authStateProvider).isLoggedInAsync();
         }
         public async Task<bool> IsAdmin()

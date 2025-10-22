@@ -41,6 +41,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine($"Is Authorization null? {_httpClient.DefaultRequestHeaders.Authorization == null}");
         try
         {
             var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
