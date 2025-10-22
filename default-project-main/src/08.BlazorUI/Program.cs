@@ -5,6 +5,8 @@ using MudBlazor.Services;
 using MyApp.BlazorUI.Components; 
 using MyApp.BlazorUI.Services; 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add MudBlazor services
@@ -16,6 +18,7 @@ builder.Services.AddRazorComponents()
 
 // Add Blazored LocalStorage
 builder.Services.AddBlazoredLocalStorage();
+
 
 // Configure HttpClient for API calls
 builder.Services.AddScoped(sp => new HttpClient

@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Exceptions;
-using MyApp.WebAPI.Models;
 using MyApp.Shared.DTOs;
 using System.Net;
 using MyApp.WebAPI.Services;
-using System.Net;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers
@@ -109,7 +107,7 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="201">Invoice created successfully</response>
         /// <response code="400">Invalid input data</response>
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<InvoiceDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<InvoiceDto>>> CreateInvoices(CreateInvoiceDto createInvoiceDto, HttpStatusCode statusCode = HttpStatusCode.Created)

@@ -35,16 +35,15 @@ namespace MyApp.WebAPI.Extensions
             services.AddScoped<IMyClassService, MyClassService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ICartItemService, CartItemService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
 
-            services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             
             services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
-            
-            services.AddScoped<IInvoiceService, InvoiceService>();
+
 
 
             // Return services untuk method chaining (builder pattern)

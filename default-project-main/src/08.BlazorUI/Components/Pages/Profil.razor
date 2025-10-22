@@ -1,0 +1,60 @@
+@page "/profile"
+@using MudBlazor
+
+@inject NavigationManagerExt Navigation;
+
+<PageTitle>Profil Saya</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+    <MudPaper Class="pa-6 rounded-lg elevation-4">
+        <MudStack Spacing="4" AlignItems="AlignItems.Center">
+
+            <!-- Foto Profil -->
+            <MudAvatar Size="Size.Large" Alt="Profile Photo" Src="img/profile-placeholder.png" />
+
+            <!-- Nama & Email -->
+            <MudText Typo="Typo.h5" Align="Align.Center"><b>@UserName</b></MudText>
+            <MudText Typo="Typo.body2" Align="Align.Center">@UserEmail</MudText>
+
+            <MudDivider />
+
+            <!-- Info Tambahan -->
+            <MudList T="string" Dense="true">
+                <MudListItem>
+                    <div><b>Tanggal Lahir:</b> @BirthDate.ToShortDateString()</div>
+                </MudListItem>
+            </MudList>
+
+
+            <!-- Tombol Aksi -->
+            <MudStack Direction="Row" Justify="Justify.Center" Spacing="2" Class="mt-4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToEditProfil">
+                    Edit Profil
+                </MudButton>
+            </MudStack>
+
+        </MudStack>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    // Data dummy, bisa kamu ganti nanti dengan data dari database atau auth user
+    private string UserName = "Admin";
+    private string UserEmail = "admin@email.com";
+    private DateTime BirthDate = new DateTime(1995, 5, 12);
+
+    private void EditProfile()
+    {
+        // Arahkan ke halaman edit profil (belum dibuat)
+        NavigationManager.NavigateTo("/edit-profile");
+    }
+
+    private void Logout()
+    {
+        // Logika logout nanti bisa kamu isi sesuai auth system
+        Console.WriteLine("User logout");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}

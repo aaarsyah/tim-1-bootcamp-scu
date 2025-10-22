@@ -44,7 +44,8 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         public async Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync()
         {
-            var invoicesDetail = await _context.InvoiceDetails.ToListAsync();
+            // Misalnya kamu ingin ambil semua invoice
+            var invoicesDetail = await _context.InvoiceDetails.ToListAsync(); // hapus .Include(c => c.Courses) jika Courses gak ada
             return _mapper.Map<IEnumerable<InvoiceDetailDto>>(invoicesDetail);
         }
 

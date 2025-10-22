@@ -1,175 +1,98 @@
-@inherits LayoutComponentBase;
+@inherits LayoutComponentBase
 
-@using MyApp.BlazorUI.Components.Pages;
+@using MyApp.BlazorUI.Components.Pages
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 
-@inject NavigationManagerExt Navigation;
+@inject NavigationManagerExt Navigation
 @inject IUserService UserService
 @inject IAuthService AuthService
+@inject NavigationManager NavManager
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
-<MudPopoverProvider /> 
-<MudDialogProvider /> 
+<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+<MudPopoverProvider />
+<MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-@if (Loggedin)
-    {
-        @if (UserRole == Role.Admin)
-        {
-            @if (ShouldShowAppBar())
-            {
-            <MudAppBar Elevation="1">
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
-                    <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
-                </MudLink>
-                <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
-            </MudAppBar>
-            }
 
-            <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-                <NavMenu />
-                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="HandleLogout">Logout</MudButton>
-            </MudDrawer>
+    <div style="display: flex; flex-direction: column; min-height: 100vh;">
 
-            <MudMainContent Class="pa-4 pt-6">
-                @Body
-            </MudMainContent>
-        }
-        else
-        {
-            @if (ShouldShowAppBar())
-            {
-            <MudAppBar Elevation="1">
-                <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
-                    <MudImage Src="img/applogo.svg" Alt="App Logo"/>
-                </MudLink>
-                <MudSpacer />
-                <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
-                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
-                    <MudText>Kelasku</MudText>
-                </MudButton>
-                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
-                    <MudText>Pembelian</MudText>
-                </MudButton>
-                <MudText Class="mx-2">|</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.Person"></MudIconButton>
-                <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
-            </MudAppBar>
-            }
-
-    <MudMainContent Class="pt-16 pa-4">
-        @Body
-    </MudMainContent>
-
-    <!---Footer-->
-    @if (ShouldShowFooter())
-    {
-    <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
-        <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
-            <MudGrid Class="d-flex justify-space-evenly">
-                <!-- Kolom Tentang -->
-                <MudItem xs="12" sm="6" md="4">
-                    <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
-                    <MudText Typo="Typo.body2">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
-                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
-                        architecto beatae vitae dicta sunt explicabo.
-                    </MudText>
-                </MudItem>
-
-                <!-- Kolom Produk -->
-                <MudItem xs="12" sm="6" md="4">
-                    <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
-                    <MudStack Row="true" Spacing="1">
-                    <ul class="ml-4" style="columns: 2; column-gap: 20px;">
-                        <li>Biola</li>
-                        <li>Gitar</li>
-                        <li>Drum</li>
-                        <li>Menyanyi</li>
-                        <li>Piano</li>
-                        <li>Saxophone</li>
-                    </ul>
-                    </MudStack>
-                </MudItem>
-
-                <!-- Kolom Alamat -->
-                <MudItem xs="12" sm="12" md="4">
-                    <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
-                    <MudText Typo="Typo.body2" Class="mb-2">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                    </MudText>
-                    
-                    <!-- Kolom Kontak -->
-                    <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
-                    <MudStack Row="true" Spacing="2">
-                        <!-- Phone -->
-                        <MudLink Href="tel:+62">
-                            <MudIconButton>
-                            <img src="img/icon-telephone.svg" alt="Phone" />
-                            </MudIconButton>
-                        </MudLink>
-
-                        <!-- Instagram -->
-                        <MudLink Href="https://www.instagram.com/" Target="_blank">
-                            <MudIconButton>
-                                <img src="img/icon-instagram.svg" alt="Instagram" />
-                            </MudIconButton>
-                        </MudLink>
-
-                        <!-- Youtube -->
-                        <MudLink Href="https://www.youtube.com/" Target="_blank">
-                            <MudIconButton>
-                                <img src="img/icon-youtube.svg" alt="YouTube" />
-                            </MudIconButton>
-                        </MudLink>
-
-                        <!-- Tele -->
-                        <MudLink Href="https://web.telegram.org/">
-                            <MudIconButton>
-                            <img src="img/icon-tele.svg" alt="Instagram" />
-                            </MudIconButton>
-                        </MudLink>
-
-                        <!-- Email -->
-                        <MudLink Href="mailto:aku@gmail.com">
-                            <MudIconButton>
-                            <img src="img/icon-email.svg" alt="Instagram" />
-                            </MudIconButton>
-                        </MudLink>
-                    </MudStack>
-
-                </MudItem>
-            </MudGrid>
-        </MudContainer>
-    </MudPaper> 
-    }
-}  
-    }
-    else
-    {
         @if (ShouldShowAppBar())
         {
-        <MudAppBar Elevation="1">
-            <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
-                <MudImage Src="img/applogo.svg" Alt="App Logo"/>
-            </MudLink>
-            <MudSpacer />
-            <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister" Class="mx-2">
-                <MudText>Daftar Sekarang</MudText>
-            </MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">
-                <MudText>Masuk</MudText>
-            </MudButton>
-        </MudAppBar>
-        }   
+            <MudAppBar Elevation="1">
+                <MudLink OnClick="Navigation.GoToHome">
+                    <MudImage Src="img/applogo.svg" Alt="App Logo" />
+                </MudLink>
+                <MudSpacer />
+                @if (Loggedin)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout" />
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu">Kelasku</MudButton>
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice">Pembelian</MudButton>
+                    <MudText>|</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfil"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout" />
+                }
+                else
+                {
+                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister">Daftar Sekarang</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">Masuk</MudButton>
+                }
+            </MudAppBar>
+        }
 
-    <MudMainContent Class="pt-16 pa-4">
-        @Body
-    </MudMainContent>
-    }
+        <!-- Main Content (flex-grow: 1) -->
+        <MudMainContent Class="pa-4 pt-6" Style="flex: 1;">
+            @Body
+        </MudMainContent>
+
+        @if (ShouldShowFooter())
+        {
+            <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+                <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+                    <MudGrid Class="d-flex justify-space-evenly">
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                            <MudText Typo="Typo.body2">
+                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                            </MudText>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="6" md="4">
+                            <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
+                            <MudStack Row="true" Spacing="1">
+                                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+                                    <li>Biola</li>
+                                    <li>Gitar</li>
+                                    <li>Drum</li>
+                                    <li>Menyanyi</li>
+                                    <li>Piano</li>
+                                    <li>Saxophone</li>
+                                </ul>
+                            </MudStack>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="12" md="4">
+                            <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
+                            <MudText Typo="Typo.body2" Class="mb-2">
+                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                            </MudText>
+                            <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
+                            <MudStack Row="true" Spacing="2">
+                                <MudLink Href="tel:+62"><MudIconButton><img src="img/icon-telephone.svg" /></MudIconButton></MudLink>
+                                <MudLink Href="https://www.instagram.com/" Target="_blank"><MudIconButton><img src="img/icon-instagram.svg" /></MudIconButton></MudLink>
+                                <MudLink Href="https://www.youtube.com/" Target="_blank"><MudIconButton><img src="img/icon-youtube.svg" /></MudIconButton></MudLink>
+                                <MudLink Href="https://web.telegram.org/"><MudIconButton><img src="img/icon-tele.svg" /></MudIconButton></MudLink>
+                                <MudLink Href="mailto:aku@gmail.com"><MudIconButton><img src="img/icon-email.svg" /></MudIconButton></MudLink>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudContainer>
+            </MudPaper>
+        }
+    </div>
+
 </MudLayout>
 
 
@@ -207,20 +130,18 @@
         Navigation.GoToHome2(); //Logout balik ke home page
     }
 
+    private bool Loggedin = true; // Ubah sesuai autentikasi aslinya
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
 
     private string? currentPath;
 
-    // ====== Lifecycle ======
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
         currentPath = NavManager.Uri;
 
-        // Event listener untuk deteksi perubahan halaman
         NavManager.LocationChanged += (_, __) =>
         {
             currentPath = NavManager.Uri;
@@ -255,7 +176,6 @@
     private bool ShouldShowFooter()
     {
         var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
-        // Sembunyikan footer di halaman tertentu
         return !(path.Contains("checkout") ||
                  path.Contains("success-purchase") ||
                  path.Contains("confirm-email"));
@@ -264,7 +184,6 @@
     private bool ShouldShowAppBar()
     {
         var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
-        // Sembunyikan AppBar di halaman tertentu
         return !(path.Contains("success-purchase") ||
                  path.Contains("confirm-email"));
     }
@@ -276,7 +195,7 @@
 
     private readonly PaletteLight _lightPalette = new()
     {
-        Primary = "#5D5FEF", //Button Color
+        Primary = "#5D5FEF",
         Black = "#110e2d",
         AppbarText = "#424242",
         AppbarBackground = "#F2C94C",
@@ -285,7 +204,53 @@
         GrayLighter = "#f9f9f9",
     };
 
-    
+    private RenderFragment RenderFooter() => __builder =>
+    {
+        __builder.AddMarkupContent(0, @"
+<MudPaper Class=""mt-12"" Style=""background-color:#F8D24B; border-radius: 0;"">
+    <MudContainer MaxWidth=""MaxWidth.Large"" Class=""py-10"">
+        <MudGrid Class=""d-flex justify-space-evenly"">
+
+            <MudItem xs=""12"" sm=""6"" md=""4"">
+                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Tentang</b></MudText>
+                <MudText Typo=""Typo.body2"">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                </MudText>
+            </MudItem>
+
+            <MudItem xs=""12"" sm=""6"" md=""4"">
+                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Produk</b></MudText>
+                <MudStack Row=""true"" Spacing=""1"">
+                    <ul class=""ml-4"" style=""columns: 2; column-gap: 20px;"">
+                        <li>Biola</li>
+                        <li>Gitar</li>
+                        <li>Drum</li>
+                        <li>Menyanyi</li>
+                        <li>Piano</li>
+                        <li>Saxophone</li>
+                    </ul>
+                </MudStack>
+            </MudItem>
+
+            <MudItem xs=""12"" sm=""12"" md=""4"">
+                <MudText Typo=""Typo.h6"" Class=""mb-2""><b>Alamat</b></MudText>
+                <MudText Typo=""Typo.body2"" Class=""mb-2"">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                </MudText>
+
+                <MudText Typo=""Typo.h6""><b>Kontak</b></MudText>
+                <MudStack Row=""true"" Spacing=""2"">
+                    <MudLink Href=""tel:+62""><MudIconButton><img src=""img/icon-telephone.svg"" alt=""Phone"" /></MudIconButton></MudLink>
+                    <MudLink Href=""https://www.instagram.com/"" Target=""_blank""><MudIconButton><img src=""img/icon-instagram.svg"" alt=""Instagram"" /></MudIconButton></MudLink>
+                    <MudLink Href=""https://www.youtube.com/"" Target=""_blank""><MudIconButton><img src=""img/icon-youtube.svg"" alt=""YouTube"" /></MudIconButton></MudLink>
+                    <MudLink Href=""https://web.telegram.org/""><MudIconButton><img src=""img/icon-tele.svg"" alt=""Telegram"" /></MudIconButton></MudLink>
+                    <MudLink Href=""mailto:aku@gmail.com""><MudIconButton><img src=""img/icon-email.svg"" alt=""Email"" /></MudIconButton></MudLink>
+                </MudStack>
+            </MudItem>
+
+        </MudGrid>
+    </MudContainer>
+</MudPaper>
+");
+    };
 }
-
-
