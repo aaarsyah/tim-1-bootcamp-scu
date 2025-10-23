@@ -31,7 +31,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpGet]
         [Authorize]
         [ProducesResponseType(typeof(IEnumerable<MyClassDto>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<MyClassDto>>> GetOwnMyClasses()
+        public async Task<ActionResult<IEnumerable<MyClassDto>>> MyClassService()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))

@@ -36,19 +36,32 @@ namespace MyApp.WebAPI.Services
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
 
+        //public async Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId)
+        //{
+        //    var myClasses = await _context.MyClasses
+        //        .Where(m => m.UserId == userId)
+        //        .Include(m => m.Schedule)
+        //        .ThenInclude(s => s.Course)
+        //        .ThenInclude(c => c.Category)
+        //        .ToListAsync();
+        //    return _mapper.Map<IEnumerable<MyClassDto>>(myClasses);
+        //}
+
         /// <summary>
         /// Get all Invoice
         /// </summary>
         public async Task<IEnumerable<InvoiceDto>> GetAllInvoicesAsync()
         {
             // Misalnya kamu ingin ambil semua invoice
-            var invoices = await _context.Invoices.ToListAsync(); // hapus .Include(c => c.Courses) jika Courses gak ada
+            var invoices = await _context.Invoices
+                .ToListAsync(); // hapus .Include(c => c.Courses) jika Courses gak ada
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
 
         public async Task<InvoiceDto> GetInvoicesByIdAsync(int id)
         {
-            var invoice = await _context.Invoices.FirstOrDefaultAsync(c => c.Id == id);
+            var invoice = await _context.Invoices
+                .FirstOrDefaultAsync(c => c.Id == id);
             if (invoice == null)
                 throw new NotFoundException($"Invoice with Id {id} not found");
 

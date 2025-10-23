@@ -130,7 +130,8 @@
     /// <returns></returns>
     private async Task HandleLogout()
     {
-        await AuthService.LogoutAsync();
+        var auth = await AuthService.GetAccessTokenAsync();
+        await AuthService.LogoutAsync(auth);
         Navigation.GoToHome2(); //Logout balik ke home page
     }
 
@@ -151,7 +152,7 @@
             await UpdateLogin();
             StateHasChanged(); // Refresh tampilan saat route berubah
         };
-
+        
         _theme = new()
         {
             PaletteLight = _lightPalette,
@@ -170,8 +171,8 @@
 
     private async Task UpdateLogin()
     {
-        Loggedin = await AuthService.IsLoggedIn();
-        IsAdmin = await AuthService.IsAdmin();
+        Loggedin = await AuthService.IsLoggedInAsync();
+        IsAdmin = await AuthService.IsAdminAsync();
     }
 
     // ====== Logic Visibility ======

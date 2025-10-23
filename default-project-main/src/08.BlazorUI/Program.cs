@@ -1,7 +1,7 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
-
+using MyApp.BlazorUI;
 using MyApp.BlazorUI.Components; 
 using MyApp.BlazorUI.Services; 
 
@@ -21,9 +21,13 @@ builder.Services.AddBlazoredLocalStorage();
 
 
 // Configure HttpClient for API calls
-builder.Services.AddScoped(sp => new HttpClient
+//builder.Services.AddScoped(sp => new HttpClient
+//{
+//    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269")
+//});
+builder.Services.AddHttpClient("WebAPI", sp =>
 {
-    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269")
+    sp.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269");
 });
 
 // Add navigation service
@@ -39,6 +43,7 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 //Auth
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMyClassService, MyClassService>();
 
 
 

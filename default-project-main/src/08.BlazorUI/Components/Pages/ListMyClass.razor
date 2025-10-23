@@ -1,9 +1,15 @@
 @page "/MyClass"
 @using System.Globalization
+@using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
-@inject HttpClient _httpClient
+@using System.Net.Http.Headers
+@using Blazored.LocalStorage
+@inject NavigationManagerExt Navigation
+@inject IAuthService AuthService
+@inject IMyClassService MyClassService
 
 <PageTitle>My Class</PageTitle>
+@* <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" /> *@
 
 <MudContainer>
     @if (_itemList is null)
@@ -39,19 +45,20 @@
 @code {
     private List<MyClassDto> _itemList = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Console.WriteLine($"Is Authorization null? {_httpClient.DefaultRequestHeaders.Authorization == null}");
-        try
+        if (!firstRender)
         {
-            var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
-
-             _itemList = response?.ToList() ?? new();
+            return;
         }
-        catch (Exception ex)
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
         {
-            Console.WriteLine($"Error fetching MyClass data: {ex.Message}");
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
         }
+        _itemList = await MyClassService.GetOwnMyClasses(auth); //Dapatkan MyClass
+        StateHasChanged();
     }
 }
     

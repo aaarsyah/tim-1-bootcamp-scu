@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using MudBlazor
 @using MyApp.Shared.DTOs
-@inject HttpClient _httpClient
+@inject IHttpClientFactory _factory
 @inject NavigationManagerExt Navigation;
 
 <PageTitle>Home Apple Music</PageTitle>
@@ -173,10 +173,21 @@
     private IEnumerable<CourseCard>? FeaturedCourses;
     private IEnumerable<CategoryItem>? Categories;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return; //Jangan update lagi setelah render pertama
+        }
+        await LoadHome();
+        StateHasChanged(); // Panggil function ini untuk mengupdate tampilan dengan data baru
+    }
+
+    private async Task LoadHome()
     {
         try
         {
+            var _httpClient = _factory.CreateClient("WebAPI");
             // Ambil courses
             var courseResponseMsg = await _httpClient.GetAsync("api/Course");
             if (courseResponseMsg.IsSuccessStatusCode)

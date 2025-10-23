@@ -9,17 +9,18 @@ namespace MyApp.BlazorUI.Services
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorage;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _factory;
         private readonly AuthenticationState _anonymous;
 
-        public CustomAuthStateProvider(ILocalStorageService localStorage, HttpClient httpClient)
+        public CustomAuthStateProvider(ILocalStorageService localStorage, IHttpClientFactory factory)
         {
             _localStorage = localStorage;
-            _httpClient = httpClient;
+            _factory = factory;
             _anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
+            var _httpClient = _factory.CreateClient("WebAPI");
             try
             {
                 var token = await _localStorage.GetItemAsync<string>("authToken");
@@ -46,7 +47,7 @@ namespace MyApp.BlazorUI.Services
                 var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
                 return new AuthenticationState(user);
             }
-            catch
+            catch (Exception)
             {
                 return _anonymous;
             }
