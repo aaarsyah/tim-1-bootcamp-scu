@@ -1,11 +1,16 @@
 @page "/detail/{CourseId:int}"
+
 @using System.Globalization
 @using MyApp.Shared.DTOs
+@using MyApp.BlazorUI.Services
 @using System.Net.Http.Json
 
-@inject HttpClient _httpClient
 @inject NavigationManagerExt Navigation
 @inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
+@inject ICourseService CourseService
+@inject ICheckoutService CheckoutService
 
 <PageTitle>Detail Kelas</PageTitle>
 
@@ -156,42 +161,57 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        await LoadPaymentsAsync();
+        // Ambil data course by id
+        var result = await CourseService.GetCourseByIdAsync(CourseId);
+        if (result != null)
         {
-            await LoadPaymentsAsync();
+            Course = result;
 
-            // Ambil data course by id
-            var response = await _httpClient.GetFromJsonAsync<ApiResponse<CourseDto>>($"api/Course/{CourseId}");
-            if (response?.Data != null)
-            {
-                Course = response.Data;
+            ScheduleDates = Course.ScheduleDates.ToArray();
 
-                ScheduleDates = Course.ScheduleDates.ToArray();
-
-                if (ScheduleDates.Length > 0)
-                    _date = ScheduleDates[0];
-            }
-
-            // Ambil courses lain untuk rekomendasi
-            var otherResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CourseDto>>>("api/Course");
-            if (otherResponse?.Data != null)
-            {
-                OtherCourses = otherResponse.Data
-                    .Where(c => c.Id != CourseId && c.IsActive)
-                    .ToList();
-            }
+            if (ScheduleDates.Length > 0)
+                _date = ScheduleDates[0];
         }
-        catch (Exception ex)
+        // Ambil courses lain untuk rekomendasi
+        var result2 = await CourseService.GetAllCourseAsyncv2();
+        if (result2 != null)
         {
-            Console.WriteLine($"Error fetching course data: {ex.Message}");
+            OtherCourses = result2
+                .Where(c => c.Id != CourseId && c.IsActive)
+                .ToList();
         }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        // var auth = await AuthService.GetAccessTokenAsync();
+        // if (auth == null)
+        // {
+        //     Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+        //     return;
+        // }
+        // await LoadPaymentsAsync(auth);
+        StateHasChanged();
     }
 
     private async Task LoadPaymentsAsync()
     {
-        var response = await _httpClient.GetFromJsonAsync<ApiResponse<List<PaymentDto>>>("api/payment");
-        if (response?.Data != null)
-            payments = response.Data.Where(p => p.IsActive).ToList();
+        try
+        {
+            var result = await CheckoutService.GetAllPaymentsAsync();
+            if (result != null)
+            {
+                payments = result.Where(p => p.IsActive).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Gagal memuat metode pembayaran: {ex.Message}", Severity.Error);
+        }
     }
 
     private async Task ShowPaymentDialog()
@@ -213,74 +233,85 @@
     private void CancelPayment() => _mudMessageBox.Close();
 
     //Konfirmasi Pembayaran (Button Bayar Sekarang)
-   private async Task OnPaymentConfirmed()
-{
-    if (selectedPaymentId == null)
+    private async Task OnPaymentConfirmed()
     {
-        Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
-        return;
-    }
-
-    try
-    {
-        // 1️⃣ Ambil scheduleId berdasarkan tanggal yang dipilih
-        var selectedSchedule = Course.Schedules.FirstOrDefault(s => s.Date == _date);
-        if (selectedSchedule == null)
+        // Dapatkan autentikasi
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
         {
-            Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-
-        var scheduleId = selectedSchedule.Id;
-        Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
-        
-
-        // 2️⃣ Tambahkan item ke cart
-        var response = await _httpClient.PutAsync($"/api/CartItem/add?scheduleid={scheduleId}", null);
-
-        if (!response.IsSuccessStatusCode)
+        if (selectedPaymentId == null)
         {
-            var errorContent = await response.Content.ReadAsStringAsync();
-            Snackbar.Add($"Gagal menambahkan ke keranjang: {errorContent}", Severity.Error);
+            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
             return;
         }
-
-       var cartResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CartItemResponseDto>>>("api/CartItem/cart");
-       var cartItems = cartResponse?.Data;
-
-       // Ambil item terbaru untuk scheduleId ini
-        var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
-        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
-
-
-       var checkoutRequest = new CheckoutRequestDto
+        try
         {
-            ItemCartIds = new List<int> { lastCartItem.Id }, 
-            PaymentMethodId = selectedPaymentId.Value
-        };
+            // 1️⃣ Ambil scheduleId berdasarkan tanggal yang dipilih
+            var selectedSchedule = Course.Schedules.FirstOrDefault(s => s.Date == _date);
+            if (selectedSchedule == null)
+            {
+                Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
+                return;
+            }
 
-        // Checkout
-        var checkoutResponse = await _httpClient.PostAsJsonAsync("api/CartItem/checkout", checkoutRequest);
-        if (checkoutResponse.IsSuccessStatusCode)
-        {
+            var scheduleId = selectedSchedule.Id;
+            Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
+
+
+            // 2️⃣ Tambahkan item ke cart
+            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
+            if (!result)
+            {
+                Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+                return;
+            }
+            var result2 = await CheckoutService.GetOwnCartItem(auth);
+            if (result2 == null)
+            {
+                Snackbar.Add("Gagal menambahkan ke keranjang?", Severity.Error);
+                return;
+            }
+            var cartItems = result2;
+
+            // Ambil item terbaru untuk scheduleId ini
+            var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
+            Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
+
+
+            var checkoutRequest = new CheckoutRequestDto
+            {
+                ItemCartIds = new List<int> { lastCartItem.Id }, 
+                PaymentMethodId = selectedPaymentId.Value
+            };
+
+            // Checkout
+            var result3 = await CheckoutService.CheckoutItemsAsync(auth, checkoutRequest);
+            if (result3 == null)
+            {
+                Snackbar.Add($"Checkout gagal.", Severity.Error);
+            }
             Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
             Navigation.GoToSuccessPurchase();
         }
-        else
+        catch (Exception ex)
         {
-            var content = await checkoutResponse.Content.ReadAsStringAsync();
-            Snackbar.Add($"Checkout gagal: {content}", Severity.Error);
+            Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
         }
     }
-    catch (Exception ex)
-    {
-        Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
-    }
-}
 
     //Masukkan ke Keranjang
     private async Task AddToCartAsync()
     {
+        // Dapatkan autentikasi
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
         try
         {
             if (Course == null)
@@ -299,18 +330,13 @@
             var scheduleId = selectedSchedule.Id; 
 
             // Panggil endpoint backend
-            var response = await _httpClient.PutAsync($"/api/CartItem/add?scheduleid={scheduleId}", null);
-
-            if (response.IsSuccessStatusCode)
+            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
+            if (!result)
             {
-                // Arahkan ke halaman checkout
-                Navigation.GoToCheckout();
+                Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
             }
-            else
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Failed to add cart: {error}");
-            }
+            // Arahkan ke halaman checkout
+            Navigation.GoToCheckout();
         }
         catch (Exception ex)
         {

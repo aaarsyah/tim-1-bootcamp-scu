@@ -36,16 +36,16 @@ builder.Services.AddScoped<NavigationManagerExt>();
 //Service
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 //Auth
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyClassService, MyClassService>();
 
-
+builder.Services.AddScoped<ICourseService, CourseService>(); 
 
 var app = builder.Build();
 

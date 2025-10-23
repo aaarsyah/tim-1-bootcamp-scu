@@ -95,7 +95,7 @@ namespace MyApp.WebAPI.Controllers
          /// <summary>
         /// Add course to cart by scheduleId
         /// </summary>
-        [HttpPut("add")] 
+        [HttpPut("add")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation

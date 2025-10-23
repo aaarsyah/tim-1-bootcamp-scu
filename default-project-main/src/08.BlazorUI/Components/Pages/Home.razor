@@ -1,8 +1,11 @@
 ﻿@page "/"
 @using MudBlazor
+@using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
-@inject IHttpClientFactory _factory
-@inject NavigationManagerExt Navigation;
+
+@inject NavigationManagerExt Navigation
+
+@inject ICourseService CourseService
 
 <PageTitle>Home Apple Music</PageTitle>
 
@@ -187,13 +190,11 @@
     {
         try
         {
-            var _httpClient = _factory.CreateClient("WebAPI");
             // Ambil courses
-            var courseResponseMsg = await _httpClient.GetAsync("api/Course");
-            if (courseResponseMsg.IsSuccessStatusCode)
+            var result = await CourseService.GetAllCourseAsyncv2();
+            if (result != null)
             {
-                var courseApiResponse = await courseResponseMsg.Content.ReadFromJsonAsync<ApiResponse<List<CourseDto>>>();
-                FeaturedCourses = courseApiResponse?.Data
+                FeaturedCourses = result
                     .Where(c => c.IsActive)
                     .Select(c => new CourseCard(
                         Category: c.CategoryName,
@@ -203,13 +204,11 @@
                         Id: c.Id
                     ));
             }
-
             // Ambil categories
-            var categoryResponseMsg = await _httpClient.GetAsync("api/Category");
-            if (categoryResponseMsg.IsSuccessStatusCode)
+            var result2 = await CourseService.GetAllCategoriesAsync();
+            if (result2 != null)
             {
-                var categoryApiResponse = await categoryResponseMsg.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
-                Categories = categoryApiResponse?.Data
+                Categories = result2
                     .Where(c => c.IsActive)
                     .Select(c => new CategoryItem(
                         Name: c.Name,

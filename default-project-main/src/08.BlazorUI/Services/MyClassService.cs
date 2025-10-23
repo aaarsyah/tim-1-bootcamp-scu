@@ -33,6 +33,6 @@ namespace MyApp.BlazorUI.Services
                 Console.WriteLine($"Error fetching MyClass data: {ex.Message}");
                 return new();
             }
-         }
+        }
     }
 }

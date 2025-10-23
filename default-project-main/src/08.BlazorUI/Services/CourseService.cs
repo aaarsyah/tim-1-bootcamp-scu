@@ -1,101 +1,128 @@
-using MyApp.BlazorUI.Models;
+using Microsoft.AspNetCore.WebUtilities;
+using MyApp.Shared.DTOs;
 
 namespace MyApp.BlazorUI.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly List<CourseItem> _course = new();
-        private int _nextId = 1;
+        private readonly IHttpClientFactory _factory;
 
-        public CourseService()
+        public CourseService(IHttpClientFactory factory)
         {
-            SeedData();
+            _factory = factory;
         }
-
-        public async Task<List<CourseItem>> GetCourseAsync()
+        public async Task<IEnumerable<CourseDto>?> GetAllCourseAsyncv2()
         {
-            await Task.Delay(100); 
-            return _course.OrderBy(t => t.Id).ToList();
-        }
-
-        public async Task<CourseItem> CreateCourseAsync(CourseItem course)
-        {
-            await Task.Delay(100);
-            course.Id = _nextId++;
-            _course.Add(course);
-            return course;
-        }
-
-        public async Task<CourseItem> UpdateCourseAsync(CourseItem course)
-        {
-            await Task.Delay(100);
-            var existingCourse = _course.FirstOrDefault(t => t.Id == course.Id);
-            if (existingCourse != null)
+            //GetAllCourses
+            var _httpClient = _factory.CreateClient("WebAPI");
+            //
+            var a = new CourseQueryParameters();
+            var query = new Dictionary<string, string?>
             {
-                var index = _course.IndexOf(existingCourse);
-                _course[index] = existingCourse;
-            }
-            return course;
-        }
-
-        public async Task<bool> DeleteCourseAsync(int id)
-        {
-            await Task.Delay(100);
-            var course = _course.FirstOrDefault(t => t.Id == id);
-            if (course != null)
-            {
-                _course.Remove(course);
-                return true;
-            }
-            return false;
-        }
-
-        private void SeedData()
-        {
-            var sampleCourse = new List<CourseItem>
-            {
-                new CourseItem
-                {
-                    Id = _nextId++,
-                    Name = "Drum Class For Beginner",
-                    Description = "Drum Class",
-                    Picture = "img/Class1.svg",
-                    CategoryId = 1,
-                    Harga = 1000000,
-                    AllCourse = CourseStatus.Active
-                },
-                new CourseItem
-                {
-                    Id = _nextId++,
-                    Name = "Piano Class For Beginner",
-                    Description = "Piano Class",
-                    Picture = "img/Class2.svg",
-                    CategoryId = 2,
-                    Harga = 2000000,
-                    AllCourse = CourseStatus.Active
-                },
-                new CourseItem
-                {
-                    Id = _nextId++,
-                    Name = "Gitar Class For Beginner",
-                    Description = "Gitar Class",
-                    Picture = "img/Class4.svg",
-                    CategoryId = 3,
-                    Harga = 2500000,
-                    AllCourse = CourseStatus.Active
-                },
-                new CourseItem
-                {
-                    Id = _nextId++,
-                    Name = "Bass Class For Beginner",
-                    Description = "Bass Class",
-                    Picture = "img/Class3.svg",
-                    CategoryId = 3,
-                    Harga = 1500000,
-                    AllCourse = CourseStatus.Active
-                }
+                ["Search"] = a.Search,
+                ["CategoryId"] = a.CategoryId.ToString(),
+                ["MinPrice"] = a.MinPrice.ToString(),
+                ["MaxPrice"] = a.MaxPrice.ToString(),
+                ["SortBy"] = a.SortBy,
+                ["SortDirection"] = a.SortDirection,
+                // ...
             };
-            _course.AddRange(sampleCourse);
+            try
+            {
+                var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/Course/v2", query));
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResponse<IEnumerable<CourseDto>>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
+                        && apiResponse.Data.Data != null)
+                    {
+                        return apiResponse.Data.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCourseAsyncv2: Error: {ex.Message}");
+                return null;
+            }
+        }
+        public async Task<CourseDto?> GetCourseByIdAsync(int CourseId)
+        {
+            //GetCourse
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Course/{CourseId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCourse: Error: {ex.Message}");
+                return null;
+            }
+        }
+        public async Task<List<CategoryDto>> GetAllCategoriesAsync()
+        {
+            //GetCourse
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Category");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllCategories: Error: {ex.Message}");
+                return new();
+            }
+        }
+        public async Task<CategoryDto?> GetCategoryByIdAsync(int CategoryId)
+        {
+            //GetCourse
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Category/{CategoryId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCourse: Error: {ex.Message}");
+                return null;
+            }
         }
     }
 }

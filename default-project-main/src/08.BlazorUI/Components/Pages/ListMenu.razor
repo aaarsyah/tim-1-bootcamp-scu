@@ -1,9 +1,11 @@
 @page "/listmenu/{CategoryId:int}"
 
+@using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
 
-@inject HttpClient _httpClient
 @inject NavigationManagerExt Navigation
+
+@inject ICourseService CourseService
 
 <PageTitle>Daftar Kelas</PageTitle>
 
@@ -71,45 +73,24 @@
     protected override async Task OnInitializedAsync()
     {
         // Fetch Category by Id
-        try
+        var result = await CourseService.GetCategoryByIdAsync(CategoryId);
+        if (result != null)
         {
-            var categoryResponse = await _httpClient.GetFromJsonAsync<ApiResponse<CategoryDto>>($"api/Category/{CategoryId}");
-            if (categoryResponse?.Data != null)
-            {
-                CategoryName = categoryResponse.Data.Name;
-                CategoryDescription = categoryResponse.Data.Description;
-                CategoryImage = !string.IsNullOrEmpty(categoryResponse.Data.ImageUrl)
-                                ? categoryResponse.Data.ImageUrl
-                                : "img/Class1.svg";
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading category: {ex.Message}");
-        }
-        finally
-        {
-            IsCategoryLoading = false;
+            CategoryName = result.Name;
+            CategoryDescription = result.Description;
+            CategoryImage = !string.IsNullOrEmpty(result.ImageUrl)
+                ? result.ImageUrl
+                : "img/Class1.svg";
         }
 
         // Fetch all courses
-        try
+        var result2 = await CourseService.GetAllCourseAsyncv2();
+        if (result2 != null)
         {
-            var courseResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CourseDto>>>("api/Course");
-            if (courseResponse?.Data != null)
-            {
-                Courses = courseResponse.Data
-                    .Where(c => c.IsActive && c.CategoryId == CategoryId) // filter by category
-                    .ToList();
-            }
+            Courses = result2
+                .Where(c => c.IsActive && c.CategoryId == CategoryId) // filter by category
+                .ToList();
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading courses: {ex.Message}");
-        }
-        finally
-        {
-            IsCourseLoading = false;
-        }
+        IsCourseLoading = false;
     }
 }
