@@ -1,4 +1,6 @@
 using MyApp.BlazorUI.Models;
+using MyApp.Shared.DTOs;
+using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services
 {
@@ -10,16 +12,40 @@ namespace MyApp.BlazorUI.Services
         // Properti untuk menyimpan user yang sedang login
         public UserItem? CurrentUser { get; set; }
 
-        public UserService()
+        private readonly IHttpClientFactory _factory;
+
+        public UserService(IHttpClientFactory factory)
         {
+            _factory = factory;
             SeedData();
         }
 
         // Mendapatkan semua user
-        public async Task<List<UserItem>> GetUserAsync()
+        public async Task<List<UserDto>> GetAllUsersAsync(AuthenticationHeaderValue authorization)
         {
-            await Task.Delay(100); // Simulasi delay
-            return _user.OrderByDescending(t => t.Name).ToList();
+            //
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync("api/UserManagement/users");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
+                return new();
+            }
         }
 
         // Menambahkan user baru

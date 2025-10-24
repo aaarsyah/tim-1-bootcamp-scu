@@ -4,10 +4,15 @@
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
+
+@inject NavigationManagerExt Navigation
+
+@inject IAuthService AuthService
 @inject IMemberService MemberService
 @inject IUserService UserService
 @inject IAdminService PaymentService;
-@inject NavigationManagerExt Navigation
+
+@inject IDialogService DialogService
 
 <PageTitle>Dashboard Admin</PageTitle>
 
@@ -105,7 +110,7 @@
 
     private IEnumerable<MemberItem> member = new List<MemberItem>();
 
-    private IEnumerable<UserItem> user = new List<UserItem>();
+    private IEnumerable<UserDto> user = new List<UserDto>();
     private IEnumerable<PaymentDto> payment = new List<PaymentDto>();
 
     protected override async Task OnInitializedAsync()
@@ -115,11 +120,18 @@
 
     private async Task LoadDashboardData()
     {
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+
         var members = await MemberService.GetMembersAsync();
         member = members;
         _totalMember = members.Count;
 
-        var users = await UserService.GetUserAsync();
+        var users = await UserService.GetAllUsersAsync(auth);
         user = users;
         _totalUserActive = users.Count;
 
