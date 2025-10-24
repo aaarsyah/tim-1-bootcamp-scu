@@ -64,16 +64,9 @@ namespace MyApp.WebAPI.Controllers
             {
                 throw new AuthenticationException("Token is invalid");
             }
-            try
-            {
-                var result = await _invoiceService.GetAllInvoicesUserAsync(userId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving invoice");
-                return StatusCode(500, "Internal server error");
-            }
+
+            var result = await _invoiceService.GetAllInvoicesUserAsync(userId);
+            return Ok(ApiResponse<IEnumerable<InvoiceDto>>.SuccessResult(result));
         }
 
         /// <summary>

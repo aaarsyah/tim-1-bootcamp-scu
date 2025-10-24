@@ -1,7 +1,12 @@
 @page "/invoice"
+@using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
 
 @inject NavigationManagerExt Navigation;
+@inject ISnackbar Snackbar
 
+@inject IAuthService AuthService
+@inject ICheckoutService CheckoutService
 
 <style>
 /* Selang-seling warna baris */
@@ -28,7 +33,7 @@
     <MudText Class="mb-8" Typo="Typo.subtitle1"><b>Menu Invoice</b></MudText>
 </MudItem>
 
-<MudTable T="Element" Items="@Elements.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
+    <MudTable T="InvoiceDto" Items="@invoices.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
           RowClass="cursor-pointer" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
    
     <HeaderContent>
@@ -41,11 +46,11 @@
     </HeaderContent>
 
     <RowTemplate>
-    <MudTd DataLabel="No">@context.Number</MudTd>
-    <MudTd DataLabel="No.Invoice">@context.NoInvoice</MudTd>
-    <MudTd DataLabel="Tanggal Beli">@context.TanggalBeli</MudTd>
-    <MudTd DataLabel="Jumlah Kursus">@context.JumlahKursus</MudTd>
-    <MudTd DataLabel="Total Harga">@context.TotalHarga</MudTd>
+    <MudTd DataLabel="No">@context.Id</MudTd>
+    <MudTd DataLabel="No.Invoice">@context.RefCode</MudTd>
+    <MudTd DataLabel="Tanggal Beli">@context.CreatedAt</MudTd>
+    <MudTd DataLabel="Jumlah Kursus">0</MudTd>
+    <MudTd DataLabel="Total Harga">0</MudTd>
     <MudTd DataLabel="Action">
        <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="Navigation.GoToDetailsInvoice">
     Rincian
@@ -59,59 +64,52 @@
 
 
 @code {
+    private IEnumerable<InvoiceDto> invoices = new List<InvoiceDto>();
     private int selectedRowNumber = -1;
-    private MudTable<Element> mudTable;
+    private MudTable<InvoiceDto> mudTable;
     private List<string> clickedEvents = new();
-    private IEnumerable<Element> Elements = new List<Element>()
-    {
-           new Element()
-                {
-                    Number = 1,
-                    NoInvoice = "AB00003",
-                    TanggalBeli = "25 Juli 2026",
-                    JumlahKursus = 1,
-                    TotalHarga = "IDR. 2.500.000"
-                },
-            new Element()
-             {
-                 Number = 2,
-                 NoInvoice = "AB00004",
-                 TanggalBeli = "25 September 2026",
-                 JumlahKursus = 2,
-                 TotalHarga = "IDR. 4.500.000"
-             },
-            new Element()
-             {
-                 Number = 3,
-                 NoInvoice = "AB00005",
-                 TanggalBeli = "25 Desember 2026",
-                 JumlahKursus = 3,
-                 TotalHarga = "IDR. 11.500.000"
-             },
-            new Element()
-           {
-               Number = 4,
-               NoInvoice = "AB00006",
-               TanggalBeli = "25 Desember 2026",
-               JumlahKursus = 3,
-               TotalHarga = "IDR. 11.500.000"
-           },
-              new Element()
-           {
-               Number = 5,
-               NoInvoice = "AB00007",
-               TanggalBeli = "25 Desember 2026",
-               JumlahKursus = 3,
-               TotalHarga = "IDR. 11.500.000"
-           }
-    };
 
-    private void RowClickEvent(TableRowClickEventArgs<Element> tableRowClickEventArgs)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        // var auth = await AuthService.GetAccessTokenAsync();
+        // if (auth == null)
+        // {
+        //     Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+        //     return;
+        // }
+        await LoadInvoiceAsync();
+        StateHasChanged();
+    }
+
+    private async Task LoadInvoiceAsync()
+    {
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        
+        try
+        {
+            invoices = await CheckoutService.GetOwnInvoicesAsync(auth);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Gagal memuat invoices: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void RowClickEvent(TableRowClickEventArgs<InvoiceDto> tableRowClickEventArgs)
     {
         clickedEvents.Add("Row has been clicked");
     }
 
-    private string SelectedRowClassFunc(Element element, int rowNumber)
+    private string SelectedRowClassFunc(InvoiceDto element, int rowNumber)
     {
         if (selectedRowNumber == rowNumber)
         {
@@ -131,22 +129,13 @@
         }
     }
 
-    public class Element
-    {
-        public int Number { get; set; }
-        public string NoInvoice { get; set; }
-        public string TanggalBeli { get; set; }
-        public int JumlahKursus { get; set; }
-        public string TotalHarga { get; set; }
-    }
-
-    private void ShowDetail(Element element)
+    private void ShowDetail(InvoiceDto element)
     {
         // Misalnya log ke event panel
-        clickedEvents.Add($"Detail clicked for: {element.NoInvoice}");
+        clickedEvents.Add($"Detail clicked for: {element.RefCode}");
 
         // Atau redirect ke halaman detail jika kamu pakai NavigationManager
-        // navigationManager.NavigateTo($"/detail/{element.Number}");
+        // navigationManager.NavigateTo($"/detail/{element.Id}");
     }
 
 }

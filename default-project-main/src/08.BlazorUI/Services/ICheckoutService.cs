@@ -10,5 +10,6 @@ namespace MyApp.BlazorUI.Services
         Task<bool> RemoveCourseFromCart(AuthenticationHeaderValue authorization, int cartId);
         Task<CheckoutResponseDto?> CheckoutItemsAsync(AuthenticationHeaderValue authorization, CheckoutRequestDto request);
         Task<List<PaymentDto>> GetAllPaymentsAsync();
+        Task<List<InvoiceDto>> GetOwnInvoicesAsync(AuthenticationHeaderValue authorization);
     }
 }

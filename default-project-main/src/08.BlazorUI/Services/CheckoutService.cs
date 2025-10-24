@@ -127,7 +127,7 @@ namespace MyApp.BlazorUI.Services
         }
         public async Task<List<PaymentDto>> GetAllPaymentsAsync()
         {
-            //GetCourse
+            //
             var _httpClient = _factory.CreateClient("WebAPI");
             try
             {
@@ -147,6 +147,33 @@ namespace MyApp.BlazorUI.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"GetAllPayments: Error: {ex.Message}");
+                return new();
+            }
+        }
+
+        public async Task<List<InvoiceDto>> GetOwnInvoicesAsync(AuthenticationHeaderValue authorization)
+        {
+            //
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Invoice/user");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data.ToList();
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetOwnInvoicesAsync: Error: {ex.Message}");
                 return new();
             }
         }
