@@ -113,9 +113,18 @@
     private IEnumerable<UserDto> user = new List<UserDto>();
     private IEnumerable<PaymentDto> payment = new List<PaymentDto>();
 
-    protected override async Task OnInitializedAsync()
+    // protected override async Task OnInitializedAsync()
+    // {
+    // }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!firstRender)
+        {
+            return;
+        }
         await LoadDashboardData();
+        StateHasChanged();
     }
 
     private async Task LoadDashboardData()

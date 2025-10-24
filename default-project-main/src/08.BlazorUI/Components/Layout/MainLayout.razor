@@ -14,7 +14,7 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout>
+@* <MudLayout>
 
     <div style="display: flex; flex-direction: column; min-height: 100vh;">
 
@@ -24,7 +24,7 @@
                 <MudLink OnClick="Navigation.GoToHome">
                     <MudImage Src="img/applogo.svg" Alt="App Logo" />
                 </MudLink>
-                @* <CascadingAuthenticationState>
+                 <CascadingAuthenticationState>
                     <AuthorizeView>
                         <Authorized>
                             <p>Hello, @context.User.Identity?.Name!</p>
@@ -34,7 +34,7 @@
                             <p>You're not authorized.</p>
                         </NotAuthorized>
                     </AuthorizeView>
-                </CascadingAuthenticationState> *@
+                </CascadingAuthenticationState> 
                 
 
 
@@ -112,6 +112,152 @@
         }
     </div>
 
+</MudLayout> *@
+
+<MudLayout>
+    @if (Loggedin)
+    {
+        @if (IsAdmin)
+        {
+            @if (ShouldShowAppBar())
+            {
+                <MudAppBar Elevation="1">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                    <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
+                        <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
+                    </MudLink>
+                    <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
+                </MudAppBar>
+            }
+
+            <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu />
+                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="HandleLogout">Logout</MudButton>
+            </MudDrawer>
+
+        }
+        else
+        {
+            <MudAppBar Elevation="1">
+                <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
+                    <MudImage Src="img/applogo.svg" Alt="App Logo" />
+                </MudLink>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
+                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
+                    <MudText>Kelasku</MudText>
+                </MudButton>
+                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
+                    <MudText>Pembelian</MudText>
+                </MudButton>
+                <MudText Class="mx-2">|</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfile"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
+            </MudAppBar>
+        }
+    }
+    else
+    {
+        @if (ShouldShowAppBar())
+        {
+            <MudAppBar Elevation="1">
+                <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
+                    <MudImage Src="img/applogo.svg" Alt="App Logo" />
+                </MudLink>
+                <MudSpacer />
+                <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister" Class="mx-2">
+                    <MudText>Daftar Sekarang</MudText>
+                </MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">
+                    <MudText>Masuk</MudText>
+                </MudButton>
+            </MudAppBar>
+        }
+    }
+    <MudMainContent Class="mt-16 pa-4">
+        @Body
+    </MudMainContent>
+    @if (ShouldShowFooter() && !IsAdmin)
+    {
+        <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
+            <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+                <MudGrid Class="d-flex justify-space-evenly">
+                    <!-- Kolom Tentang -->
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                        <MudText Typo="Typo.body2">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+                            architecto beatae vitae dicta sunt explicabo.
+                        </MudText>
+                    </MudItem>
+
+                    <!-- Kolom Produk -->
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
+                        <MudStack Row="true" Spacing="1">
+                            <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+                                <li>Biola</li>
+                                <li>Gitar</li>
+                                <li>Drum</li>
+                                <li>Menyanyi</li>
+                                <li>Piano</li>
+                                <li>Saxophone</li>
+                            </ul>
+                        </MudStack>
+                    </MudItem>
+
+                    <!-- Kolom Alamat -->
+                    <MudItem xs="12" sm="12" md="4">
+                        <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+                        </MudText>
+
+                        <!-- Kolom Kontak -->
+                        <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
+                        <MudStack Row="true" Spacing="2">
+                            <!-- Phone -->
+                            <MudLink Href="tel:+62">
+                                <MudIconButton>
+                                    <img src="img/icon-telephone.svg" alt="Phone" />
+                                </MudIconButton>
+                            </MudLink>
+
+                            <!-- Instagram -->
+                            <MudLink Href="https://www.instagram.com/" Target="_blank">
+                                <MudIconButton>
+                                    <img src="img/icon-instagram.svg" alt="Instagram" />
+                                </MudIconButton>
+                            </MudLink>
+
+                            <!-- Youtube -->
+                            <MudLink Href="https://www.youtube.com/" Target="_blank">
+                                <MudIconButton>
+                                    <img src="img/icon-youtube.svg" alt="YouTube" />
+                                </MudIconButton>
+                            </MudLink>
+
+                            <!-- Tele -->
+                            <MudLink Href="https://web.telegram.org/">
+                                <MudIconButton>
+                                    <img src="img/icon-tele.svg" alt="Instagram" />
+                                </MudIconButton>
+                            </MudLink>
+
+                            <!-- Email -->
+                            <MudLink Href="mailto:aku@gmail.com">
+                                <MudIconButton>
+                                    <img src="img/icon-email.svg" alt="Instagram" />
+                                </MudIconButton>
+                            </MudLink>
+                        </MudStack>
+
+                    </MudItem>
+                </MudGrid>
+            </MudContainer>
+        </MudPaper>
+    }
 </MudLayout>
 
 
@@ -196,7 +342,8 @@
     private bool ShouldShowFooter()
     {
         var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
-        return !(path.Contains("checkout") ||
+        return !(path.Contains("login") ||
+                 path.Contains("checkout") ||
                  path.Contains("success-purchase") ||
                  path.Contains("confirm-email"));
     }
