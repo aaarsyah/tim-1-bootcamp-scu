@@ -15,10 +15,10 @@ namespace MyApp.BlazorUI.Services
         Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request);
         Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request);
         Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id);
-        Task<List<PaymentItem>> GetPaymentAsync();
-        Task<PaymentItem> CreatePaymentAsync(PaymentItem payment);
-        Task<PaymentItem> UpdatePaymentAsync(PaymentItem payment);
-        Task<bool> DeletePaymentAsync(int id);
+        Task<List<PaymentDto>> GetAllPaymentMethodsAsync();
+        Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto payment);
+        Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto payment);
+        Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id);
     }
     public class AdminService : IAdminService
     {
@@ -136,17 +136,12 @@ namespace MyApp.BlazorUI.Services
             try
             {
                 var response = await _httpClient.DeleteAsync($"api/Course/{id}");
-                if (response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
-
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
-                    {
-                        return true;
-                    }
                     return false;
                 }
-                return false;
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch (Exception ex)
             {
@@ -155,42 +150,106 @@ namespace MyApp.BlazorUI.Services
             }
         }
 
-        public async Task<List<PaymentItem>> GetPaymentAsync()
+        public async Task<List<PaymentDto>> GetAllPaymentMethodsAsync()
         {
-            await Task.Delay(100);
-            return _payment.OrderBy(t => t.Id).ToList();
-        }
-
-        public async Task<PaymentItem> CreatePaymentAsync(PaymentItem payment)
-        {
-            await Task.Delay(100);
-            payment.Id = _nextPaymentId++;
-            _payment.Add(payment);
-            return payment;
-        }
-
-        public async Task<PaymentItem> UpdatePaymentAsync(PaymentItem payment)
-        {
-            await Task.Delay(100);
-            var existingPayment = _payment.FirstOrDefault(t => t.Id == payment.Id);
-            if (existingPayment != null)
+            //
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
             {
-                var index = _payment.IndexOf(existingPayment);
-                _payment[index] = existingPayment;
+                var response = await _httpClient.GetAsync("api/Payment");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return new();
+                }
+                return new();
             }
-            return payment;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
+                return new();
+            }
         }
 
-        public async Task<bool> DeletePaymentAsync(int id)
+        public async Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto request)
         {
-            await Task.Delay(100);
-            var payment = _payment.FirstOrDefault(t => t.Id == id);
-            if (payment != null)
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
             {
-                _payment.Remove(payment);
-                return true;
+                var response = await _httpClient.PostAsJsonAsync("api/Payment", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
             }
-            return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CreatePaymentMethodAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto request)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/Payment/{id}", request);
+                //Console.WriteLine($"Response: {response.Content.ReadAsStringAsync().Result}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdatePaymentMethodAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/Payment/{id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeletePaymentMethodAsync: Error: {ex.Message}");
+                return false;
+            }
         }
 
         private void SeedData()

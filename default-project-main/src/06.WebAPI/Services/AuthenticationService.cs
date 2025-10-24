@@ -204,7 +204,6 @@ namespace MyApp.WebAPI.Services
             //user.LockoutEnd = null; // Tidak perlu reset LockoutEnd, karena lockout sudah expired ketika user sudah bisa login
             user.LastLoginAt = DateTime.UtcNow;
 
-            // TODO: Use the rememberMe field?
             // Generate JWT tokens
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateRefreshTokenAsync();

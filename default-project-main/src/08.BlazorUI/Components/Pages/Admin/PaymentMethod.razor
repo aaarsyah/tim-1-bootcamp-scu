@@ -1,12 +1,15 @@
 @page "/payment-method" 
 
 @using System.Net.Http.Json
-@using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
 
-@inject IDialogService DialogService;
-@inject IAdminService PaymentService;
-@inject NavigationManagerExt Navigation;
+@inject NavigationManagerExt Navigation
+
+@inject IAuthService AuthService
+@inject IAdminService PaymentService
+
+@inject IDialogService DialogService
 
 
 <PageTitle>Payment Method</PageTitle>
@@ -36,15 +39,15 @@
     <RowTemplate>
         <MudTd DataLabel="ID">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudImage Class="mt-3" Src="@context.Logo" Alt="@context.Name" Width="40" Height="40" />
+        <MudImage Class="mt-3" Src="@context.LogoUrl" Alt="@context.Name" Width="40" Height="40" />
         <MudTd DataLabel="Status">
-            @if (context.AllPayment == PaymentStatus.Active)
+            @if (context.IsActive)
             {
                 <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">
                     Active
                 </MudChip>
             }
-            else if (context.AllPayment == PaymentStatus.InActive)
+            else
             {
                 <MudChip T="string" Color="Color.Error" Variant="Variant.Filled" Size="Size.Small">
                     Inactive
@@ -69,10 +72,10 @@
 </MudTable>
 
 @code {
-    private IEnumerable<PaymentItem> payment = new List<PaymentItem>();
+    private IEnumerable<PaymentDto> payment = new List<PaymentDto>();
     private bool hover = true;
     private string searchString1 = "";
-    private PaymentItem selectedItem1 = null;
+    private PaymentDto selectedItem1 = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,12 +84,12 @@
 
     private async Task LoadPayments()
     {
-        payment = await PaymentService.GetPaymentAsync();
+        payment = await PaymentService.GetAllPaymentMethodsAsync();
     }
 
-    private bool FilterFunc1(PaymentItem u) => FilterFunc(u, searchString1);
+    private bool FilterFunc1(PaymentDto u) => FilterFunc(u, searchString1);
 
-    private bool FilterFunc(PaymentItem u, string searchString)
+    private bool FilterFunc(PaymentDto u, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString)) return true;
         if (u.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
@@ -95,15 +98,22 @@
 
     private async Task DeletePayment(int id)
     {
-        bool result = await PaymentService.DeletePaymentAsync(id);
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        bool result = await PaymentService.DeletePaymentMethodAsync(auth, id);
         if (result) await LoadPayments();
     }
 
-  private async Task OpenPaymentDialog(PaymentItem paymentItem)
+    private async Task OpenPaymentDialog(PaymentDto paymentItem)
     {
         var parameters = new DialogParameters();
-        if (paymentItem != null)
-            parameters.Add("Payment", paymentItem);
+        //
+        parameters.Add("Payment", paymentItem ?? new PaymentDto());
+        parameters.Add("IsUpdating", paymentItem != null); // Bila courseItem ada, berarti updating
 
         var options = new DialogOptions
         {
@@ -115,7 +125,7 @@
         var dialog = await DialogService.ShowAsync<PaymentDialog>("Payment Form", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled && result.Data is PaymentItem)
+        if (result != null && !result.Canceled && result.Data is PaymentDto)
         {
             await LoadPayments();
         }

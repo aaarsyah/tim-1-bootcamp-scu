@@ -3,6 +3,7 @@
 @using System.Net.Http.Json
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
 @inject IMemberService MemberService
 @inject IUserService UserService
 @inject IAdminService PaymentService;
@@ -105,7 +106,7 @@
     private IEnumerable<MemberItem> member = new List<MemberItem>();
 
     private IEnumerable<UserItem> user = new List<UserItem>();
-    private IEnumerable<PaymentItem> payment = new List<PaymentItem>();
+    private IEnumerable<PaymentDto> payment = new List<PaymentDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -122,7 +123,7 @@
         user = users;
         _totalUserActive = users.Count;
 
-        var payments = await PaymentService.GetPaymentAsync();
+        var payments = await PaymentService.GetAllPaymentMethodsAsync();
         payment = payments;
         _totalPayment = payments.Count;
     }

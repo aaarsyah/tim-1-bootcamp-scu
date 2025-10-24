@@ -1,4 +1,3 @@
-@using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using System.ComponentModel.DataAnnotations
 @using MyApp.Shared.DTOs
@@ -53,34 +52,22 @@
 
 @code {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public CourseDto? Course { get; set; }
-
-    private bool _isUpdating = false;
+    public CourseDto Course { get; set; } = null!;
+    [Parameter]
+    public bool IsUpdating { get; set; }
 
     protected override void OnInitialized()
     {
-        if (Course == null)
-        {
-            Course = new();
-            _isUpdating = false;
-        }
-        else
-        {
-            _isUpdating = true;
-        }
-        Console.WriteLine($"CourseDialog.razor: _isUpdating: {_isUpdating}");
+        Console.WriteLine($"CourseDialog.razor: IsUpdating: {IsUpdating}");
     }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
-        if (Course == null)
-        {
-            return;
-        }
+
         if (file != null)
         {
             using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
@@ -96,7 +83,7 @@
                 _ => "image/png"
             };
 
-            Course.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+            Course.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}"; // TODO: Fix this
         }
     }
 
@@ -108,13 +95,9 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        if (Course == null)
-        {
-            return;
-        }
         CourseDto? result;
 
-        if (_isUpdating)
+        if (IsUpdating)
         {
             UpdateCourseDto updateCourseDto = new()
             {
@@ -147,7 +130,6 @@
             return;
         }
         MudDialog.Close(DialogResult.Ok(result));
-        
     }
     private void Cancel()
     {

@@ -1,7 +1,6 @@
 @page "/course" 
 
 @using System.Net.Http.Json
-@using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
 
@@ -119,10 +118,9 @@
     private async Task OpenCourseDialog(CourseDto? courseItem)
     {
         var parameters = new DialogParameters();
-        if (courseItem != null)
-        {
-            parameters.Add("Course", courseItem);
-        }
+        // 
+        parameters.Add("Course", courseItem ?? new CourseDto());
+        parameters.Add("IsUpdating", courseItem != null); // Bila courseItem ada, berarti updating
 
         var options = new DialogOptions
         {
@@ -134,7 +132,7 @@
         var dialog = await DialogService.ShowAsync<CourseDialog>("Course Form", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled && result.Data is CourseDto)
+        if (result != null && !result.Canceled && result.Data is CourseDto)
         {
             await LoadCourses();
         }
