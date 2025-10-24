@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
@@ -31,27 +32,10 @@ namespace MyApp.WebAPI.Services
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);
-            if (user == null) return null;
-            //var roles = await _userManager.GetRolesAsync(user);
-            var roles = await _context.UserRoles
-                .Where(a => a.UserId == userId)
-                .Include(a => a.Role)
-                .Select(a => a.Role.Name)
-                .ToListAsync();
-            //var claims = await _userManager.GetClaimsAsync(user);
-            var claims = await _context.UserClaims
-                .Where(a => a.UserId == userId)
-                .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
-                .ToListAsync();
-
-            return new UserDto
+            if (user == null)
             {
-                Id = user.Id,
-                Name = user.Name ?? string.Empty,
-                Email = user.Email ?? string.Empty,
-                Roles = roles,
-                Claims = claims
-            };
+                throw new NotFoundException($"User Id {userId} not found");
+            }
             return _mapper.Map<UserDto>(user);
         }
 
@@ -70,33 +54,6 @@ namespace MyApp.WebAPI.Services
                 .Include(c => c.UserClaims)
                 .ToListAsync();
 
-            //var userProfiles = new List<UserDto>();
-
-            //foreach (var user in users)
-            //{
-            //    //var roles = await _userManager.GetRolesAsync(user);
-            //    var roles = await _context.UserRoles
-            //        .Where(a => a.UserId == user.Id)
-            //        .Include(a => a.Role)
-            //        .Select(a => a.Role.Name)
-            //        .ToListAsync();
-            //    //var claims = await _userManager.GetClaimsAsync(user);
-            //    var claims = await _context.UserClaims
-            //        .Where(a => a.UserId == user.Id)
-            //        .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
-            //        .ToListAsync();
-
-            //    userProfiles.Add(new UserDto
-            //    {
-            //        Id = user.Id,
-            //        Name = user.Name ?? string.Empty,
-            //        Email = user.Email ?? string.Empty,
-            //        Roles = roles,
-            //        Claims = claims
-            //    });
-            //}
-
-            //return userProfiles;
             return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 

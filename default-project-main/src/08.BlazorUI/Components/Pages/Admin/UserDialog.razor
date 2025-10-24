@@ -1,6 +1,7 @@
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using System.ComponentModel.DataAnnotations
+@using MyApp.Shared.DTOs
 
 @inject IDialogService DialogService;
 @inject IUserService UserService;
@@ -11,14 +12,14 @@
         <MudTextField @bind-Value="User.Name" Label="Name" Required="true" />
         <MudTextField @bind-Value="User.Email" Label="Email" Required="true" Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
         
-        <MudSelect @bind-Value="User.UserRole" Class="mt-4" Label="Role">
-            <MudSelectItem Value="Role.User">User</MudSelectItem>
-            <MudSelectItem Value="Role.Admin">Admin</MudSelectItem>
-        </MudSelect>
+        @* <MudSelect @bind-Value="User.Roles" Class="mt-4" Label="Role">
+            <MudSelectItem Value="User">User</MudSelectItem>
+            <MudSelectItem Value="Admin">Admin</MudSelectItem>
+        </MudSelect> *@
         
-        <MudSelect @bind-Value="User.AllUser" Class="mt-4" Label="Status">
-            <MudSelectItem Value="UserStatus.Active">Active</MudSelectItem>
-            <MudSelectItem Value="UserStatus.InActive">Inactive</MudSelectItem>
+        <MudSelect @bind-Value="User.IsActive" Class="mt-4" Label="Status">
+            <MudSelectItem Value=true>Active</MudSelectItem>
+            <MudSelectItem Value=false>Inactive</MudSelectItem>
         </MudSelect>
     </DialogContent>
 
@@ -33,22 +34,22 @@
     private IMudDialogInstance MudDialog { get; set; }
 
     [Parameter] 
-    public UserItem User { get; set; } = new();
+    public UserDto User { get; set; } = null!;
 
     private async Task Save()
     {
-        UserItem result;
+        // UserDto result;
 
-        if (User.Id == 0)
-        {
-            result = await UserService.CreateUserAsync(User); 
-        }
-        else
-        {
-            result = await UserService.UpdateUserAsync(User);
-        }
+        // if (User.Id == 0)
+        // {
+        //     result = await UserService.CreateUserAsync(User); 
+        // }
+        // else
+        // {
+        //     result = await UserService.UpdateUserAsync(User);
+        // }
 
-        MudDialog.Close(DialogResult.Ok(result)); 
+        MudDialog.Close(DialogResult.Ok(true)); 
     }
 
     private void Cancel()

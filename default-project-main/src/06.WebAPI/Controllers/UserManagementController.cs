@@ -69,6 +69,47 @@ namespace MyApp.WebAPI.Controllers
             return Ok(ApiResponse<UserDto>.SuccessResult(user));
         }
 
+        //[HttpPost("users")] // HTTP POST method untuk create operation
+        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        //[ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)]
+        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
+        //public async Task<ActionResult<ApiResponse<CourseDto>>> CreateUser(CreateCourseDto createCourseDto)
+        //{
+        //    var result = await _userManagementService.CreateCourseAsync(createCourseDto);
+        //    return CreatedAtAction(nameof(GetCourse), new { id = result.Id }, ApiResponse<CourseDto>.SuccessResult(result));
+        //}
+
+        //[HttpPut("users/{id}")] // HTTP PUT method dengan ID parameter
+        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        //[ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        //public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateUser(int id, UpdateCourseDto updateCourseDto)
+        //{
+        //    var result = await _userManagementService.UpdateCourseAsync(id, updateCourseDto);
+        //    return Ok(ApiResponse<CourseDto>.SuccessResult(result));
+        //}
+
+        //[HttpDelete("users/{id}")] // HTTP DELETE method
+        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        //public async Task<ActionResult<ApiResponse<object>>> DeleteUser(int id)
+        //{
+        //    // Panggil service untuk delete product
+        //    // Service akan return false jika product tidak ditemukan
+        //    var result = await _userManagementService.DeleteCourseAsync(id);
+
+        //    if (!result)
+        //    {
+        //        // Return 404 jika product tidak ditemukan
+        //        return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
+        //    }
+
+        //    // Return 204 No Content untuk successful deletion
+        //    // No Content berarti operasi berhasil tapi tidak ada data untuk dikembalikan
+        //    return Ok(ApiResponse<object>.SuccessResult());
+        //}
+
         /// <summary>
         /// Assign Role to User
         /// POST /api/usermanagement/users/{userId}/roles
