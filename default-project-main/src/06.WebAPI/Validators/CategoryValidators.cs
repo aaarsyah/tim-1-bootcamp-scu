@@ -60,15 +60,15 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Course name is required")
-                .Length(2, 200).WithMessage("Course name must be between 2 and 200 characters");
+                .Length(2, 150).WithMessage("Course name must be between 2 and 200 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
-                .MaximumLength(1000).WithMessage("Description cannot exceed 1000 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than 0")
-                .LessThanOrEqualTo(999999.99m).WithMessage("Price cannot exceed 999,999.99");
+                .LessThanOrEqualTo(999999999.99m).WithMessage("Price cannot exceed 999,999,999.99"); // TODO: Should we use decimal or int?
 
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("Valid category is required");
@@ -90,15 +90,15 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Course name is required")
-                .Length(2, 200).WithMessage("Course name must be between 2 and 200 characters");
+                .Length(2, 150).WithMessage("Course name must be between 2 and 200 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
-                .MaximumLength(1000).WithMessage("Description cannot exceed 1000 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than 0")
-                .LessThanOrEqualTo(999999.99m).WithMessage("Price cannot exceed 999,999.99");
+                .LessThanOrEqualTo(999999999.99m).WithMessage("Price cannot exceed 999,999,999.99");
 
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("Valid category is required");

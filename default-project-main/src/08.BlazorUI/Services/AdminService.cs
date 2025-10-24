@@ -1,16 +1,20 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.WebUtilities;
 using MyApp.BlazorUI.Models;
+using MyApp.Shared.DTOs;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services
 {
     public interface IAdminService
     {
-        Task<List<CourseItem>> GetCourseAsync();
-        Task<CourseItem> CreateCourseAsync(CourseItem course);
-        Task<CourseItem> UpdateCourseAsync(CourseItem course);
-        Task<bool> DeleteCourseAsync(int id);
+        Task<List<CourseDto>> GetAllCourseAsync();
+        Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request);
+        Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request);
+        Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id);
         Task<List<PaymentItem>> GetPaymentAsync();
         Task<PaymentItem> CreatePaymentAsync(PaymentItem payment);
         Task<PaymentItem> UpdatePaymentAsync(PaymentItem payment);
@@ -31,43 +35,124 @@ namespace MyApp.BlazorUI.Services
             SeedData(); //TODO: Remove
         }
 
-        public async Task<List<CourseItem>> GetCourseAsync()
+        public async Task<List<CourseDto>> GetAllCourseAsync()
         {
             //GetAllCourses
-            await Task.Delay(100);
-            return _course.OrderBy(t => t.Id).ToList();
-        }
-
-        public async Task<CourseItem> CreateCourseAsync(CourseItem course)
-        {
-            await Task.Delay(100);
-            course.Id = _nextCourseId++;
-            _course.Add(course);
-            return course;
-        }
-
-        public async Task<CourseItem> UpdateCourseAsync(CourseItem course)
-        {
-            await Task.Delay(100);
-            var existingCourse = _course.FirstOrDefault(t => t.Id == course.Id);
-            if (existingCourse != null)
+            var _httpClient = _factory.CreateClient("WebAPI");
+            //
+            var parameter = new CourseQueryParameters();
+            var query = new Dictionary<string, string?>
             {
-                var index = _course.IndexOf(existingCourse);
-                _course[index] = existingCourse;
+                ["Search"] = parameter.Search,
+                ["CategoryId"] = parameter.CategoryId.ToString(),
+                ["MinPrice"] = parameter.MinPrice.ToString(),
+                ["MaxPrice"] = parameter.MaxPrice.ToString(),
+                ["SortBy"] = parameter.SortBy,
+                ["SortDirection"] = parameter.SortDirection,
+                // ...
+            };
+            try
+            {
+                var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/Course/v2", query));
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResponse<IEnumerable<CourseDto>>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
+                        && apiResponse.Data.Data != null)
+                    {
+                        return apiResponse.Data.Data.ToList();
+                    }
+                    return new();
+                }
+                return new();
             }
-            return course;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllCourseAsync: Error: {ex.Message}");
+                return new();
+            }
         }
 
-        public async Task<bool> DeleteCourseAsync(int id)
+
+        public async Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request)
         {
-            await Task.Delay(100);
-            var course = _course.FirstOrDefault(t => t.Id == id);
-            if (course != null)
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
             {
-                _course.Remove(course);
-                return true;
+                var response = await _httpClient.PostAsJsonAsync("api/Course", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
             }
-            return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CreateCourseAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/Course/{id}", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdateCourseAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/Course/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeleteCourseAsync: Error: {ex.Message}");
+                return false;
+            }
         }
 
         public async Task<List<PaymentItem>> GetPaymentAsync()

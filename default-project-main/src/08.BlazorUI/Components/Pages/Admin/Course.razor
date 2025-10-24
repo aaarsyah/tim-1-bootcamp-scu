@@ -3,11 +3,14 @@
 @using System.Net.Http.Json
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
 
-@inject IDialogService DialogService;
-@inject IAdminService CourseService;
-@inject NavigationManagerExt Navigation;
+@inject NavigationManagerExt Navigation
 
+@inject IAuthService AuthService
+@inject IAdminService CourseService
+
+@inject IDialogService DialogService
 
 <PageTitle>Course Management</PageTitle>
 
@@ -41,18 +44,18 @@
         <MudTd DataLabel="ID">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Description">@context.Description</MudTd>
-        <MudImage Class="mt-3" Src="@context.Picture" Alt="@context.Name" Width="40" Height="40" />
+        <MudImage Class="mt-3" Src="@context.ImageUrl" Alt="@context.Name" Width="40" Height="40" />
         <MudTd DataLabel="CategoryId">@context.CategoryId</MudTd>
-        <MudTd DataLabel="Harga">@context.Harga</MudTd>
-        <MudTd DataLabel="Jadwal">@context.Jadwal</MudTd>
+        <MudTd DataLabel="Harga">@context.Price</MudTd>
+        <MudTd DataLabel="Jadwal">@context.ScheduleDates</MudTd>
         <MudTd DataLabel="Status">
-            @if (context.AllCourse == CourseStatus.Active)
+            @if (context.IsActive)
             {
                 <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">
                     Active
                 </MudChip>
             }
-            else if (context.AllCourse == CourseStatus.InActive)
+            else
             {
                 <MudChip T="string" Color="Color.Error" Variant="Variant.Filled" Size="Size.Small">
                     Inactive
@@ -77,10 +80,10 @@
 </MudTable>
 
 @code {
-    private IEnumerable<CourseItem> course = new List<CourseItem>();
+    private IEnumerable<CourseDto> course = new List<CourseDto>();
     private bool hover = true;
     private string searchString1 = "";
-    private CourseItem selectedItem1 = null;
+    private CourseDto selectedItem1 = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -89,12 +92,12 @@
 
     private async Task LoadCourses()
     {
-        course = await CourseService.GetCourseAsync();
+        course = await CourseService.GetAllCourseAsync();
     }
 
-    private bool FilterFunc1(CourseItem u) => FilterFunc(u, searchString1);
+    private bool FilterFunc1(CourseDto u) => FilterFunc(u, searchString1);
 
-    private bool FilterFunc(CourseItem u, string searchString)
+    private bool FilterFunc(CourseDto u, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString)) return true;
         if (u.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)) return true;
@@ -103,15 +106,23 @@
 
     private async Task DeleteCourse(int id)
     {
-        bool result = await CourseService.DeleteCourseAsync(id);
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        bool result = await CourseService.DeleteCourseAsync(auth, id);
         if (result) await LoadCourses();
     }
 
-  private async Task OpenCourseDialog(CourseItem courseItem)
+    private async Task OpenCourseDialog(CourseDto? courseItem)
     {
         var parameters = new DialogParameters();
         if (courseItem != null)
+        {
             parameters.Add("Course", courseItem);
+        }
 
         var options = new DialogOptions
         {
@@ -123,7 +134,7 @@
         var dialog = await DialogService.ShowAsync<CourseDialog>("Course Form", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled && result.Data is CourseItem)
+        if (!result.Canceled && result.Data is CourseDto)
         {
             await LoadCourses();
         }

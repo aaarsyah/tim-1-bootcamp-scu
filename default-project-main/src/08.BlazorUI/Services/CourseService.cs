@@ -11,20 +11,20 @@ namespace MyApp.BlazorUI.Services
         {
             _factory = factory;
         }
-        public async Task<IEnumerable<CourseDto>?> GetAllCourseAsyncv2()
+        public async Task<IEnumerable<CourseDto>?> GetAllCourseAsync()
         {
             //GetAllCourses
             var _httpClient = _factory.CreateClient("WebAPI");
             //
-            var a = new CourseQueryParameters();
+            var parameter = new CourseQueryParameters();
             var query = new Dictionary<string, string?>
             {
-                ["Search"] = a.Search,
-                ["CategoryId"] = a.CategoryId.ToString(),
-                ["MinPrice"] = a.MinPrice.ToString(),
-                ["MaxPrice"] = a.MaxPrice.ToString(),
-                ["SortBy"] = a.SortBy,
-                ["SortDirection"] = a.SortDirection,
+                ["Search"] = parameter.Search,
+                ["CategoryId"] = parameter.CategoryId.ToString(),
+                ["MinPrice"] = parameter.MinPrice.ToString(),
+                ["MaxPrice"] = parameter.MaxPrice.ToString(),
+                ["SortBy"] = parameter.SortBy,
+                ["SortDirection"] = parameter.SortDirection,
                 // ...
             };
             try

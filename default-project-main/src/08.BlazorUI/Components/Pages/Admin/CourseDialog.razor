@@ -1,17 +1,23 @@
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using System.ComponentModel.DataAnnotations
+@using MyApp.Shared.DTOs
 
-@inject IDialogService DialogService;
-@inject IAdminService CourseService;
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
+@inject IAdminService CourseService
+
+@inject IDialogService DialogService
 
 <MudDialog>
     <DialogContent>
         <MudTextField @bind-Value="Course.Name" Label="Name" Required="true" />
         <MudTextField @bind-Value="Course.Description" Label="Description" Required="true" />
         <MudTextField @bind-Value="Course.CategoryId" Label="CategoryId" Required="true" />
-        <MudTextField @bind-Value="Course.Harga" Label="Harga" Required="true" />
-        <MudTextField @bind-Value="Course.Jadwal" Label="Jadwal" Required="true" />
+        <MudTextField @bind-Value="Course.Price" Label="Harga" Required="true" />
+        <MudTextField @bind-Value="Course.Schedules" Label="Jadwal" Required="true" />
 
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
 
@@ -24,18 +30,18 @@
             Upload Picture Course
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Course.Picture))
+        @if (!string.IsNullOrEmpty(Course.ImageUrl))
         {
-            <MudImage Src="@Course.Picture"
+            <MudImage Src="@Course.ImageUrl"
                       Alt="Picture Course Preview"
                       Width="150" Height="100"
                       Class="mx-auto mt-4" />
         }
 
         
-        <MudSelect @bind-Value="Course.AllCourse" Class="mt-4" Label="Status">
-            <MudSelectItem Value="CourseStatus.Active">Active</MudSelectItem>
-            <MudSelectItem Value="CourseStatus.InActive">Inactive</MudSelectItem>
+        <MudSelect @bind-Value="Course.IsActive" Class="mt-4" Label="Status">
+            <MudSelectItem Value="true">Active</MudSelectItem>
+            <MudSelectItem Value="false">Inactive</MudSelectItem>
         </MudSelect>
     </DialogContent>
 
@@ -50,12 +56,31 @@
     private IMudDialogInstance MudDialog { get; set; }
 
     [Parameter]
-    public CourseItem Course { get; set; } = new();
+    public CourseDto? Course { get; set; }
+
+    private bool _isUpdating = false;
+
+    protected override void OnInitialized()
+    {
+        if (Course == null)
+        {
+            Course = new();
+            _isUpdating = false;
+        }
+        else
+        {
+            _isUpdating = true;
+        }
+        Console.WriteLine($"CourseDialog.razor: _isUpdating: {_isUpdating}");
+    }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
-
+        if (Course == null)
+        {
+            return;
+        }
         if (file != null)
         {
             using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
@@ -71,21 +96,55 @@
                 _ => "image/png"
             };
 
-            Course.Picture = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+            Course.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
         }
     }
 
     private async Task Save()
     {
-        CourseItem result;
-
-        if (Course.Id == 0)
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
         {
-            result = await CourseService.CreateCourseAsync(Course); 
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        if (Course == null)
+        {
+            return;
+        }
+        CourseDto? result;
+
+        if (_isUpdating)
+        {
+            UpdateCourseDto updateCourseDto = new()
+            {
+                Name = Course.Name,
+                Description = Course.Description,
+                Price = Course.Price,
+                ImageUrl = Course.ImageUrl,
+                IsActive = Course.IsActive,
+                CategoryId = Course.CategoryId
+            };
+            result = await CourseService.UpdateCourseAsync(auth, Course.Id, updateCourseDto);
         }
         else
         {
-            result = await CourseService.UpdateCourseAsync(Course);
+            CreateCourseDto createCourseDto = new()
+            {
+                Name = Course.Name,
+                Description = Course.Description,
+                Price = Course.Price,
+                ImageUrl = Course.ImageUrl,
+                IsActive = Course.IsActive,
+                CategoryId = Course.CategoryId
+            };
+
+            result = await CourseService.CreateCourseAsync(auth, createCourseDto);
+        }
+        if (result == null)
+        {
+            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+            return;
         }
         MudDialog.Close(DialogResult.Ok(result));
         

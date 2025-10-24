@@ -24,7 +24,7 @@
                 <MudLink OnClick="Navigation.GoToHome">
                     <MudImage Src="img/applogo.svg" Alt="App Logo" />
                 </MudLink>
-                <CascadingAuthenticationState>
+                @* <CascadingAuthenticationState>
                     <AuthorizeView>
                         <Authorized>
                             <p>Hello, @context.User.Identity?.Name!</p>
@@ -34,7 +34,7 @@
                             <p>You're not authorized.</p>
                         </NotAuthorized>
                     </AuthorizeView>
-                </CascadingAuthenticationState>
+                </CascadingAuthenticationState> *@
                 
 
 
