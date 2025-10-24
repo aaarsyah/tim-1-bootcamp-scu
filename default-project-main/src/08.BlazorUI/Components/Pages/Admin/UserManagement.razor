@@ -43,7 +43,7 @@
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Role">@context.Roles.First()</MudTd>
         <MudTd DataLabel="Status">
-            @if (true) // TODO: Add IsActive on DTO
+            @if (context.IsActive) // TODO: Add IsActive on DTO
             {
                 <MudChip T="string" Color="Color.Success" Variant="Variant.Filled" Size="Size.Small">
                     Active

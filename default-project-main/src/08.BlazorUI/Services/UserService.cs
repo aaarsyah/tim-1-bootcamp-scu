@@ -9,9 +9,6 @@ namespace MyApp.BlazorUI.Services
         private readonly List<UserItem> _user = new();
         private int _nextId = 1;
 
-        // Properti untuk menyimpan user yang sedang login
-        public UserItem? CurrentUser { get; set; }
-
         private readonly IHttpClientFactory _factory;
 
         public UserService(IHttpClientFactory factory)
@@ -130,9 +127,6 @@ namespace MyApp.BlazorUI.Services
             };
 
             _user.AddRange(sampleUsers);
-
-            // Simulasikan user pertama sebagai user yang sedang login
-            CurrentUser = _user.First();
         }
     }
 }

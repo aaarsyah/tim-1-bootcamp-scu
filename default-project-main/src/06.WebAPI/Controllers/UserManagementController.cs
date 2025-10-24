@@ -41,14 +41,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpGet("users")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<List<UserDto>>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<List<UserDto>>>> GetAllUsers(
-            [FromQuery] int page = 1, 
-            [FromQuery] int pageSize = 10)
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<UserDto>>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<IEnumerable<UserDto>>>> GetAllUsers()
         {
-            var user = await _userManagementService.GetAllUsersAsync(page, pageSize);
+            var user = await _userManagementService.GetAllUsersAsync();
             
-            return Ok(ApiResponse<List<UserDto>>.SuccessResult(user));
+            return Ok(ApiResponse<IEnumerable<UserDto>>.SuccessResult(user));
         }
 
         /// <summary>

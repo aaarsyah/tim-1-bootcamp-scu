@@ -1,8 +1,8 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using MyApp.WebAPI.Models.Entities;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Data;
+using MyApp.WebAPI.Models.Entities;
 
 namespace MyApp.WebAPI.Services
 {
@@ -14,13 +14,16 @@ namespace MyApp.WebAPI.Services
     public class UserManagementService : IUserManagementService
     {
         private readonly AppleMusicDbContext _context;
+        private readonly IMapper _mapper;
         private readonly ILogger<UserManagementService> _logger;
 
         public UserManagementService(
             AppleMusicDbContext context,
+            IMapper mapper,
             ILogger<UserManagementService> logger)
         {
             _context = context;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -49,44 +52,52 @@ namespace MyApp.WebAPI.Services
                 Roles = roles,
                 Claims = claims
             };
+            return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync(int page = 1, int pageSize = 10)
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
+            //var users = await _context.Users
+            //    .Where(u => u.EmailConfirmed) // TODO: Perlukah user yang tidak aktif ditampilkan semua?
+            //    .OrderBy(u => u.CreatedAt)
+            //    .Skip((page - 1) * pageSize)
+            //    .Take(pageSize)
+            //    .ToListAsync();
+
             var users = await _context.Users
-                .Where(u => u.EmailConfirmed) // TODO: Perlukah user yang tidak aktif ditampilkan semua?
-                .OrderBy(u => u.CreatedAt)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Include(c => c.UserRoles)
+                    .ThenInclude(s => s.Role)
+                .Include(c => c.UserClaims)
                 .ToListAsync();
 
-            var userProfiles = new List<UserDto>();
+            //var userProfiles = new List<UserDto>();
 
-            foreach (var user in users)
-            {
-                //var roles = await _userManager.GetRolesAsync(user);
-                var roles = await _context.UserRoles
-                    .Where(a => a.UserId == user.Id)
-                    .Include(a => a.Role)
-                    .Select(a => a.Role.Name)
-                    .ToListAsync();
-                //var claims = await _userManager.GetClaimsAsync(user);
-                var claims = await _context.UserClaims
-                    .Where(a => a.UserId == user.Id)
-                    .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
-                    .ToListAsync();
+            //foreach (var user in users)
+            //{
+            //    //var roles = await _userManager.GetRolesAsync(user);
+            //    var roles = await _context.UserRoles
+            //        .Where(a => a.UserId == user.Id)
+            //        .Include(a => a.Role)
+            //        .Select(a => a.Role.Name)
+            //        .ToListAsync();
+            //    //var claims = await _userManager.GetClaimsAsync(user);
+            //    var claims = await _context.UserClaims
+            //        .Where(a => a.UserId == user.Id)
+            //        .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
+            //        .ToListAsync();
 
-                userProfiles.Add(new UserDto
-                {
-                    Id = user.Id,
-                    Name = user.Name ?? string.Empty,
-                    Email = user.Email ?? string.Empty,
-                    Roles = roles,
-                    Claims = claims
-                });
-            }
+            //    userProfiles.Add(new UserDto
+            //    {
+            //        Id = user.Id,
+            //        Name = user.Name ?? string.Empty,
+            //        Email = user.Email ?? string.Empty,
+            //        Roles = roles,
+            //        Claims = claims
+            //    });
+            //}
 
-            return userProfiles;
+            //return userProfiles;
+            return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 
         public async Task<bool> AssignRoleToUserAsync(int userId, string roleName)
