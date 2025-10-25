@@ -583,7 +583,6 @@ namespace MyApp.WebAPI.Data
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            string placeholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             var seedDate = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc);
             
             modelBuilder.Entity<Category>().HasData(
@@ -593,7 +592,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("a2f2a74c-9819-4051-852e-93e859c54661"),
                     Name = "Drum",
                     LongName = "Drummer class",
-                    Description = placeholder,
+                    Description = "Pelajari teknik bermain drum dari dasar hingga mahir, termasuk ritme, koordinasi tangan-kaki, dan improvisasi.",
                     ImageUrl = "img/Class1.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -604,7 +603,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("407c4bf0-7f0c-44fc-b3ad-9a4f18a75f29"),
                     Name = "Piano",
                     LongName = "Pianist class",
-                    Description = placeholder,
+                    Description = "Kuasai piano dari dasar sampai teknik lanjutan, termasuk membaca not, improvisasi, dan interpretasi musik.",
                     ImageUrl = "img/Class2.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -615,7 +614,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("90aa4952-165f-4225-98e4-5a569b83aa8c"),
                     Name = "Gitar",
                     LongName = "Guitarist class",
-                    Description = placeholder,
+                    Description = "Pelajari gitar akustik dan elektrik, teknik petikan, chord, solo, dan improvisasi kreatif.",
                     ImageUrl = "img/Class3.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -626,7 +625,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("3b470c4e-d847-43b1-9784-a8cc2082cf9e"),
                     Name = "Bass",
                     LongName = "Bassist class",
-                    Description = placeholder,
+                    Description = "Belajar bass untuk menciptakan groove yang solid, memahami teknik slap, fingerstyle, dan improvisasi musik.",
                     ImageUrl = "img/Class4.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -637,7 +636,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("9b648b45-327b-44ce-853a-c4ce17b7fd20"),
                     Name = "Biola",
                     LongName = "Violinist class",
-                    Description = placeholder,
+                    Description = "Pelajari biola dari teknik dasar, membaca not, hingga ekspresi musik klasik dan modern.",
                     ImageUrl = "img/Class5.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -648,7 +647,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("e4ea4121-bf90-4ba9-bc87-2c106c6acbbe"),
                     Name = "Menyanyi",
                     LongName = "Singer class",
-                    Description = placeholder,
+                    Description = "Kembangkan kemampuan vokal, teknik pernapasan, kontrol nada, serta ekspresi dan interpretasi lagu.",
                     ImageUrl = "img/Class6.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -659,7 +658,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("595b8600-4d24-44dc-9e40-6dfd87892cfa"),
                     Name = "Flute",
                     LongName = "Flutist class",
-                    Description = placeholder,
+                    Description = "Belajar flute dari teknik dasar embouchure, fingering, hingga memainkan melodi klasik dan kontemporer.",
                     ImageUrl = "img/Class7.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -670,7 +669,7 @@ namespace MyApp.WebAPI.Data
                     RefId = new Guid("e17ec48c-b705-4448-b916-9867d292e517"),
                     Name = "Saxophone",
                     LongName = "Saxophonist class",
-                    Description = placeholder,
+                    Description = "Kuasai saxophone dengan belajar teknik embouchure, breath control, improvisasi jazz, dan interpretasi musik modern.",
                     ImageUrl = "img/Class8.svg",
                     CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System"
@@ -680,9 +679,9 @@ namespace MyApp.WebAPI.Data
                 new Course
                 {
                     Id = 1,
-                    RefId = new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1"),
+                    RefId = Guid.NewGuid(),
                     Name = "Kursus Drummer Special Coach (Eno Netral)",
-                    Description = placeholder,
+                    Description = "Kursus drum eksklusif dengan mentor profesional Eno Netral, fokus pada teknik, groove, dan improvisasi.",
                     ImageUrl = "img/Landing1.svg",
                     Price = 8500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
@@ -692,33 +691,9 @@ namespace MyApp.WebAPI.Data
                 new Course
                 {
                     Id = 2,
-                    RefId = new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2"),
-                    Name = "[Beginner] Guitar class for kids",
-                    Description = placeholder,
-                    ImageUrl = "img/Landing2.svg",
-                    Price = 1600000,
-                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
-                    CategoryId = 3
-                },
-                new Course
-                {
-                    Id = 3,
-                    RefId = new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1"),
-                    Name = "Biola Mid-Level Course",
-                    Description = placeholder,
-                    ImageUrl = "img/Landing3.svg",
-                    Price = 3000000,
-                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
-                    CategoryId = 5
-                },
-                new Course
-                {
-                    Id = 4,
-                    RefId = new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928"),
+                    RefId = Guid.NewGuid(),
                     Name = "Drummer for kids (Level Basic/1)",
-                    Description = placeholder,
+                    Description = "Kursus drum untuk anak-anak, belajar ritme dasar, koordinasi tangan-kaki, dan bermain lagu sederhana.",
                     ImageUrl = "img/Landing4.svg",
                     Price = 2200000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
@@ -727,10 +702,10 @@ namespace MyApp.WebAPI.Data
                 },
                 new Course
                 {
-                    Id = 5,
-                    RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"),
+                    Id = 3,
+                    RefId = Guid.NewGuid(),
                     Name = "Kursus Piano : From Zero to Pro (Full Package)",
-                    Description = placeholder,
+                    Description = "Belajar piano dari dasar hingga mahir, termasuk teknik, sight-reading, dan repertoar klasik & modern.",
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
@@ -739,271 +714,501 @@ namespace MyApp.WebAPI.Data
                 },
                 new Course
                 {
+                    Id = 4,
+                    RefId = Guid.NewGuid(),
+                    Name = "Piano Jazz Improvisation",
+                    Description = "Kuasai improvisasi piano jazz, belajar chord voicing, scales, dan bermain bersama band.",
+                    ImageUrl = "img/Landing22.svg",
+                    Price = 7000000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 2
+                },
+                new Course
+                {
+                    Id = 5,
+                    RefId = Guid.NewGuid(),
+                    Name = "[Beginner] Guitar class for kids",
+                    Description = "Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.",
+                    ImageUrl = "img/Landing2.svg",
+                    Price = 1600000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
+                    CategoryId = 3
+                },
+                new Course
+                {
                     Id = 6,
-                    RefId = new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee"),
+                    RefId = Guid.NewGuid(),
+                    Name = "Guitar Rock Techniques",
+                    Description = "Belajar teknik gitar rock, solo, power chord, dan riff untuk pemula hingga menengah.",
+                    ImageUrl = "img/Landing33.svg",
+                    Price = 3500000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 3
+                },
+                new Course
+                {
+                    Id = 7,
+                    RefId = Guid.NewGuid(),
+                    Name = "Bass Fundamentals for Beginners",
+                    Description = "Kursus bass untuk pemula, belajar teknik dasar, groove, dan memainkan lagu sederhana.",
+                    ImageUrl = "img/Landing44.svg",
+                    Price = 2000000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 4
+                },
+                new Course
+                {
+                    Id = 8,
+                    RefId = Guid.NewGuid(),
+                    Name = "Advanced Bass Techniques",
+                    Description = "Pelajari teknik lanjutan bass, termasuk slap, tapping, dan improvisasi untuk berbagai genre musik.",
+                    ImageUrl = "img/Landing45.svg",
+                    Price = 4500000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 4
+                },
+                new Course
+                {
+                    Id = 9,
+                    RefId = Guid.NewGuid(),
+                    Name = "Biola Mid-Level Course",
+                    Description = "Kursus biola level menengah, belajar teknik bowing, vibrato, dan ekspresi musikal.",
+                    ImageUrl = "img/Landing3.svg",
+                    Price = 3000000,
+                    CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
+                    CreatedBy = "System",
+                    CategoryId = 5
+                },
+                new Course
+                {
+                    Id = 10,
+                    RefId = Guid.NewGuid(),
+                    Name = "Violin Advanced Performance",
+                    Description = "Belajar teknik lanjutan biola, interpretasi musik klasik, dan persiapan tampil di konser.",
+                    ImageUrl = "img/Landing55.svg",
+                    Price = 6000000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 5
+                },
+                new Course
+                {
+                    Id = 11,
+                    RefId = Guid.NewGuid(),
+                    Name = "Vocal Training for Beginners",
+                    Description = "Kursus menyanyi untuk pemula, fokus pada teknik pernapasan, kontrol nada, dan penguatan suara.",
+                    ImageUrl = "img/Landing66.svg",
+                    Price = 2500000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 6
+                },
+                new Course
+                {
+                    Id = 12,
+                    RefId = Guid.NewGuid(),
+                    Name = "Advanced Vocal Mastery",
+                    Description = "Kuasai teknik vokal lanjutan, ekspresi musik, vibrato, dan performa panggung profesional.",
+                    ImageUrl = "img/Landing66.svg",
+                    Price = 5500000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 6
+                },
+                new Course
+                {
+                    Id = 13,
+                    RefId = Guid.NewGuid(),
+                    Name = "Flute Basics for Beginners",
+                    Description = "Kursus flute pemula, belajar teknik embouchure, fingering, dan memainkan melodi sederhana.",
+                    ImageUrl = "img/Landing67.svg",
+                    Price = 2200000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 7
+                },
+                new Course
+                {
+                    Id = 14,
+                    RefId = Guid.NewGuid(),
+                    Name = "Flute Performance & Expression",
+                    Description = "Pelajari teknik lanjutan flute, interpretasi musik, dinamika, dan ekspresi panggung.",
+                    ImageUrl = "img/Landing77.svg",
+                    Price = 4800000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 7
+                },
+                new Course
+                {
+                    Id = 15,
+                    RefId = Guid.NewGuid(),
                     Name = "Expert Level Saxophone",
-                    Description = placeholder,
+                    Description = "Kursus saxophone level expert, belajar improvisasi jazz, teknik embouchure, dan performa profesional.",
                     ImageUrl = "img/Landing6.svg",
                     Price = 7350000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
                     CreatedBy = "System",
                     CategoryId = 8
-                }
-            );
-            modelBuilder.Entity<Schedule>().HasData(
-                new Schedule
-                {
-                    Id = 1,
-                    RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 1
                 },
-                new Schedule
-                {
-                    Id = 2,
-                    RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 1
-                },
-                new Schedule
-                {
-                    Id = 3,
-                    RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 1
-                },
-                new Schedule
-                {
-                    Id = 4,
-                    RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 1
-                },
-                new Schedule
-                {
-                    Id = 5,
-                    RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 1
-                },
-                new Schedule
-                {
-                    Id = 6,
-                    RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 1
-                },
-                new Schedule
-                {
-                    Id = 7,
-                    RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 8,
-                    RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 9,
-                    RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 10,
-                    RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 11,
-                    RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 12,
-                    RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 2
-                },
-                new Schedule
-                {
-                    Id = 13,
-                    RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 3
-                },
-                new Schedule
-                {
-                    Id = 14,
-                    RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 3
-                },
-                new Schedule
-                {
-                    Id = 15,
-                    RefId = new Guid("dc795a78-c93b-4499-a412-07a036e87ee4"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 3
-                },
-                new Schedule
+                new Course
                 {
                     Id = 16,
-                    RefId = new Guid("3b9a7f70-e5f6-4dcb-a6af-72c4b3d305f4"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 3
-                },
-                new Schedule
-                {
-                    Id = 17,
-                    RefId = new Guid("7aa4ec20-b332-4329-8aa4-b8b76e097cd9"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 3
-                },
-                new Schedule
-                {
-                    Id = 18,
-                    RefId = new Guid("b1a31b4c-17ea-47ba-948c-e282a019f510"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 3
-                },
-                new Schedule
-                {
-                    Id = 19,
-                    RefId = new Guid("1984127d-79e4-4221-954b-127718857bc0"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 20,
-                    RefId = new Guid("1fd6f30b-a51f-4de7-ab35-e309cc988c20"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 21,
-                    RefId = new Guid("deb1a633-2e59-4ebc-b55e-d65170b94207"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 22,
-                    RefId = new Guid("8b3e9524-7183-41b8-ab76-3bef3a804bfd"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 23,
-                    RefId = new Guid("571039cd-eb6e-468a-af34-3fe5a2f19d1e"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 24,
-                    RefId = new Guid("e0f2ae70-0d8f-42bc-b003-53b70f0e59e3"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 4
-                },
-                new Schedule
-                {
-                    Id = 25,
-                    RefId = new Guid("989ce1b3-83f7-49c5-833b-13e40facbb08"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 26,
-                    RefId = new Guid("562fd502-1fd0-4fe6-b013-effb8435d3b4"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 27,
-                    RefId = new Guid("50d7486f-de76-43c9-87f0-3fc55c65289b"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 28,
-                    RefId = new Guid("f545d7cf-26ce-4532-98b5-f17b980307c7"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 29,
-                    RefId = new Guid("761b4c9a-60fb-4809-b1b0-66b37c7d3c59"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 30,
-                    RefId = new Guid("02176419-f3d0-4c9a-b6c7-60f8f84fc203"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 5
-                },
-                new Schedule
-                {
-                    Id = 31,
-                    RefId = new Guid("92dfcd88-5914-4575-b2ac-bce04478c74a"),
-                    Date = new DateOnly(2022, 10, 25),
-                    CourseId = 6
-                },
-                new Schedule
-                {
-                    Id = 32,
-                    RefId = new Guid("8bc96c9b-25da-44e4-a83b-1bada63f6b81"),
-                    Date = new DateOnly(2022, 10, 26),
-                    CourseId = 6
-                },
-                new Schedule
-                {
-                    Id = 33,
-                    RefId = new Guid("1d64c39e-9857-4e86-9668-8c8b38b2f0d8"),
-                    Date = new DateOnly(2022, 10, 27),
-                    CourseId = 6
-                },
-                new Schedule
-                {
-                    Id = 34,
-                    RefId = new Guid("e577aaaf-dea3-4aaf-9a07-4143686e56ba"),
-                    Date = new DateOnly(2022, 10, 28),
-                    CourseId = 6
-                },
-                new Schedule
-                {
-                    Id = 35,
-                    RefId = new Guid("6929f28a-4f23-4d42-bd27-a5ab1eca0eda"),
-                    Date = new DateOnly(2022, 10, 29),
-                    CourseId = 6
-                },
-                new Schedule
-                {
-                    Id = 36,
-                    RefId = new Guid("4dcce0fa-717d-440e-b5b7-ce7b59f781b4"),
-                    Date = new DateOnly(2022, 10, 30),
-                    CourseId = 6
+                    RefId = Guid.NewGuid(),
+                    Name = "Saxophone Jazz Essentials",
+                    Description = "Belajar teknik dasar hingga improvisasi jazz di saxophone untuk pemula hingga menengah.",
+                    ImageUrl = "img/Landing88.svg",
+                    Price = 4500000,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System",
+                    CategoryId = 8
                 }
             );
+
+            modelBuilder.Entity<Schedule>().HasData(
+            new Schedule
+            {
+                Id = 1,
+                RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 1
+            },
+            new Schedule
+            {
+                Id = 2,
+                RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 1
+            },
+            new Schedule
+            {
+                Id = 3,
+                RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 1
+            },
+            new Schedule
+            {
+                Id = 4,
+                RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 2
+            },
+            new Schedule
+            {
+                Id = 5,
+                RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 2
+            },
+            new Schedule
+            {
+                Id = 6,
+                RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 2
+            },
+            new Schedule
+            {
+                Id = 7,
+                RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 3
+            },
+            new Schedule
+            {
+                Id = 8,
+                RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 3
+            },
+            new Schedule
+            {
+                Id = 9,
+                RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 3
+            },
+            new Schedule
+            {
+                Id = 10,
+                RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 4
+            },
+            new Schedule
+            {
+                Id = 11,
+                RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 4
+            },
+            new Schedule
+            {
+                Id = 12,
+                RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 4
+            },
+            new Schedule
+            {
+                Id = 13,
+                RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 5
+            },
+            new Schedule
+            {
+                Id = 14,
+                RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 5
+            },
+            new Schedule
+            {
+                Id = 15,
+                RefId = new Guid("e1f2d3c4-5678-4f9a-b123-abcdef123456"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 5
+            },
+            new Schedule
+            {
+                Id = 16,
+                RefId = new Guid("f1a2b3c4-5678-4a9b-cdef-123456abcdef"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 6
+            },
+            new Schedule
+            {
+                Id = 17,
+                RefId = new Guid("f2b3c4d5-6789-4b0c-def1-234567abcdef"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 6
+            },
+            new Schedule
+            {
+                Id = 18,
+                RefId = new Guid("f3c4d5e6-7890-4c1d-ef12-345678abcdef"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 6
+            },
+            new Schedule
+            {
+                Id = 19,
+                RefId = new Guid("f4d5e6f7-8901-4d2e-f123-456789abcdef"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 7
+            },
+            new Schedule
+            {
+                Id = 20,
+                RefId = new Guid("a7b8c9d0-9012-4e3f-8123-56789abcdef0"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 7
+            },
+            new Schedule
+            {
+                Id = 21,
+                RefId = new Guid("b8c9d0e1-0123-4f4a-9234-6789abcdef01"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 7
+            },
+            new Schedule
+            {
+                Id = 22,
+                RefId = new Guid("c9d0e1f2-1234-4a5b-a345-789abcdef012"),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 8
+            },
+            new Schedule
+            {
+                Id = 23,
+                RefId = new Guid("d0e1f2a3-2345-4b6c-b456-89abcdef0123"),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 8
+            },
+            new Schedule
+            {
+                Id = 24,
+                RefId = new Guid("e1f2a3b4-3456-4c7d-c567-9abcdef01234"),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 8
+            },
+            new Schedule
+            {
+                Id = 25,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 9
+            },
+            new Schedule
+            {
+                Id = 26,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 9
+            },
+            new Schedule
+            {
+                Id = 27,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 9
+            },
+            new Schedule
+            {
+                Id = 28,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 10
+            },
+            new Schedule
+            {
+                Id = 29,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 10
+            },
+            new Schedule
+            {
+                Id = 30,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 10
+            },
+            new Schedule
+            {
+                Id = 31,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 11
+            },
+            new Schedule
+            {
+                Id = 32,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 11
+            },
+            new Schedule
+            {
+                Id = 33,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 11
+            },
+            new Schedule
+            {
+                Id = 34,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 12
+            },
+            new Schedule
+            {
+                Id = 35,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 12
+            },
+            new Schedule
+            {
+                Id = 36,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 12
+            },
+            new Schedule
+            {
+                Id = 37,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 13
+            },
+            new Schedule
+            {
+                Id = 38,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 13
+            },
+            new Schedule
+            {
+                Id = 39,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 13
+            },
+            new Schedule
+            {
+                Id = 40,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 14
+            },
+            new Schedule
+            {
+                Id = 41,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 14
+            },
+            new Schedule
+            {
+                Id = 42,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 14
+            },
+            new Schedule
+            {
+                Id = 43,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 15
+            },
+            new Schedule
+            {
+                Id = 44,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 15
+            },
+            new Schedule
+            {
+                Id = 45,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 15
+            },
+            new Schedule
+            {
+                Id = 46,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 25),
+                CourseId = 16
+            },
+            new Schedule
+            {
+                Id = 47,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 26),
+                CourseId = 16
+            },
+            new Schedule
+            {
+                Id = 48,
+                RefId = Guid.NewGuid(),
+                Date = new DateOnly(2022, 10, 27),
+                CourseId = 16
+            }
+            );
+
             modelBuilder.Entity<User>().HasData(
                 new User
                 {

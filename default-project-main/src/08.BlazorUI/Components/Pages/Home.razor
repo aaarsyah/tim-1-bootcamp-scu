@@ -90,19 +90,32 @@
                         <MudPaper Class="course-card" Elevation="0">
                             <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id.Value))" Color="Color.Default">
                                 <MudImage Src="@course.Image"
-                                          Class="w-100 mb-2"
-                                          Alt="@course.Title" />
+                                        Class="w-100 mb-2"
+                                        Alt="@course.Title" />
                                 <MudText Class="category color-gray-3">@course.Category</MudText>
                                 <MudText Class="name color-gray-1"><b>@course.Title</b></MudText>
                                 <MudText Class="name color-iris pt-10" Color="Color.Primary">
                                     <b>@course.Price</b>
                                 </MudText>
-                            </MudLink>    
+                            </MudLink>
                         </MudPaper>
                     </MudItem>
                 }
             }
         </MudGrid>
+
+            <!-- Pagination Button -->
+            @if (CurrentPage < TotalPages)
+            {
+                <MudGrid Justify="Justify.Center" Class="mb-3">
+                    <MudButton Variant="Variant.Filled"
+                            Color="Color.Primary"
+                            Disabled="@isLoadingMore"
+                            OnClick="LoadMoreAsync">
+                        @(isLoadingMore ? "Loading..." : "Load More")
+                    </MudButton>
+                </MudGrid>
+            }
     </MudStack>
 </MudContainer>
 
@@ -156,22 +169,165 @@
                         </MudText>
                         <br/>
                         <MudText Class="category color-gray-1">
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                            Dengan mengikuti AppleMusic Course, peserta akan mendapatkan berbagai keuntungan, antara lain:  
+                            <ul>
+                                <li>Akses ke materi musik interaktif dari instruktur profesional.</li>
+                                <li>Belajar berbagai instrumen dan teknik vokal secara fleksibel kapan saja dan di mana saja.</li>
+                                <li>Peningkatan kemampuan musik secara bertahap dengan modul terstruktur dan latihan praktik.</li>
+                                <li>Kesempatan mengikuti workshop, performance online, dan mendapatkan sertifikat resmi.</li>
+                                <li>Komunitas belajar yang mendukung, tempat berdiskusi dan berbagi pengalaman musik.</li>
+                            </ul>
                         </MudText>
                         </MudStack>
                 </MudItem>
             </MudGrid>
         </MudContainer>
 
-
 @code {
+    private record CourseCard(string Category, string Title, string Price, string Image, int? Id = null);
+    private record CategoryItem(string Name, string Image, int? Id = null);
+
+    private IEnumerable<CourseCard>? FeaturedCourses;
+    private IEnumerable<CategoryItem>? Categories;
+    private int CurrentPage = 1;
+    private int ItemsPerPage = 6;
+    private int TotalPages = 1;
+    private bool isLoadingMore = false;
+
+    // Load pertama kali
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCategoriesAsync();
+        await LoadCoursesAsync();
+    }
+
+    // Load courses per halaman
+    private async Task LoadCoursesAsync(int page = 1)
+    {
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<PagedResponse<IEnumerable<CourseDto>>>(
+                $"api/Course?PageNumber={page}&PageSize={ItemsPerPage}");
+
+            if (response?.Data != null)
+            {
+                if (page == 1)
+                {
+                    FeaturedCourses = response.Data.Select(MapCourse);
+                }
+                else
+                {
+                    FeaturedCourses = (FeaturedCourses ?? Enumerable.Empty<CourseCard>())
+                        .Concat(response.Data.Select(MapCourse))
+                        .ToList();
+                }
+
+                CurrentPage = response.PageNumber;
+                TotalPages = response.TotalPages;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading paginated courses: {ex.Message}");
+        }
+    }
+
+    // Tombol Load More
+    private async Task LoadMoreAsync()
+    {
+        if (CurrentPage < TotalPages && !isLoadingMore)
+        {
+            isLoadingMore = true;
+            await LoadCoursesAsync(CurrentPage + 1);
+            isLoadingMore = false;
+            StateHasChanged();
+        }
+    }
+
+    // Load Categories
+    private async Task LoadCategoriesAsync()
+    {
+        try
+        {
+            var categoryResponseMsg = await _httpClient.GetAsync("api/Category");
+            if (categoryResponseMsg.IsSuccessStatusCode)
+            {
+                var categoryApiResponse = await categoryResponseMsg.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
+                Categories = categoryApiResponse?.Data
+                    .Where(c => c.IsActive)
+                    .Select(c => new CategoryItem(
+                        Name: c.Name,
+                        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-category.svg" : c.ImageUrl,
+                        Id: c.Id
+                    ));
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading categories: {ex.Message}");
+        }
+    }
+
+    // Mapper helper
+    private CourseCard MapCourse(CourseDto c) => new(
+        Category: c.CategoryName,
+        Title: c.Name,
+        Price: $"IDR {c.Price:N0}",
+        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
+        Id: c.Id
+    );
+}
+
+@* @code {
     private record CourseCard(string Category, string Title, string Price, string Image, int? Id = null); // Tambahkan Id untuk navigasi
     private record CategoryItem(string Name, string Image, int? Id = null); // Tambahkan Id untuk navigasi
 
     private IEnumerable<CourseCard>? FeaturedCourses;
     private IEnumerable<CategoryItem>? Categories;
+    private int CurrentPage = 1;
+    private int ItemsPerPage = 6;
+    private int TotalPages = 1;
+
+    private async Task LoadCoursesAsync(int page = 1)
+    {
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<PagedResponse<IEnumerable<CourseDto>>>(
+                $"api/Course/paginated?pageNumber={page}&pageSize={ItemsPerPage}");
+
+            if (response?.Data != null)
+            {
+                FeaturedCourses = response.Data.Select(c => new CourseCard(
+                    Category: c.CategoryName,
+                    Title: c.Name,
+                    Price: $"IDR {c.Price:N0}",
+                    Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
+                    Id: c.Id
+                ));
+
+                CurrentPage = response.PageNumber;
+                TotalPages = response.TotalPages;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading paginated courses: {ex.Message}");
+        }
+    }
+
+    private async Task ChangePage(int page)
+    {
+        if (page >= 1 && page <= TotalPages)
+        {
+            CurrentPage = page;
+            await LoadCoursesAsync(page);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCoursesAsync();
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -212,4 +368,4 @@
             Console.WriteLine($"Error loading data: {ex.Message}");
         }
     }
-}
+} *@
