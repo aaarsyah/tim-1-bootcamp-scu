@@ -14,15 +14,15 @@
         /// <summary>
         /// Invoice (foreign key): Bukti pembelian yang terkait
         /// </summary>
-        public int? InvoiceId { get; set; }
-        /// <summary>
-        /// RefCode: Kode bukti pembelian
-        /// </summary>
-        public string RefCode { get; set; } = string.Empty;
+        public int InvoiceId { get; set; }
         /// <summary>
         /// Date: Tanggal pembelian
         /// </summary>
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        /// <summary>
+        /// User: Invoice yang terkait<br />
+        /// </summary>
+        public virtual Invoice Invoice { get; set; } = null!;
         /// <summary>
         /// ScheduleId (foreign key): Id jadwal kelas yang terkait
         /// </summary>

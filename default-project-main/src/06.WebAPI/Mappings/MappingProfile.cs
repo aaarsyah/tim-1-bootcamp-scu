@@ -53,8 +53,15 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<Invoice, InvoiceDto>();
 
             // Invoice Detail mappings
-            CreateMap<InvoiceDetail, InvoiceDetailDto>();
-
+            CreateMap<InvoiceDetail, InvoiceDetailDto>()
+                .ForMember(dest => dest.CourseName,
+                           opt => opt.MapFrom(src => src.Schedule.Course.Name))
+                .ForMember(dest => dest.ScheduleDates,
+                           opt => opt.MapFrom(src => new List<DateOnly> { src.Schedule.Date }))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Schedule.Course.Price))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Invoice.TotalPrice))
+                .ForMember(dest => dest.RefCode, opt => opt.MapFrom(src => src.Invoice.RefCode));
             // MyClass mappings
             CreateMap<MyClass, MyClassDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))

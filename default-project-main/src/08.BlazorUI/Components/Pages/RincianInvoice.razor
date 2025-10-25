@@ -1,102 +1,127 @@
-@page "/details-invoice"
+@page "/details-invoice/{InvoiceId:int}"
 
-@inject NavigationManagerExt Navigation;
+@inject HttpClient Http
+@inject NavigationManagerExt Navigation
+
+<PageTitle>Rincian Invoice</PageTitle>
 
 <style>
 /* Selang-seling warna baris */
 .mud-table tr:nth-child(even) {
     background-color: rgba(184, 134, 11, 0.2) !important; /* Kuning tua transparan */
 }
-
-
 </style>
 
-<PageTitle>Home</PageTitle>
 <MudContainer class="mt-20">
     <MudItem xs="12" sm="10">
-    <MudText Typo="Typo.subtitle1">
-     <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
-     <MudLink OnClick="Navigation.GoToInvoice"><b style="color: gray;">Invoice ></b></MudLink>
-        <MudLink ><b>Rincian Invoice</b></MudLink>
-    </MudText>
-       
+        <MudText Typo="Typo.subtitle1">
+            <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
+            <MudLink OnClick="Navigation.GoToInvoice"><b style="color: gray;">Invoice ></b></MudLink>
+            <MudLink><b>Rincian Invoice</b></MudLink>
+        </MudText>
     </MudItem>
 
-    
-     <MudText Typo="Typo.subtitle1" Class="mb-4"><b> Rincian Invoice</b></MudText>
-    <MudItem xs="16" sm="8">
-        <MudText Typo="Typo.subtitle1"><b>No.Invoice   : AB00003</b></MudText>
-        <MudText Typo="Typo.subtitle1"><b>Tanggal Beli : 25 Juli 2026</b></MudText>
-    </MudItem>
-    <MudTable T="Element" Items="@Elements.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm"
-          Class="mt-4"
-          @ref="mudTable"
-          RowClass="cursor-pointer"
-          RowClassFunc="@SelectedRowClassFunc"
-          OnRowClick="RowClickEvent">
-   
-    <HeaderContent>
-        <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
-    </HeaderContent>
+    @if (isLoading)
+    {
+        <div class="d-flex justify-center mt-10">
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" />
+        </div>
+    }
+    else if (Elements == null || !Elements.Any())
+    {
+        <MudText Class="mt-6" Typo="Typo.subtitle1" Align="Align.Center">
+            Tidak ada data rincian invoice.
+        </MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.subtitle1" Class="mt-4 mb-4 fw-bold"><b> Rincian Invoice</b></MudText>
+        <MudItem xs="16" sm="8">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>No.Invoice: @Invoice.RefCode</b></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>Tanggal Beli: @Invoice.CreatedAt.ToString("dd MMMM yyyy")</b></MudText>
+        </MudItem>
 
-    <RowTemplate>
-    <MudTd DataLabel="No">@context.Number</MudTd>
-    <MudTd DataLabel="NamaCourse">@context.NamaCourse</MudTd>
-    <MudTd DataLabel="Kategori">@context.Kategori</MudTd>
-    <MudTd DataLabel="JadwalKursus">@context.JadwalKursus</MudTd>
-    <MudTd DataLabel="Harga">@context.Harga</MudTd>
-</RowTemplate>
-</MudTable>
+        <MudItem Class="d-flex justify-end">
+        <MudText Typo="Typo.subtitle1" Class="mb-4 fw-bold"><b>Total Harga: @Invoice.TotalPrice.ToString("C")</b></MudText>
+        </MudItem>
+
+        <MudTable T="InvoiceDetailResponse" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm"
+                  Class="mt-4"
+                  @ref="mudTable"
+                  RowClass="cursor-pointer"
+                  RowClassFunc="@SelectedRowClassFunc"
+                  OnRowClick="RowClickEvent">
+
+            <HeaderContent>
+                <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
+            </HeaderContent>
+
+            <RowTemplate Context="item">
+                <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd>
+                <MudTd DataLabel="NamaCourse">@item.CourseName</MudTd>
+                <MudTd DataLabel="Kategori">@item.CategoryName</MudTd>
+                <MudTd DataLabel="JadwalKursus">@string.Join(", ", item.ScheduleDates.Select(d => d.ToString("dd MMM yyyy")))</MudTd>
+                <MudTd DataLabel="Harga">@item.Price.ToString("C")</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
 </MudContainer>
 
-
-
 @code {
+    [Parameter]
+    public int InvoiceId { get; set; }
+
+    private bool isLoading = true;
+    private MudTable<InvoiceDetailResponse> mudTable;
     private int selectedRowNumber = -1;
-    private MudTable<Element> mudTable;
-    private List<string> clickedEvents = new();
-    private IEnumerable<Element> Elements = new List<Element>()
+    private List<InvoiceDetailResponse> Elements = new();
+    private InvoiceDetailResponse Invoice = new();
+
+    protected override async Task OnInitializedAsync()
     {
-           new Element()
+        try
+        {
+            isLoading = true;
+
+            var response = await Http.GetFromJsonAsync<List<InvoiceDetailResponse>>(
+                $"api/InvoiceDetail/user/{InvoiceId}"
+            );
+
+            if (response != null && response.Any())
             {
-                Number = 1,
-                NamaCourse = "Kursus Drum Spesial Coach (Eno Netral)",
-                Kategori = "Drum",
-                JadwalKursus = "Senin, 25 Juli 2026",
-                Harga = "IDR. 8.500.000"
-            },
-       new Element()
-            {
-                Number = 2,
-                NamaCourse = "Biola Mid-Level Course",
-                Kategori = "Biola",
-                JadwalKursus = "Senin, 25 Juli 2026",
-                Harga = "IDR. 3.000.000"
+                Elements = response;
+                Invoice = response.First();
             }
-
-    };
-
-    private void RowClickEvent(TableRowClickEventArgs<Element> tableRowClickEventArgs)
-    {
-        clickedEvents.Add("Row has been clicked");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching invoice detail: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
-    private string SelectedRowClassFunc(Element element, int rowNumber)
+    private void RowClickEvent(TableRowClickEventArgs<InvoiceDetailResponse> args)
+    {
+        Console.WriteLine($"Row clicked: {args.Item.CourseName}");
+    }
+
+    private string SelectedRowClassFunc(InvoiceDetailResponse element, int rowNumber)
     {
         if (selectedRowNumber == rowNumber)
         {
             selectedRowNumber = -1;
-            clickedEvents.Add("Selected Row: None");
             return string.Empty;
         }
         else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
         {
             selectedRowNumber = rowNumber;
-            clickedEvents.Add($"Selected Row: {rowNumber}");
             return "selected";
         }
         else
@@ -105,12 +130,17 @@
         }
     }
 
-    public class Element
+    public class InvoiceDetailResponse
     {
-        public int Number { get; set; }
-        public string NamaCourse { get; set; }
-        public string Kategori { get; set; }
-        public string JadwalKursus { get; set; }
-        public string Harga { get; set; }
+        public int Id { get; set; }
+        public string RefCode { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
+        public int ScheduleId { get; set; }
+        public string CourseName { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public List<DateTime> ScheduleDates { get; set; } = new();
+        public decimal TotalPrice { get; set; }
     }
 }

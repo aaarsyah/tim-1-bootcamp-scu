@@ -31,24 +31,35 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get Invoice Detail by IdInvoice
         /// </summary>
-        public async Task<InvoiceDetailDto> GetInvoiceDetailsByUserAsync(int invoiceId)
+        public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByUserAsync(int invoiceId)
         {
-            var invoicesDetail = await _context.InvoiceDetails
-                .FirstOrDefaultAsync(d => d.Id == invoiceId);
-                
-            return _mapper.Map<InvoiceDetailDto>(invoicesDetail);
+            var invoiceDetails = await _context.InvoiceDetails
+                .Include(d => d.Schedule)
+                    .ThenInclude(s => s.Course)
+                        .ThenInclude(c => c.Category)
+                .Include(d => d.Invoice)
+                .Where(d => d.InvoiceId == invoiceId)
+                .ToListAsync();
+
+            // Pastikan kamu memetakan ke List<InvoiceDetailDto>, bukan ke InvoiceDetailDto tunggal
+            return _mapper.Map<List<InvoiceDetailDto>>(invoiceDetails);
         }
 
         /// <summary>
         /// Get all Invoice Detail
-        /// </summary>
+        /// /// /// </summary>
         public async Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync()
         {
-            var invoicesDetail = await _context.InvoiceDetails.ToListAsync();
+            var invoicesDetail = await _context.InvoiceDetails
+                                    .Include(d => d.Schedule)
+                                    .ThenInclude(s => s.Course)
+                                        .ThenInclude(c => c.Category)
+                                .Include(d => d.Invoice)
+                                .ToListAsync();
             return _mapper.Map<IEnumerable<InvoiceDetailDto>>(invoicesDetail);
         }
 
-//Get Detail by IdDetail
+        //Get Detail by IdDetail
         public async Task<InvoiceDetailDto> GetInvoicesDetailByIdAsync(int id)
         {
             var invoiceDetail = await _context.InvoiceDetails
@@ -66,7 +77,7 @@ namespace MyApp.WebAPI.Services
             _context.InvoiceDetails.Add(invoiceDetail);
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("InvoiceDetail created: {RefCode} with ID: {Id}", invoiceDetail.RefCode, invoiceDetail.Id);
+            _logger.LogInformation("InvoiceDetail created with ID: {Id}", invoiceDetail.Id);
 
             return _mapper.Map<InvoiceDetailDto>(invoiceDetail);
         }

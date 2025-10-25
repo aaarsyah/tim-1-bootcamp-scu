@@ -462,6 +462,15 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
                         .HasDefaultValueSql("GETUTCDATE()");
+
+                 entity.Property(e => e.TotalPrice)
+                    .IsRequired()
+                    .HasColumnType("numeric(10)")
+                    .HasDefaultValue(0);
+
+                entity.Property(e => e.TotalCourse)
+                    .IsRequired()
+                    .HasDefaultValue(0);
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan PaymentMethod
                 entity.HasOne(e => e.PaymentMethod)
@@ -469,10 +478,10 @@ namespace MyApp.WebAPI.Data
                         .HasForeignKey(e => e.PaymentMethodId)
                         .OnDelete(DeleteBehavior.SetNull); // Putuskan semua InvoiceDetails yang terhubung bila Invoice dihapus
                 // Relationship dengan InvoiceDetails
-                entity.HasMany(e => e.InvoiceDetails)
-                        .WithOne()
+                 entity.HasMany(e => e.InvoiceDetails)
+                        .WithOne(e => e.Invoice)
                         .HasForeignKey(e => e.InvoiceId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+                        .OnDelete(DeleteBehavior.Restrict); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
             });
         }
         /// <summary>
@@ -493,8 +502,7 @@ namespace MyApp.WebAPI.Data
                         .WithMany()
                         .HasForeignKey(e => e.ScheduleId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
-                //TODO: diskusi bagaimana dengan invoice bilamana course/schedule dihapus
-            });
+                });
         }
         /// <summary>
         /// Configure PaymentMethod entity dengan advanced Fluent API features
@@ -721,7 +729,7 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 5,
                     RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"),
-                    Name = "Kursu Piano : From Zero to Pro (Full Package)",
+                    Name = "Kursus Piano : From Zero to Pro (Full Package)",
                     Description = placeholder,
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,

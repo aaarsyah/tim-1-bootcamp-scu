@@ -1,4 +1,4 @@
-﻿﻿namespace MyApp.WebAPI.Models.Entities
+﻿namespace MyApp.WebAPI.Models.Entities
 {
     /// <summary>
     /// Invoice: Representasi sebuah bukti pembelian<br />
@@ -37,10 +37,14 @@
         /// Virtual field untuk PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
         public virtual PaymentMethod? PaymentMethod { get; set; } = null!;
+
         /// <summary>
         /// Virtual field untuk InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah saja
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } //Collection navigation untuk mempermudah saja
+        public decimal TotalPrice { get; set; }
+
+        public int TotalCourse { get; set; }
 
     }
 }

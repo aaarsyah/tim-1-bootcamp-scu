@@ -24,7 +24,11 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Whether Invoice is active
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
+
+        public decimal TotalPrice { get; set; }
+
+        public int TotalCourse { get; set; }
 
     }
 
@@ -41,6 +45,6 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// TanggalBeli
         /// </summary>
-        public DateTime CreatedAt{ get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

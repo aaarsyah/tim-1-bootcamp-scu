@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿﻿using AutoMapper;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -95,10 +95,14 @@ namespace MyApp.WebAPI.Services
                     }
                     // ===== STEP 4 =====
                     List<CartItem> items = new List<CartItem>();
+
                     foreach (var itemcartid in request.ItemCartIds)
                     {
                         var item = await _context.CartItems
+                            .Include(i => i.Schedule)
+                                .ThenInclude(s => s.Course) //agar bisa mendapatkan price untuk menghitung totalprice
                             .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == itemcartid);
+
                         if (item == null)
                         {
                             throw new ValidationException(
@@ -119,6 +123,11 @@ namespace MyApp.WebAPI.Services
                     {
                         _context.CartItems.Remove(item);
                     }
+
+                    // ===== STEP 7: Hitung Total Price dan Total Course =====
+                    var totalPrice = items.Sum(i => i.Schedule?.Course?.Price ?? 0);
+                    var totalCourse = items.Select(i => i.ScheduleId).Distinct().Count();
+
                     // ===== STEP 7 =====
                     var invoice = new Invoice
                     {
@@ -126,6 +135,9 @@ namespace MyApp.WebAPI.Services
                         CreatedAt = DateTime.UtcNow,
                         UserId = user.Id,
                         PaymentMethodId = paymentmethod.Id,
+                        TotalPrice = totalPrice,
+                        TotalCourse = totalCourse
+
                     };
                     _context.Invoices.Add(invoice);
                     await _context.SaveChangesAsync(); // Save transaction record to generate Id
@@ -180,7 +192,7 @@ namespace MyApp.WebAPI.Services
         {
             var categories = await _context.CartItems
                 .Include(c => c.Schedule)
-                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
+                    .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);

@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251020144011_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251024091458_InvoiceUpdate")]
+    partial class InvoiceUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -441,6 +441,16 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("TotalCourse")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("TotalPrice")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(10)")
+                        .HasDefaultValue(0m);
+
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
@@ -467,12 +477,8 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("RefCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
@@ -1517,16 +1523,19 @@ namespace MyApp.WebAPI.Migrations
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.InvoiceDetail", b =>
                 {
-                    b.HasOne("MyApp.WebAPI.Models.Entities.Invoice", null)
+                    b.HasOne("MyApp.WebAPI.Models.Entities.Invoice", "Invoice")
                         .WithMany("InvoiceDetails")
                         .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("MyApp.WebAPI.Models.Entities.Schedule", "Schedule")
                         .WithMany()
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invoice");
 
                     b.Navigation("Schedule");
                 });

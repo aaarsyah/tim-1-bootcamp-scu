@@ -32,6 +32,10 @@ namespace MyApp.Shared.DTOs
         /// Null if still pending
         /// </summary>
         public DateTime? ProcessedAt { get; set; }
+
+        public decimal TotalPrice { get; set; }
+
+        public int TotalCourse { get; set; }
     }
     public class CartItemResponseDto
     {

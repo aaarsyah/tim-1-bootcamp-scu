@@ -223,7 +223,7 @@
 
     try
     {
-        // 1️⃣ Ambil scheduleId berdasarkan tanggal yang dipilih
+        // Ambil scheduleId berdasarkan tanggal yang dipilih
         var selectedSchedule = Course.Schedules.FirstOrDefault(s => s.Date == _date);
         if (selectedSchedule == null)
         {
@@ -232,7 +232,6 @@
         }
 
         var scheduleId = selectedSchedule.Id;
-        Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
         
 
         // 2️⃣ Tambahkan item ke cart
@@ -248,9 +247,8 @@
        var cartResponse = await _httpClient.GetFromJsonAsync<ApiResponse<List<CartItemResponseDto>>>("api/CartItem/cart");
        var cartItems = cartResponse?.Data;
 
-       // Ambil item terbaru untuk scheduleId ini
+       //Ambil item terbaru untuk scheduleId ini
         var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
-        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
 
 
        var checkoutRequest = new CheckoutRequestDto

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyApp.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Update : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -199,6 +199,8 @@ namespace MyApp.WebAPI.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: true),
+                    TotalPrice = table.Column<decimal>(type: "numeric(10,0)", nullable: false, defaultValue: 0m),
+                    TotalCourse = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -331,8 +333,7 @@ namespace MyApp.WebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceId = table.Column<int>(type: "int", nullable: true),
-                    RefCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InvoiceId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ScheduleId = table.Column<int>(type: "int", nullable: false),
                     RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -345,7 +346,7 @@ namespace MyApp.WebAPI.Migrations
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InvoiceDetail_Schedules_ScheduleId",
                         column: x => x.ScheduleId,
@@ -556,9 +557,10 @@ namespace MyApp.WebAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetail_InvoiceId",
+                name: "IX_InvoiceDetail_InvoiceId_ScheduleId",
                 table: "InvoiceDetail",
-                column: "InvoiceId");
+                columns: new[] { "InvoiceId", "ScheduleId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceDetail_ScheduleId",

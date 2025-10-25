@@ -24,8 +24,31 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Whether Invoice is active
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
+        /// <summary>
+        /// Schedule (foreign key): Jadwal kelas yang terkait
+        /// </summary>
+        public int ScheduleId { get; set; }
+
+        /// <summary>
+        /// Nama Course
+        /// </summary>
+        public string CourseName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Nama Kategori Kelas
+        /// </summary>
+        public string CategoryName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Product price
+        /// </summary>
+        public decimal Price { get; set; }
+
+        public List<DateOnly> ScheduleDates { get; set; } = new();
+        public decimal TotalPrice { get; set; }
+        
     }
 
     /// <summary>

@@ -46,6 +46,11 @@ namespace MyApp.WebAPI.Services
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
 
+
+        /// <summary>
+        /// Get Invoice by Id
+        /// </summary>
+
         public async Task<InvoiceDto> GetInvoicesByIdAsync(int id)
         {
             var invoice = await _context.Invoices.FirstOrDefaultAsync(c => c.Id == id);
@@ -54,6 +59,10 @@ namespace MyApp.WebAPI.Services
 
             return _mapper.Map<InvoiceDto>(invoice);
         }
+
+        /// <summary>
+        /// Get create Invoice
+        /// </summary>
 
         public async Task<InvoiceDto> CreateInvoicesAsync(CreateInvoiceDto createInvoiceDto)
         {
