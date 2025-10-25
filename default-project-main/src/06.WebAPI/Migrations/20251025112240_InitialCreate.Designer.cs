@@ -12,8 +12,8 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251020013815_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251025112240_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1215,7 +1215,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Super Admin",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1231,7 +1231,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Nur Imam Iskandar",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1247,7 +1247,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Iskandar",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1279,7 +1279,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "yusri sahrul",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1295,7 +1295,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "yusri sahrul test",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
