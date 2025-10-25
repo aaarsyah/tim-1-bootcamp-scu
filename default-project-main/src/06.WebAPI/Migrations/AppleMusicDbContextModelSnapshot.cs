@@ -493,7 +493,7 @@ namespace MyApp.WebAPI.Migrations
                     b.HasIndex("RefId")
                         .IsUnique();
 
-                    b.ToTable("InvoiceDetail", (string)null);
+                    b.ToTable("InvoiceDetails", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.MyClass", b =>

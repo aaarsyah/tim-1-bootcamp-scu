@@ -299,7 +299,7 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InvoiceDetail",
+                name: "InvoiceDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -313,9 +313,9 @@ namespace MyApp.WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InvoiceDetail", x => x.Id);
+                    table.PrimaryKey("PK_InvoiceDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InvoiceDetail_Invoices_InvoiceId",
+                        name: "FK_InvoiceDetails_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
                         principalColumn: "Id",
@@ -551,13 +551,13 @@ namespace MyApp.WebAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetail_InvoiceId",
-                table: "InvoiceDetail",
+                name: "IX_InvoiceDetails_InvoiceId",
+                table: "InvoiceDetails",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetail_RefId",
-                table: "InvoiceDetail",
+                name: "IX_InvoiceDetails_RefId",
+                table: "InvoiceDetails",
                 column: "RefId",
                 unique: true);
 
@@ -677,7 +677,7 @@ namespace MyApp.WebAPI.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "InvoiceDetail");
+                name: "InvoiceDetails");
 
             migrationBuilder.DropTable(
                 name: "MyClasses");

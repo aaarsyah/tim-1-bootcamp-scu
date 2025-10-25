@@ -12,7 +12,7 @@ using MyApp.WebAPI.Data;
 namespace MyApp.WebAPI.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
-    [Migration("20251025093443_InitialCreate")]
+    [Migration("20251025112932_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -496,7 +496,7 @@ namespace MyApp.WebAPI.Migrations
                     b.HasIndex("RefId")
                         .IsUnique();
 
-                    b.ToTable("InvoiceDetail", (string)null);
+                    b.ToTable("InvoiceDetails", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.MyClass", b =>
