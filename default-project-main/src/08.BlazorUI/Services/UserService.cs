@@ -1,5 +1,6 @@
 using MyApp.BlazorUI.Models;
 using MyApp.Shared.DTOs;
+using System.Net;
 using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services
@@ -20,7 +21,6 @@ namespace MyApp.BlazorUI.Services
         // Mendapatkan semua user
         public async Task<List<UserDto>> GetAllUsersAsync(AuthenticationHeaderValue authorization)
         {
-            //
             var _httpClient = _factory.CreateClient("WebAPI");
             _httpClient.DefaultRequestHeaders.Authorization = authorization;
             try
@@ -37,6 +37,27 @@ namespace MyApp.BlazorUI.Services
                     return new();
                 }
                 return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
+                return new();
+            }
+        }
+
+        public async Task<bool> AssignRoleToUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");// 
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/add", request);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
             }
             catch (Exception ex)
             {

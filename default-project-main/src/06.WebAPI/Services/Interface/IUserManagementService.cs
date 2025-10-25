@@ -10,10 +10,10 @@ namespace MyApp.WebAPI.Services
     {
         Task<UserDto?> GetUserProfileAsync(int userId);
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
-        Task<bool> AssignRoleToUserAsync(int userId, string roleName);
+        Task<bool> AddRoleToUserAsync(int userId, string roleName);
         Task<bool> RemoveRoleFromUserAsync(int userId, string roleName);
-        Task<bool> AddClaimToUserAsync(int userId, string claimType, string claimValue);
-        Task<bool> RemoveClaimFromUserAsync(int userId, string claimType, string claimValue);
+        Task<bool> SetClaimForUserAsync(int userId, string claimType, string claimValue);
+        Task<bool> RemoveClaimFromUserAsync(int userId, string claimType);
         Task<bool> ActivateUserAsync(int userId);
         Task<bool> DeactivateUserAsync(int userId);
     }

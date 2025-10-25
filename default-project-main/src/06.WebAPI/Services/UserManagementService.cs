@@ -34,7 +34,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"User Id {userId} not found");
+                throw new NotFoundException($"UserId {userId} not found");
             }
             return _mapper.Map<UserDto>(user);
         }
@@ -57,31 +57,31 @@ namespace MyApp.WebAPI.Services
             return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 
-        public async Task<bool> AssignRoleToUserAsync(int userId, string roleName)
+        public async Task<bool> AddRoleToUserAsync(int userId, string roleName)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);
-            if (user == null) return false;
-
-            //var roleExists = await _roleManager.RoleExistsAsync(roleName);
+            if (user == null)
+            {
+                throw new NotFoundException($"UserId {userId} not found");
+            }
             //cek apakah ada role dengan nama itu
             var role = await _context.Roles
                 .FirstOrDefaultAsync(a => a.Name == roleName);
             if (role == null)
             {
                 _logger.LogWarning("Failed to assign role {RoleName} to user {UserId}", roleName, userId);
-                return false;
+                throw new NotFoundException($"Role {roleName} not found");
             }
             //cek apakah role *tidak* ada di user
             var userRole = await _context.UserRoles
                 .FirstOrDefaultAsync(a => a.UserId == user.Id && a.RoleId == role.Id);
             if (userRole != null)
             {
-                _logger.LogWarning("Failed to remove role {RoleName} from user {UserId}", roleName, userId);
-                return false;
+                _logger.LogWarning("Failed to assign role {RoleName} to user {UserId}", roleName, userId);
+                throw new ValidationException($"User already has role {roleName}");
             }
 
-            //var result = await _userManager.AddToRoleAsync(user, roleName);
             _context.UserRoles.Add(new UserRole
             {
                 UserId = user.Id,
@@ -89,7 +89,7 @@ namespace MyApp.WebAPI.Services
             });
             await _context.SaveChangesAsync();
 
-
+            _logger.LogInformation("Role {RoleName} added to user {UserId}", roleName, userId);
             return true;
 
             
@@ -99,15 +99,17 @@ namespace MyApp.WebAPI.Services
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);
-            if (user == null) return false;
-
+            if (user == null)
+            {
+                throw new NotFoundException($"UserId {userId} not found");
+            }
             //cek apakah ada role dengan nama itu
             var role = await _context.Roles
                 .FirstOrDefaultAsync(a => a.Name == roleName);
             if (role == null)
             {
-                _logger.LogWarning("Failed to assign role {RoleName} to user {UserId}", roleName, userId);
-                return false;
+                _logger.LogWarning("Failed to remove role {RoleName} from user {UserId}", roleName, userId);
+                throw new ValidationException($"Invalid role {roleName}");
             }
             //cek apakah role ada di user
             var userRole = await _context.UserRoles
@@ -115,9 +117,9 @@ namespace MyApp.WebAPI.Services
             if (userRole == null)
             {
                 _logger.LogWarning("Failed to remove role {RoleName} from user {UserId}", roleName, userId);
-                return false;
+                throw new NotFoundException($"Role {roleName} not found");
             }
-            //var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            
             _context.UserRoles.Remove(userRole);
             await _context.SaveChangesAsync();
 
@@ -125,56 +127,58 @@ namespace MyApp.WebAPI.Services
             return true;
         }
 
-        public async Task<bool> AddClaimToUserAsync(int userId, string claimType, string claimValue)
+        public async Task<bool> SetClaimForUserAsync(int userId, string claimType, string claimValue)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);
-            if (user == null) return false;
-
+            if (user == null)
+            {
+                throw new NotFoundException($"UserId {userId} not found");
+            }
             //cek apakah claim *tidak* ada di user
             var userClaim = await _context.UserClaims
                 .FirstOrDefaultAsync(a => a.UserId == user.Id && a.ClaimType == claimType);
             if (userClaim != null)
             {
-                _logger.LogWarning("Failed to add claim {ClaimType}:{ClaimValue} to user {UserId}", claimType, claimValue, userId);
-                return false;
+                userClaim.ClaimValue = claimValue;
             }
-
-            //var claim = new Claim(claimType, claimValue);
-            //var result = await _userManager.AddClaimAsync(user, claim);
-
-            _context.UserClaims.Add(new UserClaim
+            else
             {
-                UserId = user.Id,
-                ClaimType = claimType,
-                ClaimValue = claimValue
-            });
+                _context.UserClaims.Add(new UserClaim
+                {
+                    UserId = user.Id,
+                    ClaimType = claimType,
+                    ClaimValue = claimValue
+                });
+            }
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("Claim {ClaimType}:{ClaimValue} added to user {UserId}", claimType, claimValue, userId);
+            _logger.LogInformation("Claim {ClaimType} set to {ClaimValue} for user {UserId}", claimType, claimValue, userId);
             return true;
 
             
         }
 
-        public async Task<bool> RemoveClaimFromUserAsync(int userId, string claimType, string claimValue)
+        public async Task<bool> RemoveClaimFromUserAsync(int userId, string claimType)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);
-            if (user == null) return false;
-
+            if (user == null)
+            {
+                throw new NotFoundException($"UserId {userId} not found");
+            }
             //cek apakah role ada di user
             var userClaim = await _context.UserClaims
                 .FirstOrDefaultAsync(a => a.UserId == user.Id && a.ClaimType == claimType);
             if (userClaim == null)
             {
-                _logger.LogWarning("Failed to remove claim {ClaimType}:{ClaimValue} from user {UserId}", claimType, claimValue, userId);
-                return false;
+                _logger.LogWarning("Failed to remove claim {ClaimType} from user {UserId}", claimType, userId);
+                throw new NotFoundException($"Claim {claimType} not found");
             }
             _context.UserClaims.Remove(userClaim);
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("Claim {ClaimType}:{ClaimValue} removed from user {UserId}", claimType, claimValue, userId);
+            _logger.LogInformation("Claim {ClaimType} removed from user {UserId}", claimType, userId);
             return true;
         }
         public async Task<bool> ActivateUserAsync(int userId)
@@ -184,7 +188,7 @@ namespace MyApp.WebAPI.Services
             if (user == null)
             {
                 _logger.LogWarning("Failed to activate user {UserId}", userId);
-                return false;
+                throw new NotFoundException($"UserId {userId} not found");
             }
 
             user.IsActive = true;
@@ -201,11 +205,11 @@ namespace MyApp.WebAPI.Services
             if (user == null)
             {
                 _logger.LogWarning("Failed to deactivate user {UserId}", userId);
-                return false;
+                throw new NotFoundException($"UserId {userId} not found");
             }
 
             user.IsActive = false;
-            user.RefreshToken = null;
+            user.RefreshToken = null; //also invalidate refresh token
             user.RefreshTokenExpiry = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

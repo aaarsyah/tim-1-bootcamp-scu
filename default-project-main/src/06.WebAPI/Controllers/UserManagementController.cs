@@ -74,14 +74,14 @@ namespace MyApp.WebAPI.Controllers
         /// POST /api/usermanagement/users/{userId}/roles
         /// Requires: Admin role
         /// </summary>
-        [HttpPost("users/{userId}/roles")]
+        [HttpPut("users/{userId}/roles")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> AssignRole(int userId, [FromBody] RoleRequestDto request)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> AssignRole(int userId, [FromBody] RoleRequestDto request)
         {
-            var result = await _userManagementService.AssignRoleToUserAsync(userId, request.RoleName);
+            var result = await _userManagementService.AddRoleToUserAsync(userId, request.RoleName);
             
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>
@@ -91,12 +91,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpDelete("users/{userId}/roles")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> RemoveRole(int userId, [FromBody] RoleRequestDto request)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> RemoveRole(int userId, [FromBody] RoleRequestDto request)
         {
             var result = await _userManagementService.RemoveRoleFromUserAsync(userId, request.RoleName);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>
@@ -104,14 +104,14 @@ namespace MyApp.WebAPI.Controllers
         /// POST /api/usermanagement/users/{userId}/claims
         /// Requires: Admin role
         /// </summary>
-        [HttpPost("users/{userId}/claims")]
+        [HttpPut("users/{userId}/claims")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> AddClaim(int userId, [FromBody] ClaimDto claim)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> SetClaim(int userId, [FromBody] ClaimDto claim)
         {
-            var result = await _userManagementService.AddClaimToUserAsync(userId, claim.Type, claim.Value);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+            var result = await _userManagementService.SetClaimForUserAsync(userId, claim.Type, claim.Value);
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>
@@ -121,12 +121,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpDelete("users/{userId}/claims")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> RemoveClaim(int userId, [FromBody] ClaimDto claim)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> RemoveClaim(int userId, [FromBody] ClaimDto claim)
         {
-            var result = await _userManagementService.RemoveClaimFromUserAsync(userId, claim.Type, claim.Value);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+            var result = await _userManagementService.RemoveClaimFromUserAsync(userId, claim.Type);
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPut("users/{userId}/activate")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> ActivateUser(int userId)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> ActivateUser(int userId)
         {
             var result = await _userManagementService.ActivateUserAsync(userId);
 
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+            return Ok(ApiResponse<object>.SuccessResult());
         }
         /// <summary>
         /// Deactivate User
@@ -150,12 +150,12 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPut("users/{userId}/deactivate")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> DeactivateUser(int userId)
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<object>>> DeactivateUser(int userId)
         {
             var result = await _userManagementService.DeactivateUserAsync(userId);
-            
-            return Ok(ApiResponse<bool>.SuccessResult(result));
+
+            return Ok(ApiResponse<object>.SuccessResult());
         }
     }
 }
