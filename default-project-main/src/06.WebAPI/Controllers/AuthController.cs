@@ -42,13 +42,13 @@ namespace MyApp.WebAPI.Controllers
         /// POST /api/auth/register
         /// </summary>
         [HttpPost("register")]
-        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Register([FromBody] RegisterRequestDto request)
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ApiResponse<bool>>> Register([FromBody] RegisterRequestDto request)
         {
             var result = await _authenticationService.RegisterAsync(request);
-            
-            return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+
+            return Ok(ApiResponse<object>.SuccessResult());
             // Semua error akan throw exception dan akan di catch di middleware
         }
 

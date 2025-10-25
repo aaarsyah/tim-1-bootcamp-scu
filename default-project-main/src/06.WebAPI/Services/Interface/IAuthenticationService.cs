@@ -11,7 +11,7 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public interface IAuthenticationService
     {
-        Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request);
+        Task<bool> RegisterAsync(RegisterRequestDto request);
         Task<AuthResponseDto> LoginAsync(LoginRequestDto request);
         Task<AuthResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request);
         Task<bool> LogoutAsync(int userId);

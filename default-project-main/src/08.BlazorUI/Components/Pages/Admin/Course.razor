@@ -7,7 +7,7 @@
 @inject NavigationManagerExt Navigation
 
 @inject IAuthService AuthService
-@inject IAdminService CourseService
+@inject IAdminService AdminService
 
 @inject IDialogService DialogService
 
@@ -24,7 +24,7 @@
     <ToolBarContent>
         <MudText Typo="Typo.h6">Course</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder="Search"
+        <MudTextField @bind-Value="searchString" Placeholder="Search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium" Class="mt-0" />
     </ToolBarContent>
@@ -81,7 +81,7 @@
 @code {
     private IEnumerable<CourseDto> course = new List<CourseDto>();
     private bool hover = true;
-    private string searchString1 = "";
+    private string searchString = "";
     private CourseDto selectedItem1 = null;
 
     protected override async Task OnInitializedAsync()
@@ -91,10 +91,10 @@
 
     private async Task LoadCourses()
     {
-        course = await CourseService.GetAllCourseAsync();
+        course = await AdminService.GetAllCourseAsync();
     }
 
-    private bool FilterFunc1(CourseDto u) => FilterFunc(u, searchString1);
+    private bool FilterFunc1(CourseDto u) => FilterFunc(u, searchString);
 
     private bool FilterFunc(CourseDto u, string searchString)
     {
@@ -111,7 +111,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        bool result = await CourseService.DeleteCourseAsync(auth, id);
+        bool result = await AdminService.DeleteCourseAsync(auth, id);
         if (result) await LoadCourses();
     }
 
@@ -137,5 +137,4 @@
             await LoadCourses();
         }
     }
-
 }

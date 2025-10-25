@@ -11,6 +11,10 @@ namespace MyApp.BlazorUI.Services
         Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request);
         Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request);
         Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id);
+        Task<List<CategoryDto>> GetAllCategoryAsync();
+        Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryDto request);
+        Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryDto request);
+        Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id);
         Task<List<PaymentDto>> GetAllPaymentMethodsAsync();
         Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto payment);
         Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto payment);
@@ -141,9 +145,109 @@ namespace MyApp.BlazorUI.Services
             }
         }
 
+        public async Task<List<CategoryDto>> GetAllCategoryAsync()
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Category");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
+                return new();
+            }
+        }
+
+
+        public async Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryDto request)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/Category", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CreateCourseAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryDto request)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.PutAsJsonAsync($"api/Category/{id}", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdateCourseAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            //
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/Category/{id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+                return apiResponse?.StatusCode == "SUCCESS";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DeleteCourseAsync: Error: {ex.Message}");
+                return false;
+            }
+        }
+
         public async Task<List<PaymentDto>> GetAllPaymentMethodsAsync()
         {
-            //
             var _httpClient = _factory.CreateClient("WebAPI");
             try
             {

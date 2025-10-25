@@ -53,7 +53,7 @@ namespace MyApp.WebAPI.Services
         /// Register User Baru
         /// Membuat user account baru dengan role default "User"
         /// </summary>
-        public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request)
+        public async Task<bool> RegisterAsync(RegisterRequestDto request)
         {
             // Cek apakah email sudah terdaftar
             //var existingUser = await _userManager.FindByEmailAsync(request.Email);
@@ -89,8 +89,6 @@ namespace MyApp.WebAPI.Services
                         CreatedBy = "System"
                     };
 
-                    //await _unitOfWork.Users.AddAsync(user);
-                    //await _unitOfWork.CompleteAsync();
                     await _context.Users.AddAsync(user);
                     await _context.SaveChangesAsync(); //Id di auto-generate setelah di save
 
@@ -104,19 +102,19 @@ namespace MyApp.WebAPI.Services
                         CreatedBy = "System"
                     };
 
-                    // Add default claims
-                    var userClaim = new UserClaim
-                    {
-                        UserId = user.Id,
-                        ClaimType = "can_view_profile",
-                        ClaimValue = "true",
-                        CreatedAt = DateTime.UtcNow,
-                        CreatedBy = "System"
-                    };
+                    //// Add default claims
+                    //var userClaim = new UserClaim
+                    //{
+                    //    UserId = user.Id,
+                    //    ClaimType = "can_view_profile",
+                    //    ClaimValue = "true",
+                    //    CreatedAt = DateTime.UtcNow,
+                    //    CreatedBy = "System"
+                    //}; // TODO: Belum tahu claim mau diapakan
 
                     // Save user role dan claims
-                    await _context.UserRoles.AddAsync(userRole); // TODO: Await all to make it faster
-                    await _context.UserClaims.AddAsync(userClaim);
+                    await _context.UserRoles.AddAsync(userRole);
+                    //await _context.UserClaims.AddAsync(userClaim);
                     await _context.SaveChangesAsync();
 
                     // Kirim email konfirmasi
@@ -125,30 +123,14 @@ namespace MyApp.WebAPI.Services
 
                     _logger.LogInformation("User registration successful for email: {Email}", request.Email);
 
-                    // Generate JWT tokens
-                    var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
-                    var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
-
-                    // Save refresh token
-                    // TODO: Shouldn't refresh token be given after email is confirmed?
-                    user.RefreshToken = refreshToken;
-                    user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
-
                     // ===== STEP 9 =====
                     // All operations succeeded, make permanent
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    return new AuthResponseDto
-                    {
-                        Message = "Registration successful",
-                        AccessToken = accessToken,
-                        RefreshToken = refreshToken,
-                        AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
-                        User = await MapToUserDto(user)
-                    };
+                    return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // ===== ROLLBACK ON ERROR =====
                     // Any exception -> undo all changes

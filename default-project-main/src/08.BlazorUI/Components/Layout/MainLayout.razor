@@ -14,106 +14,6 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@* <MudLayout>
-
-    <div style="display: flex; flex-direction: column; min-height: 100vh;">
-
-        @if (ShouldShowAppBar())
-        {
-            <MudAppBar Elevation="1">
-                <MudLink OnClick="Navigation.GoToHome">
-                    <MudImage Src="img/applogo.svg" Alt="App Logo" />
-                </MudLink>
-                 <CascadingAuthenticationState>
-                    <AuthorizeView>
-                        <Authorized>
-                            <p>Hello, @context.User.Identity?.Name!</p>
-                            <p><button>Authorized Only Button</button></p>
-                        </Authorized>
-                        <NotAuthorized>
-                            <p>You're not authorized.</p>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                </CascadingAuthenticationState> 
-                
-
-
-
-                <MudSpacer />
-                @if (Loggedin)
-                {
-                    @if (IsAdmin)
-                    {
-                        <MudButton Variant="Variant.Text" OnClick="Navigation.GoToDashboard"><MudText>Admin</MudText></MudButton>
-                    }
-                    <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout" />
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu"><MudText>Kelasku</MudText></MudButton>
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice"><MudText>Pembelian</MudText></MudButton>
-                    <MudText>|</MudText>
-                    <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfile"/>
-                    <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout" />
-                }
-                else
-                {
-                    <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister"><MudText>Daftar Sekarang</MudText></MudButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin"><MudText>Masuk</MudText></MudButton>
-                }
-            </MudAppBar>
-        }
-
-        <!-- Main Content (flex-grow: 1) -->
-        <MudMainContent Class="pa-4 mt-16" Style="flex: 1;">
-            @Body
-        </MudMainContent>
-
-        @if (ShouldShowFooter())
-        {
-            <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
-                <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
-                    <MudGrid Class="d-flex justify-space-evenly">
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
-                            <MudText Typo="Typo.body2">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                            </MudText>
-                        </MudItem>
-
-                        <MudItem xs="12" sm="6" md="4">
-                            <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
-                            <MudStack Row="true" Spacing="1">
-                                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
-                                    <li>Biola</li>
-                                    <li>Gitar</li>
-                                    <li>Drum</li>
-                                    <li>Menyanyi</li>
-                                    <li>Piano</li>
-                                    <li>Saxophone</li>
-                                </ul>
-                            </MudStack>
-                        </MudItem>
-
-                        <MudItem xs="12" sm="12" md="4">
-                            <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
-                            <MudText Typo="Typo.body2" Class="mb-2">
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
-                            </MudText>
-                            <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
-                            <MudStack Row="true" Spacing="2">
-                                <MudLink Href="tel:+62"><MudIconButton><img src="img/icon-telephone.svg" /></MudIconButton></MudLink>
-                                <MudLink Href="https://www.instagram.com/" Target="_blank"><MudIconButton><img src="img/icon-instagram.svg" /></MudIconButton></MudLink>
-                                <MudLink Href="https://www.youtube.com/" Target="_blank"><MudIconButton><img src="img/icon-youtube.svg" /></MudIconButton></MudLink>
-                                <MudLink Href="https://web.telegram.org/"><MudIconButton><img src="img/icon-tele.svg" /></MudIconButton></MudLink>
-                                <MudLink Href="mailto:aku@gmail.com"><MudIconButton><img src="img/icon-email.svg" /></MudIconButton></MudLink>
-                            </MudStack>
-                        </MudItem>
-                    </MudGrid>
-                </MudContainer>
-            </MudPaper>
-        }
-    </div>
-
-</MudLayout> *@
-
 <MudLayout>
     @if (Loggedin && IsAdmin)
     {
@@ -326,6 +226,7 @@
     {
         if (firstRender)
         {
+            await AuthService.GetAccessTokenAsync();
             await UpdateLogin();
             StateHasChanged();
         }

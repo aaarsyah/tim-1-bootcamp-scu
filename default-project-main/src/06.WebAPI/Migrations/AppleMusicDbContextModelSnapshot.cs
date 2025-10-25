@@ -307,8 +307,8 @@ namespace MyApp.WebAPI.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric(10)");
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
@@ -344,7 +344,7 @@ namespace MyApp.WebAPI.Migrations
                             ImageUrl = "img/Landing1.svg",
                             IsActive = true,
                             Name = "Kursus Drummer Special Coach (Eno Netral)",
-                            Price = 8500000m,
+                            Price = 8500000L,
                             RefId = new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1")
                         },
                         new
@@ -357,7 +357,7 @@ namespace MyApp.WebAPI.Migrations
                             ImageUrl = "img/Landing2.svg",
                             IsActive = true,
                             Name = "[Beginner] Guitar class for kids",
-                            Price = 1600000m,
+                            Price = 1600000L,
                             RefId = new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2")
                         },
                         new
@@ -370,7 +370,7 @@ namespace MyApp.WebAPI.Migrations
                             ImageUrl = "img/Landing3.svg",
                             IsActive = true,
                             Name = "Biola Mid-Level Course",
-                            Price = 3000000m,
+                            Price = 3000000L,
                             RefId = new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1")
                         },
                         new
@@ -383,7 +383,7 @@ namespace MyApp.WebAPI.Migrations
                             ImageUrl = "img/Landing4.svg",
                             IsActive = true,
                             Name = "Drummer for kids (Level Basic/1)",
-                            Price = 2200000m,
+                            Price = 2200000L,
                             RefId = new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928")
                         },
                         new
@@ -395,8 +395,8 @@ namespace MyApp.WebAPI.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                             ImageUrl = "img/Landing5.svg",
                             IsActive = true,
-                            Name = "Kursu Piano : From Zero to Pro (Full Package)",
-                            Price = 11650000m,
+                            Name = "Kursus Piano : From Zero to Pro (Full Package)",
+                            Price = 11650000L,
                             RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9")
                         },
                         new
@@ -409,7 +409,7 @@ namespace MyApp.WebAPI.Migrations
                             ImageUrl = "img/Landing6.svg",
                             IsActive = true,
                             Name = "Expert Level Saxophone",
-                            Price = 7350000m,
+                            Price = 7350000L,
                             RefId = new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee")
                         });
                 });
@@ -464,14 +464,27 @@ namespace MyApp.WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
+                    b.Property<DateOnly>("ScheduleDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -479,8 +492,6 @@ namespace MyApp.WebAPI.Migrations
 
                     b.HasIndex("RefId")
                         .IsUnique();
-
-                    b.HasIndex("ScheduleId");
 
                     b.ToTable("InvoiceDetail", (string)null);
                 });
@@ -1212,7 +1223,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Super Admin",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1228,7 +1239,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Nur Imam Iskandar",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1244,7 +1255,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Iskandar",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1276,7 +1287,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "yusri sahrul",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1292,7 +1303,7 @@ namespace MyApp.WebAPI.Migrations
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
                             FailedLoginAttempts = 0,
-                            IsActive = false,
+                            IsActive = true,
                             Name = "yusri sahrul test",
                             PasswordHash = "",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1516,15 +1527,8 @@ namespace MyApp.WebAPI.Migrations
                     b.HasOne("MyApp.WebAPI.Models.Entities.Invoice", null)
                         .WithMany("InvoiceDetails")
                         .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MyApp.WebAPI.Models.Entities.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("MyApp.WebAPI.Models.Entities.MyClass", b =>

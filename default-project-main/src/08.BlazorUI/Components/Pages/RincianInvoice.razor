@@ -1,116 +1,140 @@
-@page "/details-invoice"
+@page "/details-invoice/{InvoiceId:int}"
+@using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
+@using System.Globalization
 
-@inject NavigationManagerExt Navigation;
+@inject NavigationManagerExt Navigation
+
+@inject IAuthService AuthService
+@inject ICheckoutService CheckoutService
+
+<PageTitle>Rincian Invoice</PageTitle>
 
 <style>
 /* Selang-seling warna baris */
 .mud-table tr:nth-child(even) {
     background-color: rgba(184, 134, 11, 0.2) !important; /* Kuning tua transparan */
 }
-
-
 </style>
 
-<PageTitle>Home</PageTitle>
 <MudContainer class="mt-20">
     <MudItem xs="12" sm="10">
-    <MudText Typo="Typo.subtitle1">
-     <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
-     <MudLink OnClick="Navigation.GoToInvoice"><b style="color: gray;">Invoice ></b></MudLink>
-        <MudLink ><b>Rincian Invoice</b></MudLink>
-    </MudText>
-       
+        <MudText Typo="Typo.subtitle1">
+            <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
+            <MudLink OnClick="Navigation.GoToInvoice"><b style="color: gray;">Invoice ></b></MudLink>
+            <MudLink><b>Rincian Invoice</b></MudLink>
+        </MudText>
     </MudItem>
 
-    
-     <MudText Typo="Typo.subtitle1" Class="mb-4"><b> Rincian Invoice</b></MudText>
-    <MudItem xs="16" sm="8">
-        <MudText Typo="Typo.subtitle1"><b>No.Invoice   : AB00003</b></MudText>
-        <MudText Typo="Typo.subtitle1"><b>Tanggal Beli : 25 Juli 2026</b></MudText>
-    </MudItem>
-    <MudTable T="Element" Items="@Elements.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm"
-          Class="mt-4"
-          @ref="mudTable"
-          RowClass="cursor-pointer"
-          RowClassFunc="@SelectedRowClassFunc"
-          OnRowClick="RowClickEvent">
-   
-    <HeaderContent>
-        <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
-    </HeaderContent>
+    @if (isLoading)
+    {
+        <div class="d-flex justify-center mt-10">
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" />
+        </div>
+    }
+    else if (Elements == null || !Elements.Any())
+    {
+        <MudText Class="mt-6" Typo="Typo.subtitle1" Align="Align.Center">
+            Tidak ada data rincian invoice.
+        </MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.subtitle1" Class="mt-4 mb-4 fw-bold"><b> Rincian Invoice</b></MudText>
+        <MudItem xs="16" sm="8">
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>No.Invoice: @Invoice.RefCode</b></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>Tanggal Beli: @Invoice.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</b></MudText>
+        </MudItem>
 
-    <RowTemplate>
-    <MudTd DataLabel="No">@context.Number</MudTd>
-    <MudTd DataLabel="NamaCourse">@context.NamaCourse</MudTd>
-    <MudTd DataLabel="Kategori">@context.Kategori</MudTd>
-    <MudTd DataLabel="JadwalKursus">@context.JadwalKursus</MudTd>
-    <MudTd DataLabel="Harga">@context.Harga</MudTd>
-</RowTemplate>
-</MudTable>
+        <MudItem Class="d-flex justify-end">
+            <MudText Typo="Typo.subtitle1" Class="mb-4 fw-bold"><b>Total Harga: @($"IDR {Invoice.TotalPrice:N0}")</b></MudText>
+        </MudItem>
+
+        <MudTable T="InvoiceDetailDto" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm"
+                  Class="mt-4"
+                  @ref="mudTable"
+                  RowClass="cursor-pointer"
+                  RowClassFunc="@SelectedRowClassFunc"
+                  OnRowClick="RowClickEvent">
+
+            <HeaderContent>
+                <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
+            </HeaderContent>
+
+            <RowTemplate Context="item">
+                <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd>
+                <MudTd DataLabel="NamaCourse">@item.CourseName</MudTd>
+                <MudTd DataLabel="Kategori">@item.CategoryName</MudTd>
+                <MudTd DataLabel="JadwalKursus">@item.ScheduleDate.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
+                <MudTd DataLabel="Harga">@($"IDR {item.Price:N0}")</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
 </MudContainer>
 
-
-
 @code {
+    [Parameter]
+    public int InvoiceId { get; set; }
+
+    private bool isLoading = true;
+    private MudTable<InvoiceDetailDto> mudTable;
     private int selectedRowNumber = -1;
-    private MudTable<Element> mudTable;
-    private List<string> clickedEvents = new();
-    private IEnumerable<Element> Elements = new List<Element>()
-    {
-           new Element()
-            {
-                Number = 1,
-                NamaCourse = "Kursus Drum Spesial Coach (Eno Netral)",
-                Kategori = "Drum",
-                JadwalKursus = "Senin, 25 Juli 2026",
-                Harga = "IDR. 8.500.000"
-            },
-       new Element()
-            {
-                Number = 2,
-                NamaCourse = "Biola Mid-Level Course",
-                Kategori = "Biola",
-                JadwalKursus = "Senin, 25 Juli 2026",
-                Harga = "IDR. 3.000.000"
-            }
+    private List<InvoiceDetailDto> Elements = new();
+    private InvoiceDto Invoice = new();
 
-    };
+    // protected override async Task OnInitializedAsync()
+    // {
+    // }
 
-    private void RowClickEvent(TableRowClickEventArgs<Element> tableRowClickEventArgs)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        clickedEvents.Add("Row has been clicked");
+        if (!firstRender)
+        {
+            return;
+        }
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        var invoice = await CheckoutService.GetInvoiceByIdAsync(auth, InvoiceId);
+        if (invoice == null)
+        {
+            isLoading = false;
+            StateHasChanged();
+            return;
+        }
+        Invoice = invoice;
+        Elements = await CheckoutService.GetInvoiceDetailsByInvoiceIdAsync(auth, InvoiceId); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+        isLoading = false;
+        StateHasChanged();
     }
 
-    private string SelectedRowClassFunc(Element element, int rowNumber)
+    private void RowClickEvent(TableRowClickEventArgs<InvoiceDetailDto> args)
+    {
+        Console.WriteLine($"Row clicked: {args.Item?.CourseName}");
+    }
+
+    private string SelectedRowClassFunc(InvoiceDetailDto element, int rowNumber)
     {
         if (selectedRowNumber == rowNumber)
         {
             selectedRowNumber = -1;
-            clickedEvents.Add("Selected Row: None");
             return string.Empty;
         }
         else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
         {
             selectedRowNumber = rowNumber;
-            clickedEvents.Add($"Selected Row: {rowNumber}");
             return "selected";
         }
         else
         {
             return string.Empty;
         }
-    }
-
-    public class Element
-    {
-        public int Number { get; set; }
-        public string NamaCourse { get; set; }
-        public string Kategori { get; set; }
-        public string JadwalKursus { get; set; }
-        public string Harga { get; set; }
     }
 }

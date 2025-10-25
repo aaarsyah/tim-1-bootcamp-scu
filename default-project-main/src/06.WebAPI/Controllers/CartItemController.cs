@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Exceptions;
-using MyApp.WebAPI.Models;
 using MyApp.Shared.DTOs;
-using System.Net;
 using MyApp.WebAPI.Services;
-using System.Net;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers

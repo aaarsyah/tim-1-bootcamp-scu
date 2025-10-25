@@ -31,12 +31,21 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get Invoice Detail by IdInvoice
         /// </summary>
-        public async Task<InvoiceDetailDto> GetInvoiceDetailsByUserAsync(int invoiceId)
+        public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdPersonalAsync(int userId, int invoiceId)
         {
-            var invoicesDetail = await _context.InvoiceDetails
+            // TODO: Review code
+            var invoice = await _context.Invoices
                 .FirstOrDefaultAsync(d => d.Id == invoiceId);
-                
-            return _mapper.Map<InvoiceDetailDto>(invoicesDetail);
+            if (invoice.UserId != userId)
+            {
+                throw new PermissionException("Invoice not owned by user");
+            }
+            var invoiceDetails = await _context.InvoiceDetails
+                .Where(d => d.InvoiceId == invoiceId)
+                .ToListAsync();
+
+            // Pastikan kamu memetakan ke List<InvoiceDetailDto>, bukan ke InvoiceDetailDto tunggal
+            return _mapper.Map<List<InvoiceDetailDto>>(invoiceDetails);
         }
 
         /// <summary>
@@ -49,7 +58,7 @@ namespace MyApp.WebAPI.Services
             return _mapper.Map<IEnumerable<InvoiceDetailDto>>(invoicesDetail);
         }
 
-//Get Detail by IdDetail
+        //Get Detail by IdDetail
         public async Task<InvoiceDetailDto> GetInvoicesDetailByIdAsync(int id)
         {
             var invoiceDetail = await _context.InvoiceDetails

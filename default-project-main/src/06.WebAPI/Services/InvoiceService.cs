@@ -32,6 +32,7 @@ namespace MyApp.WebAPI.Services
         {
             var invoices = await _context.Invoices
                 .Where(m => m.UserId == userId)
+                .Include(m => m.InvoiceDetails)
                 .ToListAsync();
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
@@ -54,32 +55,27 @@ namespace MyApp.WebAPI.Services
         {
             // Misalnya kamu ingin ambil semua invoice
             var invoices = await _context.Invoices
-                .ToListAsync(); // hapus .Include(c => c.Courses) jika Courses gak ada
+                .Include(m => m.InvoiceDetails)
+                .ToListAsync();
+
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
+
+
+        /// <summary>
+        /// Get Invoice by Id
+        /// </summary>
 
         public async Task<InvoiceDto> GetInvoicesByIdAsync(int id)
         {
             var invoice = await _context.Invoices
+                .Include(m => m.InvoiceDetails)
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (invoice == null)
                 throw new NotFoundException($"Invoice with Id {id} not found");
 
             return _mapper.Map<InvoiceDto>(invoice);
         }
-
-        public async Task<InvoiceDto> CreateInvoicesAsync(CreateInvoiceDto createInvoiceDto)
-        {
-            var invoice = _mapper.Map<Invoice>(createInvoiceDto);
-
-            _context.Invoices.Add(invoice);
-            await _context.SaveChangesAsync();
-
-            _logger.LogInformation("Invoice created: {RefCode} with ID: {Id}", invoice.RefCode, invoice.Id);
-
-            return _mapper.Map<InvoiceDto>(invoice);
-        }
-
 
         /// <summary>
         /// Check if Invoice exists

@@ -40,7 +40,7 @@ namespace MyApp.WebAPI.Middleware
             var correlationId = GetOrGenerateCorrelationId(context);
             
             // Add to response headers (so client can see it)
-            context.Response.Headers.Add(CorrelationIdHeader, correlationId);
+            context.Response.Headers.Append(CorrelationIdHeader, correlationId);
             
             // Add to logging context (all logs in this request will include it)
             // Note: Requires Serilog.Context package

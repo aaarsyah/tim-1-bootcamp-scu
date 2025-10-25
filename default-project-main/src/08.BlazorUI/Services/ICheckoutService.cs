@@ -11,5 +11,7 @@ namespace MyApp.BlazorUI.Services
         Task<CheckoutResponseDto?> CheckoutItemsAsync(AuthenticationHeaderValue authorization, CheckoutRequestDto request);
         Task<List<PaymentDto>> GetAllPaymentsAsync();
         Task<List<InvoiceDto>> GetOwnInvoicesAsync(AuthenticationHeaderValue authorization);
+        Task<InvoiceDto?> GetInvoiceByIdAsync(AuthenticationHeaderValue authorization, int invoiceId);
+        Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAsync(AuthenticationHeaderValue authorization, int invoiceId);
     }
 }

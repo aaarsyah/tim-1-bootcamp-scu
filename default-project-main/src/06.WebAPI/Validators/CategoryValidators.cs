@@ -67,8 +67,8 @@ namespace MyApp.WebAPI.Validators
                 .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
 
             RuleFor(x => x.Price)
-                .GreaterThan(0).WithMessage("Price must be greater than 0")
-                .LessThanOrEqualTo(999999999.99m).WithMessage("Price cannot exceed 999,999,999.99"); // TODO: Should we use decimal or int?
+                .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
+                .LessThanOrEqualTo(999999999).WithMessage("Price cannot exceed IDR 999,999,999");
 
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("Valid category is required");
@@ -97,8 +97,8 @@ namespace MyApp.WebAPI.Validators
                 .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
 
             RuleFor(x => x.Price)
-                .GreaterThan(0).WithMessage("Price must be greater than 0")
-                .LessThanOrEqualTo(999999999.99m).WithMessage("Price cannot exceed 999,999,999.99");
+                .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
+                .LessThanOrEqualTo(999999999).WithMessage("Price cannot exceed IDR 999,999,999");
 
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("Valid category is required");

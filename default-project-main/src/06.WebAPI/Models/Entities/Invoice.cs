@@ -33,10 +33,11 @@
         /// Virtual field untuk PaymentMethod: Metode pembayaran yang terkait
         /// </summary>
         public virtual PaymentMethod? PaymentMethod { get; set; } = null!;
+
         /// <summary>
         /// Virtual field untuk InvoiceDetails: Item-item dalam bukti pembelian yang terkait
         /// </summary>
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah saja
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>(); //Collection navigation untuk mempermudah pemakaian LINQ
 
     }
 }

@@ -11,21 +11,22 @@ namespace MyApp.Shared.DTOs
         public int Id { get; set; }
 
         /// <summary>
-        /// RefCode name
+        /// Nama Course
         /// </summary>
-        public string RefCode { get; set; } = string.Empty;
+        public string CourseName { get; set; } = string.Empty;
 
         /// <summary>
-        /// TanggalBeli description
+        /// Nama Kategori Kelas
         /// </summary>
-        public DateTime CreatedAt { get; set; }
-
+        public string CategoryName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Whether Invoice is active
+        /// Product price
         /// </summary>
-        public bool IsActive { get; set; }
+        public long Price { get; set; }
 
+        public DateOnly ScheduleDate { get; set; }
+        
     }
 
     /// <summary>

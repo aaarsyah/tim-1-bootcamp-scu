@@ -1,73 +1,86 @@
 @page "/invoice"
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
+@using System.Globalization
 
-@inject NavigationManagerExt Navigation;
-@inject ISnackbar Snackbar
+@inject NavigationManagerExt Navigation
 
 @inject IAuthService AuthService
 @inject ICheckoutService CheckoutService
+
+
+<PageTitle>Invoice</PageTitle>
 
 <style>
 /* Selang-seling warna baris */
 .mud-table tr:nth-child(even) {
     background-color: rgba(184, 134, 11, 0.2) !important; /* Kuning tua transparan */
 }
-
-
 </style>
 
-<PageTitle>Home</PageTitle>
 <MudContainer class="mt-20">
     <MudItem xs="12" sm="4">
-    <MudText Typo="Typo.subtitle1">
-     <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
-    <MudLink OnClick="Navigation.GoToInvoice"><b> Invoice</b></MudLink>
-</MudText>
-
+        <MudText Typo="Typo.subtitle1">
+            <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
+            <MudLink OnClick="Navigation.GoToInvoice"><b> Invoice</b></MudLink>
+        </MudText>
     </MudItem>
 </MudContainer>
-    
+
 <MudContainer class="mt-8">
     <MudItem xs="12" sm="4">
-    <MudText Class="mb-8" Typo="Typo.subtitle1"><b>Menu Invoice</b></MudText>
-</MudItem>
+        <MudText Class="mb-8" Typo="Typo.subtitle1"><b>Menu Invoice</b></MudText>
+    </MudItem>
 
-    <MudTable T="InvoiceDto" Items="@invoices.Take(4)" Hover="true" Breakpoint="Breakpoint.Sm" @ref="mudTable"
-          RowClass="cursor-pointer" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
-   
-    <HeaderContent>
-        <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">No.Invoice</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Tanggal Beli</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Jumlah Kursus</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Total Harga</MudTh>
-        <MudTh Style="background-color: #F8D24B; color: black;">Action</MudTh>
-    </HeaderContent>
+    @if (isLoading)
+    {
+        <div class="d-flex justify-center mt-10">
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" />
+        </div>
+    }
+    else if (Elements == null || !Elements.Any())
+    {
+        <MudText Class="mt-6" Typo="Typo.subtitle1" Align="Align.Center">
+            Tidak ada data invoice.
+        </MudText>
+    }
+    else
+    {
+        <MudTable Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm">
+            <HeaderContent>
+                <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">No.Invoice</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Tanggal Beli</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Jumlah Kursus</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Total Harga</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">Action</MudTh>
+            </HeaderContent>
 
-    <RowTemplate>
-    <MudTd DataLabel="No">@context.Id</MudTd>
-    <MudTd DataLabel="No.Invoice">@context.RefCode</MudTd>
-    <MudTd DataLabel="Tanggal Beli">@context.CreatedAt</MudTd>
-    <MudTd DataLabel="Jumlah Kursus">0</MudTd>
-    <MudTd DataLabel="Total Harga">0</MudTd>
-    <MudTd DataLabel="Action">
-       <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="Navigation.GoToDetailsInvoice">
-    Rincian
-</MudButton>
-    </MudTd>
-</RowTemplate>
-</MudTable>
-
+            <RowTemplate Context="item">
+                <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd> 
+                <MudTd DataLabel="No.Invoice">@item.RefCode</MudTd>
+                <MudTd>@item.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
+                <MudTd DataLabel="Jumlah Kursus">@item.TotalCourse</MudTd>
+                <MudTd DataLabel="Total Harga">@($"IDR {item.TotalPrice:N0}")</MudTd>
+                <MudTd>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(() => Navigation.GoToDetailsInvoice(item.Id))">
+                        Rincian
+                    </MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
 </MudContainer>
 
-
-
 @code {
-    private IEnumerable<InvoiceDto> invoices = new List<InvoiceDto>();
-    private int selectedRowNumber = -1;
     private MudTable<InvoiceDto> mudTable;
-    private List<string> clickedEvents = new();
+    private int selectedRowNumber = -1;
+    private bool isLoading = true;
+    private List<InvoiceDto> Elements = new();
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    // }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -75,38 +88,20 @@
         {
             return;
         }
-        // var auth = await AuthService.GetAccessTokenAsync();
-        // if (auth == null)
-        // {
-        //     Navigation.GoToLogin(); // User belum login, arahkan user ke login page
-        //     return;
-        // }
-        await LoadInvoiceAsync();
-        StateHasChanged();
-    }
-
-    private async Task LoadInvoiceAsync()
-    {
         var auth = await AuthService.GetAccessTokenAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        
-        try
-        {
-            invoices = await CheckoutService.GetOwnInvoicesAsync(auth);
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Gagal memuat invoices: {ex.Message}", Severity.Error);
-        }
+        Elements = await CheckoutService.GetOwnInvoicesAsync(auth); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+        isLoading = false;
+        StateHasChanged();
     }
 
-    private void RowClickEvent(TableRowClickEventArgs<InvoiceDto> tableRowClickEventArgs)
+    private void RowClickEvent(TableRowClickEventArgs<InvoiceDto> args)
     {
-        clickedEvents.Add("Row has been clicked");
+        Console.WriteLine($"Row clicked: {args.Item?.RefCode}");
     }
 
     private string SelectedRowClassFunc(InvoiceDto element, int rowNumber)
@@ -114,13 +109,11 @@
         if (selectedRowNumber == rowNumber)
         {
             selectedRowNumber = -1;
-            clickedEvents.Add("Selected Row: None");
             return string.Empty;
         }
         else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(element))
         {
             selectedRowNumber = rowNumber;
-            clickedEvents.Add($"Selected Row: {rowNumber}");
             return "selected";
         }
         else
@@ -128,14 +121,4 @@
             return string.Empty;
         }
     }
-
-    private void ShowDetail(InvoiceDto element)
-    {
-        // Misalnya log ke event panel
-        clickedEvents.Add($"Detail clicked for: {element.RefCode}");
-
-        // Atau redirect ke halaman detail jika kamu pakai NavigationManager
-        // navigationManager.NavigateTo($"/detail/{element.Id}");
-    }
-
 }

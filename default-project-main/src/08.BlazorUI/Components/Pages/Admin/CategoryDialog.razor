@@ -1,14 +1,19 @@
-@using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
 @using System.ComponentModel.DataAnnotations
+@using MyApp.Shared.DTOs
 
-@inject IDialogService DialogService;
-@inject ICategoryService CategoryService;
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
+@inject IAdminService AdminService
+
+@inject IDialogService DialogService
 
 <MudDialog>
     <DialogContent>
         <MudTextField @bind-Value="Category.Name" Label="Name" Required="true" />
-        <MudTextField @bind-Value="Category.Description" Label="Description" Required="true" />
+        <MudTextField @bind-Value="Category.Description" Label="Description" AutoGrow Required="true" />
         
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
 
@@ -21,18 +26,17 @@
             Upload Picture Category
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Category.Picture))
+        @if (!string.IsNullOrEmpty(Category.ImageUrl))
         {
-            <MudImage Src="@Category.Picture"
+            <MudImage Src="@Category.ImageUrl"
                       Alt="Picture Category Preview"
                       Width="150" Height="100"
                       Class="mt-4" />
         }
 
-        
-        <MudSelect @bind-Value="Category.AllCategory" Class="mt-4" Label="Status">
-            <MudSelectItem Value="CategoryStatus.Active">Active</MudSelectItem>
-            <MudSelectItem Value="CategoryStatus.InActive">Inactive</MudSelectItem>
+        <MudSelect @bind-Value="Category.IsActive" Class="mt-4" Label="Status">
+            <MudSelectItem Value="true">Active</MudSelectItem>
+            <MudSelectItem Value="false">Inactive</MudSelectItem>
         </MudSelect>
     </DialogContent>
 
@@ -44,10 +48,17 @@
 
 @code {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public CategoryItem Category { get; set; } = new();
+    public CategoryDto Category { get; set; } = null!;
+    [Parameter]
+    public bool IsUpdating { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"CourseDialog.razor: IsUpdating: {IsUpdating}");
+    }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
@@ -68,28 +79,54 @@
                 _ => "image/png"
             };
 
-            Category.Picture = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}";
+            Category.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}"; // TODO: Fix this
         }
     }
 
     private async Task Save()
     {
-        CategoryItem result;
-
-        if (Category.Id == 0)
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
         {
-            result = await CategoryService.CreateCategoryAsync(Category); 
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        CategoryDto? result;
+
+        if (IsUpdating)
+        {
+            UpdateCategoryDto updateCategoryDto = new()
+            {
+                Name = Category.Name,
+                LongName = Category.LongName,
+                Description = Category.Description,
+                ImageUrl = Category.ImageUrl,
+                IsActive = Category.IsActive
+            };
+            result = await AdminService.UpdateCategoryAsync(auth, Category.Id, updateCategoryDto);
         }
         else
         {
-            result = await CategoryService.UpdateCategoryAsync(Category);
+            CreateCategoryDto createCategoryDto = new()
+            {
+                Name = Category.Name,
+                LongName = Category.LongName,
+                Description = Category.Description,
+                ImageUrl = Category.ImageUrl,
+                IsActive = Category.IsActive
+            };
+
+            result = await AdminService.CreateCategoryAsync(auth, createCategoryDto);
+        }
+        if (result == null)
+        {
+            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+            return;
         }
         MudDialog.Close(DialogResult.Ok(result));
-        
     }
     private void Cancel()
     {
         MudDialog.Cancel();
     }
-
 }

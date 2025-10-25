@@ -23,7 +23,7 @@ namespace MyApp.WebAPI.Models.Entities
         /// <summary>
         /// Price: Harga kelas dalam IDR
         /// </summary>
-        public int Price { get; set; }
+        public long Price { get; set; }
         /// <summary>
         /// IsActive: Apakah kelas pelajaran aktif?
         /// Catatan: Digunakan pada page Admin

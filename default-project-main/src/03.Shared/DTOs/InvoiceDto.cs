@@ -20,11 +20,9 @@ namespace MyApp.Shared.DTOs
         /// </summary>
         public DateTime CreatedAt { get; set; }
 
+        public long TotalPrice { get; set; }
 
-        /// <summary>
-        /// Whether Invoice is active
-        /// </summary>
-        public bool IsActive { get; set; }
+        public int TotalCourse { get; set; }
 
     }
 
@@ -41,6 +39,6 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// TanggalBeli
         /// </summary>
-        public DateTime CreatedAt{ get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

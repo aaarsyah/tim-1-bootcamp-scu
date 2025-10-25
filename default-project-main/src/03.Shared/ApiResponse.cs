@@ -187,12 +187,12 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Minimum price filter
         /// </summary>
-        public decimal? MinPrice { get; set; }
+        public long? MinPrice { get; set; }
         
         /// <summary>
         /// Maximum price filter
         /// </summary>
-        public decimal? MaxPrice { get; set; }
+        public long? MaxPrice { get; set; }
         
         /// <summary>
         /// Sort field

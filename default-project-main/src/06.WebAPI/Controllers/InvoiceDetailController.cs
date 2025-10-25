@@ -56,24 +56,17 @@ namespace MyApp.WebAPI.Controllers
         /// <response code="200">Returns the list of invoice</response>
         [HttpGet("user/{invoiceId:int}")]
         [Authorize]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetAllInvoicesDetailUser(int invoiceId)
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceId(int invoiceId)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
                 throw new AuthenticationException("Token is invalid");
             }
-            try
-            {
-                var result = await _invoiceDetailService.GetInvoiceDetailsByUserAsync(invoiceId);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving invoice");
-                return StatusCode(500, "Internal server error");
-            }
+            var result = await _invoiceDetailService.GetInvoiceDetailsByInvoiceIdPersonalAsync(userId, invoiceId);
+            return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
         }
 
         /// <summary>

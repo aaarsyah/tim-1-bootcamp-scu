@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿﻿using AutoMapper;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -95,10 +95,15 @@ namespace MyApp.WebAPI.Services
                     }
                     // ===== STEP 4 =====
                     List<CartItem> items = new List<CartItem>();
+
                     foreach (var itemcartid in request.ItemCartIds)
                     {
                         var item = await _context.CartItems
+                            .Include(i => i.Schedule)
+                                .ThenInclude(s => s.Course) //agar bisa mendapatkan price untuk dimasukkan ke invoice detail
+                                    .ThenInclude(s => s.Category) //agar bisa mendapatkan category name untuk dimasukkan ke invoice detail
                             .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == itemcartid);
+
                         if (item == null)
                         {
                             throw new ValidationException(
@@ -119,13 +124,14 @@ namespace MyApp.WebAPI.Services
                     {
                         _context.CartItems.Remove(item);
                     }
+
                     // ===== STEP 7 =====
                     var invoice = new Invoice
                     {
                         RefCode = GenerateInvoiceId(),
                         CreatedAt = DateTime.UtcNow,
                         UserId = user.Id,
-                        PaymentMethodId = paymentmethod.Id,
+                        PaymentMethodId = paymentmethod.Id
                     };
                     _context.Invoices.Add(invoice);
                     await _context.SaveChangesAsync(); // Save transaction record to generate Id
@@ -134,7 +140,10 @@ namespace MyApp.WebAPI.Services
                         _context.InvoiceDetails.Add(new InvoiceDetail
                         {
                             InvoiceId = invoice.Id, // Id generated from saving transaction
-                            ScheduleId = item.ScheduleId
+                            CourseName = item.Schedule.Course.Name,
+                            CategoryName = item.Schedule.Course.Category.Name,
+                            Price = item.Schedule.Course.Price,
+                            ScheduleDate = item.Schedule.Date
                         });
                     }
                     // ===== STEP 8 =====
@@ -180,7 +189,7 @@ namespace MyApp.WebAPI.Services
         {
             var categories = await _context.CartItems
                 .Include(c => c.Schedule)
-                .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
+                    .ThenInclude(s => s.Course) // chaining ke Course untuk mendapatkan courseName
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<CartItemResponseDto>>(categories);
@@ -296,12 +305,12 @@ namespace MyApp.WebAPI.Services
         }
         /// <summary>
         /// Generate unique transaction ID<br />
-        /// Format: APM{yyyyMMddHHmmss}{random 6 digits}<br />
-        /// Example: APM20251005123059012345
+        /// Format: APM{yyMMddHHmmss}{random 6 digits}<br />
+        /// Example: APM251005123059012345
         /// </summary>
         private string GenerateInvoiceId()
         {
-            return $"APM{DateTime.UtcNow:yyyyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
+            return $"APM{DateTime.UtcNow:yyMMddHHmmss}{Random.Shared.Next(0, 999999):D6}";
         }
        
     }

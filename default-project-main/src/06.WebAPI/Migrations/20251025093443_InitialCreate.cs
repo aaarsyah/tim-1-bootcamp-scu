@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyApp.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -115,7 +115,7 @@ namespace MyApp.WebAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Price = table.Column<decimal>(type: "numeric(10,0)", nullable: false),
+                    Price = table.Column<long>(type: "bigint", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -299,6 +299,30 @@ namespace MyApp.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InvoiceDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InvoiceId = table.Column<int>(type: "int", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Price = table.Column<long>(type: "bigint", nullable: false),
+                    ScheduleDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetail_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartItems",
                 columns: table => new
                 {
@@ -321,33 +345,6 @@ namespace MyApp.WebAPI.Migrations
                         name: "FK_CartItems_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InvoiceDetail",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceId = table.Column<int>(type: "int", nullable: true),
-                    ScheduleId = table.Column<int>(type: "int", nullable: false),
-                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoiceDetail", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_InvoiceDetail_Invoices_InvoiceId",
-                        column: x => x.InvoiceId,
-                        principalTable: "Invoices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InvoiceDetail_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -418,12 +415,12 @@ namespace MyApp.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt", "UpdatedBy" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "IsActive", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "admin@applemusic.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, null, "Super Admin", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f37e30ef-bacd-4023-be66-da243fc25964"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
-                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "nurimamiskandar@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, null, "Nur Imam Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
-                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "imam.stmik15@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, null, "Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("17039ada-1855-41f1-9bec-15c24acada86"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null }
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "admin@applemusic.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Super Admin", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f37e30ef-bacd-4023-be66-da243fc25964"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "nurimamiskandar@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Nur Imam Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
+                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "imam.stmik15@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("17039ada-1855-41f1-9bec-15c24acada86"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -433,11 +430,11 @@ namespace MyApp.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt", "UpdatedBy" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "IsActive", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "yusrisahrul.works@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, null, "yusri sahrul", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
-                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "yusribootcamp@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, null, null, "yusri sahrul test", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null }
+                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "yusrisahrul.works@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "yusri sahrul", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "System", "yusribootcamp@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "yusri sahrul test", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -445,12 +442,12 @@ namespace MyApp.WebAPI.Migrations
                 columns: new[] { "Id", "CategoryId", "CreatedAt", "CreatedBy", "Description", "ImageUrl", "IsActive", "Name", "Price", "RefId", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing1.svg", true, "Kursus Drummer Special Coach (Eno Netral)", 8500000m, new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1"), null },
-                    { 2, 3, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing2.svg", true, "[Beginner] Guitar class for kids", 1600000m, new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2"), null },
-                    { 3, 5, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing3.svg", true, "Biola Mid-Level Course", 3000000m, new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1"), null },
-                    { 4, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing4.svg", true, "Drummer for kids (Level Basic/1)", 2200000m, new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928"), null },
-                    { 5, 2, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing5.svg", true, "Kursu Piano : From Zero to Pro (Full Package)", 11650000m, new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"), null },
-                    { 6, 8, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing6.svg", true, "Expert Level Saxophone", 7350000m, new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee"), null }
+                    { 1, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing1.svg", true, "Kursus Drummer Special Coach (Eno Netral)", 8500000L, new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1"), null },
+                    { 2, 3, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing2.svg", true, "[Beginner] Guitar class for kids", 1600000L, new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2"), null },
+                    { 3, 5, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing3.svg", true, "Biola Mid-Level Course", 3000000L, new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1"), null },
+                    { 4, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing4.svg", true, "Drummer for kids (Level Basic/1)", 2200000L, new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928"), null },
+                    { 5, 2, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing5.svg", true, "Kursus Piano : From Zero to Pro (Full Package)", 11650000L, new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"), null },
+                    { 6, 8, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "System", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/Landing6.svg", true, "Expert Level Saxophone", 7350000L, new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee"), null }
                 });
 
             migrationBuilder.InsertData(
@@ -563,11 +560,6 @@ namespace MyApp.WebAPI.Migrations
                 table: "InvoiceDetail",
                 column: "RefId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoiceDetail_ScheduleId",
-                table: "InvoiceDetail",
-                column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_PaymentMethodId",

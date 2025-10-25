@@ -91,31 +91,5 @@ namespace MyApp.WebAPI.Controllers
             var result = await _invoiceService.GetInvoicesByIdAsync(id);
             return Ok(ApiResponse<InvoiceDto>.SuccessResult(result));
         }
-
-        /// <summary>
-        /// Create a new Invoice
-        /// </summary>
-        /// <param name="createInvoiceDto">Invoice data</param>
-        /// <returns>Created Invoice</returns>
-        /// <response code="201">Invoice created successfully</response>
-        /// <response code="400">Invalid input data</response>
-        [HttpPost]
-        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<InvoiceDto>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse<InvoiceDto>>> CreateInvoices(CreateInvoiceDto createInvoiceDto, HttpStatusCode statusCode = HttpStatusCode.Created)
-        {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-            {
-                throw new AuthenticationException("Token is invalid");
-            }
-
-            var result = await _invoiceService.CreateInvoicesAsync(createInvoiceDto);
-            //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
-            return CreatedAtAction(nameof(GetInvoice), new { id = result.Id }, ApiResponse<InvoiceDto>.SuccessResult(result));
-
-        }
-
     }
 }

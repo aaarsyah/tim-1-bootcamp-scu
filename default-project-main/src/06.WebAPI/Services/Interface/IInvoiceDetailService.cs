@@ -10,7 +10,7 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public interface IInvoiceDetailService
     {
-        Task<InvoiceDetailDto> GetInvoiceDetailsByUserAsync(int invoiceId);
+        Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdPersonalAsync(int userId, int invoiceId);
 
         /// <summary>
         /// Get all Invoice

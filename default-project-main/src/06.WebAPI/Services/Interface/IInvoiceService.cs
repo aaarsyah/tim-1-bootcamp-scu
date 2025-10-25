@@ -23,11 +23,6 @@ namespace MyApp.WebAPI.Services
         Task<InvoiceDto> GetInvoicesByIdAsync(int id);
 
         /// <summary>
-        /// Create new Invoice
-        /// </summary>
-        Task<InvoiceDto> CreateInvoicesAsync(CreateInvoiceDto createInvoiceDto);
-
-        /// <summary>
         /// Check if Invoice exists
         /// </summary>
         Task<bool> InvoicesExistsAsync(int id);

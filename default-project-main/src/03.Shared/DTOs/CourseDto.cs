@@ -23,7 +23,7 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Product price
         /// </summary>
-        public decimal Price { get; set; }
+        public long Price { get; set; }
 
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Product price
         /// </summary>
-        public decimal Price { get; set; }
+        public long Price { get; set; }
 
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Product price
         /// </summary>
-        public decimal Price { get; set; }
+        public long Price { get; set; }
         
         
         /// <summary>

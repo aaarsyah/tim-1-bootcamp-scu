@@ -9,14 +9,17 @@
         /// <summary>
         /// Invoice (foreign key): Bukti pembelian yang terkait
         /// </summary>
-        public int? InvoiceId { get; set; }
+        public int InvoiceId { get; set; }
+        public string CourseName { get; set; } = string.Empty;
         /// <summary>
-        /// ScheduleId (foreign key): Id jadwal kelas yang terkait
+        /// Nama Kategori Kelas
         /// </summary>
-        public int ScheduleId { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
         /// <summary>
-        /// Virtual field untuk Schedule: Jadwal kelas yang terkait
+        /// Product price
         /// </summary>
-        public virtual Schedule Schedule { get; set; } = null!;
+        public long Price { get; set; }
+
+        public DateOnly ScheduleDate { get; set; }
     }
 }

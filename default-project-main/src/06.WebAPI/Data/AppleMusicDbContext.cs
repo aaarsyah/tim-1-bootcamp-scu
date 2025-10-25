@@ -1,12 +1,6 @@
 ﻿// Import Entity Framework Core untuk database operations
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Models.Entities;
-using System.Text.Json;
-
-
-// Import Models untuk entities
-using Xunit.Sdk;
 
 namespace MyApp.WebAPI.Data
 {
@@ -100,7 +94,7 @@ namespace MyApp.WebAPI.Data
                         .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.Price)
                         .IsRequired()
-                        .HasColumnType("numeric(10)");
+                        .HasColumnType("bigint");
                 entity.Property(e => e.IsActive)
                         .IsRequired()
                         .HasColumnType("bit")
@@ -476,7 +470,7 @@ namespace MyApp.WebAPI.Data
                         .HasForeignKey(e => e.PaymentMethodId)
                         .OnDelete(DeleteBehavior.SetNull); // Putuskan semua InvoiceDetails yang terhubung bila Invoice dihapus
                 // Relationship dengan InvoiceDetails
-                entity.HasMany(e => e.InvoiceDetails)
+                 entity.HasMany(e => e.InvoiceDetails)
                         .WithOne()
                         .HasForeignKey(e => e.InvoiceId)
                         .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
@@ -490,22 +484,25 @@ namespace MyApp.WebAPI.Data
         {
             modelBuilder.Entity<InvoiceDetail>(entity =>
             {
-                entity.ToTable("InvoiceDetail");
+                entity.ToTable("InvoiceDetails");
                 // Base Entity
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.RefId)
                     .IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
+                entity.Property(e => e.CourseName)
+                    .IsRequired()
+                    .HasMaxLength(150);
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(20);
+                entity.Property(e => e.Price)
+                    .IsRequired()
+                    .HasColumnType("bigint");
                 // Properties
                 // Tak usah configure relationship sama Invoice lagi
-                // Relationship dengan Schedule
-                entity.HasOne(e => e.Schedule)
-                        .WithMany()
-                        .HasForeignKey(e => e.ScheduleId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
-                //TODO: diskusi bagaimana dengan invoice bilamana course/schedule dihapus
-            });
+                });
         }
         /// <summary>
         /// Configure PaymentMethod entity dengan advanced Fluent API features
@@ -732,7 +729,7 @@ namespace MyApp.WebAPI.Data
                 {
                     Id = 5,
                     RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9"),
-                    Name = "Kursu Piano : From Zero to Pro (Full Package)",
+                    Name = "Kursus Piano : From Zero to Pro (Full Package)",
                     Description = placeholder,
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,

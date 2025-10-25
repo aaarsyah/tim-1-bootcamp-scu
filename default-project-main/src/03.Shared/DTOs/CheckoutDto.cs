@@ -32,6 +32,10 @@ namespace MyApp.Shared.DTOs
         /// Null if still pending
         /// </summary>
         public DateTime? ProcessedAt { get; set; }
+
+        public long TotalPrice { get; set; }
+
+        public int TotalCourse { get; set; }
     }
     public class CartItemResponseDto
     {
@@ -65,7 +69,7 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Product price
         /// </summary>
-        public decimal Price { get; set; }
+        public long Price { get; set; }
         
         public List<DateOnly> ScheduleDates { get; set; } = new();
 
