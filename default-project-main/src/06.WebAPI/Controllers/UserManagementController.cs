@@ -69,47 +69,6 @@ namespace MyApp.WebAPI.Controllers
             return Ok(ApiResponse<UserDto>.SuccessResult(user));
         }
 
-        //[HttpPost("users")] // HTTP POST method untuk create operation
-        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        //[ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)]
-        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-        //public async Task<ActionResult<ApiResponse<CourseDto>>> CreateUser(CreateCourseDto createCourseDto)
-        //{
-        //    var result = await _userManagementService.CreateCourseAsync(createCourseDto);
-        //    return CreatedAtAction(nameof(GetCourse), new { id = result.Id }, ApiResponse<CourseDto>.SuccessResult(result));
-        //}
-
-        //[HttpPut("users/{id}")] // HTTP PUT method dengan ID parameter
-        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        //[ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateUser(int id, UpdateCourseDto updateCourseDto)
-        //{
-        //    var result = await _userManagementService.UpdateCourseAsync(id, updateCourseDto);
-        //    return Ok(ApiResponse<CourseDto>.SuccessResult(result));
-        //}
-
-        //[HttpDelete("users/{id}")] // HTTP DELETE method
-        //[Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<ApiResponse<object>>> DeleteUser(int id)
-        //{
-        //    // Panggil service untuk delete product
-        //    // Service akan return false jika product tidak ditemukan
-        //    var result = await _userManagementService.DeleteCourseAsync(id);
-
-        //    if (!result)
-        //    {
-        //        // Return 404 jika product tidak ditemukan
-        //        return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
-        //    }
-
-        //    // Return 204 No Content untuk successful deletion
-        //    // No Content berarti operasi berhasil tapi tidak ada data untuk dikembalikan
-        //    return Ok(ApiResponse<object>.SuccessResult());
-        //}
-
         /// <summary>
         /// Assign Role to User
         /// POST /api/usermanagement/users/{userId}/roles
@@ -118,9 +77,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpPost("users/{userId}/roles")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> AssignRole(
-            int userId, 
-            [FromBody] AssignRoleRequestDto request)
+        public async Task<ActionResult<ApiResponse<bool>>> AssignRole(int userId, [FromBody] RoleRequestDto request)
         {
             var result = await _userManagementService.AssignRoleToUserAsync(userId, request.RoleName);
             
@@ -132,12 +89,12 @@ namespace MyApp.WebAPI.Controllers
         /// DELETE /api/usermanagement/users/{userId}/roles/{roleName}
         /// Requires: Admin role
         /// </summary>
-        [HttpDelete("users/{userId}/roles/{roleName}")]
+        [HttpDelete("users/{userId}/roles")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> RemoveRole(int userId, string roleName)
+        public async Task<ActionResult<ApiResponse<bool>>> RemoveRole(int userId, [FromBody] RoleRequestDto request)
         {
-            var result = await _userManagementService.RemoveRoleFromUserAsync(userId, roleName);
+            var result = await _userManagementService.RemoveRoleFromUserAsync(userId, request.RoleName);
             
             return Ok(ApiResponse<bool>.SuccessResult(result));
         }
@@ -150,11 +107,9 @@ namespace MyApp.WebAPI.Controllers
         [HttpPost("users/{userId}/claims")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> AddClaim(
-            int userId, 
-            [FromBody] AddClaimRequestDto request)
+        public async Task<ActionResult<ApiResponse<bool>>> AddClaim(int userId, [FromBody] ClaimDto claim)
         {
-            var result = await _userManagementService.AddClaimToUserAsync(userId, request.ClaimType, request.ClaimValue);
+            var result = await _userManagementService.AddClaimToUserAsync(userId, claim.Type, claim.Value);
             
             return Ok(ApiResponse<bool>.SuccessResult(result));
         }
@@ -167,9 +122,7 @@ namespace MyApp.WebAPI.Controllers
         [HttpDelete("users/{userId}/claims")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ApiResponse<bool>>> RemoveClaim(
-            int userId, 
-            [FromBody] ClaimDto claim)
+        public async Task<ActionResult<ApiResponse<bool>>> RemoveClaim(int userId, [FromBody] ClaimDto claim)
         {
             var result = await _userManagementService.RemoveClaimFromUserAsync(userId, claim.Type, claim.Value);
             
@@ -177,11 +130,25 @@ namespace MyApp.WebAPI.Controllers
         }
 
         /// <summary>
+        /// Activate User
+        /// DELETE /api/usermanagement/users/{userId}
+        /// Requires: Admin role
+        /// </summary>
+        [HttpPut("users/{userId}/activate")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<bool>>> ActivateUser(int userId)
+        {
+            var result = await _userManagementService.ActivateUserAsync(userId);
+
+            return Ok(ApiResponse<bool>.SuccessResult(result));
+        }
+        /// <summary>
         /// Deactivate User
         /// DELETE /api/usermanagement/users/{userId}
         /// Requires: Admin role
         /// </summary>
-        [HttpDelete("users/{userId}")]
+        [HttpPut("users/{userId}/deactivate")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
         public async Task<ActionResult<ApiResponse<bool>>> DeactivateUser(int userId)

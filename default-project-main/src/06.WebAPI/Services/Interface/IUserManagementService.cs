@@ -14,6 +14,7 @@ namespace MyApp.WebAPI.Services
         Task<bool> RemoveRoleFromUserAsync(int userId, string roleName);
         Task<bool> AddClaimToUserAsync(int userId, string claimType, string claimValue);
         Task<bool> RemoveClaimFromUserAsync(int userId, string claimType, string claimValue);
+        Task<bool> ActivateUserAsync(int userId);
         Task<bool> DeactivateUserAsync(int userId);
     }
 }

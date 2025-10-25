@@ -78,6 +78,7 @@ namespace MyApp.WebAPI.Services
                     // Create new user
                     var user = new User
                     {
+                        IsActive = true,
                         Name = request.Name,
                         Email = request.Email,
                         PasswordHash = _passwordService.HashPassword(request.NewPassword),
@@ -172,13 +173,18 @@ namespace MyApp.WebAPI.Services
             if (user == null || !user.EmailConfirmed)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
-                throw new ValidationException("Invalid email or password");
+                throw new ValidationException("Invalid email or password.");
+            }
+            // Check account lockout
+            if (!user.IsActive)
+            {
+                throw new ValidationException($"Account is inactive. Contact the administrator for help.");
             }
             // Check account lockout
             if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
             {
                 var remainingTime = (user.LockoutEnd.Value - DateTime.UtcNow).TotalMinutes;
-                throw new ValidationException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes");
+                throw new ValidationException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes.");
             }
 
             // Verify password

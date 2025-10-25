@@ -1009,6 +1009,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 1,
+                    IsActive = true,
                     RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
                     Name = "Super Admin",
                     Email = "admin@applemusic.com",
@@ -1019,6 +1020,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 2,
+                    IsActive = true,
                     RefId = new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"),
                     Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
@@ -1030,6 +1032,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 3,
+                    IsActive = true,
                     RefId = new Guid("17039ada-1855-41f1-9bec-15c24acada86"),
                     Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
@@ -1039,7 +1042,9 @@ namespace MyApp.WebAPI.Data
                 },
                 new User
                 {
+                    
                     Id = 4,
+                    IsActive = false,
                     RefId = new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"),
                     Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
@@ -1050,6 +1055,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 5,
+                    IsActive = true,
                     RefId = new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"),
                     Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
@@ -1060,6 +1066,7 @@ namespace MyApp.WebAPI.Data
                 new User
                 {
                     Id = 6,
+                    IsActive = true,
                     RefId = new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"),
                     Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",

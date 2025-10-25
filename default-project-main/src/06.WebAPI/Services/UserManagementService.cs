@@ -171,14 +171,29 @@ namespace MyApp.WebAPI.Services
                 _logger.LogWarning("Failed to remove claim {ClaimType}:{ClaimValue} from user {UserId}", claimType, claimValue, userId);
                 return false;
             }
-            //var result = await _userManager.RemoveClaimAsync(user, claim);
             _context.UserClaims.Remove(userClaim);
             await _context.SaveChangesAsync();
 
             _logger.LogInformation("Claim {ClaimType}:{ClaimValue} removed from user {UserId}", claimType, claimValue, userId);
             return true;
         }
+        public async Task<bool> ActivateUserAsync(int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(a => a.Id == userId);
+            if (user == null)
+            {
+                _logger.LogWarning("Failed to activate user {UserId}", userId);
+                return false;
+            }
 
+            user.IsActive = true;
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("User {UserId} activated", userId);
+            return true;
+        }
         public async Task<bool> DeactivateUserAsync(int userId)
         {
             var user = await _context.Users
@@ -189,7 +204,7 @@ namespace MyApp.WebAPI.Services
                 return false;
             }
 
-            user.EmailConfirmed = false;
+            user.IsActive = false;
             user.RefreshToken = null;
             user.RefreshTokenExpiry = DateTime.UtcNow;
 

@@ -152,21 +152,9 @@ namespace MyApp.Shared.DTOs
     /// <summary>
     /// Request DTO untuk assign role
     /// </summary>
-    public class AssignRoleRequestDto
+    public class RoleRequestDto
     {
         [Required]
         public string RoleName { get; set; } = string.Empty;
-    }
-
-    /// <summary>
-    /// Request DTO untuk add claim
-    /// </summary>
-    public class AddClaimRequestDto
-    {
-        [Required]
-        public string ClaimType { get; set; } = string.Empty;
-        
-        [Required]
-        public string ClaimValue { get; set; } = string.Empty;
     }
 }

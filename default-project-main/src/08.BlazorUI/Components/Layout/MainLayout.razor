@@ -115,28 +115,28 @@
 </MudLayout> *@
 
 <MudLayout>
-    @if (Loggedin)
+    @if (Loggedin && IsAdmin)
     {
-        @if (IsAdmin)
+        @if (ShouldShowAppBar())
         {
-            @if (ShouldShowAppBar())
-            {
-                <MudAppBar Elevation="1">
-                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                    <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
-                        <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
-                    </MudLink>
-                    <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
-                </MudAppBar>
-            }
-
-            <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-                <NavMenu />
-                <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="HandleLogout">Logout</MudButton>
-            </MudDrawer>
-
+            <MudAppBar Elevation="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
+                    <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
+                </MudLink>
+                <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
+            </MudAppBar>
         }
-        else
+
+        <MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <NavMenu />
+            <MudButton Style="color:#110e2d" EndIcon="@Icons.Material.Filled.Logout" OnClick="HandleLogout">Logout</MudButton>
+        </MudDrawer>
+
+    }
+    else if (Loggedin)
+    {
+        @if (ShouldShowAppBar())
         {
             <MudAppBar Elevation="1">
                 <MudLink OnClick="Navigation.GoToHome" Color="Color.Default">
@@ -293,7 +293,7 @@
     private async Task HandleLogout()
     {
         var auth = await AuthService.GetAccessTokenAsync();
-        await AuthService.LogoutAsync(auth);
+        await AuthService.LogoutAsync(auth); // TODO: Apa yang terjadi bila token invalid dan user mencoba logout?
         Navigation.GoToHome2(); //Logout balik ke home page
     }
 
@@ -343,9 +343,11 @@
     {
         var path = NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
         return !(path.Contains("login") ||
+                 path.Contains("register") ||
                  path.Contains("checkout") ||
                  path.Contains("success-purchase") ||
-                 path.Contains("confirm-email"));
+                 path.Contains("confirm-email") ||
+                 path.Contains("reset-password"));
     }
 
     private bool ShouldShowAppBar()
