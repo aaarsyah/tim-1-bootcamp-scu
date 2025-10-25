@@ -3,151 +3,195 @@ using MyApp.Shared.DTOs;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace MyApp.BlazorUI.Services
+namespace MyApp.BlazorUI.Services;
+
+public class UserService : IUserService
 {
-    public class UserService : IUserService
+    private readonly List<UserItem> _user = new();
+    private int _nextId = 1;
+
+    private readonly IHttpClientFactory _factory;
+
+    public UserService(IHttpClientFactory factory)
     {
-        private readonly List<UserItem> _user = new();
-        private int _nextId = 1;
+        _factory = factory;
+    }
 
-        private readonly IHttpClientFactory _factory;
-
-        public UserService(IHttpClientFactory factory)
+    // Mendapatkan semua user
+    public async Task<List<UserDto>> GetAllUsersAsync(AuthenticationHeaderValue authorization)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
         {
-            _factory = factory;
-            SeedData();
-        }
-
-        // Mendapatkan semua user
-        public async Task<List<UserDto>> GetAllUsersAsync(AuthenticationHeaderValue authorization)
-        {
-            var _httpClient = _factory.CreateClient("WebAPI");
-            _httpClient.DefaultRequestHeaders.Authorization = authorization;
-            try
+            var response = await _httpClient.GetAsync("api/UserManagement/users");
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.GetAsync("api/UserManagement/users");
-                if (response.IsSuccessStatusCode)
-                {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserDto>>>();
-
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
-                    {
-                        return apiResponse.Data;
-                    }
-                    return new();
-                }
                 return new();
             }
-            catch (Exception ex)
+            
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserDto>>>();
+
+            if (apiResponse?.StatusCode != "SUCCESS" || apiResponse.Data == null)
             {
-                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
                 return new();
             }
+            return apiResponse.Data;
         }
-
-        public async Task<bool> AssignRoleToUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+        catch (Exception ex)
         {
-            var _httpClient = _factory.CreateClient("WebAPI");// 
-            _httpClient.DefaultRequestHeaders.Authorization = authorization;
-            try
+            Console.WriteLine($"GetAllUsersAsync: Error: {ex.Message}");
+            return new();
+        }
+    }
+    public async Task<List<RoleDto>> GetAllRolesAsync(AuthenticationHeaderValue authorization)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.GetAsync("api/UserManagement/roles");
+            if (!response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/add", request);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return false;
-                }
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"GetAllPaymentMethodsAsync: Error: {ex.Message}");
                 return new();
             }
-        }
 
-        // Menambahkan user baru
-        public async Task<UserItem> CreateUserAsync(UserItem user)
-        {
-            await Task.Delay(100);
-            user.Id = _nextId++;
-            _user.Add(user);
-            return user;
-        }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<RoleDto>>>();
 
-        // Memperbarui user yang sudah ada
-        public async Task<UserItem> UpdateUserAsync(UserItem user)
-        {
-            await Task.Delay(100);
-            var existingUser = _user.FirstOrDefault(t => t.Id == user.Id);
-            if (existingUser != null)
+            if (apiResponse?.StatusCode != "SUCCESS" || apiResponse.Data == null)
             {
-                existingUser.Name = user.Name;
-                existingUser.Email = user.Email;
-                existingUser.UserRole = user.UserRole;
-                existingUser.AllUser = user.AllUser;
-                existingUser.BirthDate = user.BirthDate;
+                return new();
             }
-            return user;
+            return apiResponse.Data;
         }
-
-        // Menghapus user
-        public async Task<bool> DeleteUserAsync(int id)
+        catch (Exception ex)
         {
-            await Task.Delay(100);
-            var user = _user.FirstOrDefault(t => t.Id == id);
-            if (user != null)
+            Console.WriteLine($"GetAllRolesAsync: Error: {ex.Message}");
+            return new();
+        }
+    }
+    public async Task<bool> AddRoleToUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/add", request);
+            if (!response.IsSuccessStatusCode)
             {
-                _user.Remove(user);
-                return true;
+                return false;
             }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"AddRoleToUserAsync: Error: {ex.Message}");
             return false;
         }
+    }
 
-        // Data dummy
-        private void SeedData()
+    public async Task<bool> RemoveRoleFromUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
         {
-            var sampleUsers = new List<UserItem>
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/remove", request);
+            if (!response.IsSuccessStatusCode)
             {
-                new UserItem
-                {
-                    Id = _nextId++,
-                    Name = "Ahmad Bajuri",
-                    Email = "ahmadbajuri@gmail.com",
-                    UserRole = Role.User,
-                    AllUser = UserStatus.Active,
-                    BirthDate = new DateTime(1995, 3, 12)
-                },
-                new UserItem
-                {
-                    Id = _nextId++,
-                    Name = "Sanggar Kelana",
-                    Email = "sanggarkelana@gmail.com",
-                    UserRole = Role.Admin,
-                    AllUser = UserStatus.Active,
-                    BirthDate = new DateTime(1990, 8, 25)
-                },
-                new UserItem
-                {
-                    Id = _nextId++,
-                    Name = "Jihan Putri",
-                    Email = "jihanputri@gmail.com",
-                    UserRole = Role.User,
-                    AllUser = UserStatus.InActive,
-                    BirthDate = new DateTime(1998, 1, 4)
-                },
-                new UserItem
-                {
-                    Id = _nextId++,
-                    Name = "Admin",
-                    Email = "admin@gmail.com",
-                    UserRole = Role.User,
-                    AllUser = UserStatus.InActive,
-                    BirthDate = new DateTime(1998, 1, 4)
-                }
-            };
+                return false;
+            }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"RemoveRoleFromUserAsync: Error: {ex.Message}");
+            return false;
+        }
+    }
 
-            _user.AddRange(sampleUsers);
+    public async Task<bool> SetClaimForUserAsync(AuthenticationHeaderValue authorization, int userId, ClaimDto request)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/claims/add", request);
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"SetClaimForUserAsync: Error: {ex.Message}");
+            return false;
+        }
+    }
+
+    public async Task<bool> RemoveClaimFromUserAsync(AuthenticationHeaderValue authorization, int userId, ClaimDto request)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/claims/remove", request);
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"RemoveClaimFromUserAsync: Error: {ex.Message}");
+            return false;
+        }
+    }
+
+    public async Task<bool> ActivateUserAsync(AuthenticationHeaderValue authorization, int userId)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/activate", new { });
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ActivateUserAsync: Error: {ex.Message}");
+            return false;
+        }
+    }
+    public async Task<bool> DeactivateUserAsync(AuthenticationHeaderValue authorization, int userId)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/deactivate", new { });
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
+            return apiResponse?.StatusCode == "SUCCESS";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DeactivateUserAsync: Error: {ex.Message}");
+            return false;
         }
     }
 }

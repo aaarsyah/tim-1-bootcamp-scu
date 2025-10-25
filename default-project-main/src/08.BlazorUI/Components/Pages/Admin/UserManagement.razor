@@ -23,7 +23,7 @@
     Add User
 </MudButton> *@
 
-<MudTable Items="@user" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
+<MudTable Items="@users" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Users</MudText>
         <MudSpacer />
@@ -41,7 +41,7 @@
     <RowTemplate>
         <MudTd DataLabel="Email">@context.Email</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Role">@context.Roles.First()</MudTd>
+        <MudTd DataLabel="Role">@string.Join(", ", context.Roles)</MudTd>
         <MudTd DataLabel="Status">
             @if (context.IsActive)
             {
@@ -74,7 +74,8 @@
 </MudTable>
 
 @code {
-    private IEnumerable<UserDto> user = new List<UserDto>();
+    private IEnumerable<UserDto> users = new List<UserDto>();
+    private IEnumerable<RoleDto> roles = new List<RoleDto>();
     private bool hover = true;
     private string searchString1 = "";
     private UserDto selectedItem1 = null;
@@ -89,19 +90,15 @@
         {
             return;
         }
-        await LoadUsers();
-        StateHasChanged();
-    }
-
-    private async Task LoadUsers()
-    {
         var auth = await AuthService.GetAccessTokenAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        user = await UserService.GetAllUsersAsync(auth);
+        users = await UserService.GetAllUsersAsync(auth);
+        roles = await UserService.GetAllRolesAsync(auth);
+        StateHasChanged();
     }
 
     private bool FilterFunc1(UserDto u) => FilterFunc(u, searchString1);
@@ -125,7 +122,11 @@
     {
         var parameters = new DialogParameters();
         if (userItem != null)
+        {
+            parameters.Add("Roles", roles);
             parameters.Add("User", userItem);
+        }
+        
 
         var options = new DialogOptions
         {
@@ -137,9 +138,15 @@
         var dialog = await DialogService.ShowAsync<UserDialog>("User Form", parameters, options);
         var result = await dialog.Result;
 
-        if (!result.Canceled && result.Data is UserDto)
+        if (true)
         {
-            await LoadUsers();
+            var auth = await AuthService.GetAccessTokenAsync();
+            if (auth == null)
+            {
+                Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+                return;
+            }
+            users = await UserService.GetAllUsersAsync(auth);
         }
     }
 

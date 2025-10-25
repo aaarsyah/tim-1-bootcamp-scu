@@ -111,6 +111,15 @@ namespace MyApp.Shared.DTOs
     /// <summary>
     /// DTO untuk claim
     /// </summary>
+    public class RoleDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    /// <summary>
+    /// DTO untuk claim
+    /// </summary>
     public class ClaimDto
     {
         public string Type { get; set; } = string.Empty;

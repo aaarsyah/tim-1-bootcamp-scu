@@ -69,12 +69,22 @@ namespace MyApp.WebAPI.Controllers
             return Ok(ApiResponse<UserDto>.SuccessResult(user));
         }
 
+        [HttpGet("roles")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<RoleDto>>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<IEnumerable<RoleDto>>>> GetAllRoles()
+        {
+            var user = await _userManagementService.GetAllRolesAsync();
+
+            return Ok(ApiResponse<IEnumerable<RoleDto>>.SuccessResult(user));
+        }
+
         /// <summary>
         /// Assign Role to User
         /// POST /api/usermanagement/users/{userId}/roles
         /// Requires: Admin role
         /// </summary>
-        [HttpPut("users/{userId}/roles")]
+        [HttpPut("users/{userId}/roles/add")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         public async Task<ActionResult<ApiResponse<object>>> AssignRole(int userId, [FromBody] RoleRequestDto request)
@@ -89,7 +99,7 @@ namespace MyApp.WebAPI.Controllers
         /// DELETE /api/usermanagement/users/{userId}/roles/{roleName}
         /// Requires: Admin role
         /// </summary>
-        [HttpDelete("users/{userId}/roles")]
+        [HttpPut("users/{userId}/roles/remove")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         public async Task<ActionResult<ApiResponse<object>>> RemoveRole(int userId, [FromBody] RoleRequestDto request)
@@ -104,7 +114,7 @@ namespace MyApp.WebAPI.Controllers
         /// POST /api/usermanagement/users/{userId}/claims
         /// Requires: Admin role
         /// </summary>
-        [HttpPut("users/{userId}/claims")]
+        [HttpPut("users/{userId}/claims/add")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         public async Task<ActionResult<ApiResponse<object>>> SetClaim(int userId, [FromBody] ClaimDto claim)
@@ -119,7 +129,7 @@ namespace MyApp.WebAPI.Controllers
         /// DELETE /api/usermanagement/users/{userId}/claims
         /// Requires: Admin role
         /// </summary>
-        [HttpDelete("users/{userId}/claims")]
+        [HttpPut("users/{userId}/claims/remove")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
         public async Task<ActionResult<ApiResponse<object>>> RemoveClaim(int userId, [FromBody] ClaimDto claim)

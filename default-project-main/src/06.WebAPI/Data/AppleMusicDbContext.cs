@@ -305,6 +305,8 @@ namespace MyApp.WebAPI.Data
                 entity.Property(e => e.UpdatedAt);
                 entity.Property(e => e.UpdatedBy)
                     .HasMaxLength(MAX_USERNAME_LENGTH);
+                // Indexes
+                //entity.HasIndex(e => e.Name).IsUnique(); //TODO: Uncomment this when it's ready
                 // Properties
                 entity.Property(e => e.Name)
                     .HasMaxLength(30);

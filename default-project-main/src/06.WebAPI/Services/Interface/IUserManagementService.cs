@@ -10,6 +10,7 @@ namespace MyApp.WebAPI.Services
     {
         Task<UserDto?> GetUserProfileAsync(int userId);
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
+        Task<IEnumerable<RoleDto>> GetAllRolesAsync();
         Task<bool> AddRoleToUserAsync(int userId, string roleName);
         Task<bool> RemoveRoleFromUserAsync(int userId, string roleName);
         Task<bool> SetClaimForUserAsync(int userId, string claimType, string claimValue);

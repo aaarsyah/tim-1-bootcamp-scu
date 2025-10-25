@@ -39,6 +39,7 @@ namespace MyApp.WebAPI.Mappings
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src.UserRoles.Select(s => s.Role.Name).ToList()))
                 .ForMember(dest => dest.Claims, opt => opt.MapFrom(src => src.UserClaims.Select(s => new ClaimDto { Type = s.ClaimType, Value = s.ClaimValue }).ToList()));
+            CreateMap<Role, RoleDto>();
 
             // User CartItem
             CreateMap<CartItem, CartItemResponseDto>()

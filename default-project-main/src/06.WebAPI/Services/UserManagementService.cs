@@ -1,6 +1,8 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Shared.DTOs;
+using MyApp.WebAPI.Configuration;
 using MyApp.WebAPI.Data;
 using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models.Entities;
@@ -56,6 +58,13 @@ namespace MyApp.WebAPI.Services
 
             return _mapper.Map<IEnumerable<UserDto>>(users);
         }
+        public async Task<IEnumerable<RoleDto>> GetAllRolesAsync()
+        {
+            var roles = await _context.Roles
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<RoleDto>>(roles);
+        }
 
         public async Task<bool> AddRoleToUserAsync(int userId, string roleName)
         {
@@ -91,8 +100,6 @@ namespace MyApp.WebAPI.Services
 
             _logger.LogInformation("Role {RoleName} added to user {UserId}", roleName, userId);
             return true;
-
-            
         }
 
         public async Task<bool> RemoveRoleFromUserAsync(int userId, string roleName)

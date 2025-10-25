@@ -3,29 +3,41 @@
 @using System.ComponentModel.DataAnnotations
 @using MyApp.Shared.DTOs
 
-@inject IDialogService DialogService;
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
 @inject IUserService UserService;
+
+@inject IDialogService DialogService;
 
 
 <MudDialog>
     <DialogContent>
-        <MudTextField @bind-Value="User.Name" Label="Name" Required="true" />
-        <MudTextField @bind-Value="User.Email" Label="Email" Required="true" Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
+        @* <MudTextField @bind-Value="User.Name" Label="Name" Required="true" />
+        <MudTextField @bind-Value="User.Email" Label="Email" Required="true" Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" /> *@
         
         @* <MudSelect @bind-Value="User.Roles" Class="mt-4" Label="Role">
             <MudSelectItem Value="User">User</MudSelectItem>
             <MudSelectItem Value="Admin">Admin</MudSelectItem>
         </MudSelect> *@
-        
-        <MudSelect @bind-Value="User.IsActive" Class="mt-4" Label="Status">
-            <MudSelectItem Value=true>Active</MudSelectItem>
-            <MudSelectItem Value=false>Inactive</MudSelectItem>
+
+        <MudSelect @bind-Value="roleName" Class="mt-4" Label="Status">
+            @foreach (var role in roles)
+            {
+                <MudSelectItem T="string" Value="@role.Name">@role.Name</MudSelectItem>
+            }
         </MudSelect>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddRole">Add Role</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveRole">Remove Role</MudButton>
+        <br />
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Deactivate">Deactivate user</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Reactivate">Reactivate user</MudButton>
     </DialogContent>
 
     <DialogActions>
-        <MudButton OnClick="Cancel" Variant="Variant.Outlined">Cancel</MudButton>
-        <MudButton OnClick="Save" Variant="Variant.Filled" Color="Color.Success">Save</MudButton>
+        <MudButton OnClick="Close" Variant="Variant.Outlined">Close</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -33,28 +45,93 @@
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
 
+    [Parameter]
+    public IEnumerable<RoleDto> roles { get; set; } = null!;
     [Parameter] 
     public UserDto User { get; set; } = null!;
 
-    private async Task Save()
+    private string roleName { get; set; } = string.Empty;
+
+    private async Task AddRole()
     {
-        // UserDto result;
-
-        // if (User.Id == 0)
-        // {
-        //     result = await UserService.CreateUserAsync(User); 
-        // }
-        // else
-        // {
-        //     result = await UserService.UpdateUserAsync(User);
-        // }
-
-        MudDialog.Close(DialogResult.Ok(true)); 
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        if (string.IsNullOrEmpty(roleName))
+        {
+            Snackbar.Add($"Pilih role yang sesuai", Severity.Error);
+            return;
+        }
+        var result = await UserService.AddRoleToUserAsync(auth, User.Id, new RoleRequestDto() { RoleName = roleName });
+        if (!result)
+        {
+            Snackbar.Add($"Gagal menambahkan role ke user", Severity.Error);
+            return;
+        }
+        Snackbar.Add($"Berhasil menambahkan role {roleName} ke user", Severity.Success);
+    }
+    private async Task RemoveRole()
+    {
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        if (string.IsNullOrEmpty(roleName))
+        {
+            Snackbar.Add($"Pilih role yang sesuai", Severity.Error);
+            return;
+        }
+        var result = await UserService.RemoveRoleFromUserAsync(auth, User.Id, new RoleRequestDto() { RoleName = roleName });
+        if (!result)
+        {
+            Snackbar.Add($"Gagal menghapus role dari user", Severity.Error);
+            return;
+        }
+        Snackbar.Add($"Berhasil menghapus role {roleName} dari user", Severity.Success);
+    }
+    private async Task Deactivate()
+    {
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        var result = await UserService.DeactivateUserAsync(auth, User.Id);
+        if (!result)
+        {
+            Snackbar.Add($"Gagal menonaktifkan user", Severity.Error);
+            return;
+        }
+        Snackbar.Add($"Berhasil menonaktifkan user", Severity.Success);
+        MudDialog.Close();
+    }
+    private async Task Reactivate()
+    {
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        var result = await UserService.ActivateUserAsync(auth, User.Id);
+        if (!result)
+        {
+            Snackbar.Add($"Gagal megaktifkan user", Severity.Error);
+            return;
+        }
+        Snackbar.Add($"Berhasil megaktifkan user", Severity.Success);
+        MudDialog.Close();
     }
 
-    private void Cancel()
+    private void Close()
     {
-        MudDialog.Cancel();
+        MudDialog.Close();
     }
 
 }
