@@ -79,8 +79,12 @@ namespace MyApp.Shared.DTOs
     /// Paginated response wrapper
     /// </summary>
     /// <typeparam name="T">Response data type</typeparam>
-    public class PagedResponse<T> : ApiResponse<T>
+    public class PaginatedResponse<T>
     {
+        /// <summary>
+        /// Paginated data
+        /// </summary>
+        public T Data { get; set; }
         /// <summary>
         /// Current page number
         /// </summary>
@@ -114,7 +118,7 @@ namespace MyApp.Shared.DTOs
         /// <summary>
         /// Create paginated response
         /// </summary>
-        public static PagedResponse<IEnumerable<TData>> Create<TData>(
+        public static PaginatedResponse<IEnumerable<TData>> Create<TData>(
             IEnumerable<TData> data, 
             int pageNumber, 
             int pageSize, 
@@ -122,7 +126,7 @@ namespace MyApp.Shared.DTOs
         {
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             
-            return new PagedResponse<IEnumerable<TData>>
+            return new PaginatedResponse<IEnumerable<TData>>
             {
                 Data = data,
                 PageNumber = pageNumber,

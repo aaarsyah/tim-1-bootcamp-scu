@@ -51,7 +51,7 @@ namespace MyApp.BlazorUI.Services
                 var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/Course/v2", query));
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResponse<IEnumerable<CourseDto>>>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>();
 
                     if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
                         && apiResponse.Data.Data != null)

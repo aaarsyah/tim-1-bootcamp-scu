@@ -41,7 +41,7 @@
                         <MudImage Src="@(!string.IsNullOrEmpty(course.ImageUrl) ? course.ImageUrl : "img/default-course.svg")" Class="w-100 mb-2" />
                         <MudText Class="category color-gray-3">@course.CategoryName</MudText>
                         <MudText Class="name color-gray-1"><b>@course.Name</b></MudText>
-                        <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>IDR @course.Price:N0</b></MudText>
+                        <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>@($"IDR {course.Price:N0}")</b></MudText>
                     </MudLink>
                 </MudItem>
             }

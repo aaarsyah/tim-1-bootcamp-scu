@@ -119,10 +119,11 @@
                 @foreach (var payment in payments)
                 {
                     <MudButton 
+                        @key="@payment.Id"
                         Variant="@GetVariant(payment.Name)"
                         Color="@GetColor(payment.Name)"
                         OnClick="@(() => SelectPayment(payment))"
-                        Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
+                        Style="@GetButtonStyle(payment)">
                         
                         <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
                         <MudText>@payment.Name</MudText>
@@ -225,7 +226,11 @@
         selectedPaymentId = payment.Id;
         StateHasChanged();
     }
-
+    private string GetButtonStyle(PaymentDto payment)
+    {
+        var baseStyle = "justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;";
+        return baseStyle;
+    }
     private Color GetColor(string name) => selectedPayment?.Name == name ? Color.Primary : Color.Default;
     private Variant GetVariant(string name) => selectedPayment?.Name == name ? Variant.Outlined : Variant.Text;
 

@@ -174,7 +174,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Pelajari teknik bermain drum dari dasar hingga mahir, termasuk ritme, koordinasi tangan-kaki, dan improvisasi.",
                             ImageUrl = "img/Class1.svg",
                             IsActive = true,
                             LongName = "Drummer class",
@@ -186,7 +186,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kuasai piano dari dasar sampai teknik lanjutan, termasuk membaca not, improvisasi, dan interpretasi musik.",
                             ImageUrl = "img/Class2.svg",
                             IsActive = true,
                             LongName = "Pianist class",
@@ -198,7 +198,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Pelajari gitar akustik dan elektrik, teknik petikan, chord, solo, dan improvisasi kreatif.",
                             ImageUrl = "img/Class3.svg",
                             IsActive = true,
                             LongName = "Guitarist class",
@@ -210,7 +210,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Belajar bass untuk menciptakan groove yang solid, memahami teknik slap, fingerstyle, dan improvisasi musik.",
                             ImageUrl = "img/Class4.svg",
                             IsActive = true,
                             LongName = "Bassist class",
@@ -222,7 +222,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Pelajari biola dari teknik dasar, membaca not, hingga ekspresi musik klasik dan modern.",
                             ImageUrl = "img/Class5.svg",
                             IsActive = true,
                             LongName = "Violinist class",
@@ -234,7 +234,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kembangkan kemampuan vokal, teknik pernapasan, kontrol nada, serta ekspresi dan interpretasi lagu.",
                             ImageUrl = "img/Class6.svg",
                             IsActive = true,
                             LongName = "Singer class",
@@ -246,7 +246,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 7,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Belajar flute dari teknik dasar embouchure, fingering, hingga memainkan melodi klasik dan kontemporer.",
                             ImageUrl = "img/Class7.svg",
                             IsActive = true,
                             LongName = "Flutist class",
@@ -258,7 +258,7 @@ namespace MyApp.WebAPI.Migrations
                             Id = 8,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kuasai saxophone dengan belajar teknik embouchure, breath control, improvisasi jazz, dan interpretasi musik modern.",
                             ImageUrl = "img/Class8.svg",
                             IsActive = true,
                             LongName = "Saxophonist class",
@@ -340,77 +340,207 @@ namespace MyApp.WebAPI.Migrations
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kursus drum eksklusif dengan mentor profesional Eno Netral, fokus pada teknik, groove, dan improvisasi.",
                             ImageUrl = "img/Landing1.svg",
                             IsActive = true,
                             Name = "Kursus Drummer Special Coach (Eno Netral)",
                             Price = 8500000L,
-                            RefId = new Guid("2467c3ca-ea46-4720-b590-aeb81ff50ea1")
+                            RefId = new Guid("d236d9db-5312-48d7-b171-a340c134f6f6")
                         },
                         new
                         {
                             Id = 2,
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/Landing2.svg",
-                            IsActive = true,
-                            Name = "[Beginner] Guitar class for kids",
-                            Price = 1600000L,
-                            RefId = new Guid("d38adc18-7b11-46a1-9417-a2f64b2adcd2")
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 5,
-                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ImageUrl = "img/Landing3.svg",
-                            IsActive = true,
-                            Name = "Biola Mid-Level Course",
-                            Price = 3000000L,
-                            RefId = new Guid("b298d7f3-5f95-403a-bbc5-60f6d4124dd1")
-                        },
-                        new
-                        {
-                            Id = 4,
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kursus drum untuk anak-anak, belajar ritme dasar, koordinasi tangan-kaki, dan bermain lagu sederhana.",
                             ImageUrl = "img/Landing4.svg",
                             IsActive = true,
                             Name = "Drummer for kids (Level Basic/1)",
                             Price = 2200000L,
-                            RefId = new Guid("17bdb4a1-c77f-4625-a00f-30620c7f3928")
+                            RefId = new Guid("633473ab-67d5-4460-9f9a-a8eef9be341d")
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 3,
                             CategoryId = 2,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Belajar piano dari dasar hingga mahir, termasuk teknik, sight-reading, dan repertoar klasik & modern.",
                             ImageUrl = "img/Landing5.svg",
                             IsActive = true,
                             Name = "Kursus Piano : From Zero to Pro (Full Package)",
                             Price = 11650000L,
-                            RefId = new Guid("eccb915d-a7dd-4762-9732-8aeb7f2bcdd9")
+                            RefId = new Guid("250ef74f-6bec-4a29-b101-0d6ed27437ad")
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kuasai improvisasi piano jazz, belajar chord voicing, scales, dan bermain bersama band.",
+                            ImageUrl = "img/Landing22.svg",
+                            IsActive = true,
+                            Name = "Piano Jazz Improvisation",
+                            Price = 7000000L,
+                            RefId = new Guid("2cc98cec-0887-4171-bfeb-b23d68e6e9e1")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 3,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.",
+                            ImageUrl = "img/Landing2.svg",
+                            IsActive = true,
+                            Name = "[Beginner] Guitar class for kids",
+                            Price = 1600000L,
+                            RefId = new Guid("602558bf-e45c-4ff5-80ac-c3f4fba1300e")
                         },
                         new
                         {
                             Id = 6,
+                            CategoryId = 3,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Belajar teknik gitar rock, solo, power chord, dan riff untuk pemula hingga menengah.",
+                            ImageUrl = "img/Landing33.svg",
+                            IsActive = true,
+                            Name = "Guitar Rock Techniques",
+                            Price = 3500000L,
+                            RefId = new Guid("217cdf56-0c1c-419e-885c-302488474f13")
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kursus bass untuk pemula, belajar teknik dasar, groove, dan memainkan lagu sederhana.",
+                            ImageUrl = "img/Landing44.svg",
+                            IsActive = true,
+                            Name = "Bass Fundamentals for Beginners",
+                            Price = 2000000L,
+                            RefId = new Guid("ed415851-8d59-44bc-ad4c-c79cc871564e")
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Pelajari teknik lanjutan bass, termasuk slap, tapping, dan improvisasi untuk berbagai genre musik.",
+                            ImageUrl = "img/Landing45.svg",
+                            IsActive = true,
+                            Name = "Advanced Bass Techniques",
+                            Price = 4500000L,
+                            RefId = new Guid("ff17199d-6790-4052-b04b-96d3149b877c")
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kursus biola level menengah, belajar teknik bowing, vibrato, dan ekspresi musikal.",
+                            ImageUrl = "img/Landing3.svg",
+                            IsActive = true,
+                            Name = "Biola Mid-Level Course",
+                            Price = 3000000L,
+                            RefId = new Guid("1afb6912-52ff-46df-a8ac-feb53bfc7326")
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 5,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Belajar teknik lanjutan biola, interpretasi musik klasik, dan persiapan tampil di konser.",
+                            ImageUrl = "img/Landing55.svg",
+                            IsActive = true,
+                            Name = "Violin Advanced Performance",
+                            Price = 6000000L,
+                            RefId = new Guid("c1de03ce-528f-4d52-ab9e-bb156e3fc0c1")
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 6,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kursus menyanyi untuk pemula, fokus pada teknik pernapasan, kontrol nada, dan penguatan suara.",
+                            ImageUrl = "img/Landing66.svg",
+                            IsActive = true,
+                            Name = "Vocal Training for Beginners",
+                            Price = 2500000L,
+                            RefId = new Guid("1b507945-91bf-4904-ac4a-09a18d0e27d1")
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 6,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kuasai teknik vokal lanjutan, ekspresi musik, vibrato, dan performa panggung profesional.",
+                            ImageUrl = "img/Landing66.svg",
+                            IsActive = true,
+                            Name = "Advanced Vocal Mastery",
+                            Price = 5500000L,
+                            RefId = new Guid("ce44161a-a1e3-4fde-889a-dab9f1355e20")
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Kursus flute pemula, belajar teknik embouchure, fingering, dan memainkan melodi sederhana.",
+                            ImageUrl = "img/Landing67.svg",
+                            IsActive = true,
+                            Name = "Flute Basics for Beginners",
+                            Price = 2200000L,
+                            RefId = new Guid("174bc8e5-e615-4877-b4c2-5202cc70e9d8")
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Pelajari teknik lanjutan flute, interpretasi musik, dinamika, dan ekspresi panggung.",
+                            ImageUrl = "img/Landing77.svg",
+                            IsActive = true,
+                            Name = "Flute Performance & Expression",
+                            Price = 4800000L,
+                            RefId = new Guid("20cd6469-d4c0-486f-84ee-0a3d9805b921")
+                        },
+                        new
+                        {
+                            Id = 15,
                             CategoryId = 8,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = "System",
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            Description = "Kursus saxophone level expert, belajar improvisasi jazz, teknik embouchure, dan performa profesional.",
                             ImageUrl = "img/Landing6.svg",
                             IsActive = true,
                             Name = "Expert Level Saxophone",
                             Price = 7350000L,
-                            RefId = new Guid("2c47a426-06f2-4f9f-bfee-45438d7c46ee")
+                            RefId = new Guid("039dfcd8-7258-4417-8359-5f47fbd44e18")
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 8,
+                            CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = "System",
+                            Description = "Belajar teknik dasar hingga improvisasi jazz di saxophone untuk pemula hingga menengah.",
+                            ImageUrl = "img/Landing88.svg",
+                            IsActive = true,
+                            Name = "Saxophone Jazz Essentials",
+                            Price = 4500000L,
+                            RefId = new Guid("c3a3d793-bad8-4f3f-856e-b71de82deb2a")
                         });
                 });
 
@@ -820,34 +950,34 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 4,
-                            CourseId = 1,
+                            CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
+                            Date = new DateOnly(2022, 10, 25),
                             RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
-                            CourseId = 1,
+                            CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
+                            Date = new DateOnly(2022, 10, 26),
                             RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 6,
-                            CourseId = 1,
+                            CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
+                            Date = new DateOnly(2022, 10, 27),
                             RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 7,
-                            CourseId = 2,
+                            CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
@@ -856,7 +986,7 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 8,
-                            CourseId = 2,
+                            CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
@@ -865,7 +995,7 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 9,
-                            CourseId = 2,
+                            CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
                             RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
@@ -874,34 +1004,34 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 10,
-                            CourseId = 2,
+                            CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
+                            Date = new DateOnly(2022, 10, 25),
                             RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 11,
-                            CourseId = 2,
+                            CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
+                            Date = new DateOnly(2022, 10, 26),
                             RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 12,
-                            CourseId = 2,
+                            CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
+                            Date = new DateOnly(2022, 10, 27),
                             RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 13,
-                            CourseId = 3,
+                            CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
                             RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
@@ -910,7 +1040,7 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 14,
-                            CourseId = 3,
+                            CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
                             RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
@@ -919,199 +1049,307 @@ namespace MyApp.WebAPI.Migrations
                         new
                         {
                             Id = 15,
-                            CourseId = 3,
+                            CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("dc795a78-c93b-4499-a412-07a036e87ee4"),
+                            RefId = new Guid("e1f2d3c4-5678-4f9a-b123-abcdef123456"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 16,
-                            CourseId = 3,
+                            CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
-                            RefId = new Guid("3b9a7f70-e5f6-4dcb-a6af-72c4b3d305f4"),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("f1a2b3c4-5678-4a9b-cdef-123456abcdef"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 17,
-                            CourseId = 3,
+                            CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
-                            RefId = new Guid("7aa4ec20-b332-4329-8aa4-b8b76e097cd9"),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("f2b3c4d5-6789-4b0c-def1-234567abcdef"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 18,
-                            CourseId = 3,
+                            CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
-                            RefId = new Guid("b1a31b4c-17ea-47ba-948c-e282a019f510"),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("f3c4d5e6-7890-4c1d-ef12-345678abcdef"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 19,
-                            CourseId = 4,
+                            CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("1984127d-79e4-4221-954b-127718857bc0"),
+                            RefId = new Guid("f4d5e6f7-8901-4d2e-f123-456789abcdef"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 20,
-                            CourseId = 4,
+                            CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("1fd6f30b-a51f-4de7-ab35-e309cc988c20"),
+                            RefId = new Guid("a7b8c9d0-9012-4e3f-8123-56789abcdef0"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 21,
-                            CourseId = 4,
+                            CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("deb1a633-2e59-4ebc-b55e-d65170b94207"),
+                            RefId = new Guid("b8c9d0e1-0123-4f4a-9234-6789abcdef01"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 22,
-                            CourseId = 4,
+                            CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
-                            RefId = new Guid("8b3e9524-7183-41b8-ab76-3bef3a804bfd"),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("c9d0e1f2-1234-4a5b-a345-789abcdef012"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 23,
-                            CourseId = 4,
+                            CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
-                            RefId = new Guid("571039cd-eb6e-468a-af34-3fe5a2f19d1e"),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("d0e1f2a3-2345-4b6c-b456-89abcdef0123"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 24,
-                            CourseId = 4,
+                            CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
-                            RefId = new Guid("e0f2ae70-0d8f-42bc-b003-53b70f0e59e3"),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("e1f2a3b4-3456-4c7d-c567-9abcdef01234"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 25,
-                            CourseId = 5,
+                            CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("989ce1b3-83f7-49c5-833b-13e40facbb08"),
+                            RefId = new Guid("e8ad711c-43bd-43a2-98c6-3d46b3667812"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 26,
-                            CourseId = 5,
+                            CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("562fd502-1fd0-4fe6-b013-effb8435d3b4"),
+                            RefId = new Guid("cbd109ea-3589-488a-bf07-668b46f6bc8a"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 27,
-                            CourseId = 5,
+                            CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("50d7486f-de76-43c9-87f0-3fc55c65289b"),
+                            RefId = new Guid("670e7315-12b0-4dda-8adb-34de699cf3be"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 28,
-                            CourseId = 5,
+                            CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
-                            RefId = new Guid("f545d7cf-26ce-4532-98b5-f17b980307c7"),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("20ee3579-1c49-4e8f-8554-3a1ff11411e2"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 29,
-                            CourseId = 5,
+                            CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
-                            RefId = new Guid("761b4c9a-60fb-4809-b1b0-66b37c7d3c59"),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("7cceb84e-1fb3-4834-b594-903edb63e1a1"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 30,
-                            CourseId = 5,
+                            CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
-                            RefId = new Guid("02176419-f3d0-4c9a-b6c7-60f8f84fc203"),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("5d4ab8e2-0383-4d71-9d70-9e1b6e86ec94"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 31,
-                            CourseId = 6,
+                            CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("92dfcd88-5914-4575-b2ac-bce04478c74a"),
+                            RefId = new Guid("26f85f8d-9f30-4b2d-88f1-1170c0cfd7bc"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 32,
-                            CourseId = 6,
+                            CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("8bc96c9b-25da-44e4-a83b-1bada63f6b81"),
+                            RefId = new Guid("c68ce666-4fb9-41f1-8823-cb5ef12a26ee"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 33,
-                            CourseId = 6,
+                            CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("1d64c39e-9857-4e86-9668-8c8b38b2f0d8"),
+                            RefId = new Guid("fc1e014b-d804-45e6-b9e6-ca7cb863deee"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 34,
-                            CourseId = 6,
+                            CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 28),
-                            RefId = new Guid("e577aaaf-dea3-4aaf-9a07-4143686e56ba"),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("bacae46f-be78-4e4e-ad18-7050a9fcf125"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 35,
-                            CourseId = 6,
+                            CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 29),
-                            RefId = new Guid("6929f28a-4f23-4d42-bd27-a5ab1eca0eda"),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("c9444095-c496-4a71-9e60-3932449f5f91"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 36,
-                            CourseId = 6,
+                            CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Date = new DateOnly(2022, 10, 30),
-                            RefId = new Guid("4dcce0fa-717d-440e-b5b7-ce7b59f781b4"),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("7b89ba88-8d47-438b-938d-e4a6b207ee93"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CourseId = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("0a5b10b7-5b2b-4323-99f7-d4016697b191"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CourseId = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("7f10395a-f36e-455b-9dbc-7c39210d3ee6"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CourseId = 13,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("237fc072-5e2e-4f10-b980-0d18b889cab1"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CourseId = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("b04045b4-13af-4d8c-921c-971e0c5cf904"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CourseId = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("c244ef8a-3222-4002-be2b-d53a7fc6e787"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CourseId = 14,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("2bb5eaf0-f3a6-4842-a191-161cc51b4bf0"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CourseId = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("c6666efa-2e35-4bac-810f-10e694a6d7db"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CourseId = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("1083cf7b-d1ef-4953-901b-64c72ae82160"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CourseId = 15,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("4e0ad8cb-938d-4f9d-9786-34550d529dcc"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CourseId = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 25),
+                            RefId = new Guid("db796688-95bb-4aa4-8a08-d846dd81e1d3"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CourseId = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 26),
+                            RefId = new Guid("172ac710-0583-42f9-b27d-653fc99251cf"),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 48,
+                            CourseId = 16,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateOnly(2022, 10, 27),
+                            RefId = new Guid("5923917b-fefd-4525-aab3-12813aa6c41c"),
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

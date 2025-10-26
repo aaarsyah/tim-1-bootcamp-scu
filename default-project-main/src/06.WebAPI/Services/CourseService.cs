@@ -43,7 +43,7 @@ namespace MyApp.WebAPI.Services
         /// </summary>
         /// <param name="parameters">Parameter untuk filtering dan pagination</param>
         /// <returns>PagedResponse berisi products dan pagination info</returns>
-        public async Task<PagedResponse<IEnumerable<CourseDto>>> GetAllCoursesPaginatedAsync(CourseQueryParameters parameters)
+        public async Task<PaginatedResponse<IEnumerable<CourseDto>>> GetAllCoursesPaginatedAsync(CourseQueryParameters parameters)
         {
             // Buat base query dengan Include untuk eager loading Category data
             // AsQueryable() memungkinkan kita untuk chain multiple LINQ operations
@@ -125,7 +125,7 @@ namespace MyApp.WebAPI.Services
             // ========== CREATE PAGINATED RESPONSE ==========
             
             // Buat PagedResponse dengan pagination metadata
-            return PagedResponse<IEnumerable<CourseDto>>.Create(
+            return PaginatedResponse<IEnumerable<CourseDto>>.Create(
                 courseDtos,                    // Data yang akan dikembalikan
                 parameters.PageNumber,          // Current page number
                 parameters.PageSize,            // Page size

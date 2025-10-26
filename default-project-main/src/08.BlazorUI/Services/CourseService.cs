@@ -19,6 +19,8 @@ namespace MyApp.BlazorUI.Services
             var parameter = new CourseQueryParameters();
             var query = new Dictionary<string, string?>
             {
+                //["PageNumber"] = parameter.PageNumber.ToString(),
+                //["PageSize"] = parameter.PageSize.ToString(),
                 ["Search"] = parameter.Search,
                 ["CategoryId"] = parameter.CategoryId.ToString(),
                 ["MinPrice"] = parameter.MinPrice.ToString(),
@@ -32,12 +34,51 @@ namespace MyApp.BlazorUI.Services
                 var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/Course/v2", query));
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResponse<IEnumerable<CourseDto>>>>();
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>();
 
                     if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
                         && apiResponse.Data.Data != null)
                     {
                         return apiResponse.Data.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCourseAsyncv2: Error: {ex.Message}");
+                return null;
+            }
+        }
+        public async Task<PaginatedResponse<IEnumerable<CourseDto>>?> GetAllCoursePaginatedAsync(int page, int pageSize)
+        {
+            //GetAllCourses
+            var _httpClient = _factory.CreateClient("WebAPI");
+            //
+            var parameter = new CourseQueryParameters();
+            var query = new Dictionary<string, string?>
+            {
+                ["PageNumber"] = page.ToString(),
+                ["PageSize"] = pageSize.ToString(),
+                ["Search"] = parameter.Search,
+                ["CategoryId"] = parameter.CategoryId.ToString(),
+                ["MinPrice"] = parameter.MinPrice.ToString(),
+                ["MaxPrice"] = parameter.MaxPrice.ToString(),
+                ["SortBy"] = parameter.SortBy,
+                ["SortDirection"] = parameter.SortDirection,
+                // ...
+            };
+            try
+            {
+                var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("api/Course/v2", query));
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
                     }
                     return null;
                 }

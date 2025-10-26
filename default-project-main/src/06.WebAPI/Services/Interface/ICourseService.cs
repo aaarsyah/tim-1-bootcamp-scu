@@ -13,7 +13,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get products with pagination and filtering
         /// </summary>
-        Task<PagedResponse<IEnumerable<CourseDto>>> GetAllCoursesPaginatedAsync(CourseQueryParameters parameters);
+        Task<PaginatedResponse<IEnumerable<CourseDto>>> GetAllCoursesPaginatedAsync(CourseQueryParameters parameters);
         
         /// <summary>
         /// Get product by ID

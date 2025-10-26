@@ -45,8 +45,8 @@ namespace MyApp.WebAPI.Controllers
         /// <returns>Paginated list berisi ProductDto objects</returns>
         [HttpGet("v2")] // HTTP GET method
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ApiResponse<PagedResponse<IEnumerable<CourseDto>>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<PagedResponse<IEnumerable<CourseDto>>>>> GetAllCourses([FromQuery] CourseQueryParameters parameters)
+        [ProducesResponseType(typeof(ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>), StatusCodes.Status200OK)] // Swagger documentation
+        public async Task<ActionResult<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>> GetAllCoursesV2([FromQuery] CourseQueryParameters parameters)
         {
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -55,7 +55,7 @@ namespace MyApp.WebAPI.Controllers
             var result = await _courseService.GetAllCoursesPaginatedAsync(parameters);
             
             // Return 200 OK dengan paginated response
-            return Ok(ApiResponse<PagedResponse<IEnumerable<CourseDto>>>.SuccessResult(result));
+            return Ok(ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>.SuccessResult(result));
         }
 
         /// <summary>
