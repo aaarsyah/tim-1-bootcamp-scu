@@ -8,8 +8,10 @@
 
 @inject IAuthService AuthService
 @inject IAdminService PaymentService
+@inject ICheckoutService CheckoutService
 
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 
 <PageTitle>Payment Method</PageTitle>
@@ -84,7 +86,13 @@
 
     private async Task LoadPayments()
     {
-        payment = await PaymentService.GetAllPaymentMethodsAsync();
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        payment = await CheckoutService.GetAllPaymentsAsync(auth);
     }
 
     private bool FilterFunc1(PaymentDto u) => FilterFunc(u, searchString1);
@@ -106,6 +114,7 @@
         }
         bool result = await PaymentService.DeletePaymentMethodAsync(auth, id);
         if (result) await LoadPayments();
+        Snackbar.Add("Delete successful!", Severity.Success);
     }
 
     private async Task OpenPaymentDialog(PaymentDto paymentItem)

@@ -125,9 +125,10 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
-        public async Task<List<PaymentDto>> GetAllPaymentsAsync()
+        public async Task<List<PaymentDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
             try
             {
                 var response = await _httpClient.GetAsync("api/payment");
@@ -150,6 +151,31 @@ namespace MyApp.BlazorUI.Services
             }
         }
 
+        public async Task<List<InvoiceDto>> GetAllInvoiceAsync(AuthenticationHeaderValue authorization)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Invoice");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<InvoiceDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllInvoice: Error: {ex.Message}");
+                return new();
+            }
+        }
         public async Task<List<InvoiceDto>> GetOwnInvoicesAsync(AuthenticationHeaderValue authorization)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
@@ -163,7 +189,9 @@ namespace MyApp.BlazorUI.Services
 
                     if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
                     {
-                        return apiResponse.Data.ToList();
+                        return apiResponse.Data
+                            .OrderByDescending(i => i.CreatedAt) // urutkan descending by tanggal terbaru
+                            .ToList();
                     }
                     return new();
                 }
@@ -175,6 +203,7 @@ namespace MyApp.BlazorUI.Services
                 return new();
             }
         }
+
         public async Task<InvoiceDto?> GetInvoiceByIdAsync(AuthenticationHeaderValue authorization, int invoiceId)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
@@ -197,6 +226,32 @@ namespace MyApp.BlazorUI.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"CheckoutItemsAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<InvoiceDetailDto>> GetAllInvoicesDetail(AuthenticationHeaderValue authorization, int invoiceId)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/InvoiceDetail/admin/{invoiceId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();
+
+                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    {
+                        return apiResponse.Data.ToList();
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllInvoice: Error: {ex.Message}");
                 return null;
             }
         }

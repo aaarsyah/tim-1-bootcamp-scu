@@ -9,6 +9,7 @@
 @inject IAdminService AdminService
 
 @inject IDialogService DialogService
+@inject IWebHostEnvironment Env
 
 <MudDialog>
     <DialogContent>
@@ -16,25 +17,24 @@
         <MudTextField @bind-Value="Course.Description" Label="Description" AutoGrow Required="true" />
         <MudTextField @bind-Value="Course.CategoryId" Label="CategoryId" Required="true" />
         <MudTextField @bind-Value="Course.Price" Label="Harga" Required="true" />
-        <MudTextField @bind-Value="Course.Schedules" Label="Jadwal" Required="true" />
 
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
-
         <MudButton HtmlTag="label"
                    Variant="Variant.Filled"
                    Color="Color.Primary"
                    StartIcon="@Icons.Material.Filled.CloudUpload"
-                   Class="mt-20"
+                   Class="mt-4"
                    for="fileInput">
             Upload Picture Course
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Course.ImageUrl))
+        @if (!string.IsNullOrEmpty(previewImageUrl))
         {
-            <MudImage Src="@Course.ImageUrl"
+            <MudImage Src="@previewImageUrl"
                       Alt="Picture Course Preview"
-                      Width="150" Height="100"
-                      Class="mx-auto mt-4" />
+                      Width="200"
+                      Height="120"
+                      Class="mx-auto mt-3 rounded shadow-sm" />
         }
 
         
@@ -58,33 +58,33 @@
     public CourseDto Course { get; set; } = null!;
     [Parameter]
     public bool IsUpdating { get; set; }
+    private string? previewImageUrl;
+    private string? newScheduleDate;
 
     protected override void OnInitialized()
     {
+
+        previewImageUrl = !string.IsNullOrEmpty(Course.ImageUrl) ? Course.ImageUrl : null;
         Console.WriteLine($"CourseDialog.razor: IsUpdating: {IsUpdating}");
     }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
+        if (file == null) return;
 
-        if (file != null)
+        var ext = Path.GetExtension(file.Name).ToLower();
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        var savePath = Path.Combine(Env.WebRootPath, "img", fileName);
+
+        await using (var stream = new FileStream(savePath, FileMode.Create))
         {
-            using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
-            using var ms = new MemoryStream();
-            await stream.CopyToAsync(ms);
-
-            var ext = Path.GetExtension(file.Name).ToLower();
-            var mime = ext switch
-            {
-                ".jpg" or ".jpeg" => "image/jpeg",
-                ".png" => "image/png",
-                ".svg" => "image/svg+xml",
-                _ => "image/png"
-            };
-
-            Course.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}"; // TODO: Fix this
+            await file.OpenReadStream(maxAllowedSize: 5_000_000).CopyToAsync(stream);
         }
+
+        Course.ImageUrl = $"/img/{fileName}";
+        previewImageUrl = Course.ImageUrl;
+        StateHasChanged();
     }
 
     private async Task Save()
@@ -109,6 +109,7 @@
                 CategoryId = Course.CategoryId
             };
             result = await AdminService.UpdateCourseAsync(auth, Course.Id, updateCourseDto);
+            Snackbar.Add("Edit successful!", Severity.Success);
         }
         else
         {
@@ -123,10 +124,11 @@
             };
 
             result = await AdminService.CreateCourseAsync(auth, createCourseDto);
+            Snackbar.Add("Create successful!", Severity.Success);
         }
         if (result == null)
         {
-            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+            Snackbar.Add($"Gagal", Severity.Error);
             return;
         }
         MudDialog.Close(DialogResult.Ok(result));

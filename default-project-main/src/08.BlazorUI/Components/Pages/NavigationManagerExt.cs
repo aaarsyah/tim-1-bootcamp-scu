@@ -74,28 +74,19 @@ namespace MyApp.BlazorUI.Components
             _navigation.NavigateTo("/checkout");
         }
 
-        // public void GoToDetail()
-        // {
-        //     _navigation.NavigateTo("/detail");
-        // }
-
-        // public void GoToListMenu()
-        // {
-        //     _navigation.NavigateTo("/listmenu");
-        // }
-
         public void GoToInvoice()
         {
             _navigation.NavigateTo("/invoice");
         }
 
-        // public void GoToDetailsInvoice()
-        // {
-        //     _navigation.NavigateTo("/details-invoice");
-        // }
         public void GoToDetailsInvoice(int invoiceId)
         {
             _navigation.NavigateTo($"/details-invoice/{invoiceId}");
+        }
+
+        public void GoToDetailsInvoiceAdmin(int invoiceId)
+        {
+            _navigation.NavigateTo($"/details-invoice-admin/{invoiceId}");
         }
 
         public void GoToDashboard()
@@ -127,12 +118,6 @@ namespace MyApp.BlazorUI.Components
         {
             _navigation.NavigateTo($"/success-purchase?method={selectedPayment}");
         }
-
-        // Contoh jika menggunakan id
-        // public void GoToDetail(int id)
-        // {
-        //     _navigation.NavigateTo($"/detail/{id}");
-        // }
 
         public void GoToListMenu(int categoryId)
         {

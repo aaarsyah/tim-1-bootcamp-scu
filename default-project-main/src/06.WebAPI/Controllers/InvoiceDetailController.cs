@@ -34,10 +34,10 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <returns>List of InvoiceDetail</returns>
         /// <response code="200">Returns the list of invoice</response>
-        [HttpGet]
+        [HttpGet("admin/{invoiceId:int}")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetAllInvoicesDetail()
+        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetAllInvoicesDetail(int invoiceId)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
@@ -45,7 +45,7 @@ namespace MyApp.WebAPI.Controllers
                 throw new AuthenticationException("Token is invalid");
             }
 
-            var result = await _invoiceDetailService.GetAllInvoicesDetailAsync();
+            var result = await _invoiceDetailService.GetAllInvoicesDetailAsync(invoiceId);
             return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
         }
 

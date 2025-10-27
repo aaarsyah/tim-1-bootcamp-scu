@@ -1209,18 +1209,24 @@ namespace MyApp.WebAPI.Data
             }
             );
 
+            var admin = new User
+            {
+                Id = 1,
+                IsActive = true,
+                RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
+                Name = "Super Admin",
+                Email = "admin@applemusic.com",
+                EmailConfirmed = true,
+                CreatedAt = seedDate,
+                CreatedBy = "System"
+            };
+
+            // Hash password
+            admin.PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123@");
+
+
             modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = 1,
-                    IsActive = true,
-                    RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
-                    Name = "Super Admin",
-                    Email = "admin@applemusic.com",
-                    EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
-                },
+                admin,
                 new User
                 {
                     Id = 2,
@@ -1246,7 +1252,7 @@ namespace MyApp.WebAPI.Data
                 },
                 new User
                 {
-                    
+
                     Id = 4,
                     IsActive = false,
                     RefId = new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"),
@@ -1279,6 +1285,7 @@ namespace MyApp.WebAPI.Data
                     CreatedBy = "System"
                 }
             );
+
             modelBuilder.Entity<UserRole>().HasData(
                 new UserRole
                 {

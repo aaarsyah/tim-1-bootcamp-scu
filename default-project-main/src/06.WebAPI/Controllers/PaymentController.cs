@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.WebAPI.Configuration;
+using MyApp.WebAPI.Exceptions;
 using MyApp.WebAPI.Models;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers
 {
- 
+
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
@@ -24,28 +26,40 @@ namespace MyApp.WebAPI.Controllers
             _paymentService = paymentService;
             _logger = logger;
         }
-
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<PaymentDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ApiResponse<IEnumerable<PaymentDto>>>> GetAllPaymentMethods()
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
+
             var result = await _paymentService.GetAllPaymentAsync();
             return Ok(ApiResponse<IEnumerable<PaymentDto>>.SuccessResult(result));
         }
 
-      
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize]
         [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ApiResponse<PaymentDto>>> GetPayment(int id)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new AuthenticationException("Token is invalid");
+            }
+
             var result = await _paymentService.GetPaymentByIdAsync(id);
             return Ok(ApiResponse<PaymentDto>.SuccessResult(result));
         }
 
-      
+
         [HttpPost]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status201Created)]
@@ -56,7 +70,7 @@ namespace MyApp.WebAPI.Controllers
             return CreatedAtAction(nameof(GetPayment), new { id = result.Id }, ApiResponse<PaymentDto>.SuccessResult(result));
         }
 
-      
+
         [HttpPut("{id}")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]

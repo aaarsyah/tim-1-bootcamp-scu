@@ -1463,7 +1463,7 @@ namespace MyApp.WebAPI.Migrations
                             FailedLoginAttempts = 0,
                             IsActive = true,
                             Name = "Super Admin",
-                            PasswordHash = "",
+                            PasswordHash = "$2a$11$0exJ.g3UuG5OkMlez9izxO14dodhcBEkxV49ryAGqbL0urtb3L5Cq",
                             PasswordResetTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
                             RefreshTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

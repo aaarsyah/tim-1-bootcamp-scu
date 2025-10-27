@@ -102,6 +102,7 @@
                 IsActive = Payment.IsActive
             };
             result = await PaymentService.UpdatePaymentMethodAsync(auth, Payment.Id, updatePaymentDto);
+            Snackbar.Add("Edit successful!", Severity.Success);
         }
         else
         {
@@ -112,10 +113,11 @@
                 IsActive = Payment.IsActive
             };
             result = await PaymentService.CreatePaymentMethodAsync(auth, createPaymentDto);
+            Snackbar.Add("Create successful!", Severity.Success);
         }
         if (result == null)
         {
-            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+            Snackbar.Add($"Gagal", Severity.Error);
             return;
         }
         MudDialog.Close(DialogResult.Ok(result));

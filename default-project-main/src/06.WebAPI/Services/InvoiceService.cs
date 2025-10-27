@@ -37,17 +37,6 @@ namespace MyApp.WebAPI.Services
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
 
-        //public async Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId)
-        //{
-        //    var myClasses = await _context.MyClasses
-        //        .Where(m => m.UserId == userId)
-        //        .Include(m => m.Schedule)
-        //        .ThenInclude(s => s.Course)
-        //        .ThenInclude(c => c.Category)
-        //        .ToListAsync();
-        //    return _mapper.Map<IEnumerable<MyClassDto>>(myClasses);
-        //}
-
         /// <summary>
         /// Get all Invoice
         /// </summary>
@@ -55,6 +44,7 @@ namespace MyApp.WebAPI.Services
         {
             // Misalnya kamu ingin ambil semua invoice
             var invoices = await _context.Invoices
+                .Include(m => m.User)
                 .Include(m => m.InvoiceDetails)
                 .ToListAsync();
 

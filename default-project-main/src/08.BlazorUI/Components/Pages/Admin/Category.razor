@@ -10,6 +10,7 @@
 @inject IAdminService AdminService
 
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 <PageTitle>Category</PageTitle>
 
@@ -106,6 +107,7 @@
         }
         bool result = await AdminService.DeleteCategoryAsync(auth, id);
         if (result) await LoadCategories();
+        Snackbar.Add("Delete successful!", Severity.Success);
     }
 
     private async Task OpenCategoryDialog(CategoryDto? categoryItem)

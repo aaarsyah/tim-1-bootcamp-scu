@@ -84,7 +84,7 @@
         }
 
         // Fetch all courses
-        var result2 = await CourseService.GetAllCourseAsync();
+        var result2 = await CourseService.GetCourseByCategoryAsync(CategoryId);
         if (result2 != null)
         {
             Courses = result2

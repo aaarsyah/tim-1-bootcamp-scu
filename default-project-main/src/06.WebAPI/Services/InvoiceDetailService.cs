@@ -51,10 +51,12 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get all Invoice Detail
         /// </summary>
-        public async Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync()
+        public async Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync(int invoiceId)
         {
             // Misalnya kamu ingin ambil semua invoice
-            var invoicesDetail = await _context.InvoiceDetails.ToListAsync(); // hapus .Include(c => c.Courses) jika Courses gak ada
+            var invoicesDetail = await _context.InvoiceDetails
+                    .Where(d => d.InvoiceId == invoiceId)
+                    .ToListAsync(); 
             return _mapper.Map<IEnumerable<InvoiceDetailDto>>(invoicesDetail);
         }
 

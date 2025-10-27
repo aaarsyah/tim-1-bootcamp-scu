@@ -54,11 +54,13 @@ namespace MyApp.WebAPI.Mappings
 
             // Invoice mappings
             CreateMap<Invoice, InvoiceDto>()
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.InvoiceDetails.Sum(s => s.Price)))
                 .ForMember(dest => dest.TotalCourse, opt => opt.MapFrom(src => src.InvoiceDetails.Count));
 
             // Invoice Detail mappings
             CreateMap<InvoiceDetail, InvoiceDetailDto>();
+            
             // MyClass mappings
             CreateMap<MyClass, MyClassDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Schedule.Course.Category.Name))

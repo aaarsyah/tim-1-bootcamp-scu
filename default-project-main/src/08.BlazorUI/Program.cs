@@ -27,7 +27,7 @@ builder.Services.AddBlazoredLocalStorage();
 //});
 builder.Services.AddHttpClient("WebAPI", sp =>
 {
-    sp.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269");
+    sp.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:5099");
 });
 
 // Add navigation service

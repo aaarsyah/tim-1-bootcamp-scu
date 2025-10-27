@@ -104,6 +104,7 @@
                 IsActive = Category.IsActive
             };
             result = await AdminService.UpdateCategoryAsync(auth, Category.Id, updateCategoryDto);
+            Snackbar.Add("Edit successful!", Severity.Success);
         }
         else
         {
@@ -117,10 +118,11 @@
             };
 
             result = await AdminService.CreateCategoryAsync(auth, createCategoryDto);
+            Snackbar.Add("Create successful!", Severity.Success);
         }
         if (result == null)
         {
-            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+            Snackbar.Add($"Gagal", Severity.Error);
             return;
         }
         MudDialog.Close(DialogResult.Ok(result));

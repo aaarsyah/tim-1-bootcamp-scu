@@ -151,7 +151,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Create new product
         /// </summary>
-        public async Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto)
+       public async Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto)
         {
             // Validate category exists
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
@@ -161,13 +161,33 @@ namespace MyApp.WebAPI.Services
             }
 
             var course = _mapper.Map<Course>(createCourseDto);
-            
+
+            // === Upload Image (jika ImageUrl berisi base64 dari client) ===
+            if (!string.IsNullOrWhiteSpace(createCourseDto.ImageUrl) &&
+                createCourseDto.ImageUrl.StartsWith("data:image"))
+            {
+                // Contoh: data:image/png;base64,AAAA...
+                var base64Data = createCourseDto.ImageUrl.Substring(createCourseDto.ImageUrl.IndexOf(",") + 1);
+                var bytes = Convert.FromBase64String(base64Data);
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = $"{Guid.NewGuid()}.png"; 
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                await File.WriteAllBytesAsync(filePath, bytes);
+
+                // Simpan URL publik ke database
+                course.ImageUrl = $"/img/{fileName}";
+            }
+
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
-            
+
             // Reload with category for DTO mapping
             await _context.Entry(course).Reference(p => p.Category).LoadAsync();
-            
+
             _logger.LogInformation("Course created: {CourseName} with ID: {CourseId}", 
                 course.Name, course.Id);
 

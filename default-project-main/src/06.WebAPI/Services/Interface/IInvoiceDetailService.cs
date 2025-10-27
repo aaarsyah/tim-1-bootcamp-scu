@@ -15,7 +15,7 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get all Invoice
         /// </summary>
-        Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync();
+        Task<IEnumerable<InvoiceDetailDto>> GetAllInvoicesDetailAsync(int invoiceId);
 
         /// <summary>
         /// Get Invoice by ID

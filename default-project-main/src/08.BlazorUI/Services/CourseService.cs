@@ -165,5 +165,39 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
+
+        public async Task<List<CourseDto>> GetCourseByCategoryAsync(int categoryId)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Course/v2?CategoryId={categoryId}");
+                var rawJson = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response JSON: {rawJson}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"GetCourse: Error HTTP {response.StatusCode}");
+                    return new List<CourseDto>();
+                }
+
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<List<CourseDto>>>>();
+
+                if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data?.Data != null)
+                {
+                    return apiResponse.Data.Data
+                        .Where(c => c.IsActive && c.CategoryId == categoryId)
+                        .ToList();
+                }
+
+                return new List<CourseDto>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetCourse: Error: {ex.Message}");
+                return new List<CourseDto>();
+            }
+        }
+
     }
 }
