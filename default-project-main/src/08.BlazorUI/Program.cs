@@ -37,7 +37,6 @@ builder.Services.AddScoped<NavigationManagerExt>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 
 //Auth
