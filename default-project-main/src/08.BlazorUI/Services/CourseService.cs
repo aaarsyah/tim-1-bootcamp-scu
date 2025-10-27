@@ -39,7 +39,9 @@ namespace MyApp.BlazorUI.Services
                     if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
                         && apiResponse.Data.Data != null)
                     {
-                        return apiResponse.Data.Data;
+                        return apiResponse.Data.Data
+                            .OrderBy(c => c.Id) // urutkan berdasarkan ID terkecil (ascending)
+                            .ToList();
                     }
                     return null;
                 }
