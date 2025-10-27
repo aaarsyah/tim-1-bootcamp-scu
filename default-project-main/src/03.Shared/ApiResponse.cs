@@ -1,29 +1,16 @@
 namespace MyApp.Shared.DTOs
 {
     /// <summary>
-    /// Standard API response wrapper
+    /// Standard API response wrapper for non-error responses<br />
+    /// For error responses, use ProblemDetails
     /// </summary>
     /// <typeparam name="T">Response data type</typeparam>
     public class ApiResponse<T>
     {
         /// <summary>
-        /// Machine-readable status code
-        /// Purpose: Frontend can handle specific errors programmatically
-        /// Examples: "NOT_FOUND", "SUCCESS", "VALIDATION_ERROR"
-        /// </summary>
-        public string StatusCode { get; set; } = string.Empty;
-        /// <summary>
         /// Response data
         /// </summary>
         public T? Data { get; set; }
-        /// <summary>
-        /// Response message
-        /// </summary>
-        public string? ErrorMessage { get; set; }
-        /// <summary>
-        /// Error details if any
-        /// </summary>
-        public object? Errors { get; set; }
         /// <summary>
         /// Response timestamp
         /// </summary>
@@ -35,7 +22,6 @@ namespace MyApp.Shared.DTOs
         {
             return new ApiResponse<T>
             {
-                StatusCode = "SUCCESS",
                 Data = data
             };
         }
@@ -46,21 +32,12 @@ namespace MyApp.Shared.DTOs
         {
             return new ApiResponse<object>
             {
-                StatusCode = "SUCCESS",
                 Data = null
             };
         }
         /// <summary>
         /// Create error response
         /// </summary>
-        public static ApiResponse<T> ErrorResult(string message, object? errors = null)
-        {
-            return new ApiResponse<T>
-            {
-                ErrorMessage = message,
-                Errors = errors
-            };
-        }
     }
 
     /// <summary>

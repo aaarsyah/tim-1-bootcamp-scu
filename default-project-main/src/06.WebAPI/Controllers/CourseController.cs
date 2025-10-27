@@ -127,18 +127,7 @@ namespace MyApp.WebAPI.Controllers
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ApiResponse<object>>> DeleteCourse(int id)
         {
-            // Panggil service untuk delete product
-            // Service akan return false jika product tidak ditemukan
             var result = await _courseService.DeleteCourseAsync(id);
-            
-            if (!result)
-            {
-                // Return 404 jika product tidak ditemukan
-                return NotFound(ApiResponse<object>.ErrorResult($"Course with ID {id} not found"));
-            }
-
-            // Return 204 No Content untuk successful deletion
-            // No Content berarti operasi berhasil tapi tidak ada data untuk dikembalikan
             return Ok(ApiResponse<object>.SuccessResult());
         }
     } // End of ProductsController class

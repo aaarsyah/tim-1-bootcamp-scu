@@ -75,10 +75,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<object>>> DeletePayment(int id)
         {
             var result = await _paymentService.DeletePaymentAsync(id);
-            if (!result)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult($"PaymentMethod with ID {id} not found"));
-            }
             return Ok(ApiResponse<object>.SuccessResult());
         }
     }

@@ -36,8 +36,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null
-                        && apiResponse.Data.Data != null)
+                    if (apiResponse?.Data?.Data != null)
                     {
                         return apiResponse.Data.Data;
                     }
@@ -76,7 +75,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -101,7 +100,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -126,7 +125,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<CategoryDto>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -151,7 +150,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }

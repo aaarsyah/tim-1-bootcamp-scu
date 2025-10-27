@@ -91,10 +91,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<object>>> DeleteMyClass(int id)
         {
             var result = await _myclassService.DeleteMyClassAsync(id);
-            if (!result)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult($"MyClass with ID {id} not found"));
-            }
             return Ok(ApiResponse<object>.SuccessResult());
         }
     }

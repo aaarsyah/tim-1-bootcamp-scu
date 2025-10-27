@@ -27,7 +27,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<CartItemResponseDto>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -56,7 +56,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS")
+                    if (apiResponse != null)
                     {
                         return true;
                     }
@@ -85,7 +85,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS")
+                    if (apiResponse != null)
                     {
                         return true;
                     }
@@ -111,7 +111,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CheckoutResponseDto>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -135,7 +135,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentDto>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -161,7 +161,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDto>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data.ToList();
                     }
@@ -186,7 +186,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<InvoiceDto>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data;
                     }
@@ -211,7 +211,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         return apiResponse.Data.ToList();
                     }

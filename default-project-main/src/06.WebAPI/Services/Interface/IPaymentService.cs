@@ -16,7 +16,6 @@ namespace MyApp.WebAPI.Services
         
         Task<PaymentDto> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto);
         
-
         Task<bool> DeletePaymentAsync(int id);
      
         Task<bool> PaymentExistsAsync(int id);

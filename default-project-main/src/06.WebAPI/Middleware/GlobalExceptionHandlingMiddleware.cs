@@ -97,7 +97,7 @@ namespace MyApp.WebAPI.Middleware
                             TraceId = traceId,
                             StackTrace = _environment.IsDevelopment() ? validationEx.StackTrace : null
                         };
-                        extensions["ErrorCode"] = ex.ErrorCode;
+                        extensions["errorCode"] = ex.ErrorCode;
                         response = new ProblemDetails()
                         {
                             Title = ex.Message,
@@ -114,7 +114,7 @@ namespace MyApp.WebAPI.Middleware
                             // Show stack trace only in development
                             StackTrace = _environment.IsDevelopment() ? ex.StackTrace : null
                         };
-                        extensions["ErrorCode"] = ex.ErrorCode;
+                        extensions["errorCode"] = ex.ErrorCode;
                         response = new ProblemDetails()
                         {
                             Title = ex.Message,
@@ -133,7 +133,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentNullException.StackTrace : null
                     };
-                    extensions["ErrorCode"] = "ARGUMENT_NULL";
+                    extensions["errorCode"] = "ARGUMENT_NULL";
                     response = new ProblemDetails()
                     {
                         Title = "A required argument was null",
@@ -151,7 +151,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentException.StackTrace : null
                     };
-                    extensions["ErrorCode"] = "ARGUMENT_INVALID";
+                    extensions["errorCode"] = "ARGUMENT_INVALID";
                     response = new ProblemDetails()
                     {
                         Title = argumentException.Message,
@@ -169,7 +169,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId
                         // No stack trace for security
                     };
-                    extensions["ErrorCode"] = "UNAUTHORIZED";
+                    extensions["errorCode"] = "UNAUTHORIZED";
                     response = new ProblemDetails()
                     {
                         Title = "Access denied",
@@ -188,7 +188,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? timeoutException.StackTrace : null
                     };
-                    extensions["ErrorCode"] = "TIMEOUT";
+                    extensions["errorCode"] = "TIMEOUT";
                     response = new ProblemDetails()
                     {
                         Title = "The request timed out",
@@ -207,7 +207,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? taskCanceledException.StackTrace : null
                     };
-                    extensions["ErrorCode"] = "TIMEOUT";
+                    extensions["errorCode"] = "TIMEOUT";
                     response = new ProblemDetails()
                     {
                         Title = "The request timed out",
@@ -228,7 +228,7 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? exception.StackTrace : null
                     };
-                    extensions["ErrorCode"] = "INTERNAL_SERVER_ERROR";
+                    extensions["errorCode"] = "INTERNAL_SERVER_ERROR";
                     response = new ProblemDetails()
                     {
                         Title = message,

@@ -8,7 +8,7 @@ namespace MyApp.WebAPI.Services
 {
     public interface IUserManagementService
     {
-        Task<UserDto?> GetUserProfileAsync(int userId);
+        Task<UserDto> GetUserProfileAsync(int userId);
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
         Task<IEnumerable<RoleDto>> GetAllRolesAsync();
         Task<bool> AddRoleToUserAsync(int userId, string roleName);

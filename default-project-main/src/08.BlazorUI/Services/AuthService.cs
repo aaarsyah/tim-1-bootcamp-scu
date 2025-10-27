@@ -52,7 +52,7 @@ namespace MyApp.BlazorUI.Services
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<AuthResponseDto>>();
 
-                    if (apiResponse?.StatusCode == "SUCCESS" && apiResponse.Data != null)
+                    if (apiResponse?.Data != null)
                     {
                         await SetTokensAsync(apiResponse.Data.AccessToken, apiResponse.Data.RefreshToken);
 
@@ -78,7 +78,6 @@ namespace MyApp.BlazorUI.Services
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/register", request);
-
                 if (!response.IsSuccessStatusCode)
                 {
                     var a = await response.Content.ReadFromJsonAsync<ProblemDetails>();
@@ -87,7 +86,7 @@ namespace MyApp.BlazorUI.Services
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
+                return apiResponse != null;
             }
             catch
             {
@@ -106,7 +105,7 @@ namespace MyApp.BlazorUI.Services
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
+                return apiResponse != null;
             }
             catch
             {
@@ -126,7 +125,7 @@ namespace MyApp.BlazorUI.Services
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
+                return apiResponse != null;
             }
             catch
             {
@@ -145,7 +144,7 @@ namespace MyApp.BlazorUI.Services
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
+                return apiResponse != null;
             }
             catch
             {
@@ -164,7 +163,7 @@ namespace MyApp.BlazorUI.Services
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-                return apiResponse?.StatusCode == "SUCCESS";
+                return apiResponse != null;
             }
             catch
             {
@@ -209,7 +208,7 @@ namespace MyApp.BlazorUI.Services
                     return;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
-                if (apiResponse?.StatusCode != "SUCCESS")
+                if (apiResponse == null)
                 {
                     // mungkin error karena token invalid, kita buang tokennya
                     await ClearTokensAsync();
@@ -306,7 +305,7 @@ namespace MyApp.BlazorUI.Services
                     }
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<AuthResponseDto>>();
 
-                    if (apiResponse?.StatusCode != "SUCCESS" || apiResponse.Data == null)
+                    if (apiResponse?.Data == null)
                     {
                         return null; // hasil keluaran API invalid (mungkin token invalid)
                     }

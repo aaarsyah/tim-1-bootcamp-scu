@@ -110,10 +110,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<object>>> DeleteCategory(int id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
-            if (!result)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult($"Category with ID {id} not found"));
-            }
             return Ok(ApiResponse<object>.SuccessResult());
         }
     }

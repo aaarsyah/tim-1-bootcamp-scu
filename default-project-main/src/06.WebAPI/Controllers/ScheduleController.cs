@@ -76,10 +76,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<IActionResult> DeleteSchedule(int id)
         {
             var result = await _scheduleService.DeleteScheduleAsync(id);
-            if (!result)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult($"Schedule with ID {id} not found"));
-            }
             return Ok(ApiResponse<object>.SuccessResult());
         }
     }

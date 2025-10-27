@@ -30,7 +30,7 @@ namespace MyApp.WebAPI.Services
             _logger = logger;
         }
 
-        public async Task<UserDto?> GetUserProfileAsync(int userId)
+        public async Task<UserDto> GetUserProfileAsync(int userId)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Id == userId);

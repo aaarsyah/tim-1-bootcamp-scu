@@ -61,11 +61,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<UserDto>>> GetUser(int userId)
         {
             var user = await _userManagementService.GetUserProfileAsync(userId);
-            if (user == null)
-            {
-                return NotFound(ApiResponse<object>.ErrorResult("User not found"));
-            }
-
             return Ok(ApiResponse<UserDto>.SuccessResult(user));
         }
 
@@ -75,7 +70,6 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<IEnumerable<RoleDto>>>> GetAllRoles()
         {
             var user = await _userManagementService.GetAllRolesAsync();
-
             return Ok(ApiResponse<IEnumerable<RoleDto>>.SuccessResult(user));
         }
 

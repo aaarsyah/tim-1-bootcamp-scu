@@ -15,7 +15,6 @@ namespace MyApp.WebAPI.Services
         
         Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto);
         
-
         Task<bool> DeleteMyClassAsync(int id);
      
         Task<bool> MyClassExistsAsync(int id);

@@ -7,9 +7,6 @@ namespace MyApp.BlazorUI.Services;
 
 public class UserService : IUserService
 {
-    private readonly List<UserItem> _user = new();
-    private int _nextId = 1;
-
     private readonly IHttpClientFactory _factory;
 
     public UserService(IHttpClientFactory factory)
@@ -32,7 +29,7 @@ public class UserService : IUserService
             
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserDto>>>();
 
-            if (apiResponse?.StatusCode != "SUCCESS" || apiResponse.Data == null)
+            if (apiResponse?.Data == null)
             {
                 return new();
             }
@@ -58,7 +55,7 @@ public class UserService : IUserService
 
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<RoleDto>>>();
 
-            if (apiResponse?.StatusCode != "SUCCESS" || apiResponse.Data == null)
+            if (apiResponse?.Data == null)
             {
                 return new();
             }
@@ -82,7 +79,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
@@ -103,7 +100,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
@@ -124,7 +121,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
@@ -145,7 +142,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
@@ -166,7 +163,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
@@ -186,7 +183,7 @@ public class UserService : IUserService
                 return false;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
-            return apiResponse?.StatusCode == "SUCCESS";
+            return apiResponse != null;
         }
         catch (Exception ex)
         {
