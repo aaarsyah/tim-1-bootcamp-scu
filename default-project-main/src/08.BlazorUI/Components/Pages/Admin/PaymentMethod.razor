@@ -112,8 +112,23 @@
     {
         var parameters = new DialogParameters();
         //
-        parameters.Add("Payment", paymentItem ?? new PaymentDto());
-        parameters.Add("IsUpdating", paymentItem != null); // Bila courseItem ada, berarti updating
+        PaymentDto? paymentItemClone = null;
+        bool isUpdating = paymentItem != null;
+        if (paymentItem != null)
+        {
+            paymentItemClone = new PaymentDto()
+            {
+                Id = paymentItem.Id,
+                Name = paymentItem.Name,
+                LogoUrl = paymentItem.LogoUrl,
+                CreatedAt = paymentItem.CreatedAt,
+                UpdatedAt = paymentItem.UpdatedAt,
+                IsActive = paymentItem.IsActive
+            };
+        }
+        //
+        parameters.Add("Payment", paymentItemClone ?? new PaymentDto());
+        parameters.Add("IsUpdating", isUpdating); // Bila courseItem ada, berarti updating
 
         var options = new DialogOptions
         {
@@ -127,6 +142,10 @@
 
         if (result != null && !result.Canceled && result.Data is PaymentDto)
         {
+            // if (isUpdating)
+            // {
+            //     paymentItem = (PaymentDto)result.Data;
+            // }
             await LoadPayments();
         }
     }

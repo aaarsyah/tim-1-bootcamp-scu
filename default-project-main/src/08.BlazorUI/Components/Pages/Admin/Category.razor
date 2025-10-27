@@ -112,8 +112,24 @@
     {
         var parameters = new DialogParameters();
         //
-        parameters.Add("Category", categoryItem ?? new CategoryDto());
-        parameters.Add("IsUpdating", categoryItem != null); // Bila courseItem ada, berarti updating
+        CategoryDto? categoryItemClone = null;
+        bool isUpdating = categoryItem != null;
+        if (categoryItem != null)
+        {
+            categoryItemClone = new CategoryDto()
+            {
+                Id = categoryItem.Id,
+                Name = categoryItem.Name,
+                LongName = categoryItem.LongName,
+                Description = categoryItem.Description,
+                IsActive = categoryItem.IsActive,
+                CreatedAt = categoryItem.CreatedAt,
+                ImageUrl = categoryItem.ImageUrl
+            };
+        }
+        //
+        parameters.Add("Category", categoryItemClone ?? new CategoryDto());
+        parameters.Add("IsUpdating", isUpdating); // Bila courseItem ada, berarti updating
 
         var options = new DialogOptions
         {

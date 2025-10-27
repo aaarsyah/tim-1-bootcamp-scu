@@ -118,9 +118,29 @@
     private async Task OpenCourseDialog(CourseDto? courseItem)
     {
         var parameters = new DialogParameters();
+        //
+        CourseDto? courseItemClone = null;
+        bool isUpdating = courseItem != null;
+        if (courseItem != null)
+        {
+            courseItemClone = new CourseDto()
+            {
+                Id = courseItem.Id,
+                Name = courseItem.Name,
+                Description = courseItem.Description,
+                Price = courseItem.Price,
+                ImageUrl = courseItem.ImageUrl,
+                IsActive = courseItem.IsActive,
+                CreatedAt = courseItem.CreatedAt,
+                CategoryId = courseItem.CategoryId,
+                CategoryName = courseItem.CategoryName,
+                ScheduleDates = new(),
+                Schedules = new()
+            };
+        }
         // 
-        parameters.Add("Course", courseItem ?? new CourseDto());
-        parameters.Add("IsUpdating", courseItem != null); // Bila courseItem ada, berarti updating
+        parameters.Add("Course", courseItemClone ?? new CourseDto());
+        parameters.Add("IsUpdating", isUpdating); // Bila courseItem ada, berarti updating
 
         var options = new DialogOptions
         {

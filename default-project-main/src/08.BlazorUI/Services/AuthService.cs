@@ -80,9 +80,12 @@ namespace MyApp.BlazorUI.Services
                 var response = await _httpClient.PostAsJsonAsync("api/auth/register", request);
                 if (!response.IsSuccessStatusCode)
                 {
-                    var a = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    //Console.WriteLine(a.Type);
-                    //Console.WriteLine(await response.Content.ReadAsStringAsync());
+                    var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                    if (problemDetails == null)
+                    {
+                        // Unknown error
+                        return false;
+                    }
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();
