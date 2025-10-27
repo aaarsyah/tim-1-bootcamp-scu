@@ -43,7 +43,7 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         [HttpPost("register")]
         [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ApiResponse<bool>>> Register([FromBody] RegisterRequestDto request)
         {
             var result = await _authenticationService.RegisterAsync(request);

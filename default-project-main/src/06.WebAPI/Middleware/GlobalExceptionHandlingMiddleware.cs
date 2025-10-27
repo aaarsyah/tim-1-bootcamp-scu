@@ -1,8 +1,10 @@
-using MyApp.WebAPI.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using MyApp.Shared.DTOs;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
+using System;
 using System.Net;
 using System.Text.Json;
-using MyApp.WebAPI.Models;
 
 namespace MyApp.WebAPI.Middleware
 {
@@ -75,7 +77,8 @@ namespace MyApp.WebAPI.Middleware
             
             var traceId = context.TraceIdentifier; // For tracking in logs
             ErrorResponse errorResponse;
-            ApiResponse<object> response;
+            Dictionary<string, object?> extensions = new();
+            ProblemDetails response;
             // ===== HANDLE DIFFERENT EXCEPTION TYPES =====
 
             switch (exception)
@@ -94,7 +97,13 @@ namespace MyApp.WebAPI.Middleware
                             TraceId = traceId,
                             StackTrace = _environment.IsDevelopment() ? validationEx.StackTrace : null
                         };
-                        response = ApiResponse<object>.ErrorResult(ex.ErrorCode, ex.Message, errorResponse);
+                        extensions["ErrorCode"] = ex.ErrorCode;
+                        response = new ProblemDetails()
+                        {
+                            Title = ex.Message,
+                            Detail = errorResponse.ToString(),
+                            Extensions = extensions
+                        };
                     }
                     else
                     {
@@ -105,7 +114,13 @@ namespace MyApp.WebAPI.Middleware
                             // Show stack trace only in development
                             StackTrace = _environment.IsDevelopment() ? ex.StackTrace : null
                         };
-                        response = ApiResponse<object>.ErrorResult(ex.ErrorCode, ex.Message, errorResponse);
+                        extensions["ErrorCode"] = ex.ErrorCode;
+                        response = new ProblemDetails()
+                        {
+                            Title = ex.Message,
+                            Detail = errorResponse.ToString(),
+                            Extensions = extensions
+                        };
                     }
                     break;
 
@@ -118,7 +133,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentNullException.StackTrace : null
                     };
-                    response = ApiResponse<object>.ErrorResult("ARGUMENT_NULL", "A required argument was null", errorResponse);
+                    extensions["ErrorCode"] = "ARGUMENT_NULL";
+                    response = new ProblemDetails()
+                    {
+                        Title = "A required argument was null",
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     break;
 
                 // ===== ARGUMENT EXCEPTION =====
@@ -130,7 +151,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? argumentException.StackTrace : null
                     };
-                    response = ApiResponse<object>.ErrorResult("ARGUMENT_INVALID", argumentException.Message, errorResponse);
+                    extensions["ErrorCode"] = "ARGUMENT_INVALID";
+                    response = new ProblemDetails()
+                    {
+                        Title = argumentException.Message,
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     break;
 
                 // ===== UNAUTHORIZED ACCESS =====
@@ -142,7 +169,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId
                         // No stack trace for security
                     };
-                    response = ApiResponse<object>.ErrorResult("UNAUTHORIZED", "Access denied", errorResponse);
+                    extensions["ErrorCode"] = "UNAUTHORIZED";
+                    response = new ProblemDetails()
+                    {
+                        Title = "Access denied",
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     break;
 
                 // ===== TIMEOUT EXCEPTION =====
@@ -155,7 +188,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? timeoutException.StackTrace : null
                     };
-                    response = ApiResponse<object>.ErrorResult("TIMEOUT", "The request timed out", errorResponse);
+                    extensions["ErrorCode"] = "TIMEOUT";
+                    response = new ProblemDetails()
+                    {
+                        Title = "The request timed out",
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     break;
 
                 // ===== TASK CANCELED (TIMEOUT) =====
@@ -168,7 +207,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? taskCanceledException.StackTrace : null
                     };
-                    response = ApiResponse<object>.ErrorResult("TIMEOUT", "The request timed out", errorResponse);
+                    extensions["ErrorCode"] = "TIMEOUT";
+                    response = new ProblemDetails()
+                    {
+                        Title = "The request timed out",
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     break;
 
                 // ===== UNKNOWN/UNHANDLED EXCEPTIONS =====
@@ -183,7 +228,13 @@ namespace MyApp.WebAPI.Middleware
                         TraceId = traceId,
                         StackTrace = _environment.IsDevelopment() ? exception.StackTrace : null
                     };
-                    response = ApiResponse<object>.ErrorResult("INTERNAL_SERVER_ERROR", message, errorResponse);
+                    extensions["ErrorCode"] = "INTERNAL_SERVER_ERROR";
+                    response = new ProblemDetails()
+                    {
+                        Title = message,
+                        Detail = errorResponse.ToString(),
+                        Extensions = extensions
+                    };
                     // Log full details for internal errors
                     _logger.LogError(exception, 
                         "Internal server error occurred. TraceId: {TraceId}", traceId);

@@ -61,18 +61,6 @@ namespace MyApp.Shared.DTOs
                 Errors = errors
             };
         }
-        /// <summary>
-        /// Create error response
-        /// </summary>
-        public static ApiResponse<T> ErrorResult(string statusCode, string message, object? errors = null)
-        {
-            return new ApiResponse<T>
-            {
-                StatusCode = statusCode,
-                ErrorMessage = message,
-                Errors = errors
-            };
-        }
     }
 
     /// <summary>

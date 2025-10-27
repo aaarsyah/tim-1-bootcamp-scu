@@ -8,7 +8,7 @@ namespace MyApp.Shared.DTOs
     public class RegisterRequestDto
     {
         [Required(ErrorMessage = "Name is required")]
-        [StringLength(64, ErrorMessage = "Name length cannot exceed 64 characters")] // Sesuai dengan batasan di database
+        [StringLength(10, ErrorMessage = "Name length cannot exceed 64 characters")] // Sesuai dengan batasan di database
         public string Name { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Email is required")]
