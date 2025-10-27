@@ -135,7 +135,7 @@ namespace MyApp.WebAPI.Services
                     // ===== ROLLBACK ON ERROR =====
                     // Any exception -> undo all changes
                     await transaction.RollbackAsync();
-                    _logger.LogError("Register failed, transaction rolled back");
+                    _logger.LogError("User registration failed for email: {Email}. Transaction rolled back.", request.Email);
                     throw; // Re-throw to be handled by middleware
                 }
             });

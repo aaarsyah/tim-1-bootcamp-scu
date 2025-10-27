@@ -8,15 +8,16 @@ namespace MyApp.Shared.DTOs
     public class RegisterRequestDto
     {
         [Required(ErrorMessage = "Name is required")]
-        [StringLength(100)]
+        [StringLength(64, ErrorMessage = "Name length cannot exceed 64 characters")] // Sesuai dengan batasan di database
         public string Name { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Email is required")]
+        [StringLength(256, ErrorMessage = "Email length cannot exceed 256 characters")] // Sesuai dengan batasan di database
         [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Password is required")]
-        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters and cannot exceed 100 characters")]
         // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
             ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]

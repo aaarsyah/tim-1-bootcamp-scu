@@ -1,5 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using MyApp.Shared.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -79,6 +81,9 @@ namespace MyApp.BlazorUI.Services
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    var a = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+                    //Console.WriteLine(a.Type);
+                    //Console.WriteLine(await response.Content.ReadAsStringAsync());
                     return false;
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<object>>();

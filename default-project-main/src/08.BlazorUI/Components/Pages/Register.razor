@@ -11,92 +11,89 @@
 
 <PageTitle>Register</PageTitle>
 
-        <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
-        <MudForm @ref="_form">
-        <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
-        <MudText Typo="Typo.subtitle1" Class="mb-4">Yuk daftar terlebih dahulu akun kamu</MudText>
-
-                    <MudTextField T="string"
-                      Label="Masukkan Nama Lengkap"
+<MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
+    <MudForm @ref="_form">
+    <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-4">Yuk daftar terlebih dahulu akun kamu</MudText>
+        <MudTextField T="string"
+                      Label="Nama Lengkap"
                       Variant="Variant.Outlined"
                       @bind-Value="_registerModel.Name"
                       Required="true"
-                      RequiredError="Nama Lengkap Harus Diisi!" />
+                      RequiredError="Nama Lengkap Harus Diisi!"
+                      MaxLength="64" />
+        <MudTextField T="string" 
+                      Label="Email"
+                      Variant="Variant.Outlined"
+                      @bind-Value="_registerModel.Email"
+                      Required="true"
+                      RequiredError="Email Harus diisi!"
+                      MaxLength="256"
+                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah"})" />
+        <MudTextField T="string" 
+                      Label="Password"
+                      Variant="Variant.Outlined"
+                      @bind-Value="_registerModel.NewPassword"
+                      @ref="pwField1"
+                      InputType="@_passwordInputType"
+                      Required="true"
+                      RequiredError="Password Harus Diisi!"
+                      MaxLength="100"
+                      Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))"
+                      Adornment="Adornment.End"
+                      AdornmentIcon="@_passwordIcon"
+                      OnAdornmentClick="TogglePasswordVisibility"
+                      HelperText="Min 8 characters, uppercase, lowercase, number, special char" />
+        <MudTextField T="string"
+                      Label="Konfirmasi Password"
+                      Variant="Variant.Outlined"
+                      @bind-Value="_registerModel.ConfirmNewPassword"
+                      InputType="@_confirmPasswordInputType"
+                      Required="true"
+                      RequiredError="Konfirmasi Password Harus Diisi!"
+                      MaxLength="100"
+                      Validation="@(new Func<string, string>(PasswordMatch))"
+                      Adornment="Adornment.End"
+                      AdornmentIcon="@_confirmPasswordIcon"
+                      OnAdornmentClick="ToggleConfirmPasswordVisibility"
+                      HelperText="Repeat the password" />
 
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
+        }
 
-                    <MudTextField T="string" 
-                        Label="Masukkan Email" 
-                        Variant="Variant.Outlined"
-                        @bind-Value="_registerModel.Email"
-                        Required="true" 
-                        RequiredError="Email Harus diisi!"
-                        Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})"/>
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+        }
 
-    
-                    <MudTextField T="string" 
-                        Label="Masukkan Password" 
-                        @bind-Value="_registerModel.NewPassword"
-                        Variant="Variant.Outlined"
-                        @ref="pwField1"
-                        InputType="@_passwordInputType"
-                        Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
-                        Required="true"
-                        Adornment="Adornment.End"
-                        AdornmentIcon="@_passwordIcon"
-                        OnAdornmentClick="TogglePasswordVisibility"
-                        RequiredError="Password Harus Diisi!"
-                        HelperText="Min 8 characters, uppercase, lowercase, number, special char"/>
+        @if (!string.IsNullOrEmpty(_successMessage))
+        {
+            <MudAlert Severity="Severity.Success" Class="mb-4">@_successMessage</MudAlert>
+        }
 
-
-                    <MudTextField T="string"
-                            Label="Konfirmasi Password" 
-                            Variant="Variant.Outlined"
-                            @bind-Value="_registerModel.ConfirmNewPassword"
-                            HelperText="Repeat the password" 
-                            InputType="@_confirmPasswordInputType"
-                            Adornment="Adornment.End"
-                            AdornmentIcon="@_confirmPasswordIcon"
-                            OnAdornmentClick="ToggleConfirmPasswordVisibility"
-                            Required="true"
-                            RequiredError="Konfirmasi Password Harus Diisi!"
-                            Validation="@(new Func<string, string>(PasswordMatch))"/>
-
-                    @if (_isLoading)
-                    {
-                        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(_errorMessage))
-                    {
-                        <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
-                    }
-
-                    @if (!string.IsNullOrEmpty(_successMessage))
-                    {
-                        <MudAlert Severity="Severity.Success" Class="mb-4">@_successMessage</MudAlert>
-                    }
-
-                    <!-- Register button -->
-                    <MudStack Direction="Row" Spacing="5" Row="true">
-                    <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
-                        Daftar
-                    </MudButton>
+        <!-- Register button -->
+        <MudStack Direction="Row" Spacing="5" Row="true">
+        <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
+            Daftar
+        </MudButton>
                     
-                    <!-- Login Link -->
-                    <div Class="d-flex align-center mt-4">
-                        <MudText Typo="Typo.body2" Class="d-flex align-center">
-                            Sudah punya akun? 
-                            <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
-                        </MudText>
-                    </div>
-                    </MudStack>
-            </MudForm>   
-        </MudPaper>
+        <!-- Login Link -->
+        <div Class="d-flex align-center mt-4">
+            <MudText Typo="Typo.body2" Class="d-flex align-center">
+                Sudah punya akun? 
+                <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
+            </MudText>
+        </div>
+        </MudStack>
+    </MudForm>   
+</MudPaper>
 
 
 @code {
-    MudTextField<string> pwField1;
-    MudForm _form;
+    private MudTextField<string> pwField1;
+    private MudForm _form;
 
     private bool _isLoading = false;
     private string _errorMessage = string.Empty;
