@@ -155,7 +155,7 @@
                     c.CategoryName,
                     c.CourseName,
                     (int)c.Price,
-                    c.ScheduleDates.FirstOrDefault()
+                    c.Date
                 )).ToList();
 
                 UpdatePrice(); //tambahkan price di DTO

@@ -70,8 +70,8 @@ namespace MyApp.Shared.DTOs
         /// Product price
         /// </summary>
         public long Price { get; set; }
-        
-        public List<DateOnly> ScheduleDates { get; set; } = new();
+
+        public DateOnly Date { get; set; }
 
         /// <summary>
         /// Product image URL
