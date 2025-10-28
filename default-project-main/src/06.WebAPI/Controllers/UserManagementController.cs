@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Shared.DTOs;
-using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Models;
 using MyApp.WebAPI.Configuration;
+using MyApp.WebAPI.Exceptions;
+using MyApp.WebAPI.Models;
+using MyApp.WebAPI.Services;
+using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers
 {
@@ -160,6 +162,19 @@ namespace MyApp.WebAPI.Controllers
             var result = await _userManagementService.DeactivateUserAsync(userId);
 
             return Ok(ApiResponse<object>.SuccessResult());
+        }
+        [HttpGet("users/me")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<ApiResponse<UserDto>>> GetSelfUser()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new TokenInvalidException();
+            }
+            var result = await _userManagementService.GetUserProfileAsync(userId);
+            return Ok(ApiResponse<UserDto>.SuccessResult(result));
         }
     }
 }

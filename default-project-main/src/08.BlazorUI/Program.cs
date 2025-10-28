@@ -34,7 +34,6 @@ builder.Services.AddHttpClient("WebAPI", sp =>
 builder.Services.AddScoped<NavigationManagerExt>();
 
 //Service
-builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IAdminService, AdminService>();

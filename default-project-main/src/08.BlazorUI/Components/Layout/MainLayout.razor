@@ -4,6 +4,7 @@
 @using MyApp.BlazorUI.Components.Pages
 @using MyApp.BlazorUI.Models
 @using MyApp.BlazorUI.Services
+@using MyApp.Shared.DTOs
 
 @inject NavigationManagerExt Navigation
 @inject ISnackbar Snackbar
@@ -57,24 +58,11 @@
                 <div class="d-flex">
                     <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="@ToggleOpen"></MudIconButton>
                     <MudPopover Open="@popoverOpen" Fixed="true" Class="" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopLeft">
-                        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+                        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4 mb-4">
                             <MudStack Spacing="4" AlignItems="AlignItems.Center">
-                                <!-- Foto Profil -->
-                                <MudAvatar Size="Size.Large" Alt="Profile Photo" Src="img/profile-placeholder.png" />
-                                <!-- Nama & Email -->
-                                <MudText Typo="Typo.h5" Align="Align.Center"><b>Test Username</b></MudText>
-                                <MudText Typo="Typo.body2" Align="Align.Center">testemail@example.com</MudText>
-
-                                <MudDivider />
-
-
-                                <!-- Tombol Aksi -->
-                                <MudStack Direction="Row" Justify="Justify.Center" Spacing="2" Class="mt-4">
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToEditProfile">
-                                        Edit Profil
-                                    </MudButton>
-                                </MudStack>
-
+                                <MudIcon Icon="@Icons.Material.Filled.Person" Style="font-size: 4rem;"></MudIcon>
+                                <MudText Typo="Typo.h5" Align="Align.Center"><b>@_user.Name</b></MudText>
+                                <MudText Typo="Typo.body2" Align="Align.Center">@_user.Email</MudText>
                             </MudStack>
                         </MudContainer>
                     </MudPopover>
@@ -217,6 +205,12 @@
     private bool Loggedin = false;
     private bool IsAdmin = false;
 
+    private UserDto _user = new()
+    {
+        Name = "Loading....",
+        Email = "Loading....",
+    };
+
     /// <summary>
     /// Handle user menekan tombol logout
     /// </summary>
@@ -241,9 +235,25 @@
 
     private bool popoverOpen = false;
 
-    private void ToggleOpen()
+    private async Task ToggleOpen()
     {
         popoverOpen = !popoverOpen;
+        if (popoverOpen)
+        {
+            var auth = await AuthService.GetAccessTokenAsync();
+            if (auth == null)
+            {
+                Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+                return;
+            }
+            var user = await UserService.GetSelfUserAsync(auth); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+            if (user != null)
+            {
+                _user = user;
+                StateHasChanged();
+            }
+            
+        }
     }
 
     private string? currentPath;

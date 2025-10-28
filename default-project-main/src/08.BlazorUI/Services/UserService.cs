@@ -27,13 +27,13 @@ public class UserService : IUserService
                 return new();
             }
             
-            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<UserDto>>>();
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<UserDto>>>();
 
             if (apiResponse?.Data == null)
             {
                 return new();
             }
-            return apiResponse.Data;
+            return apiResponse.Data.ToList();
         }
         catch (Exception ex)
         {
@@ -53,13 +53,13 @@ public class UserService : IUserService
                 return new();
             }
 
-            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<RoleDto>>>();
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<RoleDto>>>();
 
             if (apiResponse?.Data == null)
             {
                 return new();
             }
-            return apiResponse.Data;
+            return apiResponse.Data.ToList();
         }
         catch (Exception ex)
         {
@@ -191,4 +191,31 @@ public class UserService : IUserService
             return false;
         }
     }
+    public async Task<UserDto?> GetSelfUserAsync(AuthenticationHeaderValue authorization)
+    {
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
+        {
+            var response = await _httpClient.GetAsync("api/UserManagement/users/me");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
+
+            if (apiResponse?.Data == null)
+            {
+                return null;
+            }
+            return apiResponse.Data;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"GetSelfUserAsync: Error: {ex.Message}");
+            return null;
+        }
+    }
+    
 }

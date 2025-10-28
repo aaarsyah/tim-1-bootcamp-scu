@@ -14,5 +14,6 @@ namespace MyApp.BlazorUI.Services
         Task<bool> RemoveClaimFromUserAsync(AuthenticationHeaderValue authorization, int userId, ClaimDto request);
         Task<bool> ActivateUserAsync(AuthenticationHeaderValue authorization, int userId);
         Task<bool> DeactivateUserAsync(AuthenticationHeaderValue authorization, int userId);
+        Task<UserDto?> GetSelfUserAsync(AuthenticationHeaderValue authorization);
     }
 }
