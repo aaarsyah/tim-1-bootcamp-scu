@@ -9,6 +9,7 @@
 @inject IAdminService AdminService
 
 @inject IDialogService DialogService
+@inject IWebHostEnvironment Env
 
 <MudDialog>
     <DialogContent>
@@ -26,12 +27,12 @@
             Upload Picture Category
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Category.ImageUrl))
+        @if (!string.IsNullOrEmpty(previewImageUrl))
         {
-            <MudImage Src="@Category.ImageUrl"
+            <MudImage Src="@previewImageUrl"
                       Alt="Picture Category Preview"
                       Width="150" Height="100"
-                      Class="mt-4" />
+                      Class="mx-auto mt-3 rounded shadow-sm" />
         }
 
         <MudSelect @bind-Value="Category.IsActive" Class="mt-4" Label="Status">
@@ -54,33 +55,31 @@
     public CategoryDto Category { get; set; } = null!;
     [Parameter]
     public bool IsUpdating { get; set; }
+    private string? previewImageUrl;
 
     protected override void OnInitialized()
     {
+        previewImageUrl = !string.IsNullOrEmpty(Category.ImageUrl) ? Category.ImageUrl : null;
         Console.WriteLine($"CourseDialog.razor: IsUpdating: {IsUpdating}");
     }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
+        if (file == null) return;
 
-        if (file != null)
+        var ext = Path.GetExtension(file.Name).ToLower();
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        var savePath = Path.Combine(Env.WebRootPath, "img", fileName);
+
+        await using (var stream = new FileStream(savePath, FileMode.Create))
         {
-            using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
-            using var ms = new MemoryStream();
-            await stream.CopyToAsync(ms);
-
-            var ext = Path.GetExtension(file.Name).ToLower();
-            var mime = ext switch
-            {
-                ".jpg" or ".jpeg" => "image/jpeg",
-                ".png" => "image/png",
-                ".svg" => "image/svg+xml",
-                _ => "image/png"
-            };
-
-            Category.ImageUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}"; // TODO: Fix this
+            await file.OpenReadStream(maxAllowedSize: 5_000_000).CopyToAsync(stream);
         }
+
+        Category.ImageUrl = $"/img/{fileName}";
+        previewImageUrl = Category.ImageUrl;
+        StateHasChanged();
     }
 
     private async Task Save()

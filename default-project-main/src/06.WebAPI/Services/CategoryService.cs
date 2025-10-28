@@ -61,7 +61,27 @@ namespace MyApp.WebAPI.Services
         public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto createCategoryDto)
         {
             var category = _mapper.Map<Category>(createCategoryDto);
-            
+
+            // === Upload Image (jika ImageUrl berisi base64 dari client) ===
+            if (!string.IsNullOrWhiteSpace(createCategoryDto.ImageUrl) &&
+                createCategoryDto.ImageUrl.StartsWith("data:image"))
+            {
+                // Contoh: data:image/png;base64,AAAA...
+                var base64Data = createCategoryDto.ImageUrl.Substring(createCategoryDto.ImageUrl.IndexOf(",") + 1);
+                var bytes = Convert.FromBase64String(base64Data);
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = $"{Guid.NewGuid()}.png";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                await File.WriteAllBytesAsync(filePath, bytes);
+
+                // Simpan URL publik ke database
+                category.ImageUrl = $"/img/{fileName}";
+            }
+
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
             

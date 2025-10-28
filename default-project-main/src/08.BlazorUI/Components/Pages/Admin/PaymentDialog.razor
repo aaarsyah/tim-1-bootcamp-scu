@@ -9,6 +9,7 @@
 @inject IAdminService PaymentService
 
 @inject IDialogService DialogService
+@inject IWebHostEnvironment Env
 
 <MudDialog>
     <DialogContent>
@@ -25,12 +26,12 @@
             Upload Logo
         </MudButton>
 
-        @if (!string.IsNullOrEmpty(Payment.LogoUrl))
+        @if (!string.IsNullOrEmpty(previewLogoUrl))
         {
-            <MudImage Src="@Payment.LogoUrl"
-                      Alt="Logo Preview"
+            <MudImage Src="@previewLogoUrl"
+                      Alt="Picture Category Preview"
                       Width="150" Height="100"
-                      Class="mt-4" />
+                      Class="mx-auto mt-3 rounded shadow-sm" />
         }
 
         
@@ -54,33 +55,31 @@
     public PaymentDto Payment { get; set; } = null!;
     [Parameter]
     public bool IsUpdating { get; set; }
+    private string? previewLogoUrl;
 
     protected override void OnInitialized()
     {
+        previewLogoUrl = !string.IsNullOrEmpty(Payment.LogoUrl) ? Payment.LogoUrl : null;
         Console.WriteLine($"PaymentDialog.razor: IsUpdating: {IsUpdating}");
     }
 
     private async Task UploadImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
+        if (file == null) return;
 
-        if (file != null)
+        var ext = Path.GetExtension(file.Name).ToLower();
+        var fileName = $"{Guid.NewGuid()}{ext}";
+        var savePath = Path.Combine(Env.WebRootPath, "img", fileName);
+
+        await using (var stream = new FileStream(savePath, FileMode.Create))
         {
-            using var stream = file.OpenReadStream(maxAllowedSize: 5_000_000); // max 5 MB
-            using var ms = new MemoryStream();
-            await stream.CopyToAsync(ms);
-
-            var ext = Path.GetExtension(file.Name).ToLower();
-            var mime = ext switch
-            {
-                ".jpg" or ".jpeg" => "image/jpeg",
-                ".png" => "image/png",
-                ".svg" => "image/svg+xml",
-                _ => "image/png"
-            };
-
-            Payment.LogoUrl = $"data:{mime};base64,{Convert.ToBase64String(ms.ToArray())}"; // TODO: Fix this
+            await file.OpenReadStream(maxAllowedSize: 5_000_000).CopyToAsync(stream);
         }
+
+        Payment.LogoUrl = $"/img/{fileName}";
+        previewLogoUrl = Payment.LogoUrl;
+        StateHasChanged();
     }
 
     private async Task Save()

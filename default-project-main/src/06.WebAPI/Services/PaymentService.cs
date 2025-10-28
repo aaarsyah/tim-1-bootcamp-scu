@@ -48,7 +48,27 @@ namespace MyApp.WebAPI.Services
         public async Task<PaymentDto> CreatePaymentAsync(CreatePaymentDto createPaymentDto)
         {
             var payment = _mapper.Map<PaymentMethod>(createPaymentDto);
-            
+
+            // === Upload Image (jika ImageUrl berisi base64 dari client) ===
+            if (!string.IsNullOrWhiteSpace(createPaymentDto.LogoUrl) &&
+                createPaymentDto.LogoUrl.StartsWith("data:image"))
+            {
+                // Contoh: data:image/png;base64,AAAA...
+                var base64Data = createPaymentDto.LogoUrl.Substring(createPaymentDto.LogoUrl.IndexOf(",") + 1);
+                var bytes = Convert.FromBase64String(base64Data);
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var fileName = $"{Guid.NewGuid()}.png";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                await File.WriteAllBytesAsync(filePath, bytes);
+
+                // Simpan URL publik ke database
+                payment.LogoUrl = $"/img/{fileName}";
+            }
+
             _context.PaymentMethods.Add(payment);
             await _context.SaveChangesAsync();
             
