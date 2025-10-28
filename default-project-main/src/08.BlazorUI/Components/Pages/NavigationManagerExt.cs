@@ -23,7 +23,7 @@ namespace MyApp.BlazorUI.Components
 
         public void GoToProfile()
         {
-            _navigation.NavigateTo("/profile");
+            _navigation.NavigateTo("/profil");
         }
 
         public void GoToEditProfile()

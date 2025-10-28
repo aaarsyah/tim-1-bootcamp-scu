@@ -45,7 +45,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyClassService, MyClassService>();
 
-builder.Services.AddScoped<ICourseService, CourseService>(); 
+builder.Services.AddScoped<ICourseService, CourseService>();
+
 
 var app = builder.Build();
 
@@ -56,6 +57,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for Courseion scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseAntiforgery();
