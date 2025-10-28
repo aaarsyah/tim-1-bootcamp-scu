@@ -152,21 +152,25 @@ namespace MyApp.WebAPI.Services
             //var user = await _userManager.FindByEmailAsync(request.Email);
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Email == request.Email);
-            if (user == null || !user.EmailConfirmed)
+            if (user == null)
             {
                 _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
+                throw new ValidationException("Invalid email or password.");
+            }
+            if (!user.EmailConfirmed)
+            {
                 throw new ValidationException("Invalid email or password.");
             }
             // Check account lockout
             if (!user.IsActive)
             {
-                throw new ValidationException($"Account is inactive. Contact the administrator for help.");
+                throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
             }
             // Check account lockout
             if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
             {
                 var remainingTime = (user.LockoutEnd.Value - DateTime.UtcNow).TotalMinutes;
-                throw new ValidationException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes.");
+                throw new AccountLockedException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes.");
             }
 
             // Verify password
@@ -245,20 +249,23 @@ namespace MyApp.WebAPI.Services
                 //    Success = false,
                 //    Message = "Invalid refresh token"
                 //};
-                throw new AuthenticationException("Token is invalid");
+                throw new ValidationException("User is invalid");
             }
             if (!user.EmailConfirmed)
             {
-                throw new AuthenticationException("User has not confirmed email");
+                throw new AccountInactiveException("User has not confirmed email");
             }
-
+            if (!user.IsActive)
+            {
+                throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
+            }
             if (user.RefreshToken != request.RefreshToken)
             {
-                throw new AuthenticationException("Refresh token is invalid");
+                throw new ValidationException("Refresh token is invalid");
             }
             if (user.RefreshTokenExpiry <= DateTime.UtcNow)
             {
-                throw new AuthenticationException("Refresh token has expired");
+                throw new ValidationException("Refresh token has expired");
             }
             // Generate tokens baru
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
@@ -289,7 +296,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new ValidationException("User is invalid");
             }
             // Invalidate refresh token
             user.RefreshToken = null;
@@ -345,20 +352,21 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new ValidationException("User is invalid");
             }
 
-            if (request.NewPassword != request.ConfirmNewPassword)
-            {
-                _logger.LogWarning("Password confirmation mismatch for {Email}", user.Email);
-                throw new ValidationException("Password and confirmation password do not match.");
-            }
+            // Tidak usah lagi, karena pasti sudah error di tingkat DTO
+            //if (request.NewPassword != request.ConfirmNewPassword)
+            //{
+            //    _logger.LogWarning("Password confirmation mismatch for {Email}", user.Email);
+            //    throw new ValidationException("Password and confirmation password do not match.");
+            //}
 
             // Verify password
-            if (!_passwordService.VerifyPassword(request.NewPassword, user.PasswordHash))
+            if (!_passwordService.VerifyPassword(request.CurrentPassword, user.PasswordHash))
             {
                 _logger.LogWarning("Password change failed for user: {UserId}", userId);
-                throw new ValidationException("Password change failed");
+                throw new ValidationException("Invalid password.");
             }
 
             //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
@@ -413,22 +421,23 @@ namespace MyApp.WebAPI.Services
         {
             _logger.LogInformation("Reset password attempt for email: {Email}", request.Email);
 
-            if (request.NewPassword != request.ConfirmNewPassword)
-            {
-                _logger.LogWarning("Password confirmation mismatch for {Email}", request.Email);
-                throw new ValidationException("Password and confirmation password do not match.");
-            }
+            // Tidak usah lagi, karena pasti sudah error di tingkat DTO
+            //if (request.NewPassword != request.ConfirmNewPassword)
+            //{
+            //    _logger.LogWarning("Password confirmation mismatch for {Email}", request.Email);
+            //    throw new ValidationException("Password and confirmation password do not match.");
+            //}
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(a => a.Email == request.Email);
             if (user == null)
             {
                 _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
-                throw new AuthenticationException("Invalid user or token.");
+                throw new ValidationException("Invalid user or token.");
             }
 
             // Validasi token buatan sendiri
-            if (user.PasswordResetToken != request.AccessToken ||
+            if (user.PasswordResetToken != request.PasswordResetToken ||
                 user.PasswordResetTokenExpiry < DateTime.UtcNow)
             {
                 _logger.LogWarning("Invalid or expired token for {Email}", request.Email);

@@ -14,13 +14,7 @@
 
 <MudDialog>
     <DialogContent>
-        @* <MudTextField @bind-Value="User.Name" Label="Name" Required="true" />
-        <MudTextField @bind-Value="User.Email" Label="Email" Required="true" Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" /> *@
-        
-        @* <MudSelect @bind-Value="User.Roles" Class="mt-4" Label="Role">
-            <MudSelectItem Value="User">User</MudSelectItem>
-            <MudSelectItem Value="Admin">Admin</MudSelectItem>
-        </MudSelect> *@
+
 
         <MudSelect @bind-Value="roleName" Class="mt-4" Label="Status">
             @foreach (var role in roles)
@@ -29,11 +23,11 @@
             }
         </MudSelect>
 
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddRole">Add Role</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveRole">Remove Role</MudButton>
+        <MudButton Class="mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="AddRole">Add Role</MudButton>
+        <MudButton Class="mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="RemoveRole">Remove Role</MudButton>
         <br />
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Deactivate">Deactivate user</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Reactivate">Reactivate user</MudButton>
+        <MudButton Class="mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Deactivate">Deactivate user</MudButton>
+        <MudButton Class="mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="Reactivate">Reactivate user</MudButton>
     </DialogContent>
 
     <DialogActions>
@@ -122,10 +116,10 @@
         var result = await UserService.ActivateUserAsync(auth, User.Id);
         if (!result)
         {
-            Snackbar.Add($"Gagal megaktifkan user", Severity.Error);
+            Snackbar.Add($"Gagal mengaktifkan user", Severity.Error);
             return;
         }
-        Snackbar.Add($"Berhasil megaktifkan user", Severity.Success);
+        Snackbar.Add($"Berhasil mengaktifkan user", Severity.Success);
         MudDialog.Close();
     }
 

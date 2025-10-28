@@ -1,4 +1,4 @@
-@page "/details-invoice/{InvoiceId:int}"
+@page "/details-invoice-admin/{InvoiceId:int}"
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
 @using System.Globalization
@@ -18,14 +18,6 @@
 </style>
 
 <MudContainer class="mt-20">
-    <MudItem xs="12" sm="10">
-        <MudText Typo="Typo.subtitle1">
-            <MudLink OnClick="Navigation.GoToHome"><b style="color: gray;">Beranda ></b></MudLink>
-            <MudLink OnClick="Navigation.GoToInvoice"><b style="color: gray;">Invoice ></b></MudLink>
-            <MudLink><b>Rincian Invoice</b></MudLink>
-        </MudText>
-    </MudItem>
-
     @if (isLoading)
     {
         <div class="d-flex justify-center mt-10">
@@ -40,7 +32,7 @@
     }
     else
     {
-        <MudText Typo="Typo.subtitle1" Class="mt-4 mb-4 fw-bold"><b> Rincian Invoice</b></MudText>
+        <MudText Typo="Typo.subtitle1" Class="mt-6 mb-4 fw-bold"><b> Rincian Invoice</b></MudText>
         <MudItem xs="16" sm="8">
             <MudText Typo="Typo.subtitle1" Class="mb-2"><b>No.Invoice: @Invoice.RefCode</b></MudText>
             <MudText Typo="Typo.subtitle1" Class="mb-2"><b>Tanggal Beli: @Invoice.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</b></MudText>
@@ -86,10 +78,6 @@
     private List<InvoiceDetailDto> Elements = new();
     private InvoiceDto Invoice = new();
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    // }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender)
@@ -102,7 +90,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        var invoice = await CheckoutService.GetInvoiceByIdAsync(auth, InvoiceId);
+        var invoice = await CheckoutService.GetInvoiceByIdAdminAsync(auth, InvoiceId);
         if (invoice == null)
         {
             // Tidak ada invoice, kosong
@@ -111,7 +99,7 @@
             return;
         }
         Invoice = invoice;
-        Elements = await CheckoutService.GetInvoiceDetailsByInvoiceIdAsync(auth, InvoiceId); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+        Elements = await CheckoutService.GetInvoiceDetailsByInvoiceIdAdminAsync(auth, InvoiceId); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
         isLoading = false;
         StateHasChanged();
     }

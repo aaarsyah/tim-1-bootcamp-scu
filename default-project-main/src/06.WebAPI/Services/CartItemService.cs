@@ -84,14 +84,12 @@ namespace MyApp.WebAPI.Services
                         .FirstOrDefaultAsync(a => a.Id == userId);
                     if (user == null)
                     {
-                        throw new ValidationException(
-                            $"Invalid UserId {userId} ");
+                        throw new ValidationException($"Invalid UserId {userId} ");
                     }
                     // ===== STEP 3 =====
                     if (!user.EmailConfirmed)
                     {
-                        throw new PermissionException(
-                            $"UserId {user.Id} not active");
+                        throw new PermissionException($"UserId {user.Id} not active");
                     }
                     // ===== STEP 4 =====
                     List<CartItem> items = new List<CartItem>();
@@ -103,11 +101,9 @@ namespace MyApp.WebAPI.Services
                                 .ThenInclude(s => s.Course) //agar bisa mendapatkan price untuk dimasukkan ke invoice detail
                                     .ThenInclude(s => s.Category) //agar bisa mendapatkan category name untuk dimasukkan ke invoice detail
                             .FirstOrDefaultAsync(a => a.UserId == user.Id && a.Id == itemcartid);
-
                         if (item == null)
                         {
-                            throw new ValidationException(
-                                $"CartId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
+                            throw new ValidationException($"CartId {itemcartid} not found"); // TODO: Support for multiple items? Or just return invalid message?
                         }
                         items.Add(item);
                     }
@@ -116,8 +112,7 @@ namespace MyApp.WebAPI.Services
                         .FirstOrDefaultAsync(a => a.Id == request.PaymentMethodId);
                     if (paymentmethod == null)
                     {
-                        throw new ValidationException(
-                            $"PaymentMethodId {request.PaymentMethodId} not found");
+                        throw new ValidationException($"PaymentMethodId {request.PaymentMethodId} not found");
                     }
                     // ===== STEP 6 =====
                     foreach (var item in items)
@@ -231,22 +226,23 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new ValidationException(
-                    $"Invalid UserId {userId} ");
+                throw new ValidationException($"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
             if (!user.EmailConfirmed)
             {
-                throw new PermissionException(
-                    $"UserId {user.Id} not active");
+                throw new AccountInactiveException("User has not confirmed email");
+            }
+            if (!user.IsActive)
+            {
+                throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
             }
             // ===== STEP 3 =====
             var schedule = await _context.Schedules
                 .FirstOrDefaultAsync(a => a.Id == scheduleid);
             if (schedule == null)
             {
-                throw new ValidationException(
-                    $"ScheduleId {scheduleid} not found");
+                throw new ValidationException($"ScheduleId {scheduleid} not found");
             }
             // ===== STEP 4 =====
             _context.CartItems.Add(new CartItem
@@ -279,22 +275,23 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new ValidationException(
-                    $"Invalid UserId {userId} ");
+                throw new ValidationException($"Invalid UserId {userId} ");
             }
             // ===== STEP 2 =====
             if (!user.EmailConfirmed)
             {
-                throw new PermissionException(
-                    $"UserId {user.Id} not active");
+                throw new AccountInactiveException("User has not confirmed email");
+            }
+            if (!user.IsActive)
+            {
+                throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
             }
             // ===== STEP 3 =====
             var cartitem = await _context.CartItems
                 .FirstOrDefaultAsync(a => a.Id == cartItemId && a.UserId == userId);
             if (cartitem == null)
             {
-                throw new ValidationException(
-                    $"cartItemId {cartItemId} not found");
+                throw new ValidationException($"cartItemId {cartItemId} not found");
             }
             // ===== STEP 4 =====
             _context.CartItems.Remove(cartitem);

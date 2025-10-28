@@ -10,6 +10,8 @@
 @inject IAdminService AdminService
 
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
 
 <PageTitle>Course Management</PageTitle>
 
@@ -46,7 +48,7 @@
         <MudImage Class="mt-3" Src="@context.ImageUrl" Alt="@context.Name" Width="40" Height="40" />
         <MudTd DataLabel="CategoryId">@context.CategoryId</MudTd>
         <MudTd DataLabel="Harga">@context.Price</MudTd>
-        <MudTd DataLabel="Jadwal">@context.ScheduleDates</MudTd>
+        <MudTd DataLabel="Jadwal"> @string.Join(", ", @context.ScheduleDates.Select(d => d.ToString("yyyy-MM-dd")))</MudTd>
         <MudTd DataLabel="Status">
             @if (context.IsActive)
             {
@@ -66,8 +68,9 @@
                        OnClick="() => OpenCourseDialog(context)">
                 Edit
             </MudButton>
+            <br />
             <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
-                       Class="ml-2"
+                       Class="mt-4"
                        OnClick="() => DeleteCourse(context.Id)">
                 Delete
             </MudButton>
@@ -113,6 +116,7 @@
         }
         bool result = await AdminService.DeleteCourseAsync(auth, id);
         if (result) await LoadCourses();
+        Snackbar.Add("Berhasil menghapus course", Severity.Success);
     }
 
     private async Task OpenCourseDialog(CourseDto? courseItem)

@@ -1,4 +1,6 @@
 ﻿// Import Entity Framework Core untuk database operations
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyApp.WebAPI.Models.Entities;
 
@@ -1216,6 +1218,7 @@ namespace MyApp.WebAPI.Data
                     IsActive = true,
                     RefId = new Guid("f37e30ef-bacd-4023-be66-da243fc25964"),
                     Name = "Super Admin",
+                    PasswordHash = "$2a$11$0exJ.g3UuG5OkMlez9izxO14dodhcBEkxV49ryAGqbL0urtb3L5Cq", //Password: Admin123@
                     Email = "admin@applemusic.com",
                     EmailConfirmed = true,
                     CreatedAt = seedDate,
@@ -1246,7 +1249,7 @@ namespace MyApp.WebAPI.Data
                 },
                 new User
                 {
-                    
+
                     Id = 4,
                     IsActive = false,
                     RefId = new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"),
@@ -1279,6 +1282,7 @@ namespace MyApp.WebAPI.Data
                     CreatedBy = "System"
                 }
             );
+
             modelBuilder.Entity<UserRole>().HasData(
                 new UserRole
                 {

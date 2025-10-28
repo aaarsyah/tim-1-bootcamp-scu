@@ -48,7 +48,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             _logger.LogInformation(
                 "Checkout request received for {UserId} checking out {ItemCartIds.Count} items",
@@ -77,7 +77,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -101,7 +101,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
@@ -125,7 +125,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             // [FromQuery] attribute: bind query string parameters ke object properties
             // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize

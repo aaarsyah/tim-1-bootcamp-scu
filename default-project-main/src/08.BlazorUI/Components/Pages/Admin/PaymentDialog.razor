@@ -102,6 +102,12 @@
                 IsActive = Payment.IsActive
             };
             result = await PaymentService.UpdatePaymentMethodAsync(auth, Payment.Id, updatePaymentDto);
+            if (result == null)
+            {
+                Snackbar.Add($"Gagal mengedit payment method", Severity.Error);
+                return;
+            }
+            Snackbar.Add("Berhasil mengedit payment method", Severity.Success);
         }
         else
         {
@@ -112,11 +118,12 @@
                 IsActive = Payment.IsActive
             };
             result = await PaymentService.CreatePaymentMethodAsync(auth, createPaymentDto);
-        }
-        if (result == null)
-        {
-            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
-            return;
+            if (result == null)
+            {
+                Snackbar.Add($"Gagal menmbuat payment method baru", Severity.Error);
+                return;
+            }
+            Snackbar.Add("Berhasil menmbuat payment method baru", Severity.Success);
         }
         MudDialog.Close(DialogResult.Ok(result));
     }

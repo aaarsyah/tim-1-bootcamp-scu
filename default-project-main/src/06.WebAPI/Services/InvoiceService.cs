@@ -17,7 +17,6 @@ namespace MyApp.WebAPI.Services
         private readonly AppleMusicDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<InvoiceService> _logger;
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -27,8 +26,10 @@ namespace MyApp.WebAPI.Services
             _mapper = mapper;
             _logger = logger;
         }
-
-        public async Task<IEnumerable<InvoiceDto>> GetAllInvoicesUserAsync(int userId)
+        /// <summary>
+        /// Get Invoice-Invoice berdasarkan user id
+        /// </summary>
+        public async Task<IEnumerable<InvoiceDto>> GetAllInvoicesByUserIdAsync(int userId)
         {
             var invoices = await _context.Invoices
                 .Where(m => m.UserId == userId)
@@ -36,53 +37,50 @@ namespace MyApp.WebAPI.Services
                 .ToListAsync();
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
-
-        //public async Task<IEnumerable<MyClassDto>> GetMyClassesByUserIdAsync(int userId)
-        //{
-        //    var myClasses = await _context.MyClasses
-        //        .Where(m => m.UserId == userId)
-        //        .Include(m => m.Schedule)
-        //        .ThenInclude(s => s.Course)
-        //        .ThenInclude(c => c.Category)
-        //        .ToListAsync();
-        //    return _mapper.Map<IEnumerable<MyClassDto>>(myClasses);
-        //}
-
         /// <summary>
-        /// Get all Invoice
+        /// Get semua Invoice
         /// </summary>
         public async Task<IEnumerable<InvoiceDto>> GetAllInvoicesAsync()
         {
             // Misalnya kamu ingin ambil semua invoice
             var invoices = await _context.Invoices
+                .Include(m => m.User)
                 .Include(m => m.InvoiceDetails)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
         }
-
-
         /// <summary>
-        /// Get Invoice by Id
+        /// Get Invoice berdasarkan invoice id
         /// </summary>
-
-        public async Task<InvoiceDto> GetInvoicesByIdAsync(int id)
+        public async Task<InvoiceDto> GetInvoiceByIdAsync(int invoiceId)
         {
             var invoice = await _context.Invoices
                 .Include(m => m.InvoiceDetails)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == invoiceId);
             if (invoice == null)
-                throw new NotFoundException($"Invoice with Id {id} not found");
-
+            {
+                throw new NotFoundException("Invoice Id", invoiceId);
+            }
             return _mapper.Map<InvoiceDto>(invoice);
         }
-
         /// <summary>
-        /// Check if Invoice exists
+        /// Get Invoice berdasarkan invoice id (hanya jika user id sesuai dengan invoice tersebut)
         /// </summary>
-        public async Task<bool> InvoicesExistsAsync(int id)
+        public async Task<InvoiceDto> GetInvoiceByIdPersonalAsync(int userId, int invoiceId)
         {
-            return await _context.Invoices.AnyAsync(c => c.Id == id);
+            var invoice = await _context.Invoices
+                .Include(m => m.InvoiceDetails)
+                .FirstOrDefaultAsync(c => c.Id == invoiceId);
+            if (invoice?.UserId != userId)
+            {
+                throw new NotFoundException("Invoice Id", invoiceId); //throw exception yang serupa untuk merahasiakan data
+            }
+            if (invoice == null)
+            {
+                throw new NotFoundException("Invoice Id", invoiceId);
+            }
+            return _mapper.Map<InvoiceDto>(invoice);
         }
     }
 }

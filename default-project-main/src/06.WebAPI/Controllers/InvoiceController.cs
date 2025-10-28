@@ -34,7 +34,7 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <returns>List of Invoice</returns>
         /// <response code="200">Returns the list of invoice</response>
-        [HttpGet]
+        [HttpGet("admin")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDto>>), StatusCodes.Status200OK)] // Swagger documentation
         public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDto>>>> GetAllInvoices()
@@ -42,7 +42,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
 
             var result = await _invoiceService.GetAllInvoicesAsync();
@@ -54,19 +54,42 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <returns>List of Invoice</returns>
         /// <response code="200">Returns the list of invoice</response>
-        [HttpGet("user")]
+        [HttpGet]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDto>>>> GetInvoicesUser()
+        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDto>>>> GetSelfInvoices()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
 
-            var result = await _invoiceService.GetAllInvoicesUserAsync(userId);
-            return Ok(ApiResponse<IEnumerable<InvoiceDto>>.SuccessResult(result));
+            var result = await _invoiceService.GetAllInvoicesByUserIdAsync(userId);
+            return Ok(ApiResponse<IEnumerable<InvoiceDto>>.SuccessResult(result)); 
+        }
+
+        /// <summary>
+        /// Get invoice by ID (ADMIN)
+        /// </summary>
+        /// <param name="id">invoice ID</param>
+        /// <returns>invoice details</returns>
+        /// <response code="200">Returns the invoice</response>
+        /// <response code="404">invoice not found</response>
+        [HttpGet("admin/{id}")]
+        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
+        [ProducesResponseType(typeof(ApiResponse<InvoiceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<InvoiceDto>>> GetInvoiceAdmin(int id)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new TokenInvalidException();
+            }
+
+            var result = await _invoiceService.GetInvoiceByIdAsync(id);
+            return Ok(ApiResponse<InvoiceDto>.SuccessResult(result));
         }
 
         /// <summary>
@@ -85,10 +108,10 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             
-            var result = await _invoiceService.GetInvoicesByIdAsync(id);
+            var result = await _invoiceService.GetInvoiceByIdPersonalAsync(userId, id);
             return Ok(ApiResponse<InvoiceDto>.SuccessResult(result));
         }
     }

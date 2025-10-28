@@ -50,7 +50,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (category == null)
             {
-                throw new NotFoundException($"Category Id {id} not found");
+                throw new NotFoundException("Category Id", id);
             }
             return _mapper.Map<CategoryDto>(category);
         }
@@ -80,7 +80,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (category == null)
             {
-                throw new NotFoundException($"Category Id {id} not found");
+                throw new NotFoundException("Category Id", id);
             }
 
             _mapper.Map(updateCategoryDto, category);
@@ -102,7 +102,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (category == null)
             {
-                throw new NotFoundException($"Category Id {id} not found");
+                throw new NotFoundException("Category Id", id);
             }
 
             // Check if category has products

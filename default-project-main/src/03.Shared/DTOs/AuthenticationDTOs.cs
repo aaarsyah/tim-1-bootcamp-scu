@@ -24,7 +24,7 @@ namespace MyApp.Shared.DTOs
         public string NewPassword { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Confirm password is required")]
-        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
 
         //ketika registrasi email-confirm = false
@@ -52,14 +52,19 @@ namespace MyApp.Shared.DTOs
     /// </summary>
     public class ForgotPasswordRequestDto
     {
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; } = string.Empty;
     }
 
     // Reset Password Request (GET) = Link
     public class ResetPasswordRequestDto
     {
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; } = string.Empty;
-        public string AccessToken { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Token is required")]
+        public string PasswordResetToken { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
@@ -69,7 +74,7 @@ namespace MyApp.Shared.DTOs
         public string NewPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Confirm password is required")]
-        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 
@@ -155,7 +160,7 @@ namespace MyApp.Shared.DTOs
         public string NewPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Confirm password is required")]
-        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 

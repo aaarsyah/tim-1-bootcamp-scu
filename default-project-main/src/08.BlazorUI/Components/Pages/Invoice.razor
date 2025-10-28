@@ -78,9 +78,6 @@
     private bool isLoading = true;
     private List<InvoiceDto> Elements = new();
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    // }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -94,7 +91,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        Elements = await CheckoutService.GetOwnInvoicesAsync(auth); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+        Elements = await CheckoutService.GetSelfInvoicesAsync(auth); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
         isLoading = false;
         StateHasChanged();
     }

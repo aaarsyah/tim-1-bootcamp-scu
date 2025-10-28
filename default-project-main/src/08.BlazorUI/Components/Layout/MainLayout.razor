@@ -6,6 +6,8 @@
 @using MyApp.BlazorUI.Services
 
 @inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
 @inject IUserService UserService
 @inject IAuthService AuthService
 
@@ -15,6 +17,7 @@
 <MudSnackbarProvider />
 
 <MudLayout>
+    <MudOverlay @bind-Visible="@popoverOpen" Absolute="true" Class="pa-0 ma-0" AutoClose="true" />
     @if (Loggedin && IsAdmin)
     {
         @if (ShouldShowAppBar())
@@ -51,7 +54,34 @@
                     <MudText>Pembelian</MudText>
                 </MudButton>
                 <MudText Class="mx-2">|</MudText>
-                <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="Navigation.GoToProfile"></MudIconButton>
+                <div class="d-flex">
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" OnClick="@ToggleOpen"></MudIconButton>
+                    <MudPopover Open="@popoverOpen" Fixed="true" Class="" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopLeft">
+                        <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-10">
+                            <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                                <!-- Foto Profil -->
+                                <MudAvatar Size="Size.Large" Alt="Profile Photo" Src="img/profile-placeholder.png" />
+                                <!-- Nama & Email -->
+                                <MudText Typo="Typo.h5" Align="Align.Center"><b>Test Username</b></MudText>
+                                <MudText Typo="Typo.body2" Align="Align.Center">testemail@example.com</MudText>
+
+                                <MudDivider />
+
+
+                                <!-- Tombol Aksi -->
+                                <MudStack Direction="Row" Justify="Justify.Center" Spacing="2" Class="mt-4">
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToEditProfile">
+                                        Edit Profil
+                                    </MudButton>
+                                </MudStack>
+
+                            </MudStack>
+                        </MudContainer>
+                    </MudPopover>
+                </div>
+                
+
+                
                 <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
             </MudAppBar>
         }
@@ -74,23 +104,24 @@
             </MudAppBar>
         }
     }
-    <MudMainContent Class="mt-16 pa-4">
+    <MudMainContent Class="mt-14 pa-4" Style="min-height: 60vh">
         @Body
     </MudMainContent>
+    
     @if (ShouldShowFooter() && !IsAdmin)
     {
-    <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0;">
-        <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
-            <MudGrid Class="d-flex justify-space-evenly">
-                <!-- Kolom Tentang -->
-                <MudItem xs="12" sm="6" md="4">
-                    <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
-                    <MudText Typo="Typo.body2">
-                        AppleMusic Course Web adalah platform interaktif yang dirancang untuk mempermudah pengguna belajar musik secara online. 
-                        Dengan berbagai kursus instrumen, teknik vokal, dan teori musik, pengguna dapat mengakses materi berkualitas tinggi kapan saja 
-                        dan di mana saja, serta belajar dari instruktur profesional di bidangnya.
-                    </MudText>
-                </MudItem>
+        <MudPaper Class="mt-12" Style="background-color:#F8D24B; border-radius: 0; bottom: 0; ">
+            <MudContainer MaxWidth="MaxWidth.Large" Class="py-10">
+                <MudGrid Class="d-flex justify-space-evenly">
+                    <!-- Kolom Tentang -->
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                        <MudText Typo="Typo.body2">
+                            AppleMusic Course Web adalah platform interaktif yang dirancang untuk mempermudah pengguna belajar musik secara online. 
+                            Dengan berbagai kursus instrumen, teknik vokal, dan teori musik, pengguna dapat mengakses materi berkualitas tinggi kapan saja 
+                            dan di mana saja, serta belajar dari instruktur profesional di bidangnya.
+                        </MudText>
+                    </MudItem>
 
                     <!-- Kolom Produk -->
                     <MudItem xs="12" sm="6" md="4">
@@ -192,14 +223,28 @@
     /// <returns></returns>
     private async Task HandleLogout()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
-        await AuthService.LogoutAsync(auth); // TODO: Apa yang terjadi bila token invalid dan user mencoba logout?
+        try
+        {
+            var auth = await AuthService.GetAccessTokenAsync();
+            await AuthService.LogoutAsync(auth); // TODO: Apa yang terjadi bila token invalid dan user mencoba logout?
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+        }
         Navigation.GoToHome2(); //Logout balik ke home page
     }
 
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
     private MudTheme? _theme = null;
+
+    private bool popoverOpen = false;
+
+    private void ToggleOpen()
+    {
+        popoverOpen = !popoverOpen;
+    }
 
     private string? currentPath;
 
@@ -214,7 +259,7 @@
             await UpdateLogin();
             StateHasChanged(); // Refresh tampilan saat route berubah
         };
-        
+
         _theme = new()
         {
             PaletteLight = _lightPalette,
@@ -226,7 +271,6 @@
     {
         if (firstRender)
         {
-            await AuthService.GetAccessTokenAsync();
             await UpdateLogin();
             StateHasChanged();
         }

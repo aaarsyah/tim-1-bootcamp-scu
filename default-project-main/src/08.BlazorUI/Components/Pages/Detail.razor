@@ -189,13 +189,6 @@
         {
             return;
         }
-        // var auth = await AuthService.GetAccessTokenAsync();
-        // if (auth == null)
-        // {
-        //     Navigation.GoToLogin(); // User belum login, arahkan user ke login page
-        //     return;
-        // }
-        // await LoadPaymentsAsync(auth);
         StateHasChanged();
     }
 
@@ -203,7 +196,14 @@
     {
         try
         {
-            var result = await CheckoutService.GetAllPaymentsAsync();
+            var token = await AuthService.GetAccessTokenAsync();
+            if (token == null)
+            {
+                Navigation.GoToLogin();
+                return;
+            }
+
+            var result = await CheckoutService.GetAllPaymentsAsync(token);
             if (result != null)
             {
                 payments = result.Where(p => p.IsActive).ToList();
@@ -273,7 +273,7 @@
                 Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
                 return;
             }
-            var result2 = await CheckoutService.GetOwnCartItem(auth);
+            var result2 = await CheckoutService.GetSelfCartItem(auth);
             if (result2 == null)
             {
                 Snackbar.Add("Gagal menambahkan ke keranjang?", Severity.Error);

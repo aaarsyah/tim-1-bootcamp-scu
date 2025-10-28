@@ -24,6 +24,8 @@ namespace MyApp.Shared.DTOs
 
         public int TotalCourse { get; set; }
 
+        public string Email { get; set; } = string.Empty;
+
     }
 
     /// <summary>

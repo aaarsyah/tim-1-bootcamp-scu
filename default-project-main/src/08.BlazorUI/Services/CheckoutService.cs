@@ -16,7 +16,7 @@ namespace MyApp.BlazorUI.Services
         {
             _factory = factory;
         }
-        public async Task<List<CartItemResponseDto>> GetOwnCartItem(AuthenticationHeaderValue authorization)
+        public async Task<List<CartItemResponseDto>> GetSelfCartItem(AuthenticationHeaderValue authorization)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
             _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -125,9 +125,10 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
-        public async Task<List<PaymentDto>> GetAllPaymentsAsync()
+        public async Task<List<PaymentDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
             try
             {
                 var response = await _httpClient.GetAsync("api/payment");
@@ -150,13 +151,13 @@ namespace MyApp.BlazorUI.Services
             }
         }
 
-        public async Task<List<InvoiceDto>> GetOwnInvoicesAsync(AuthenticationHeaderValue authorization)
+        public async Task<List<InvoiceDto>> GetAllInvoiceAdminAsync(AuthenticationHeaderValue authorization)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
             _httpClient.DefaultRequestHeaders.Authorization = authorization;
             try
             {
-                var response = await _httpClient.GetAsync("api/Invoice/user");
+                var response = await _httpClient.GetAsync("api/Invoice/admin");
                 if (response.IsSuccessStatusCode)
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDto>>>();
@@ -171,10 +172,64 @@ namespace MyApp.BlazorUI.Services
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"GetAllInvoice: Error: {ex.Message}");
+                return new();
+            }
+        }
+        public async Task<List<InvoiceDto>> GetSelfInvoicesAsync(AuthenticationHeaderValue authorization)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Invoice");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDto>>>();
+
+                    if (apiResponse?.Data != null)
+                    {
+                        return apiResponse.Data
+                            .OrderByDescending(i => i.CreatedAt) // urutkan descending by tanggal terbaru
+                            .ToList();
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine($"GetOwnInvoicesAsync: Error: {ex.Message}");
                 return new();
             }
         }
+
+        public async Task<InvoiceDto?> GetInvoiceByIdAdminAsync(AuthenticationHeaderValue authorization, int invoiceId)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/Invoice/admin/{invoiceId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<InvoiceDto>>();
+
+                    if (apiResponse?.Data != null)
+                    {
+                        return apiResponse.Data;
+                    }
+                    return null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"CheckoutItemsAsync: Error: {ex.Message}");
+                return null;
+            }
+        }
+
         public async Task<InvoiceDto?> GetInvoiceByIdAsync(AuthenticationHeaderValue authorization, int invoiceId)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
@@ -200,13 +255,39 @@ namespace MyApp.BlazorUI.Services
                 return null;
             }
         }
+
+        public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAdminAsync(AuthenticationHeaderValue authorization, int invoiceId)
+        {
+            var _httpClient = _factory.CreateClient("WebAPI");
+            _httpClient.DefaultRequestHeaders.Authorization = authorization;
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/InvoiceDetail/admin/{invoiceId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();
+
+                    if (apiResponse?.Data != null)
+                    {
+                        return apiResponse.Data.ToList();
+                    }
+                    return new();
+                }
+                return new();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetAllInvoice: Error: {ex.Message}");
+                return new();
+            }
+        }
         public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAsync(AuthenticationHeaderValue authorization, int invoiceId)
         {
             var _httpClient = _factory.CreateClient("WebAPI");
             _httpClient.DefaultRequestHeaders.Authorization = authorization;
             try
             {
-                var response = await _httpClient.GetAsync($"api/InvoiceDetail/user/{invoiceId}");
+                var response = await _httpClient.GetAsync($"api/InvoiceDetail/{invoiceId}");
                 if (response.IsSuccessStatusCode)
                 {
                     var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();

@@ -10,7 +10,7 @@ namespace MyApp.WebAPI.Services
     /// </summary>
     public interface IInvoiceService
     {
-        Task<IEnumerable<InvoiceDto>> GetAllInvoicesUserAsync(int userId);
+        Task<IEnumerable<InvoiceDto>> GetAllInvoicesByUserIdAsync(int userId);
 
         /// <summary>
         /// Get all Invoice
@@ -20,12 +20,10 @@ namespace MyApp.WebAPI.Services
         /// <summary>
         /// Get Invoice by ID
         /// </summary>
-        Task<InvoiceDto> GetInvoicesByIdAsync(int id);
-
+        Task<InvoiceDto> GetInvoiceByIdAsync(int invoiceId);
         /// <summary>
-        /// Check if Invoice exists
+        /// Get Invoice by ID
         /// </summary>
-        Task<bool> InvoicesExistsAsync(int id);
-        
+        Task<InvoiceDto> GetInvoiceByIdPersonalAsync(int userId, int invoiceId);
     }
 }

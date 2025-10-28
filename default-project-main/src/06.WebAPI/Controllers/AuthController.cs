@@ -105,14 +105,11 @@ namespace MyApp.WebAPI.Controllers
         public async Task<ActionResult<ApiResponse<object>>> Logout()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
-
             var result = await _authenticationService.LogoutAsync(userId);
-
             return Ok(ApiResponse<object>.SuccessResult());
         }
 
@@ -130,11 +127,9 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
-
             var result = await _authenticationService.ChangePasswordAsync(userId, request);
-
             return Ok(ApiResponse<object>.SuccessResult());
         }
 
@@ -147,7 +142,6 @@ namespace MyApp.WebAPI.Controllers
         {
             var validator = new ForgotPasswordRequestValidator();
             var validationResult = await validator.ValidateAsync(request);
-
             if (!validationResult.IsValid)
             {
                 throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
@@ -193,14 +187,9 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             var profile = await _userManagementService.GetUserProfileAsync(userId);
-            if (profile == null)
-            {
-                throw new NotFoundException("User Profile not found");
-            }
-
             return Ok(ApiResponse<UserDto>.SuccessResult(profile));
         }
     }

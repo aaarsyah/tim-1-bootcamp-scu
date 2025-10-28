@@ -46,7 +46,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (myclass == null)
             {
-                throw new NotFoundException($"MyClass Id {id} not found");
+                throw new NotFoundException("MyClass Id", id);
             }
             return _mapper.Map<MyClassDto>(myclass);
         }
@@ -98,7 +98,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (myclass == null)
             {
-                throw new NotFoundException($"MyClass Id {id} not found");
+                throw new NotFoundException("MyClass Id", id);
             }
 
             // Validate user exists if changed
@@ -144,7 +144,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (myclass == null)
             {
-                throw new NotFoundException($"MyClass Id {id} not found");
+                throw new NotFoundException("MyClass Id", id);
             }
 
             _context.MyClasses.Remove(myclass);

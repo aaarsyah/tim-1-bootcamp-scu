@@ -15,7 +15,6 @@ namespace MyApp.BlazorUI.Services
         Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryDto request);
         Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryDto request);
         Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id);
-        Task<List<PaymentDto>> GetAllPaymentMethodsAsync();
         Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto payment);
         Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto payment);
         Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id);
@@ -55,7 +54,9 @@ namespace MyApp.BlazorUI.Services
 
                     if (apiResponse?.Data?.Data != null)
                     {
-                        return apiResponse.Data.Data.ToList();
+                        return apiResponse.Data.Data
+                                .OrderBy(c => c.Id) // urutkan berdasarkan ID terkecil (ascending)
+                                .ToList();
                     }
                     return new();
                 }

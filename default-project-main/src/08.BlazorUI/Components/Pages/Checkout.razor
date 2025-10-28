@@ -146,7 +146,7 @@
     {
         try
         {
-            var result = await CheckoutService.GetOwnCartItem(authentication);
+            var result = await CheckoutService.GetSelfCartItem(authentication);
             if (result != null)
             {
                 _itemList = result.Select(c => new ItemMy(
@@ -171,7 +171,7 @@
     {
         try
         {
-            var result = await CheckoutService.GetAllPaymentsAsync();
+            var result = await CheckoutService.GetAllPaymentsAsync(authentication);
             if (result != null)
             {
                 payments = result.Where(p => p.IsActive).ToList();
@@ -285,6 +285,7 @@
             if (!result)
             {
                 Snackbar.Add($"Gagal menghapus item", Severity.Error);
+                return;
             }
             _itemList.Remove(item);
             Snackbar.Add($"Item '{item.Name}' berhasil dihapus dari keranjang.", Severity.Success);

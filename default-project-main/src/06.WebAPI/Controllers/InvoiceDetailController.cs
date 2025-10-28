@@ -34,18 +34,17 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <returns>List of InvoiceDetail</returns>
         /// <response code="200">Returns the list of invoice</response>
-        [HttpGet]
+        [HttpGet("admin/{invoiceId:int}")]
         [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)] // Swagger documentation
-        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetAllInvoicesDetail()
+        public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceIdAdmin(int invoiceId)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
-
-            var result = await _invoiceDetailService.GetAllInvoicesDetailAsync();
+            var result = await _invoiceDetailService.GetInvoiceDetailsByInvoiceIdAsync(invoiceId);
             return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
         }
 
@@ -54,7 +53,7 @@ namespace MyApp.WebAPI.Controllers
         /// </summary>
         /// <returns>List of InvoiceDetail</returns>
         /// <response code="200">Returns the list of invoice</response>
-        [HttpGet("user/{invoiceId:int}")]
+        [HttpGet("{invoiceId:int}")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
@@ -63,59 +62,10 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             var result = await _invoiceDetailService.GetInvoiceDetailsByInvoiceIdPersonalAsync(userId, invoiceId);
             return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
         }
-
-        /// <summary>
-        /// Get invoice Detail by ID
-        /// </summary>
-        /// <param name="id">invoice ID</param>
-        /// <returns>invoice details</returns>
-        /// <response code="200">Returns the invoice</response>
-        /// <response code="404">invoice not found</response>
-        [HttpGet("{id}")]
-        [Authorize]
-        [ProducesResponseType(typeof(ApiResponse<InvoiceDetailDto>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApiResponse<InvoiceDetailDto>>> GetInvoiceDetail(int id)
-        {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-            {
-                throw new AuthenticationException("Token is invalid");
-            }
-
-            var result = await _invoiceDetailService.GetInvoicesDetailByIdAsync(id);
-            return Ok(ApiResponse<InvoiceDetailDto>.SuccessResult(result));
-        }
-
-        /// <summary>
-        /// Create a new Invoice
-        /// </summary>
-        /// <param name="createInvoiceDto">Invoice data</param>
-        /// <returns>Created Invoice</returns>
-        /// <response code="201">Invoice created successfully</response>
-        /// <response code="400">Invalid input data</response>
-        [HttpPost]
-        [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-        [ProducesResponseType(typeof(ApiResponse<InvoiceDetailDto>), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse<InvoiceDetailDto>>> CreateInvoicesDetail(CreateInvoiceDetailDto createInvoiceDetailDto, HttpStatusCode statusCode = HttpStatusCode.Created)
-        {
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-            {
-                throw new AuthenticationException("Token is invalid");
-            }
-            
-            var result = await _invoiceDetailService.CreateInvoicesDetailAsync(createInvoiceDetailDto);
-            //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
-            return CreatedAtAction(nameof(GetInvoiceDetail), new { id = result.Id }, ApiResponse<InvoiceDetailDto>.SuccessResult(result));
-
-        }
-
     }
 }

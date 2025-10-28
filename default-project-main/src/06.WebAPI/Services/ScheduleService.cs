@@ -41,7 +41,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(s => s.Id == id);
             if (schedule == null)
             {
-                throw new NotFoundException($"Schedule Id {id} not found");
+                throw new NotFoundException("Schedule Id", id);
             }
             return _mapper.Map<ScheduleDto>(schedule);
         }
@@ -76,7 +76,7 @@ namespace MyApp.WebAPI.Services
 
             if (schedule == null)
             {
-                throw new NotFoundException($"Schedule Id {id} not found");
+                throw new NotFoundException("Schedule Id", id);
             }
 
             // Validate course exists if changed
@@ -113,7 +113,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (schedule == null)
             {
-                throw new NotFoundException($"Schedule Id {id} not found");
+                throw new NotFoundException("Schedule Id", id);
             }
 
             _context.Schedules.Remove(schedule);

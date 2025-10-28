@@ -36,7 +36,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
             return _mapper.Map<UserDto>(user);
         }
@@ -72,7 +72,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
             //cek apakah ada role dengan nama itu
             var role = await _context.Roles
@@ -80,7 +80,7 @@ namespace MyApp.WebAPI.Services
             if (role == null)
             {
                 _logger.LogWarning("Failed to assign role {RoleName} to user {UserId}", roleName, userId);
-                throw new NotFoundException($"Role {roleName} not found");
+                throw new NotFoundException("Role", roleName);
             }
             //cek apakah role *tidak* ada di user
             var userRole = await _context.UserRoles
@@ -108,7 +108,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
             //cek apakah ada role dengan nama itu
             var role = await _context.Roles
@@ -124,7 +124,7 @@ namespace MyApp.WebAPI.Services
             if (userRole == null)
             {
                 _logger.LogWarning("Failed to remove role {RoleName} from user {UserId}", roleName, userId);
-                throw new NotFoundException($"Role {roleName} not found");
+                throw new NotFoundException("Role", roleName);
             }
             
             _context.UserRoles.Remove(userRole);
@@ -140,7 +140,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
             //cek apakah claim *tidak* ada di user
             var userClaim = await _context.UserClaims
@@ -172,7 +172,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(a => a.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
             //cek apakah role ada di user
             var userClaim = await _context.UserClaims
@@ -180,7 +180,7 @@ namespace MyApp.WebAPI.Services
             if (userClaim == null)
             {
                 _logger.LogWarning("Failed to remove claim {ClaimType} from user {UserId}", claimType, userId);
-                throw new NotFoundException($"Claim {claimType} not found");
+                throw new NotFoundException("Claim", claimType);
             }
             _context.UserClaims.Remove(userClaim);
             await _context.SaveChangesAsync();
@@ -195,7 +195,7 @@ namespace MyApp.WebAPI.Services
             if (user == null)
             {
                 _logger.LogWarning("Failed to activate user {UserId}", userId);
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
 
             user.IsActive = true;
@@ -212,7 +212,7 @@ namespace MyApp.WebAPI.Services
             if (user == null)
             {
                 _logger.LogWarning("Failed to deactivate user {UserId}", userId);
-                throw new NotFoundException($"UserId {userId} not found");
+                throw new NotFoundException("User Id", userId);
             }
 
             user.IsActive = false;

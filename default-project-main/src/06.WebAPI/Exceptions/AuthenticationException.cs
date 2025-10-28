@@ -2,18 +2,9 @@
 {
     /// <summary>
     /// Exception untuk akses yang belum diotorisasi (misalnya belum login)<br />
-    /// Tujuan: Untuk mengingatkan client bahwa server tidak dapat authenticate client karena credential invalid<br />
+    /// Tujuan: Untuk mengingatkan client bahwa server tidak dapat authenticate client karena belum ada credential<br />
+    /// Umumnya digunakan ketika HTTP request tidak mengandung Authentication header<br />
     /// HTTP Status: 401 Unauthorized<br />
-    /// <br />
-    /// Dipakai ketika:<br />
-    /// - User yang belum login mencoba untuk melakukan checkout<br />
-    /// - Token yang dipakai user expired atau invalid<br />
-    /// <b>Tidak</b> dipakai ketika:<br />
-    /// - User yang login mencoba untuk mengakses halaman admin (gunakan PermissionException)<br />
-    /// - Login gagal karena salah password/email/dll. (gunakan ValidationException)<br />
-    /// <br />
-    /// Contoh:<br />
-    /// throw new AuthenticationException($"Please log in first to access your cart.");<br />
     /// </summary>
     public class AuthenticationException : BaseApiException
     {
@@ -22,9 +13,17 @@
         /// </summary>
         /// <param name="message">Pesan mengenai exception</param>
         /// <param name="details">Informasi detil mengenai exception (bisa berupa List bila lebih dari satu)</param>
-        public AuthenticationException(string message, object? details = null)
-            : base(StatusCodes.Status401Unauthorized, "NOT_AUTHENTICATED", message, details)
+        public AuthenticationException(string errorCode, string message, object? details = null)
+            : base(StatusCodes.Status401Unauthorized, errorCode, message, details)
         {
         }
     }
+    public class TokenInvalidException : AuthenticationException
+    {
+        public TokenInvalidException(object? details = null)
+            : base("INVALID_TOKEN", "Token is invalid", details)
+        {
+        }
+    }
+    
 }

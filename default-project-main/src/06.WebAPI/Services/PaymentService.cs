@@ -39,7 +39,7 @@ namespace MyApp.WebAPI.Services
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (payment == null)
             {
-                throw new NotFoundException($"PaymentMethod Id {id} not found");
+                throw new NotFoundException("PaymentMethod Id", id);
             }
             return _mapper.Map<PaymentDto>(payment);
         }
@@ -65,7 +65,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (payment == null)
             {
-                throw new NotFoundException($"PaymentMethod Id {id} not found");
+                throw new NotFoundException("PaymentMethod Id", id);
             }
 
             _mapper.Map(updatePaymentDto, payment);
@@ -85,7 +85,7 @@ namespace MyApp.WebAPI.Services
                 .FindAsync(id);
             if (payment == null)
             {
-                throw new NotFoundException($"PaymentMethod Id {id} not found");
+                throw new NotFoundException("PaymentMethod Id", id);
             }
 
             _context.PaymentMethods.Remove(payment);

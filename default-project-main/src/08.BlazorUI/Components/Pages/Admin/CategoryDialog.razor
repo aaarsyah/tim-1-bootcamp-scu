@@ -104,6 +104,12 @@
                 IsActive = Category.IsActive
             };
             result = await AdminService.UpdateCategoryAsync(auth, Category.Id, updateCategoryDto);
+            if (result == null)
+            {
+                Snackbar.Add($"Gagal mengedit category", Severity.Error);
+                return;
+            }
+            Snackbar.Add("Berhasil mengedit category", Severity.Success);
         }
         else
         {
@@ -115,13 +121,13 @@
                 ImageUrl = Category.ImageUrl,
                 IsActive = Category.IsActive
             };
-
             result = await AdminService.CreateCategoryAsync(auth, createCategoryDto);
-        }
-        if (result == null)
-        {
-            Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
-            return;
+            if (result == null)
+            {
+                Snackbar.Add($"Gagal membuat category baru", Severity.Error);
+                return;
+            }
+            Snackbar.Add("Berhasil membuat category baru", Severity.Success);
         }
         MudDialog.Close(DialogResult.Ok(result));
     }

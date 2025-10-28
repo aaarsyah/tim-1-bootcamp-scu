@@ -36,7 +36,7 @@ namespace MyApp.WebAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
             {
-                throw new AuthenticationException("Token is invalid");
+                throw new TokenInvalidException();
             }
             try
             {

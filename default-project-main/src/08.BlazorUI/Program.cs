@@ -44,7 +44,10 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyClassService, MyClassService>();
 
-builder.Services.AddScoped<ICourseService, CourseService>(); 
+builder.Services.AddScoped<ICourseService, CourseService>();
+
+// Error Handling
+builder.Services.AddScoped<ErrorService, ErrorService>();
 
 var app = builder.Build();
 
