@@ -1,0 +1,508 @@
+// Import AutoMapper untuk object-to-object mapping
+using AutoMapper;
+// Import Entity Framework Core untuk database operations
+using Microsoft.EntityFrameworkCore;
+// Import DbContext untuk database operations
+using MyApp.Infrastructure.Data;
+// Import Custom exceptions untuk exception handling
+using MyApp.Base.Exceptions;
+// Import DTOs untuk data transfer objects
+using MyApp.Shared.DTOs;
+// Import Models untuk entities dan response wrappers
+using MyApp.Domain.Models;
+// Import Logging untuk log aplikasi
+using Microsoft.Extensions.Logging;
+// Import Configuration untuk akses konfigurasi aplikasi
+using MyApp.Infrastructure.Configuration;
+
+namespace MyApp.WebAPI.Services;
+
+/// <summary>
+/// Authentication Service Implementation
+/// Menangani semua operasi authentication: register, login, logout, refresh token
+/// 
+/// Key Features:
+/// - User registration dengan validation
+/// - Login dengan JWT token generation
+/// - Refresh token untuk perpanjang session
+/// - Password change
+/// - Account lockout protection
+/// </summary>
+public class AuthenticationService : IAuthenticationService
+{
+    private readonly AppleMusicDbContext _context;
+    private readonly ITokenService _tokenService;
+    private readonly JwtSettings _jwtSettings;
+    private readonly ILogger<AuthenticationService> _logger;
+    private readonly IEmailService _emailService;
+    private readonly IPasswordService _passwordService;
+
+    private const int MAX_FAILED_ATTEMPTS = 5;
+    private const int LOCKOUT_TIME_MINUTES = 15;
+
+    public AuthenticationService(
+        AppleMusicDbContext context,
+        ITokenService tokenService,
+        JwtSettings jwtSettings,
+        ILogger<AuthenticationService> logger,
+        IEmailService emailService,
+        IPasswordService passwordService
+    )
+        
+    {
+        _context = context;
+        _tokenService = tokenService;
+        _jwtSettings = jwtSettings;
+        _logger = logger;
+        _emailService = emailService; //confirm-email
+        _passwordService = passwordService;
+    }
+
+    /// <summary>
+    /// Register User Baru
+    /// Membuat user account baru dengan role default "User"
+    /// </summary>
+    public async Task<bool> RegisterAsync(RegisterRequestDto request)
+    {
+        // Cek apakah email sudah terdaftar
+        //var existingUser = await _userManager.FindByEmailAsync(request.Email);
+        var existingUser = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+        if (existingUser != null)
+        {
+            throw new ValidationException("User with this email already exists");
+        }
+
+        _logger.LogInformation("User registration attempt for email: {Email}", request.Email);
+        var strategy = _context.Database.CreateExecutionStrategy();
+        return await strategy.ExecuteAsync(async () =>
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // Generate email confirmation token
+                var confirmationToken = await _tokenService.GenerateEmailConfirmationTokenAsync();
+
+                // Create new user
+                var user = new User
+                {
+                    IsActive = true,
+                    Name = request.Name,
+                    Email = request.Email,
+                    PasswordHash = _passwordService.HashPassword(request.NewPassword),
+                    EmailConfirmed = false,
+                    EmailConfirmationToken = confirmationToken,
+                    EmailConfirmationTokenExpiry = DateTime.UtcNow.AddHours(24),
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System"
+                };
+
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync(); //Id di auto-generate setelah di save
+
+                // Assign default role "User"
+
+                var userRole = new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = 1, // User role
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = "System"
+                };
+
+                //// Add default claims
+                //var userClaim = new UserClaim
+                //{
+                //    UserId = user.Id,
+                //    ClaimType = "can_view_profile",
+                //    ClaimValue = "true",
+                //    CreatedAt = DateTime.UtcNow,
+                //    CreatedBy = "System"
+                //}; // TODO: Belum tahu claim mau diapakan
+
+                // Save user role dan claims
+                await _context.UserRoles.AddAsync(userRole);
+                //await _context.UserClaims.AddAsync(userClaim);
+                await _context.SaveChangesAsync();
+
+                // Kirim email konfirmasi
+                var confirmationLink = $"https://localhost:7069/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(confirmationToken)}";
+                await _emailService.SendEmailConfirmationAsync(user.Email, user.Name, confirmationLink);
+
+                _logger.LogInformation("User registration successful for email: {Email}", request.Email);
+
+                // ===== STEP 9 =====
+                // All operations succeeded, make permanent
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                // ===== ROLLBACK ON ERROR =====
+                // Any exception -> undo all changes
+                await transaction.RollbackAsync();
+                _logger.LogError("User registration failed for email: {Email}. Transaction rolled back.", request.Email);
+                throw; // Re-throw to be handled by middleware
+            }
+        });
+    }
+    /// <summary>
+    /// Login User
+    /// Validasi credentials dan generate JWT tokens
+    /// </summary>
+    public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request)
+    {
+        _logger.LogInformation("Login attempt for email: {Email}", request.Email);
+
+        // Cari user berdasarkan email
+        //var user = await _userManager.FindByEmailAsync(request.Email);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+        if (user == null)
+        {
+            _logger.LogWarning("Login failed: User not found or inactive for email: {Email}", request.Email);
+            throw new ValidationException("Invalid email or password.");
+        }
+        if (!user.EmailConfirmed)
+        {
+            throw new ValidationException("Invalid email or password.");
+        }
+        // Check account lockout
+        if (!user.IsActive)
+        {
+            throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
+        }
+        // Check account lockout
+        if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
+        {
+            var remainingTime = (user.LockoutEnd.Value - DateTime.UtcNow).TotalMinutes;
+            throw new AccountLockedException($"Account is locked. Please try again in {Math.Ceiling(remainingTime)} minutes.");
+        }
+
+        // Verify password
+        if (!_passwordService.VerifyPassword(request.Password, user.PasswordHash))
+        {
+            // Increment failed attempts
+            user.FailedLoginAttempts++;
+            //_logger.LogWarning("Login failed for email: {Email}. Reason: {Reason}", request.Email, result.ToString());
+
+            if (user.FailedLoginAttempts >= MAX_FAILED_ATTEMPTS)
+            {
+                user.LockoutEnd = DateTime.UtcNow.AddMinutes(LOCKOUT_TIME_MINUTES);
+                _logger.LogWarning($"Account locked for user: {user.Email}");
+            }
+
+            await _context.SaveChangesAsync();
+
+            throw new ValidationException("Invalid email or password");
+        }
+
+        // Reset failed attempts on successful login
+        user.FailedLoginAttempts = 0;
+        //user.LockoutEnd = null; // Tidak perlu reset LockoutEnd, karena lockout sudah expired ketika user sudah bisa login
+        user.LastLoginAt = DateTime.UtcNow;
+
+        // Generate JWT tokens
+        var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
+        var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
+
+        // Save refresh token
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = request.RememberMe
+            ? DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenRememberMeExpirationDays)
+            : DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("Login successful for email: {Email}", request.Email);
+
+        return new AuthResponseDto
+        {
+            Message = "Login successful",
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
+            User = await MapToUserDto(user)
+        };
+    }
+
+    /// <summary>
+    /// Refresh Token
+    /// Perpanjang session dengan refresh token tanpa perlu login ulang
+    /// </summary>
+    public async Task<AuthResponseDto> RefreshTokenAsync(RefreshTokenRequestDto request)
+    {
+        // Extract claims dari expired access token
+        var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
+        if (principal == null)
+        {
+            throw new ValidationException("Invalid access token");
+        }
+
+        var userIdClaim = principal.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        {
+            throw new ValidationException("Invalid token claims");
+        }
+
+        // Validasi refresh token
+        //var user = await _userManager.FindByIdAsync(userId.ToString());
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Id == userId);
+        if (user == null)
+        {
+            //return new AuthResponseDto
+            //{
+            //    Success = false,
+            //    Message = "Invalid refresh token"
+            //};
+            throw new ValidationException("User is invalid");
+        }
+        if (!user.EmailConfirmed)
+        {
+            throw new AccountInactiveException("User has not confirmed email");
+        }
+        if (!user.IsActive)
+        {
+            throw new AccountInactiveException("Account is inactive. Contact the administrator for help.");
+        }
+        if (user.RefreshToken != request.RefreshToken)
+        {
+            throw new ValidationException("Refresh token is invalid");
+        }
+        if (user.RefreshTokenExpiry <= DateTime.UtcNow)
+        {
+            throw new ValidationException("Refresh token has expired");
+        }
+        // Generate tokens baru
+        var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
+        var refreshToken = await _tokenService.GenerateRefreshTokenAsync();
+
+        // Update refresh token
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationDays);
+        await _context.SaveChangesAsync();
+
+        return new AuthResponseDto
+        {
+            Message = "Token refreshed successfully",
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            AccessTokenExpiry = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
+            User = await MapToUserDto(user)
+        };
+    }
+
+    /// <summary>
+    /// Logout User
+    /// Invalidate refresh token
+    /// </summary>
+    public async Task<bool> LogoutAsync(int userId)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Id == userId);
+        if (user == null)
+        {
+            throw new ValidationException("User is invalid");
+        }
+        // Invalidate refresh token
+        user.RefreshToken = null;
+        user.RefreshTokenExpiry = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("User logged out: {UserId}", userId);
+        return true;
+    }
+
+    /// <summary>
+    /// Logout User
+    /// Invalidate refresh token
+    /// </summary>
+    public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+        if (user == null)
+        {
+            _logger.LogWarning("Confirm email failed: User not found or inactive for email: {Email}", request.Email);
+            throw new ValidationException("Invalid email");
+        }
+        // Uncomment bila dibutuhkan: Cek apakah user masih belum confirm email, bila sudah confirm email, batalkan
+        //if (user.EmailConfirmed)
+        //{
+        //    _logger.LogWarning("Confirm email failed: User already confirmed email: {Email}", request.Email);
+        //    throw new ValidationException("Invalid email");
+        //}
+        // Cek token valid dan belum expired
+        if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
+        {
+            throw new ValidationException("Invalid or expired confirmation token");
+        }
+        // Tandai email sebagai terverifikasi
+        user.EmailConfirmed = true;
+        user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
+        user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("Confirm email success for: {Email}", request.Email);
+        return true;
+    }
+
+    /// <summary> 
+    /// Change Password for authenticated user = change password ketika sudah login di profile misalnya
+    /// Ubah password user yang sudah login
+    /// </summary>
+    public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequestDto request)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Id == userId);
+        if (user == null)
+        {
+            throw new ValidationException("User is invalid");
+        }
+
+        // Tidak usah lagi, karena pasti sudah error di tingkat DTO
+        //if (request.NewPassword != request.ConfirmNewPassword)
+        //{
+        //    _logger.LogWarning("Password confirmation mismatch for {Email}", user.Email);
+        //    throw new ValidationException("Password and confirmation password do not match.");
+        //}
+
+        // Verify password
+        if (!_passwordService.VerifyPassword(request.CurrentPassword, user.PasswordHash))
+        {
+            _logger.LogWarning("Password change failed for user: {UserId}", userId);
+            throw new ValidationException("Invalid password.");
+        }
+
+        //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+        user.PasswordHash = _passwordService.HashPassword(request.NewPassword);
+        user.UpdatedAt = DateTime.UtcNow;
+        user.UpdatedBy = user.Name;
+
+        _logger.LogInformation("Password changed successfully for user: {UserId}", userId);
+        return true;
+    }
+
+    //Forgot Password = Request password reset 
+    //Langsung Menggunakan HTTPClient - Service nya di Blazor UI
+    public async Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request)
+    {
+        _logger.LogInformation("Forgot password requested for email: {Email}", request.Email);
+
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+
+        //Menghindari Email Enumeration Attack (menghindari hacker mengetahui email mana yang valid)
+        if (user == null)
+        {
+            _logger.LogWarning("Forgot password requested for non-existing email: {Email}", request.Email);
+            // Demi keamanan: tetap return sukses tanpa memberitahu apakah email valid
+            return true;
+        }
+
+        // Generate token reset password
+        var token = await _tokenService.GeneratePasswordResetTokenAsync();
+        user.PasswordResetToken = token;
+        user.PasswordResetTokenExpiry = DateTime.UtcNow.AddHours(1); ; // Token valid for 1 hour
+
+        await _context.SaveChangesAsync();
+
+        // Buat link reset (menuju frontend URL BlazorUI)
+        var resetLink = $"https://localhost:7069/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+
+
+        // Jika email terdaftar dalam database, Kirim email reset password
+        await _emailService.SendPasswordResetAsync(user.Email, user.Name ?? string.Empty, resetLink); 
+
+        _logger.LogInformation("Password reset email sent to {Email}", user.Email);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Reset password menggunakan token dari email
+    /// </summary>
+    public async Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request)
+    {
+        _logger.LogInformation("Reset password attempt for email: {Email}", request.Email);
+
+        // Tidak usah lagi, karena pasti sudah error di tingkat DTO
+        //if (request.NewPassword != request.ConfirmNewPassword)
+        //{
+        //    _logger.LogWarning("Password confirmation mismatch for {Email}", request.Email);
+        //    throw new ValidationException("Password and confirmation password do not match.");
+        //}
+
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+        if (user == null)
+        {
+            _logger.LogWarning("Reset password attempt failed: user not found for {Email}", request.Email);
+            throw new ValidationException("Invalid user or token.");
+        }
+
+        // Validasi token buatan sendiri
+        if (user.PasswordResetToken != request.PasswordResetToken ||
+            user.PasswordResetTokenExpiry < DateTime.UtcNow)
+        {
+            _logger.LogWarning("Invalid or expired token for {Email}", request.Email);
+            throw new ValidationException("Invalid or expired reset token.");
+        }
+
+        // Ganti password baru (reset password)
+        user.PasswordHash = _passwordService.HashPassword(request.NewPassword);
+        user.UpdatedAt = DateTime.UtcNow;
+        user.UpdatedBy = user.Name;
+
+        // Reset password reset token
+        user.PasswordResetToken = null;
+        user.PasswordResetTokenExpiry = DateTime.UtcNow;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        // Kirim email notifikasi berhasil
+        await _emailService.SendPasswordChangedNotificationAsync(user.Email, user.Name ?? "User");
+
+        _logger.LogInformation("Password reset successful for {Email}", request.Email);
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Map User entity to UserDto
+    /// </summary>
+    private async Task<UserDto> MapToUserDto(User user)
+    {
+        var usera = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == user.Email);
+        //var roles = await _userManager.GetRolesAsync(user);
+        var roles = await _context.UserRoles
+            .Where(a => a.UserId == user.Id)
+            .Include(a => a.Role)
+            .Select(a => a.Role.Name)
+            .ToListAsync();
+        //var claims = await _userManager.GetClaimsAsync(user);
+        var claims = await _context.UserClaims
+            .Where(a => a.UserId == user.Id)
+            .Select(a => new ClaimDto { Type = a.ClaimType, Value = a.ClaimValue })
+            .ToListAsync();
+
+        return new UserDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email ?? string.Empty,
+            EmailConfirmed = user.EmailConfirmed,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt ?? DateTime.MinValue,
+            Roles = roles,
+            Claims = claims
+        };
+    }
+}

@@ -1,6 +1,4 @@
-using MyApp.BlazorUI.Models;
 using MyApp.Shared.DTOs;
-using System.Net;
 using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services;

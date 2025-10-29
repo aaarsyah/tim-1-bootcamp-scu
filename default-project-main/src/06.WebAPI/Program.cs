@@ -1,13 +1,13 @@
 // Import Entity Framework Core untuk database operations
 using Microsoft.EntityFrameworkCore;
 // Import AppleMusicDbContext dari folder Data
-using MyApp.WebAPI.Data;
+using MyApp.Infrastructure.Data;
 // Import extension methods dari folder Extensions
 using MyApp.WebAPI.Extensions;
 // Import custom middleware dari folder Middleware
 using MyApp.WebAPI.Middleware;
-using MyApp.WebAPI.Configuration;
-using MyApp.WebAPI.Models.Entities;
+using MyApp.Infrastructure.Configuration;
+using MyApp.Domain.Models;
 // Import FluentValidation ASP.NET Core integration
 using FluentValidation.AspNetCore;
 // Import System.Reflection untuk assembly operations
@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using MyApp.Application.Mappings;
 
 // ===== STEP 1: CONFIGURE SERILOG LOGGING =====
 // Purpose: Setup structured logging before anything else
@@ -148,7 +149,9 @@ try
 
     builder.Services.AddSqlServerDatabase(builder.Configuration);
 
-    builder.Services.AddAutoMapperProfiles();
+    builder.Services.AddAutoMapper(cfg => {
+        cfg.AddProfile<MappingProfile>();
+    });
 
     builder.Services.AddFluentValidationAutoValidation();
 

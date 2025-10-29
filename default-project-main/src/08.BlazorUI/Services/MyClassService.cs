@@ -1,38 +1,31 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-using MyApp.Shared.DTOs;
+﻿using MyApp.Shared.DTOs;
 using System.Net.Http.Headers;
 
-namespace MyApp.BlazorUI.Services
+namespace MyApp.BlazorUI.Services;
+
+public class MyClassService : IMyClassService
 {
-    public interface IMyClassService
+    private readonly IHttpClientFactory _factory;
+
+    public MyClassService(
+        IHttpClientFactory factory)
     {
-        Task<List<MyClassDto>> GetOwnMyClasses(AuthenticationHeaderValue authorization);
+        _factory = factory;
     }
-    public class MyClassService : IMyClassService
+    public async Task<List<MyClassDto>> GetOwnMyClasses(AuthenticationHeaderValue authorization)
     {
-        private readonly IHttpClientFactory _factory;
-
-        public MyClassService(
-            IHttpClientFactory factory)
+        var _httpClient = _factory.CreateClient("WebAPI");
+        _httpClient.DefaultRequestHeaders.Authorization = authorization;
+        try
         {
-            _factory = factory;
+            var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
+
+            return response?.ToList() ?? new ();
         }
-        public async Task<List<MyClassDto>> GetOwnMyClasses(AuthenticationHeaderValue authorization)
+        catch (Exception ex)
         {
-            var _httpClient = _factory.CreateClient("WebAPI");
-            _httpClient.DefaultRequestHeaders.Authorization = authorization;
-            try
-            {
-                var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
-
-                return response?.ToList() ?? new ();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching MyClass data: {ex.Message}");
-                return new();
-            }
+            Console.WriteLine($"Error fetching MyClass data: {ex.Message}");
+            return new();
         }
     }
 }
