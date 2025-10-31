@@ -21,10 +21,6 @@ builder.Services.AddBlazoredLocalStorage();
 
 
 // Configure HttpClient for API calls
-//builder.Services.AddScoped(sp => new HttpClient
-//{
-//    BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269")
-//});
 builder.Services.AddHttpClient("WebAPI", sp =>
 {
     sp.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"] ?? "https://localhost:7269");
