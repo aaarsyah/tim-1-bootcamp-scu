@@ -1,0 +1,131 @@
+﻿@using MyApp.Domain.Models
+@using MyApp.BlazorUI.Services
+@using System.ComponentModel.DataAnnotations
+@using MyApp.Shared.DTOs
+@using System.Net.Http.Headers
+
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
+@inject ICheckoutService CheckoutService;
+
+@inject IDialogService DialogService;
+
+
+<MudDialog >
+
+    <DialogContent>
+        <MudStack>
+            @if (payments.Count == 0)
+            {
+                <MudText>Memuat metode pembayaran...</MudText>
+            }
+            else
+            {
+                @foreach (var payment in payments)
+                {
+                    <MudButton Variant="@(payment.Name == selectedPayment ? Variant.Outlined : Variant.Text)"
+                               Color="@(payment.Name == selectedPayment ? Color.Primary : Color.Default)"
+                               OnClick="@(() => SelectPayment(payment))"
+                               Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
+
+                        <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
+                        <MudText>@payment.Name</MudText>
+                        @* <MudSpacer />
+                        <MudText>VV</MudText> *@
+                    </MudButton>
+
+                }
+            }
+        </MudStack>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="Close">Batal</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public CheckoutRequestDto CheckoutRequest { get; set; } = null!;
+
+    private List<PaymentDto> payments = new();
+    private string? selectedPayment;
+    private int? selectedPaymentId;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        await LoadPaymentsAsync(auth);
+        StateHasChanged();
+    }
+
+    private async Task LoadPaymentsAsync(AuthenticationHeaderValue authentication)
+    {
+        try
+        {
+            var result = await CheckoutService.GetAllPaymentsAsync(authentication);
+            if (result != null)
+            {
+                payments = result.Where(p => p.IsActive).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Gagal memuat metode pembayaran: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void SelectPayment(PaymentDto payment)
+    {
+        selectedPayment = payment.Name;
+        selectedPaymentId = payment.Id;
+        StateHasChanged();
+    }
+
+    private async Task OnPaymentConfirmed()
+    {
+        // Dapatkan autentikasi
+        var auth = await AuthService.GetAccessTokenAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        //
+        if (selectedPaymentId == null)
+        {
+            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            return;
+        }
+
+        CheckoutRequest.PaymentMethodId = selectedPaymentId.Value;
+
+        var result = await CheckoutService.CheckoutItemsAsync(auth, CheckoutRequest);
+        if (result == null)
+        {
+            Snackbar.Add($"Checkout gagal.", Severity.Error);
+        }
+        Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
+        Navigation.GoToSuccessPurchase();
+    }
+
+    private void Close()
+    {
+        MudDialog.Close();
+    }
+}

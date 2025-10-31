@@ -1,0 +1,66 @@
+﻿{
+   "ConnectionStringName": "dab-connection-string",
+   "Dacpac": null,
+   "DatabaseType": 3,
+   "MergeDacpacs": false,
+   "Optional": false,
+   "ProjectPath": "D:\\BootcampProject\\default-project-main\\src\\06.WebAPI",
+   "Tables": [
+      {
+         "Name": "[dbo].[AuditLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CartItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Categories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Courses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[InvoiceDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Invoices]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MyClasses]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PaymentMethods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RoleClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Schedules]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Users]",
+         "ObjectType": 0
+      }
+   ]
+}

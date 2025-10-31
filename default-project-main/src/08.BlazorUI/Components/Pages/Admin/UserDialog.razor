@@ -17,7 +17,7 @@
 
 
         <MudSelect @bind-Value="roleName" Class="mt-4" Label="Status">
-            @foreach (var role in roles)
+            @foreach (var role in Roles)
             {
                 <MudSelectItem T="string" Value="@role.Name">@role.Name</MudSelectItem>
             }
@@ -40,7 +40,7 @@
     private IMudDialogInstance MudDialog { get; set; }
 
     [Parameter]
-    public IEnumerable<RoleDto> roles { get; set; } = null!;
+    public IEnumerable<RoleDto> Roles { get; set; } = null!;
     [Parameter] 
     public UserDto User { get; set; } = null!;
 
