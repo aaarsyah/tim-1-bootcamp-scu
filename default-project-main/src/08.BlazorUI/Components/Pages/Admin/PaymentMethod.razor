@@ -16,14 +16,14 @@
 
 <PageTitle>Payment Method</PageTitle>
 
-<MudText Typo="Typo.h5" Class="mt-16 mb-4">Payment Method</MudText>
+<MudText Typo="Typo.h5" Class="mt-4 mb-4">Payment Method</MudText>
 
 <MudButton Class="mb-6" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large"
            OnClick="() => OpenPaymentDialog(null)">
     Add Payment Method
 </MudButton>
 
-<MudTable Items="@payment" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
+<MudTable Breakpoint="Breakpoint.Sm" Items="@payment" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Payment Method</MudText>
         <MudSpacer />
@@ -41,7 +41,13 @@
     <RowTemplate>
         <MudTd DataLabel="ID">@context.Id</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudImage Class="mt-3" Src="@context.LogoUrl" Alt="@context.Name" Width="40" Height="40" />
+        <MudTd DataLabel="Logo">
+                <MudImage Src="@context.LogoUrl"
+                          Alt="@context.Name"
+                          Width="40"
+                          Height="40"
+                          Class="rounded-md mt-1" />
+        </MudTd>
         <MudTd DataLabel="Status">
             @if (context.IsActive)
             {
@@ -58,11 +64,11 @@
         </MudTd>
         <MudTd DataLabel="Action">
             <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
+                       Class="ml-auto mr-2"
                        OnClick="() => OpenPaymentDialog(context)">
                 Edit
             </MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
-                       Class="ml-2"
                        OnClick="() => DeletePayment(context.Id)">
                 Delete
             </MudButton>
@@ -151,10 +157,7 @@
 
         if (result != null && !result.Canceled && result.Data is PaymentDto)
         {
-            // if (isUpdating)
-            // {
-            //     paymentItem = (PaymentDto)result.Data;
-            // }
+
             await LoadPayments();
         }
     }

@@ -11,7 +11,6 @@
 @inject IMyClassService MyClassService
 
 <PageTitle>My Class</PageTitle>
-@* <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" /> *@
 
 <MudContainer>
     @if (_itemList is null)
@@ -29,16 +28,24 @@
         <MudDivider></MudDivider>
         @foreach (var item in _itemList)
         {
-            <MudStack Class="ma-4" Row="true" AlignItems="AlignItems.Center">
-                <MudImage Src="@item.ImageUrl" Style="width=200px; height=133px" />
-                <MudContainer Class="ml-4">
-                    <MudText Style="color: #828282">@item.CategoryName</MudText>
-                    <MudText Style="color: #333333"><b>@item.CourseName</b></MudText>
-                    <MudText Color="Color.Primary">
-                        Jadwal: @item.Date.ToString("d MMMM yyyy", new CultureInfo("id-ID"))
-                    </MudText>
-                </MudContainer>
-            </MudStack>
+            <MudGrid Class="my-3">
+                <MudItem xs="12" sm="4" md="3" lg="2">
+                    <MudImage Src="@item.ImageUrl"
+                              Alt="@item.CourseName"
+                              Class="rounded-lg w-full"
+                              Style="object-fit: cover; max-height: 150px;" />
+                </MudItem>
+
+                <MudItem xs="12" sm="8" md="9" lg="10">
+                    <MudStack Spacing="1" Class="ml-lg-10 mt-lg-5">
+                        <MudText Style="color: #828282; font-size: 0.9rem;">@item.CategoryName</MudText>
+                        <MudText Style="color: #333333; font-weight: 600;">@item.CourseName</MudText>
+                        <MudText Color="Color.Primary" Style="font-size: 0.9rem;">
+                            Jadwal: @item.Date.ToString("d MMMM yyyy", new CultureInfo("id-ID"))
+                        </MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
             <MudDivider></MudDivider>
         }
     }

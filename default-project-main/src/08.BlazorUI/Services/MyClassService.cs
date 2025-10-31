@@ -20,7 +20,9 @@ public class MyClassService : IMyClassService
         {
             var response = await _httpClient.GetFromJsonAsync<List<MyClassDto>>("api/MyClass");
 
-            return response?.ToList() ?? new ();
+            return response?
+                .OrderByDescending(x => x.Date)
+                .ToList() ?? new();
         }
         catch (Exception ex)
         {

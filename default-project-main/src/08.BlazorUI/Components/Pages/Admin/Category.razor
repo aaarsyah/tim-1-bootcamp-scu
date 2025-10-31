@@ -14,14 +14,14 @@
 
 <PageTitle>Category</PageTitle>
 
-<MudText Typo="Typo.h5" Class="mt-16 mb-4">Category</MudText>
+<MudText Typo="Typo.h5" Class="mt-4 mb-4">Category</MudText>
 
 <MudButton Class="mb-6" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large"
            OnClick="() => OpenCategoryDialog(null)">
     Add Category
 </MudButton>
 
-<MudTable Items="@category" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem">
+<MudTable Breakpoint="Breakpoint.Sm" Items="@category" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Category</MudText>
         <MudSpacer />
@@ -45,7 +45,13 @@
                 @context.Description
             </div>
         </MudTd>
-        <MudImage Class="mt-3" Src="@context.ImageUrl" Alt="@context.Name" Width="40" Height="40" />
+        <MudTd DataLabel="Picture">
+                <MudImage Src="@context.ImageUrl"
+                          Alt="@context.Name"
+                          Width="40"
+                          Height="40"
+                          Class="rounded-md mt-1" />
+        </MudTd>
         <MudTd DataLabel="Status">
             @if (context.IsActive == true)
             {
@@ -58,6 +64,7 @@
         </MudTd>
         <MudTd DataLabel="Action">
             <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
+                       Class="ml-auto mr-2"
                        OnClick="() => OpenCategoryDialog(context)">
                 Edit
             </MudButton>
