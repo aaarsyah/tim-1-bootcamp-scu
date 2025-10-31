@@ -94,7 +94,7 @@
                     @foreach (var c in OtherCourses)
                     {
                         <MudItem xs="12" md="6" lg="4">
-                            <MudLink Color="Color.Default" OnClick="@(() => Navigation.GoToDetail(c.Id))">
+                            <MudLink Color="Color.Default" OnClick="@(async () => { CourseId = c.Id; await OnInitializedAsync(); Navigation.GoToDetail(c.Id); })">
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText>@c.CategoryName</MudText>
                                 <MudText><b>@c.Name</b></MudText>
@@ -116,16 +116,10 @@
     private List<CourseDto>? OtherCourses { get; set; }
     private DateOnly _date;
     private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
-    private int? selectedPaymentId; //sama dengan selectedPayment
-
-    private List<PaymentDto> payments = new();
-    private PaymentDto? selectedPayment;
-    private MudMessageBox _mudMessageBox;
 
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadPaymentsAsync();
         // Ambil data course by id
         var result = await CourseService.GetCourseByIdAsync(CourseId);
         if (result != null)
@@ -144,37 +138,6 @@
             OtherCourses = result2
                 .Where(c => c.Id != CourseId && c.IsActive)
                 .ToList();
-        }
-    }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!firstRender)
-        {
-            return;
-        }
-        StateHasChanged();
-    }
-
-    private async Task LoadPaymentsAsync()
-    {
-        try
-        {
-            var token = await AuthService.GetAccessTokenAsync();
-            if (token == null)
-            {
-                Navigation.GoToLogin();
-                return;
-            }
-
-            var result = await CheckoutService.GetAllPaymentsAsync(token);
-            if (result != null)
-            {
-                payments = result.Where(p => p.IsActive).ToList();
-            }
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Gagal memuat metode pembayaran: {ex.Message}", Severity.Error);
         }
     }
 

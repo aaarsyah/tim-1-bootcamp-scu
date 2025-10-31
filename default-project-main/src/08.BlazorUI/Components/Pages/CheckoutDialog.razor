@@ -49,7 +49,7 @@
 
 @code {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public CheckoutRequestDto CheckoutRequest { get; set; } = null!;

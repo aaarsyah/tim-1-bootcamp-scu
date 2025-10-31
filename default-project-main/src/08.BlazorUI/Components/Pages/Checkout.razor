@@ -68,7 +68,7 @@
             <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
         </MudText>
         <MudSpacer />
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClickedAsync">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog">
             <MudText>Bayar Sekarang</MudText>
         </MudButton>
     </MudToolBar>
@@ -76,10 +76,7 @@
 </MudContainer>
 
 @code {
-    private MudMessageBox _mudMessageBox;
     private bool? selectAllCheckbox = false;
-    private string? selectedPayment;
-    private int? selectedPaymentId;
     private int _totalPrice = 0;
 
     private List<ItemMy> _itemList = new();
@@ -129,7 +126,7 @@
         }
     }
 
-    private async Task OnButtonClickedAsync()
+    private async Task ShowPaymentDialog()
     {
         if (!_itemList.Any(i => i.Selected))
         {
