@@ -12,6 +12,8 @@
 @inject ICourseService CourseService
 @inject ICheckoutService CheckoutService
 
+@inject IDialogService DialogService
+
 <PageTitle>Detail Kelas</PageTitle>
 
 <MudContainer Class="mt-10">
@@ -92,7 +94,7 @@
                     @foreach (var c in OtherCourses)
                     {
                         <MudItem xs="12" md="6" lg="4">
-                            <MudLink Color="Color.Default" OnClick="@(() => Navigation.GoToDetail(c.Id))">
+                            <MudLink Color="Color.Default" OnClick="@(async () => { CourseId = c.Id; await OnInitializedAsync(); Navigation.GoToDetail(c.Id); })">
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText>@c.CategoryName</MudText>
                                 <MudText><b>@c.Name</b></MudText>
@@ -106,45 +108,6 @@
     }
 </MudContainer>
 
-<!-- Dialog Metode Pembayaran -->
-<MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
-    <MessageContent>
-        <MudStack>
-            @if (payments.Count == 0)
-            {
-                <MudText>Memuat metode pembayaran...</MudText>
-            }
-            else
-            {
-                @foreach (var payment in payments)
-                {
-                    <MudButton 
-                        @key="@payment.Id"
-                        Variant="@GetVariant(payment.Name)"
-                        Color="@GetColor(payment.Name)"
-                        OnClick="@(() => SelectPayment(payment))"
-                        Style="@GetButtonStyle(payment)">
-                        
-                        <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
-                        <MudText>@payment.Name</MudText>
-                    </MudButton>
-                }
-            }
-        </MudStack>
-    </MessageContent>
-
-    <NoButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="CancelPayment">
-            Batal
-        </MudButton>
-    </NoButton>
-    <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">
-            Bayar
-        </MudButton>
-    </YesButton>
-</MudMessageBox>
-
 @code {
     [Parameter]
     public int CourseId { get; set; }
@@ -153,16 +116,10 @@
     private List<CourseDto>? OtherCourses { get; set; }
     private DateOnly _date;
     private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
-    private int? selectedPaymentId; //sama dengan selectedPayment
-
-    private List<PaymentDto> payments = new();
-    private PaymentDto? selectedPayment;
-    private MudMessageBox _mudMessageBox;
 
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadPaymentsAsync();
         // Ambil data course by id
         var result = await CourseService.GetCourseByIdAsync(CourseId);
         if (result != null)
@@ -183,128 +140,78 @@
                 .ToList();
         }
     }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!firstRender)
-        {
-            return;
-        }
-        StateHasChanged();
-    }
-
-    private async Task LoadPaymentsAsync()
-    {
-        try
-        {
-            var token = await AuthService.GetAccessTokenAsync();
-            if (token == null)
-            {
-                Navigation.GoToLogin();
-                return;
-            }
-
-            var result = await CheckoutService.GetAllPaymentsAsync(token);
-            if (result != null)
-            {
-                payments = result.Where(p => p.IsActive).ToList();
-            }
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Gagal memuat metode pembayaran: {ex.Message}", Severity.Error);
-        }
-    }
 
     private async Task ShowPaymentDialog()
     {
-        await _mudMessageBox.ShowAsync();
-    }
-
-    private void SelectPayment(PaymentDto payment)
-    {
-        selectedPayment = payment;
-        selectedPaymentId = payment.Id;
-        StateHasChanged();
-    }
-    private string GetButtonStyle(PaymentDto payment)
-    {
-        var baseStyle = "justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;";
-        return baseStyle;
-    }
-    private Color GetColor(string name) => selectedPayment?.Name == name ? Color.Primary : Color.Default;
-    private Variant GetVariant(string name) => selectedPayment?.Name == name ? Variant.Outlined : Variant.Text;
-
-    //Cancel
-    private void CancelPayment() => _mudMessageBox.Close();
-
-    //Konfirmasi Pembayaran (Button Bayar Sekarang)
-    private async Task OnPaymentConfirmed()
-    {
-        // Dapatkan autentikasi
         var auth = await AuthService.GetAccessTokenAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        if (selectedPaymentId == null)
+
+        // 1️. Ambil scheduleId berdasarkan tanggal yang dipilih
+        var selectedSchedule = Course?.Schedules.FirstOrDefault(s => s.Date == _date);
+        if (selectedSchedule == null)
         {
-            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
+            Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
             return;
         }
-        try
+
+        var scheduleId = selectedSchedule.Id;
+        Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
+
+
+        // 2️. Tambahkan item ke cart
+        var resultadd = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
+        if (!resultadd)
         {
-            // 1️⃣ Ambil scheduleId berdasarkan tanggal yang dipilih
-            var selectedSchedule = Course.Schedules.FirstOrDefault(s => s.Date == _date);
-            if (selectedSchedule == null)
-            {
-                Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
-                return;
-            }
-
-            var scheduleId = selectedSchedule.Id;
-            Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
-
-
-            // 2️⃣ Tambahkan item ke cart
-            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
-            if (!result)
-            {
-                Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
-                return;
-            }
-            var result2 = await CheckoutService.GetSelfCartItem(auth);
-            if (result2 == null)
-            {
-                Snackbar.Add("Gagal menambahkan ke keranjang?", Severity.Error);
-                return;
-            }
-            var cartItems = result2;
-
-            // Ambil item terbaru untuk scheduleId ini
-            var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
-            Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
-
-
-            var checkoutRequest = new CheckoutRequestDto
-            {
-                ItemCartIds = new List<int> { lastCartItem.Id }, 
-                PaymentMethodId = selectedPaymentId.Value
-            };
-
-            // Checkout
-            var result3 = await CheckoutService.CheckoutItemsAsync(auth, checkoutRequest);
-            if (result3 == null)
-            {
-                Snackbar.Add($"Checkout gagal.", Severity.Error);
-            }
-            Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
-            Navigation.GoToSuccessPurchase();
+            Snackbar.Add("Gagal menambahkan ke keranjang", Severity.Error);
+            return;
         }
-        catch (Exception ex)
+        var resultget = await CheckoutService.GetSelfCartItem(auth);
+        if (resultget == null)
         {
-            Snackbar.Add($"Terjadi kesalahan: {ex.Message}", Severity.Error);
+            Snackbar.Add("Gagal menambahkan ke keranjang", Severity.Error);
+            return;
         }
+        var cartItems = resultget;
+
+        // Ambil item terbaru untuk scheduleId ini
+        var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
+        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
+
+        var checkoutRequest = new CheckoutRequestDto
+        {
+            ItemCartIds = new List<int> { lastCartItem.Id },
+            PaymentMethodId = null
+        };
+
+        var parameters = new DialogParameters();
+        parameters.Add("CheckoutRequest", checkoutRequest);
+
+
+        var options = new DialogOptions
+        {
+            CloseButton = false,
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<CheckoutDialog>("Pilih Metode Pembayaran", parameters, options);
+        var result = await dialog.Result;
+
+        // if (true)
+        // {
+        //     var auth = await AuthService.GetAccessTokenAsync();
+        //     if (auth == null)
+        //     {
+        //         Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+        //         return;
+        //     }
+        // }
+
+        // await _mudMessageBox.ShowAsync();
     }
 
     //Masukkan ke Keranjang

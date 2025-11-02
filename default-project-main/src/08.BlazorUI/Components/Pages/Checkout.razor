@@ -12,12 +12,11 @@
 @inject IAuthService AuthService
 @inject ICheckoutService CheckoutService
 
+@inject IDialogService DialogService
+
 <PageTitle>Checkout</PageTitle>
 
-<MudDialogProvider />
-
 <MudContainer Class="pa-4">
-
     <MudStack Row="true" AlignItems="AlignItems.Center">
         <MudCheckBox T="bool?" 
              Value="selectAllCheckbox" 
@@ -69,57 +68,18 @@
             <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
         </MudText>
         <MudSpacer />
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClickedAsync">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog">
             <MudText>Bayar Sekarang</MudText>
         </MudButton>
     </MudToolBar>
 
 </MudContainer>
 
-<MudMessageBox @ref="_mudMessageBox" Title="Pilih Metode Pembayaran">
-    <MessageContent>
-        <MudStack>
-            @if (payments.Count == 0)
-            {
-                <MudText>Memuat metode pembayaran...</MudText>
-            }
-            else
-            {
-                @foreach (var payment in payments)
-                {
-                    <MudButton 
-                        Variant="@GetVariant(payment.Name)"
-                        Color="@GetColor(payment.Name)"
-                        OnClick="@(() => SelectPayment(payment))"
-                        Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
-                        
-                        <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
-                        <MudText>@payment.Name</MudText>
-                    </MudButton>
-                }
-            }
-        </MudStack>
-    </MessageContent>
-    
-    <NoButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="CancelPayment">
-            Batal
-        </MudButton>
-    </NoButton>
-    <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
-    </YesButton>
-</MudMessageBox>
-
 @code {
-    private MudMessageBox _mudMessageBox;
     private bool? selectAllCheckbox = false;
-    private string? selectedPayment;
-    private int? selectedPaymentId;
     private int _totalPrice = 0;
 
     private List<ItemMy> _itemList = new();
-    private List<PaymentDto> payments = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -134,7 +94,6 @@
             return;
         }
         await LoadCartItemsAsync(auth);
-        await LoadPaymentsAsync(auth);
         StateHasChanged();
     }
 
@@ -163,60 +122,11 @@
         }
     }
 
-    private async Task LoadPaymentsAsync(AuthenticationHeaderValue authentication)
-    {
-        try
-        {
-            var result = await CheckoutService.GetAllPaymentsAsync(authentication);
-            if (result != null)
-            {
-                payments = result.Where(p => p.IsActive).ToList();
-            }
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"Gagal memuat metode pembayaran: {ex.Message}", Severity.Error);
-        }
-    }
-
-    private async Task OnButtonClickedAsync()
+    private async Task ShowPaymentDialog()
     {
         if (!_itemList.Any(i => i.Selected))
         {
             Snackbar.Add("Pilih minimal satu item untuk checkout!", Severity.Warning);
-            return;
-        }
-
-        await _mudMessageBox.ShowAsync();
-    }
-
-    private void SelectPayment(PaymentDto payment)
-    {
-        selectedPayment = payment.Name;
-        selectedPaymentId = payment.Id;
-        StateHasChanged();
-    }
-
-    private Color GetColor(string name) => name == selectedPayment ? Color.Primary : Color.Default;
-    private Variant GetVariant(string name) => name == selectedPayment ? Variant.Outlined : Variant.Text;
-
-    //Cancel
-    private void CancelPayment() => _mudMessageBox.Close();    
-
-    //Button Bayar
-    private async Task OnPaymentConfirmed()
-    {
-        // Dapatkan autentikasi
-        var auth = await AuthService.GetAccessTokenAsync();
-        if (auth == null)
-        {
-            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
-            return;
-        }
-        //
-        if (selectedPaymentId == null)
-        {
-            Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
             return;
         }
 
@@ -226,22 +136,40 @@
             .ToList();
 
         var checkoutRequest = new CheckoutRequestDto
+            {
+                ItemCartIds = selectedCartIds,
+                PaymentMethodId = null
+            };
+
+        var parameters = new DialogParameters();
+        parameters.Add("CheckoutRequest", checkoutRequest);
+
+
+        var options = new DialogOptions
         {
-            ItemCartIds = selectedCartIds,
-            PaymentMethodId = selectedPaymentId.Value
+            CloseButton = false,
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true
         };
 
-        var result = await CheckoutService.CheckoutItemsAsync(auth, checkoutRequest);
-        if (result == null)
-        {
-            Snackbar.Add($"Checkout gagal.", Severity.Error);
-        }
-        Snackbar.Add("Checkout berhasil! Mengarahkan ke halaman pembayaran...", Severity.Success);
-        Navigation.GoToSuccessPurchase();
+        var dialog = await DialogService.ShowAsync<CheckoutDialog>("Pilih Metode Pembayaran", parameters, options);
+        var result = await dialog.Result;
+
+        // if (true)
+        // {
+        //     var auth = await AuthService.GetAccessTokenAsync();
+        //     if (auth == null)
+        //     {
+        //         Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+        //         return;
+        //     }
+        // }
+
+        // await _mudMessageBox.ShowAsync();
     }
 
     // Toggle Select All dan update harga total
-    private async Task OnSelectAllChanged(bool? value)
+    private void OnSelectAllChanged(bool? value)
     {
         selectAllCheckbox = value;
 
