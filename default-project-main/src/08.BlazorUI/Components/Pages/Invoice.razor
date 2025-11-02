@@ -61,7 +61,7 @@
                 <MudTd DataLabel="No.Invoice">@item.RefCode</MudTd>
                 <MudTd>@item.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
                 <MudTd DataLabel="Jumlah Kursus">@item.TotalCourse</MudTd>
-                <MudTd DataLabel="Total Harga">@($"IDR {item.TotalPrice:N0}")</MudTd>
+                <MudTd DataLabel="Total Harga">@($"Rp. {item.TotalPrice:N0}")</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(() => Navigation.GoToDetailsInvoice(item.Id))">
                         Rincian

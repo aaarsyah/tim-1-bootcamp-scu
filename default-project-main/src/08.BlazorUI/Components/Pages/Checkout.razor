@@ -48,7 +48,7 @@
                         Jadwal : @item.ScheduleDates.ToString("D", new CultureInfo("id-ID"))
                     </MudText>
                     <MudText Color="Color.Primary">
-                        <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))
+                        <b>Rp. @item.Price.ToString("N0", new CultureInfo("id-ID"))
                         </b>
                     </MudText>
                 </MudContainer>
@@ -65,7 +65,7 @@
     <MudToolBar Class="mt-4">
         <MudText>Total biaya:</MudText>
         <MudText Color="Color.Primary">
-            <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
+            <b>Rp. @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
         </MudText>
         <MudSpacer />
         <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog">

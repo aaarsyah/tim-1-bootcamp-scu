@@ -29,7 +29,7 @@
                 <MudContainer>
                     <MudText>@Course.CategoryName</MudText>
                     <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
-                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"Rp. {Course.Price:N0}")</b></MudText>
 
                     <MudSelect Class="mt-2" @bind-Value="_date"
                                Label="Tanggal Kursus"
@@ -56,7 +56,7 @@
                 <MudContainer>
                     <MudText>@Course.CategoryName</MudText>
                     <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
-                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"Rp. {Course.Price:N0}")</b></MudText>
 
                     <MudSelect Class="mt-2" @bind-Value="_date"
                                Label="Tanggal Kursus"
@@ -98,7 +98,7 @@
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText>@c.CategoryName</MudText>
                                 <MudText><b>@c.Name</b></MudText>
-                                <MudText Color="Color.Primary"><b>@($"IDR {c.Price:N0}")</b></MudText>
+                                <MudText Color="Color.Primary"><b>@($"Rp. {c.Price:N0}")</b></MudText>
                             </MudLink>
                         </MudItem>
                     }
