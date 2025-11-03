@@ -1,7 +1,9 @@
 @page "/invoice"
+
+@using System.Globalization
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
-@using System.Globalization
+
 
 @inject NavigationManagerExt Navigation
 
@@ -59,9 +61,9 @@
             <RowTemplate Context="item">
                 <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd> 
                 <MudTd DataLabel="No.Invoice">@item.RefCode</MudTd>
-                <MudTd>@item.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
+                <MudTd>@item.CreatedAt.ToString("dd MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
                 <MudTd DataLabel="Jumlah Kursus">@item.TotalCourse</MudTd>
-                <MudTd DataLabel="Total Harga">@($"IDR {item.TotalPrice:N0}")</MudTd>
+                <MudTd DataLabel="Total Harga">IDR @item.TotalPrice.ToString("N0", new CultureInfo("id-ID"))</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" OnClick="@(() => Navigation.GoToDetailsInvoice(item.Id))">
                         Rincian

@@ -13,8 +13,7 @@
 @inject IDialogService DialogService;
 
 
-<MudDialog >
-
+<MudDialog TitleClass="align-self-center">
     <DialogContent>
         <MudStack>
             @if (payments.Count == 0)
@@ -28,9 +27,9 @@
                     <MudButton Variant="@(payment.Name == selectedPayment ? Variant.Outlined : Variant.Text)"
                                Color="@(payment.Name == selectedPayment ? Color.Primary : Color.Default)"
                                OnClick="@(() => SelectPayment(payment))"
-                               Style="justify-content:flex-start; width:100%; text-transform:none; margin:8px 0; border-radius:10px;">
-
-                        <MudImage Src="@payment.LogoUrl" Style="width:40px; margin-right:8px;" />
+                               Class="justify-start px-2"
+                               Style="width:100%; text-transform:none">
+                        <MudImage Src="@payment.LogoUrl" Class="mr-2" Style="width:40px" />
                         <MudText>@payment.Name</MudText>
                         @* <MudSpacer />
                         <MudText>VV</MudText> *@
@@ -42,8 +41,12 @@
     </DialogContent>
 
     <DialogActions>
-        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="Close">Batal</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mb-2" Style="width: 170px;" OnClick="OnPaymentConfirmed">Bayar</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="ml-5 mx-2 mb-2 py-3" Style="width:100%" OnClick="Close">
+            <MudText>Batal</MudText>
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mr-5 mx-2 mb-2 py-3" Style="width:100%" OnClick="OnPaymentConfirmed">
+            <MudText>Bayar</MudText>
+        </MudButton>
     </DialogActions>
 </MudDialog>
 

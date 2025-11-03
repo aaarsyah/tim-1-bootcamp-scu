@@ -1,7 +1,8 @@
 @page "/details-invoice/{InvoiceId:int}"
+
+@using System.Globalization
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
-@using System.Globalization
 
 @inject NavigationManagerExt Navigation
 
@@ -43,11 +44,11 @@
         <MudText Typo="Typo.subtitle1" Class="mt-4 mb-4 fw-bold"><b> Rincian Invoice</b></MudText>
         <MudItem xs="16" sm="8">
             <MudText Typo="Typo.subtitle1" Class="mb-2"><b>No.Invoice: @Invoice.RefCode</b></MudText>
-            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>Tanggal Beli: @Invoice.CreatedAt.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</b></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-2"><b>Tanggal Beli: @Invoice.CreatedAt.ToString("dd MMMM yyyy", new CultureInfo("id-ID"))</b></MudText>
         </MudItem>
 
         <MudItem Class="d-flex justify-end">
-            <MudText Typo="Typo.subtitle1" Class="mb-4 fw-bold"><b>Total Harga: @($"IDR {Invoice.TotalPrice:N0}")</b></MudText>
+            <MudText Typo="Typo.subtitle1" Class="mb-4 fw-bold"><b>Total Harga: IDR @Invoice.TotalPrice.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
         </MudItem>
 
         <MudTable T="InvoiceDetailDto" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm"
@@ -69,8 +70,8 @@
                 <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd>
                 <MudTd DataLabel="NamaCourse">@item.CourseName</MudTd>
                 <MudTd DataLabel="Kategori">@item.CategoryName</MudTd>
-                <MudTd DataLabel="JadwalKursus">@item.ScheduleDate.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
-                <MudTd DataLabel="Harga">@($"IDR {item.Price:N0}")</MudTd>
+                <MudTd DataLabel="JadwalKursus">@item.ScheduleDate.ToString("D", new CultureInfo("id-ID"))</MudTd>
+                <MudTd DataLabel="Harga">IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</MudTd>
             </RowTemplate>
         </MudTable>
     }

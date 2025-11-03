@@ -29,7 +29,7 @@
                 <MudContainer>
                     <MudText>@Course.CategoryName</MudText>
                     <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
-                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>IDR @Course.Price.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
 
                     <MudSelect Class="mt-2" @bind-Value="_date"
                                Label="Tanggal Kursus"
@@ -56,14 +56,14 @@
                 <MudContainer>
                     <MudText>@Course.CategoryName</MudText>
                     <MudText Typo="Typo.h5"><b>@Course.Name</b></MudText>
-                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>@($"IDR {Course.Price:N0}")</b></MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Primary"><b>IDR @Course.Price.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
 
                     <MudSelect Class="mt-2" @bind-Value="_date"
                                Label="Tanggal Kursus"
                                FitContent="true">
                         @foreach (var d in ScheduleDates)
                         {
-                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
+                            <MudSelectItem Value="d">@d.ToString("D", new CultureInfo("id-ID"))</MudSelectItem>
                         }
                     </MudSelect>
 
@@ -98,7 +98,7 @@
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText>@c.CategoryName</MudText>
                                 <MudText><b>@c.Name</b></MudText>
-                                <MudText Color="Color.Primary"><b>@($"IDR {c.Price:N0}")</b></MudText>
+                                <MudText Color="Color.Primary"><b>IDR @c.Price.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
                             </MudLink>
                         </MudItem>
                     }

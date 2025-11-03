@@ -1,4 +1,6 @@
 ﻿@page "/"
+
+@using System.Globalization
 @using MudBlazor
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
@@ -25,16 +27,16 @@
                          place-items: center;
                          color: white;">
         <MudStack Spacing="2" Align="Center">                 
-        <MudText Class="pt-8" Typo="Typo.h4" Align="Align.Center">
-            Hi Musiker! Gabung yuk di Apel Music
+        <MudText Class="mt-20 ma-4" Typo="Typo.h4" Align="Align.Center">
+                <b>Hi Musiker! Gabung yuk di Apel Music</b>
         </MudText>
-        <MudText Typo="Typo.h6" Class="mt-2 mb-6" Align="Align.Center">
+        <MudText Typo="Typo.h6" Class="ma-4 mb-6" Align="Align.Center">
             Banyak kelas keren yang bisa menunjang bakat bermusik kamu
         </MudText>
         </MudStack>
 
         <!-- Statistik -->
-        <MudGrid Class="d-flex justify-space-evenly">
+        <MudGrid Class="my-4 d-flex justify-space-evenly">
             <MudItem xs="12" sm="6" md="4" >
                 <MudPaper Class="pa-4 py-10 rounded-xl">
                     <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
@@ -110,7 +112,7 @@
             <!-- Pagination Button -->
             @if (CurrentPage < TotalPages)
             {
-                <MudGrid Justify="Justify.Center" Class="mb-3">
+                <MudGrid Justify="Justify.Center" Class="mb-5">
                     <MudButton Variant="Variant.Filled"
                             Color="Color.Primary"
                             Disabled="@isLoadingMore"
@@ -125,7 +127,7 @@
 
 <!-- ====== Pilih Kelas Impian Kamu ====== -->
 <div class="pa-0 ma-n4">
-    <MudContainer MaxWidth="MaxWidth.False" Style="background-color: lightblue;" Class="category-section py-8" DisableGutters="true">
+    <MudContainer MaxWidth="MaxWidth.False" Style="background-color: rgb(165 166 246 / 20%);" Class="category-section py-8" DisableGutters="true">
         <MudStack Spacing="2">
             <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
                 <b>Pilih kelas impian kamu</b>
@@ -275,107 +277,8 @@
     private CourseCard MapCourse(CourseDto c) => new(
         Category: c.CategoryName,
         Title: c.Name,
-        Price: $"IDR {c.Price:N0}",
+        Price: $"IDR {c.Price.ToString("N0", new CultureInfo("id-ID"))}",
         Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
         Id: c.Id
     );
 }
-
-@* @code {
-    private record CourseCard(string Category, string Title, string Price, string Image, int? Id = null); // Tambahkan Id untuk navigasi
-    private record CategoryItem(string Name, string Image, int? Id = null); // Tambahkan Id untuk navigasi
-
-    private IEnumerable<CourseCard>? FeaturedCourses;
-    private IEnumerable<CategoryItem>? Categories;
-    private int CurrentPage = 1;
-    private int ItemsPerPage = 6;
-    private int TotalPages = 1;
-
-    private async Task LoadCoursesAsync(int page = 1)
-    {
-        try
-        {
-            var response = await _httpClient.GetFromJsonAsync<PagedResponse<IEnumerable<CourseDto>>>(
-                $"api/Course/paginated?pageNumber={page}&pageSize={ItemsPerPage}");
-
-            if (response?.Data != null)
-            {
-                FeaturedCourses = response.Data.Select(c => new CourseCard(
-                    Category: c.CategoryName,
-                    Title: c.Name,
-                    Price: $"IDR {c.Price:N0}",
-                    Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
-                    Id: c.Id
-                ));
-
-                CurrentPage = response.PageNumber;
-                TotalPages = response.TotalPages;
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading paginated courses: {ex.Message}");
-        }
-    }
-
-    private async Task ChangePage(int page)
-    {
-        if (page >= 1 && page <= TotalPages)
-        {
-            CurrentPage = page;
-            await LoadCoursesAsync(page);
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadCoursesAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!firstRender)
-        {
-            return; //Jangan update lagi setelah render pertama
-        }
-        await LoadHome();
-        StateHasChanged(); // Panggil function ini untuk mengupdate tampilan dengan data baru
-    }
-
-    private async Task LoadHome()
-    {
-        try
-        {
-            // Ambil courses
-            var result = await CourseService.GetAllCourseAsync();
-            if (result != null)
-            {
-                FeaturedCourses = result
-                    .Where(c => c.IsActive)
-                    .Select(c => new CourseCard(
-                        Category: c.CategoryName,
-                        Title: c.Name,
-                        Price: $"IDR {c.Price:N0}",
-                        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
-                        Id: c.Id
-                    ));
-            }
-            // Ambil categories
-            var result2 = await CourseService.GetAllCategoriesAsync();
-            if (result2 != null)
-            {
-                Categories = result2
-                    .Where(c => c.IsActive)
-                    .Select(c => new CategoryItem(
-                        Name: c.Name,
-                        Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-category.svg" : c.ImageUrl,
-                        Id: c.Id
-                    ));
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading data: {ex.Message}");
-        }
-    }
-} *@
