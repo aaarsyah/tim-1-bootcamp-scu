@@ -1,0 +1,1 @@
+oRYD:\BootcampProject\default-project-main\src\05.Infrastructure\MyApp.Infrastructure.csproj¢net9.0òCSharp13

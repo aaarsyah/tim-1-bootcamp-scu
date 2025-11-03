@@ -1,0 +1,11 @@
+l
+aD:\BootcampProject\default-project-main\src\01.Base\obj\Release\net9.0\MyApp.Base.AssemblyInfo.csutf-8€
+uD:\BootcampProject\default-project-main\src\01.Base\obj\Release\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.csutf-8n
+cD:\BootcampProject\default-project-main\src\01.Base\obj\Release\net9.0\MyApp.Base.GlobalUsings.g.csutf-8^
+UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\ValidationException.csutf-8^
+UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\PermissionException.csutf-8\
+SD:\BootcampProject\default-project-main\src\01.Base\Exceptions\NotFoundException.csutf-8[
+RD:\BootcampProject\default-project-main\src\01.Base\Exceptions\BaseApiException.csutf-8b
+YD:\BootcampProject\default-project-main\src\01.Base\Exceptions\AuthenticationException.csutf-8F
+=D:\BootcampProject\default-project-main\src\01.Base\Entity.csutf-8F
+=D:\BootcampProject\default-project-main\src\01.Base\Class1.csutf-8

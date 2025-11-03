@@ -1,0 +1,1 @@
+_RID:\BootcampProject\default-project-main\src\03.Shared\MyApp.Shared.csproj¢net9.0òCSharp13

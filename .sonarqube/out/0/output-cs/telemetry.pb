@@ -1,0 +1,1 @@
+[RED:\BootcampProject\default-project-main\src\01.Base\MyApp.Base.csproj¢net9.0òCSharp13

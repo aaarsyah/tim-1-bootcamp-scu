@@ -1,0 +1,15 @@
+p
+eD:\BootcampProject\default-project-main\src\03.Shared\obj\Release\net9.0\MyApp.Shared.AssemblyInfo.csutf-8‚
+wD:\BootcampProject\default-project-main\src\03.Shared\obj\Release\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.csutf-8r
+gD:\BootcampProject\default-project-main\src\03.Shared\obj\Release\net9.0\MyApp.Shared.GlobalUsings.g.csutf-8O
+FD:\BootcampProject\default-project-main\src\03.Shared\ErrorResponse.csutf-8R
+ID:\BootcampProject\default-project-main\src\03.Shared\DTOs\ScheduleDto.csutf-8Q
+HD:\BootcampProject\default-project-main\src\03.Shared\DTOs\PaymentDto.csutf-8Q
+HD:\BootcampProject\default-project-main\src\03.Shared\DTOs\MyClassDto.csutf-8Q
+HD:\BootcampProject\default-project-main\src\03.Shared\DTOs\InvoiceDto.csutf-8W
+ND:\BootcampProject\default-project-main\src\03.Shared\DTOs\InvoiceDetailDto.csutf-8P
+GD:\BootcampProject\default-project-main\src\03.Shared\DTOs\CourseDto.csutf-8R
+ID:\BootcampProject\default-project-main\src\03.Shared\DTOs\CheckoutDto.csutf-8R
+ID:\BootcampProject\default-project-main\src\03.Shared\DTOs\CategoryDto.csutf-8Y
+PD:\BootcampProject\default-project-main\src\03.Shared\DTOs\AuthenticationDTOs.csutf-8M
+DD:\BootcampProject\default-project-main\src\03.Shared\ApiResponse.csutf-8

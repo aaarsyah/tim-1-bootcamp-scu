@@ -1,0 +1,1 @@
+_RID:\BootcampProject\default-project-main\src\07.Client\MyApp.Client.csproj¢net9.0òCSharp13

@@ -1,0 +1,5 @@
+﻿D:\BootcampProject\default-project-main\src\05.Infrastructure\Class1.cs
+D:\BootcampProject\default-project-main\src\05.Infrastructure\Data\AppleMusicDbContext.cs
+D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\20251028065650_InitialCreate.cs
+D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\20251028065650_InitialCreate.Designer.cs
+D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\AppleMusicDbContextModelSnapshot.cs

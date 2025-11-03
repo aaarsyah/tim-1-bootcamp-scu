@@ -14,5 +14,7 @@ obj/
 
 # jangan masukkan logs ke repositori
 logs/
-/default-project-main/src/06.WebAPI/logs/app-20251016.log
-/default-project-main/src/06.WebAPI/logs/app-20251016.log
+
+# folder untuk hasil dari dotnet test tidak perlu dimasukkan
+TestResults/
+
