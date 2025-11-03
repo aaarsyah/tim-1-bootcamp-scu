@@ -1,5 +1,6 @@
 @page "/dashboard"
 
+@using System.Globalization
 @using System.Net.Http.Json
 @using MyApp.Domain.Models
 @using MyApp.BlazorUI.Services
@@ -83,9 +84,9 @@
     <RowTemplate>
         <MudTd DataLabel="Email">@context.Email</MudTd>
         <MudTd DataLabel="NoInvoice">@context.RefCode</MudTd>
-        <MudTd DataLabel="Date">@context.CreatedAt.ToString("yyyy-MM-dd")</MudTd>
+        <MudTd DataLabel="Date">@context.CreatedAt.ToString("yyyy-MM-dd", new CultureInfo("id-ID"))</MudTd>
         <MudTd DataLabel="TotalCourse">@context.TotalCourse</MudTd>
-        <MudTd DataLabel="TotalPrice">@context.TotalPrice.ToString("C")</MudTd>
+        <MudTd DataLabel="TotalPrice">@context.TotalPrice.ToString("C0", new CultureInfo("id-ID"))</MudTd>
         <MudTd DataLabel="Action">
             <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
                        OnClick="() => Navigation.GoToDetailsInvoiceAdmin(context.Id)">
