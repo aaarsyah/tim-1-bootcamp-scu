@@ -192,8 +192,9 @@
     {
         PaletteLight = new PaletteLight()
         {
+            
             Primary = "#5D5FEF",
-            Black = "#110e2d",
+            TextPrimary = "#333333",
             AppbarText = "#424242",
             AppbarBackground = "#F2C94C",
             DrawerBackground = "#F8D24B",
@@ -207,10 +208,61 @@
         },
         Typography = new Typography()
         {
+            H1 = new H1Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "600",
+                FontSize = "32px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            H2 = new H2Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "600",
+                FontSize = "24px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            H3 = new H3Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "600",
+                FontSize = "18px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            H4 = new H4Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "600",
+                FontSize = "16px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
             Default = new DefaultTypography()
             {
                 FontFamily = new[] {"Poppins"},
-                FontWeight = "500"
+                FontWeight = "400",
+                FontSize = "16px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            Body1 = new Body1Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "400",
+                FontSize = "16px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            Button = new ButtonTypography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "500",
+                FontSize = "15px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
             }
         }
     };

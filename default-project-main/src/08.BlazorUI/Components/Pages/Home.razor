@@ -27,22 +27,22 @@
                          place-items: center;
                          color: white;">
         <MudStack Spacing="2" Align="Center">                 
-        <MudText Class="mt-20 ma-4" Typo="Typo.h4" Align="Align.Center">
-                <b>Hi Musiker! Gabung yuk di Apel Music</b>
-        </MudText>
-        <MudText Typo="Typo.h6" Class="ma-4 mb-6" Align="Align.Center">
-            Banyak kelas keren yang bisa menunjang bakat bermusik kamu
-        </MudText>
+            <MudText Class="mt-20 ma-4" Typo="Typo.h1" Align="Align.Center">
+                Hi Musiker! Gabung yuk di Apel Music
+            </MudText>
+            <MudText Class="ma-4 mb-6" Typo="Typo.h2" Align="Align.Center" Style="font-weight: 400">
+                Banyak kelas keren yang bisa menunjang bakat bermusik kamu
+            </MudText>
         </MudStack>
 
         <!-- Statistik -->
         <MudGrid Class="my-4 d-flex justify-space-evenly">
             <MudItem xs="12" sm="6" md="4" >
                 <MudPaper Class="pa-4 py-10 rounded-xl">
-                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
-                        <b>500+</b>
+                    <MudText Typo="Typo.h1" Color="Color.Primary" Align="Align.Center" Style="font-size: 48px">
+                        500+
                     </MudText>
-                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                    <MudText Typo="Typo.h4" Class="mt-4" Align="Align.Center">
                         Lebih dari sekedar kelas biasa yang bisa mengeluarkan bakat kalian
                     </MudText>
                 </MudPaper>
@@ -50,10 +50,10 @@
 
             <MudItem xs="12" sm="6" md="4">
                 <MudPaper Class="pa-4 py-10 rounded-xl">
-                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
-                        <b>50+</b>
+                    <MudText Typo="Typo.h1" Color="Color.Primary" Align="Align.Center" Style="font-size: 48px">
+                        50+
                     </MudText>
-                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                    <MudText Typo="Typo.h4" Class="mt-4" Align="Align.Center">
                         Lulusan yang menjadi musisi ternama dengan skill memukau
                     </MudText>
                 </MudPaper>
@@ -61,10 +61,10 @@
 
             <MudItem xs="12" sm="6" md="4">
                 <MudPaper Class="pa-4 py-10 rounded-xl">
-                    <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
-                        <b>10+</b>
+                    <MudText Typo="Typo.h1" Color="Color.Primary" Align="Align.Center" Style="font-size: 48px">
+                        10+
                     </MudText>
-                    <MudText Typo="Typo.body1" Class="mt-4" Align="Align.Center">
+                    <MudText Typo="Typo.h4" Class="mt-4" Align="Align.Center">
                         Coach Special kolaborasi dengan 
                         <br /> musisi terkenal
                     </MudText>
@@ -77,8 +77,8 @@
 <!-- ====== Explore Kelas Favorit ====== -->
 <MudContainer MaxWidth="MaxWidth.Large" Class="py-5">
     <MudStack Spacing="4">
-        <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
-            <b>Explore kelas favorit</b>
+        <MudText Class="mt-16" Typo="Typo.h2" Align="Align.Center" Style="font-family: Inter" Color="Color.Primary">
+            Explore kelas favorit
         </MudText>
 
         <MudGrid Class="mb-20 mt-4 gap-10 d-flex justify-space-evenly">
@@ -97,10 +97,10 @@
                                 <MudImage Src="@course.Image"
                                         Class="w-100 mb-2"
                                         Alt="@course.Title" />
-                                <MudText Class="category color-gray-3">@course.Category</MudText>
-                                <MudText Class="name color-gray-1"><b>@course.Title</b></MudText>
-                                <MudText Class="name color-iris pt-10" Color="Color.Primary">
-                                    <b>@course.Price</b>
+                                <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@course.Category</MudText>
+                                <MudText Typo="Typo.h3">@course.Title</MudText>
+                                <MudText Class="pt-10" Typo="Typo.h3" Color="Color.Primary">
+                                    @course.Price
                                 </MudText>
                             </MudLink>
                         </MudPaper>
@@ -129,10 +129,9 @@
 <div class="pa-0 ma-n4">
     <MudContainer MaxWidth="MaxWidth.False" Style="background-color: rgb(165 166 246 / 20%);" Class="category-section py-8" DisableGutters="true">
         <MudStack Spacing="2">
-            <MudText Typo="Typo.h5" Align="Align.Center" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
-                <b>Pilih kelas impian kamu</b>
+            <MudText Class="mt-16" Typo="Typo.h2" Align="Align.Center" Style="font-family: Inter" Color="Color.Primary">
+                Pilih kelas impian kamu
             </MudText>
-
             <MudGrid Spacing="3" Class="mt-4 mb-20">
                 @if (Categories is null)
                 {
@@ -148,7 +147,7 @@
                                 <MudImage Class="w-100 mb-2"
                                           Src="@category.Image"
                                           Alt="@category.Name" />
-                                <MudText Align="Align.Center" Typo="Typo.body2"><b>@category.Name</b></MudText>
+                                <MudText Class="ma-4 mb-6" Typo="Typo.h2" Align="Align.Center" Style="font-weight: 400">@category.Name</MudText>
                             </MudLink>    
                         </MudItem>
                     }
@@ -169,11 +168,11 @@
                 </MudItem>
                 <MudItem xs="12" md="7">
                     <MudStack Spacing="2">
-                        <MudText Typo="Typo.h5" Class="subtitle mt-16 font-semibold text-balance" Color="Color.Primary">
-                        <b>Benefit ikut Apel Course</b>
+                        <MudText Class="mt-16" Typo="Typo.h2" Color="Color.Primary">
+                            Benefit ikut Apel Course
                         </MudText>
                         <br/>
-                        <MudText Class="category color-gray-1">
+                        <MudText>
                             Dengan mengikuti AppleMusic Course, peserta akan mendapatkan berbagai keuntungan, antara lain:  
                             <ul>
                                 <li>Akses ke materi musik interaktif dari instruktur profesional.</li>

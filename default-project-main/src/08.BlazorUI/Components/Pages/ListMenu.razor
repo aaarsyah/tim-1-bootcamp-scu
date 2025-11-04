@@ -19,18 +19,16 @@
 <MudContainer>
     @if (CategoryName != null)
     {
-        <MudText Class="mt-8" Typo="Typo.h5">
-            <b>@CategoryName</b>
-        </MudText>
-        <MudText Class="desc mt-8">@CategoryDescription</MudText>
+        <MudText Class="mt-8" Typo="Typo.h2">@CategoryName</MudText>
+        <MudText Class="mt-8">@CategoryDescription</MudText>
     }
     else if (IsCategoryLoading)
     {
         <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
     }
-
-    <MudText Class="subtitle mt-16" Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">
-        <b>Kelas yang tersedia</b>
+    
+    <MudText Class="mt-16" Typo="Typo.h2" Align="Align.Center" Style="font-family: Inter" Color="Color.Primary">
+        Kelas yang tersedia
     </MudText>
 
     <MudGrid Class="mb-20 mt-4 gap-10 gap-x-20 d-flex justify-start">
@@ -41,9 +39,9 @@
                 <MudItem xs="12" sm="6" md="4" lg="3">
                     <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id))" Color="Color.Default">
                         <MudImage Src="@(!string.IsNullOrEmpty(course.ImageUrl) ? course.ImageUrl : "img/default-course.svg")" Class="w-100 mb-2" />
-                        <MudText Class="category color-gray-3">@course.CategoryName</MudText>
-                        <MudText Class="name color-gray-1"><b>@course.Name</b></MudText>
-                        <MudText Class="name color-iris pt-10" Color="Color.Primary"><b>IDR @course.Price.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
+                        <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@course.CategoryName</MudText>
+                        <MudText Typo="Typo.h3">@course.Name</MudText>
+                        <MudText Class="pt-10" Typo="Typo.h3" Color="Color.Primary">IDR @course.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
                     </MudLink>
                 </MudItem>
             }

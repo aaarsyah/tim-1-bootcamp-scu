@@ -40,9 +40,7 @@
                 <MudCheckBox @bind-Value="item.Selected" Size="Size.Small" Color="Color.Primary" />
                 <MudImage Src="@item.Image" Style="width:100px; height:100px; object-fit:contain;" /> 
                 <MudContainer>
-                    <MudText Style="color: #828282">
-                    @item.Category
-                    </MudText>
+                    <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@item.Category</MudText>
                     <MudText Style="color: #333333"><b>@item.Name</b></MudText>
                     <MudText Style="color: #4F4F4F">
                         Jadwal : @item.ScheduleDates.ToString("D", new CultureInfo("id-ID"))
