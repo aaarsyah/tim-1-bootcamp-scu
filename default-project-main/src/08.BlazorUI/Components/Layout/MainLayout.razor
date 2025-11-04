@@ -12,7 +12,7 @@
 @inject IUserService UserService
 @inject IAuthService AuthService
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode" />
+<MudThemeProvider Theme="@MyCustomTheme" IsDarkMode="_isDarkMode" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -190,6 +190,21 @@
     [Inject] private NavigationManager NavManager { get; set; } = default!;
     MudTheme MyCustomTheme = new MudTheme()
     {
+        PaletteLight = new PaletteLight()
+        {
+            Primary = "#5D5FEF",
+            Black = "#110e2d",
+            AppbarText = "#424242",
+            AppbarBackground = "#F2C94C",
+            DrawerBackground = "#F8D24B",
+            GrayLight = "#e8e8e8",
+            GrayLighter = "#f9f9f9",
+
+        },
+        LayoutProperties = new LayoutProperties()
+        {
+            DefaultBorderRadius = "10px",
+        },
         Typography = new Typography()
         {
             Default = new DefaultTypography()
@@ -268,14 +283,6 @@
             StateHasChanged(); // Refresh tampilan saat route berubah
         };
 
-        _theme = new()
-        {
-            PaletteLight = _lightPalette,
-            LayoutProperties = new LayoutProperties()
-            {
-                DefaultBorderRadius = "10px",
-            }
-        };
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -317,16 +324,4 @@
     {
         _drawerOpen = !_drawerOpen;
     }
-
-    private readonly PaletteLight _lightPalette = new()
-    {
-        Primary = "#5D5FEF",
-        Black = "#110e2d",
-        AppbarText = "#424242",
-        AppbarBackground = "#F2C94C",
-        DrawerBackground = "#F8D24B",
-        GrayLight = "#e8e8e8",
-        GrayLighter = "#f9f9f9",
-
-    };
 }
