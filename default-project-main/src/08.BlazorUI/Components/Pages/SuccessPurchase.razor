@@ -7,22 +7,22 @@
 @inject NavigationManagerExt Navigation;
 
 <PageTitle> Success Purchase</PageTitle>
-
+@*<MudText Class="mt-16" Typo="Typo.h2" Color="Color.Primary" Align="Align.Center" Style="font-weight: 600">*@
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex flex-column align-center mt-8">
     <MudImage Src="img/animasiconfirmsuccess.svg" Alt="Email Confirmation Animation" Width="250" Height="250"/>
-    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-2">Pembelian Berhasil</MudText>
-    <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-4">Yey! Kamu telah berhasil membeli kursus di Apel Music</MudText>
+    <MudText Class="mb-2" Typo="Typo.h2" Align="Align.Center" Style="font-weight: 500">Pembelian Berhasil</MudText>
+    <MudText Class="mb-4" Typo="Typo.body1" Align="Align.Center">Yey! Kamu telah berhasil membeli kursus di Apel Music</MudText>
 
-    <!--Button Ke Beranda -->
     <MudStack Direction="Row" Spacing="5" Row="true" class="mt-4">
-    <MudButton OnClick="Navigation.GoToHome" StartIcon="@Icons.Material.Filled.Home" Variant="Variant.Outlined" Color="Color.Primary" Style="width: 170px; height: 55px; border-radius: 8px">
-            Ke Beranda
-    </MudButton>
+        <!--Button Ke Beranda -->
+        <MudButton OnClick="Navigation.GoToHome" StartIcon="@Icons.Material.Filled.Home" Variant="Variant.Outlined" Color="Color.Primary" Style="width: 170px; height: 55px; border-radius: 8px">
+            <MudText Typo="Typo.h4" Style="font-weight: 600; font-size: 15px">Ke Beranda</MudText>
+        </MudButton>
    
-    <!--Button Buka Invoice -->
-     <MudButton OnClick="Navigation.GoToInvoice" StartIcon="@Icons.Material.Filled.ArrowForward" Variant="Variant.Filled" Color="Color.Primary" Style="width: 170px; height: 55px; border-radius: 8px">
-            Buka Invoice
-    </MudButton>
+        <!--Button Buka Invoice -->
+        <MudButton OnClick="Navigation.GoToInvoice" StartIcon="@Icons.Material.Filled.ArrowForward" Variant="Variant.Filled" Color="Color.Primary" Style="width: 170px; height: 55px; border-radius: 8px">
+            <MudText Typo="Typo.h4" Style="font-weight: 600; font-size: 15px">Buka Invoice</MudText>
+        </MudButton>
     </MudStack>
     
 </MudContainer>

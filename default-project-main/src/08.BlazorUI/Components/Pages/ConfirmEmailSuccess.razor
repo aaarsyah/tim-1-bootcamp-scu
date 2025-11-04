@@ -15,9 +15,11 @@
 
 <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex flex-column align-center mt-8">
     <MudImage Src="img/animasiconfirmsuccess.svg" Alt="Email Confirmation Animation" Width="250" Height="250"/>
-    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-2">Konfirmasi Email Berhasil</MudText>
-    <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-4">Silahkan Login terlebih dahulu untuk masuk ke aplikasi</MudText>
-    <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Style="width: 176px; height: 55px; border-radius: 6px">Masuk Sekarang</MudButton>
+    <MudText Class="mb-2" Typo="Typo.h2" Align="Align.Center" Style="font-weight: 500">Konfirmasi Email Berhasil</MudText>
+    <MudText Class="mb-4" Typo="Typo.body1" Align="Align.Center">Silahkan Login terlebih dahulu untuk masuk ke aplikasi</MudText>
+    <MudButton OnClick="Navigation.GoToLogin" Variant="Variant.Filled" Color="Color.Primary" Style="width: 176px; height: 55px; border-radius: 6px">
+        <MudText Typo="Typo.h4" Style="font-weight: 600; font-size: 15px">Masuk Sekarang</MudText>
+    </MudButton>
 </MudContainer>
 
 @code {

@@ -14,13 +14,12 @@
 <PageTitle>Login</PageTitle>
 
 <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
-
-    <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
-    <MudText Typo="Typo.subtitle1" Class="mb-4">Login Dulu Yuk!</MudText>
-
+    <MudText Class="mb-4" Typo="Typo.h2" Style="font-weight: 400">Selamat Datang Musikers!</MudText>
+    <MudText Class="mb-4" Typo="Typo.body1">Login dulu yuk</MudText>
+    
     <MudForm @ref="_form">
         <MudTextField @bind-Value="_loginModel.Email"
-                      Label="Masukkan Email"
+                      Label="Email"
                       Variant="Variant.Outlined"
                       Required="true"
                       RequiredError="Email Harus diisi!"
@@ -28,7 +27,7 @@
 
 
         <MudTextField @bind-Value="_loginModel.Password"
-                      Label="Masukkan Password"
+                      Label="Password"
                       Variant="Variant.Outlined"
                       InputType="@_passwordInputType"
                       Required="true"
@@ -38,38 +37,37 @@
                       OnAdornmentClick="TogglePasswordVisibility"
                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" />
 
-            <MudCheckBox @bind-Value="_loginModel.RememberMe" Label="Remember Me" Color="Color.Primary" Class="mb-4" />          
+        <MudCheckBox @bind-Value="_loginModel.RememberMe" Label="Remember Me" Color="Color.Primary" Class="mb-4" />          
 
-            @if (_isLoading)
-            {
-                <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
-            }
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mb-4" />
+        }
 
-            @if (!string.IsNullOrEmpty(_errorMessage))
-            {
-                <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
-            }
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+        }
 
+        <!-- Forgot password link -->
+        <div class="d-flex justify-end mb-4">
+            <MudText Typo="Typo.body2">
+                <MudLink OnClick="Navigation.GoToForgotPass" Color="Color.Primary">Lupa kata sandi</MudLink>
+            </MudText>
+        </div>
 
-    <!-- Forgot password link -->
-    <div class="d-flex justify-end mb-4">
-        <MudText Typo="Typo.body2">
-            <MudLink OnClick="Navigation.GoToForgotPass" Color="Color.Primary">Lupa kata sandi</MudLink>
-        </MudText>
-    </div>
+        <!-- Login button -->
+        <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
+            <MudText Typo="Typo.h4" Style="font-weight: 500; font-size: 15px">Masuk</MudText>
+        </MudButton>
 
-    <!-- Login button -->
-    <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Style="width: 140px; height: 43px; border-radius: 8px">
-            Masuk
-    </MudButton>
-
-    <!-- Register link -->
-    <div class="mt-2">
-        <MudText Typo="Typo.body2">
-            Belum punya akun? 
-            <MudLink OnClick="Navigation.GoToRegister" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
-        </MudText>
-    </div>
+        <!-- Register link -->
+        <div class="mt-2">
+            <MudText Typo="Typo.body1">
+                Belum punya akun? 
+                <MudLink OnClick="Navigation.GoToRegister" Color="Color.Primary" Class="ml-1">Daftar disini</MudLink>
+            </MudText>
+        </div>
     </MudForm>
 </MudPaper>
 

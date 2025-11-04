@@ -48,7 +48,7 @@
 
     private async Task AddRole()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -69,7 +69,7 @@
     }
     private async Task RemoveRole()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -90,7 +90,7 @@
     }
     private async Task Deactivate()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -107,7 +107,7 @@
     }
     private async Task Reactivate()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

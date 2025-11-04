@@ -28,7 +28,7 @@
                 <MudLink OnClick="Navigation.GoToDashboard" Color="Color.Default">
                     <MudImage Class="mt-2" Src="img/applogo.svg" Alt="App Logo" />
                 </MudLink>
-                <MudText Typo="Typo.h5" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
+                <MudText Typo="Typo.h2" Class="ml-3" Style="color:#110e2d">Dashboard Admin</MudText>
             </MudAppBar>
         }
 
@@ -49,10 +49,10 @@
                 <MudSpacer />
                 <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" OnClick="Navigation.GoToCheckout"></MudIconButton>
                 <MudButton Variant="Variant.Text" OnClick="Navigation.GoToKelasKu" Class="mx-2">
-                    <MudText>Kelasku</MudText>
+                    <MudText Style="font-weight: 500">Kelasku</MudText>
                 </MudButton>
                 <MudButton Variant="Variant.Text" OnClick="Navigation.GoToInvoice" Class="mx-2">
-                    <MudText>Pembelian</MudText>
+                    <MudText Style="font-weight: 500">Pembelian</MudText>
                 </MudButton>
                 <MudText Class="mx-2">|</MudText>
                 <div class="d-flex">
@@ -60,16 +60,13 @@
                     <MudPopover Open="@popoverOpen" Fixed="true" Class="" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopLeft">
                         <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-4 mb-4">
                             <MudStack Spacing="4" AlignItems="AlignItems.Center">
-                                <MudIcon Icon="@Icons.Material.Filled.Person" Style="font-size: 4rem;"></MudIcon>
-                                <MudText Typo="Typo.h5" Align="Align.Center"><b>@_user.Name</b></MudText>
-                                <MudText Typo="Typo.body2" Align="Align.Center">@_user.Email</MudText>
+                                <MudIcon Icon="@Icons.Material.Filled.Person" Style="font-size: 72px;"></MudIcon>
+                                <MudText Typo="Typo.h2" Align="Align.Center"><b>@_user.Name</b></MudText>
+                                <MudText Typo="Typo.body1" Align="Align.Center">@_user.Email</MudText>
                             </MudStack>
                         </MudContainer>
                     </MudPopover>
                 </div>
-                
-
-                
                 <MudIconButton Icon="@Icons.Material.Filled.Logout" OnClick="HandleLogout"></MudIconButton>
             </MudAppBar>
         }
@@ -84,10 +81,10 @@
                 </MudLink>
                 <MudSpacer />
                 <MudButton Variant="Variant.Text" OnClick="Navigation.GoToRegister" Class="mx-2">
-                    <MudText>Daftar Sekarang</MudText>
+                    <MudText Style="font-weight: 500">Daftar Sekarang</MudText>
                 </MudButton>
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Navigation.GoToLogin">
-                    <MudText>Masuk</MudText>
+                    <MudText Style="font-weight: 500">Masuk</MudText>
                 </MudButton>
             </MudAppBar>
         }
@@ -103,45 +100,47 @@
                 <MudGrid Class="d-flex justify-space-evenly">
                     <!-- Kolom Tentang -->
                     <MudItem xs="12" sm="6" md="4">
-                        <MudText Typo="Typo.h6" Class="mb-2"><b>Tentang</b></MudText>
+                        <MudText Class="mb-2" Typo="Typo.h4" Style="font-weight: 500">Tentang</MudText>
                         <MudText Typo="Typo.body2">
                             AppleMusic Course Web adalah platform interaktif yang dirancang untuk mempermudah pengguna belajar musik secara online. 
                             Dengan berbagai kursus instrumen, teknik vokal, dan teori musik, pengguna dapat mengakses materi berkualitas tinggi kapan saja 
                             dan di mana saja, serta belajar dari instruktur profesional di bidangnya.
                         </MudText>
                     </MudItem>
-
+                    
                     <!-- Kolom Produk -->
                     <MudItem xs="12" sm="6" md="4">
-                        <MudText Typo="Typo.h6" Class="mb-2"><b>Produk</b></MudText>
-                        <MudStack Row="true" Spacing="1">
-                            <ul class="ml-4" style="columns: 2; column-gap: 20px;">
-                                <li>Biola</li>
-                                <li>Gitar</li>
-                                <li>Drum</li>
-                                <li>Menyanyi</li>
-                                <li>Piano</li>
-                                <li>Saxophone</li>
-                            </ul>
-                        </MudStack>
+                        <MudText Class="mb-2" Typo="Typo.h4" Style="font-weight: 500">Produk</MudText>
+                        <MudText Typo="Typo.body2">
+                            <MudStack Row="true" Spacing="1">
+                                <ul class="ml-4" style="columns: 2; column-gap: 20px;">
+                                    <li>Biola</li>
+                                    <li>Gitar</li>
+                                    <li>Drum</li>
+                                    <li>Menyanyi</li>
+                                    <li>Piano</li>
+                                    <li>Saxophone</li>
+                                </ul>
+                            </MudStack>
+                        </MudText>
                     </MudItem>
 
-                <!-- Kolom Alamat -->
-                <MudItem xs="12" sm="12" md="4">
-                    <MudText Typo="Typo.h6" Class="mb-2"><b>Alamat</b></MudText>
-                    <MudText Typo="Typo.body2" Class="mb-2">
-                        Jakarta, Indonesia 10110.
-                    </MudText>
+                    <!-- Kolom Alamat -->
+                    <MudItem xs="12" sm="12" md="4">
+                        <MudText Class="mb-2" Typo="Typo.h4" Style="font-weight: 500">Alamat</MudText>
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            Jakarta, Indonesia 10110.
+                        </MudText>
                     
-                    <!-- Kolom Kontak -->
-                    <MudText Typo="Typo.h6"><b>Kontak</b></MudText>
-                    <MudStack Row="true" Spacing="2">
-                        <!-- Phone -->
-                        <MudLink Href="tel:+62">
-                            <MudIconButton>
-                            <img src="img/icon-telephone.svg" alt="Phone" />
-                            </MudIconButton>
-                        </MudLink>
+                        <!-- Kolom Kontak -->
+                        <MudText Class="mb-2" Typo="Typo.h4" Style="font-weight: 500">Kontak</MudText>
+                        <MudStack Row="true" Spacing="2">
+                            <!-- Phone -->
+                            <MudLink Href="tel:+62">
+                                <MudIconButton>
+                                    <img src="img/icon-telephone.svg" alt="Phone" />
+                                </MudIconButton>
+                            </MudLink>
 
                             <!-- Instagram -->
                             <MudLink Href="https://www.instagram.com/" Target="_blank">
@@ -242,7 +241,7 @@
             },
             Default = new DefaultTypography()
             {
-                FontFamily = new[] {"Poppins"},
+                FontFamily = new[] { "Poppins" },
                 FontWeight = "400",
                 FontSize = "16px",
                 LineHeight = "150%",
@@ -253,6 +252,14 @@
                 FontFamily = new[] { "Poppins" },
                 FontWeight = "400",
                 FontSize = "16px",
+                LineHeight = "150%",
+                LetterSpacing = "0%"
+            },
+            Body2 = new Body2Typography()
+            {
+                FontFamily = new[] { "Poppins" },
+                FontWeight = "400",
+                FontSize = "14px",
                 LineHeight = "150%",
                 LetterSpacing = "0%"
             },
@@ -284,7 +291,7 @@
     {
         try
         {
-            var auth = await AuthService.GetAccessTokenAsync();
+            var auth = await AuthService.GetAuthAsync();
             await AuthService.LogoutAsync(auth); // TODO: Apa yang terjadi bila token invalid dan user mencoba logout?
         }
         catch (Exception ex)
@@ -305,7 +312,7 @@
         popoverOpen = !popoverOpen;
         if (popoverOpen)
         {
-            var auth = await AuthService.GetAccessTokenAsync();
+            var auth = await AuthService.GetAuthAsync();
             if (auth == null)
             {
                 Navigation.GoToLogin(); // User belum login, arahkan user ke login page

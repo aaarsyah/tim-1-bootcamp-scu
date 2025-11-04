@@ -19,7 +19,7 @@
     }
     else if (_itemList.Count == 0)
     {
-        <MudText Class="mt-10" Typo="Typo.h6" Align="Align.Center">
+        <MudText Class="mt-10" Typo="Typo.h2" Align="Align.Center">
             Belum ada kelas yang kamu ikuti.
         </MudText>
     }
@@ -39,9 +39,9 @@
                 <MudItem xs="12" sm="8" md="9" lg="10">
                     <MudStack Spacing="1" Class="ml-lg-10 mt-lg-5">
                         <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@item.CategoryName</MudText>
-                        <MudText Style="color: #333333; font-weight: 600;">@item.CourseName</MudText>
-                        <MudText Color="Color.Primary" Style="font-size: 0.9rem;">
-                            Jadwal: @item.Date.ToString("d MMMM yyyy", new CultureInfo("id-ID"))
+                        <MudText Typo="Typo.h2">@item.CourseName</MudText>
+                        <MudText Typo="Typo.h3" Color="Color.Primary" Style="font-size: 20px">
+                            Jadwal : @item.Date.ToString("D", new CultureInfo("id-ID"))
                         </MudText>
                     </MudStack>
                 </MudItem>
@@ -60,7 +60,7 @@
         {
             return;
         }
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

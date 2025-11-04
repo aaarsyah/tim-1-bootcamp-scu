@@ -15,7 +15,7 @@
 
 <PageTitle>Dashboard Admin</PageTitle>
 
-<MudText Typo="Typo.h5" Class="mt-4 mb-4">Welcome, Admin!</MudText>
+<MudText Typo="Typo.h2" Class="mt-4 mb-4">Welcome, Admin!</MudText>
 
 <!-- Statistics Cards -->
 <MudGrid Class="mb-6">
@@ -65,7 +65,7 @@
 <!-- Invoice Table -->
 <MudTable Items="@invoices" Hover="true" Filter="new Func<InvoiceDto,bool>(FilterFunc)" @bind-SelectedItem="selectedInvoice">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Invoices</MudText>
+        <MudText Typo="Typo.h2">Invoices</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search Invoice"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
@@ -117,7 +117,7 @@
 
     private async Task LoadDashboardData()
     {
-        var token = await AuthService.GetAccessTokenAsync();
+        var token = await AuthService.GetAuthAsync();
         if (token == null)
         {
             Navigation.GoToLogin();

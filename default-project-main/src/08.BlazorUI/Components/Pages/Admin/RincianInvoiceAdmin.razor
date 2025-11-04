@@ -84,7 +84,7 @@
         {
             return;
         }
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

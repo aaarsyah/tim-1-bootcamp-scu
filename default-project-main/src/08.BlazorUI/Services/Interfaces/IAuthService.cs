@@ -15,5 +15,5 @@ public interface IAuthService
     Task LogoutAsync(AuthenticationHeaderValue authorization);
     Task<bool> IsLoggedInAsync();
     Task<bool> IsAdminAsync();
-    Task<AuthenticationHeaderValue?> GetAccessTokenAsync();
+    Task<AuthenticationHeaderValue?> GetAuthAsync();
 }

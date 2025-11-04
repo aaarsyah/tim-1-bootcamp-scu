@@ -13,8 +13,8 @@
 
 <MudPaper Class="pa-0 mx-auto mt-12" MaxWidth="800px" Elevation="0">
     <MudForm @ref="_form">
-    <MudText Typo="Typo.h5" Class="mb-4">Selamat Datang Musikers!</MudText>
-    <MudText Typo="Typo.subtitle1" Class="mb-4">Yuk daftar terlebih dahulu akun kamu</MudText>
+        <MudText Class="mb-4" Typo="Typo.h2" Style="font-weight: 400">Selamat Datang Musikers!</MudText>
+        <MudText Class="mb-4" Typo="Typo.body1">Yuk daftar terlebih dahulu akun kamu</MudText>
         <MudTextField T="string"
                       Label="Nama Lengkap"
                       Variant="Variant.Outlined"
@@ -75,17 +75,17 @@
 
         <!-- Register button -->
         <MudStack Direction="Row" Spacing="5" Row="true">
-        <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
-            Daftar
-        </MudButton>
+            <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
+                <MudText Typo="Typo.h4" Style="font-weight: 500; font-size: 15px">Daftar</MudText>
+            </MudButton>
                     
-        <!-- Login Link -->
-        <div Class="d-flex align-center mt-4">
-            <MudText Typo="Typo.body2" Class="d-flex align-center">
-                Sudah punya akun? 
-                <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1" >Login disini</MudLink>
-            </MudText>
-        </div>
+            <!-- Login Link -->
+            <div Class="d-flex align-center mt-4">
+                <MudText Typo="Typo.body1" Class="d-flex align-center">
+                    Sudah punya akun? 
+                    <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1">Login disini</MudLink>
+                </MudText>
+            </div>
         </MudStack>
     </MudForm>   
 </MudPaper>

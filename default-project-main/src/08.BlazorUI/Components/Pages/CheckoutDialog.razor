@@ -29,10 +29,8 @@
                                OnClick="@(() => SelectPayment(payment))"
                                Class="justify-start px-2"
                                Style="width:100%; text-transform:none">
-                        <MudImage Src="@payment.LogoUrl" Class="mr-2" Style="width:40px" />
-                        <MudText>@payment.Name</MudText>
-                        @* <MudSpacer />
-                        <MudText>VV</MudText> *@
+                        <MudImage Src="@payment.LogoUrl" Class="mr-2" Style="width:40px"/>
+                        <MudText Typo="Typo.h3" Style="font-weight: 500">@payment.Name</MudText>
                     </MudButton>
 
                 }
@@ -42,10 +40,10 @@
 
     <DialogActions>
         <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="ml-5 mx-2 mb-2 py-3" Style="width:100%" OnClick="Close">
-            <MudText>Batal</MudText>
+            <MudText Typo="Typo.h4">Batal</MudText>
         </MudButton>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mr-5 mx-2 mb-2 py-3" Style="width:100%" OnClick="OnPaymentConfirmed">
-            <MudText>Bayar</MudText>
+            <MudText Typo="Typo.h4">Bayar</MudText>
         </MudButton>
     </DialogActions>
 </MudDialog>
@@ -67,7 +65,7 @@
         {
             return;
         }
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -103,7 +101,7 @@
     private async Task OnPaymentConfirmed()
     {
         // Dapatkan autentikasi
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

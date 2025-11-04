@@ -27,7 +27,6 @@
             <MudStack Row="true">
                 <MudImage Src="@Course.ImageUrl" />
                 <MudContainer>
-                    @*<MudText Class="mt-16" Typo="Typo.h2" Color="Color.Primary" Align="Align.Center" Style="font-weight: 600">*@
                     <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@Course.CategoryName</MudText>
                     <MudText Typo="Typo.h2">@Course.Name</MudText>
                     <MudText Typo="Typo.h2" Color="Color.Primary">IDR @Course.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
@@ -76,7 +75,7 @@
             </MudStack>
         </MudHidden>
 
-        <MudText Class="mt-8" Typo="Typo.h5">
+        <MudText Class="mt-8" Typo="Typo.h2">
             <b>Deskripsi</b>
         </MudText>
         <MudText Class="desc mt-8">
@@ -96,8 +95,8 @@
                             <MudLink Color="Color.Default" OnClick="@(async () => { CourseId = c.Id; await OnInitializedAsync(); Navigation.GoToDetail(c.Id); })">
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@c.CategoryName</MudText>
-                                <MudText Typo="Typo.h3"><b>@c.Name</b></MudText>
-                                <MudText Class="pt-10" Typo="Typo.h3" Color="Color.Primary"><b>IDR @c.Price.ToString("N0", new CultureInfo("id-ID"))</b></MudText>
+                                <MudText Typo="Typo.h3">@c.Name</MudText>
+                                <MudText Class="pt-10" Typo="Typo.h3" Color="Color.Primary">IDR @c.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
                             </MudLink>
                         </MudItem>
                     }
@@ -142,7 +141,7 @@
 
     private async Task ShowPaymentDialog()
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -217,7 +216,7 @@
     private async Task AddToCartAsync()
     {
         // Dapatkan autentikasi
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

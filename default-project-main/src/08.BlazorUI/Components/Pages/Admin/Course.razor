@@ -15,7 +15,7 @@
 
 <PageTitle>Course Management</PageTitle>
 
-<MudText Typo="Typo.h5" Class="mt-4 mb-4">Course</MudText>
+<MudText Typo="Typo.h2" Class="mt-4 mb-4">Course</MudText>
 
 <MudButton Class="mb-6" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large"
            OnClick="() => OpenCourseDialog(null)">
@@ -24,7 +24,7 @@
 
 <MudTable Breakpoint="Breakpoint.Sm" Items="@course" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Course</MudText>
+        <MudText Typo="Typo.h2">Course</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
@@ -118,7 +118,7 @@
 
     private async Task DeleteCourse(int id)
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

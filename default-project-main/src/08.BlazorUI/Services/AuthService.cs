@@ -11,7 +11,6 @@ public class AuthService : IAuthService
 {
     private readonly IHttpClientFactory _factory;
     private readonly ILocalStorageService _localStorage;
-    private readonly AuthenticationStateProvider _authStateProvider;
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler = new();
 
     public AuthService(
@@ -21,7 +20,7 @@ public class AuthService : IAuthService
     {
         _factory = factory;
         _localStorage = localStorage;
-        _authStateProvider = authStateProvider;
+        //_authStateProvider = authStateProvider;
     }
     public async Task<AuthResponseDto?> LoginAsync(LoginRequestDto request)
     {
@@ -41,7 +40,7 @@ public class AuthService : IAuthService
                     _httpClient.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", apiResponse.Data.AccessToken);
 
-                    ((CustomAuthStateProvider)_authStateProvider).NotifyUserAuthentication(apiResponse.Data.AccessToken);
+                    //((CustomAuthStateProvider)_authStateProvider).NotifyUserAuthentication(apiResponse.Data.AccessToken);
 
                     return apiResponse.Data;
                 }
@@ -189,7 +188,7 @@ public class AuthService : IAuthService
                 // mungkin error karena token invalid, kita buang tokennya
                 await ClearTokensAsync();
 
-                ((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
+                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
                 return;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
@@ -198,13 +197,13 @@ public class AuthService : IAuthService
                 // mungkin error karena token invalid, kita buang tokennya
                 await ClearTokensAsync();
 
-                ((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
+                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
                 return;
             }
             //Berhasil
             await ClearTokensAsync();
 
-            ((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout();
+            //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout();
             return;
         }
         catch
@@ -214,36 +213,7 @@ public class AuthService : IAuthService
         }
 
     }
-    public async Task<bool> IsLoggedInAsync()
-    {
-        var _httpClient = _factory.CreateClient("WebAPI");
-        //Set Authorization header to include the access token
-        if (_httpClient.DefaultRequestHeaders.Authorization == null)
-        {
-            var token = await _localStorage.GetItemAsync<string>("authToken");
-            _httpClient.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", token);
-        }
-        return await ((CustomAuthStateProvider)_authStateProvider).isLoggedInAsync();
-    }
-    public async Task<bool> IsAdminAsync()
-    {
-        var role = (await ((CustomAuthStateProvider)_authStateProvider).GetAuthenticationStateAsync())
-            .User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
-        if (role == null)
-        {
-            return false;
-        }
-        Console.WriteLine($"Test role: {role}");
-        return role.Contains("Admin");
-    }
-    /// <summary>
-    /// Dapatkan akses token. Bila token expired, akan otomatis refresh token dan me-return token baru.<br />
-    /// Catatan: Hanya panggil function ini di luar dari pre-rendering (tidak dalam OnInitialized()/OnInitializedAsync(), tapi dalam OnAfterRender()/OnAfterRenderAsync())<br />
-    /// Karena fungsi ini mengakses local storage untuk set token baru, dan local storage hanya dapat diakses di luar pre-rendering mode.
-    /// </summary>
-    /// <returns>AuthenticationHeaderValue yang bisa digunakan untuk meng-set _httpClient.DefaultRequestHeaders.Authorization, atau null bila token tidak ada.</returns>
-    public async Task<AuthenticationHeaderValue?> GetAccessTokenAsync()
+    private async Task<string?> GetAccessTokenAsync()
     {
         // Dapatkan token
         var token = await _localStorage.GetItemAsync<string>("authToken");
@@ -263,6 +233,10 @@ public class AuthService : IAuthService
         }
         // Dapatkan expiry dari token
         var expiryDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expiry));
+
+        // Uncomment line ini untuk debug
+        Console.WriteLine($"Now: {DateTimeOffset.UtcNow} (+ 2 minutes = {DateTimeOffset.UtcNow.AddMinutes(2)}) Expiry time: {expiryDateTime}");
+
         // Cek apakah token sudah expired (atau 2 menit sebelum expired)
         if (expiryDateTime < DateTimeOffset.UtcNow.AddMinutes(2))
         {
@@ -295,7 +269,7 @@ public class AuthService : IAuthService
                     return null; // hasil keluaran API invalid (mungkin token invalid)
                 }
                 await SetTokensAsync(apiResponse.Data.AccessToken, apiResponse.Data.RefreshToken);
-                return new AuthenticationHeaderValue("Bearer", apiResponse.Data.AccessToken);
+                return apiResponse.Data.AccessToken;
             }
             catch
             {
@@ -303,8 +277,41 @@ public class AuthService : IAuthService
                 return null;
             }
         }
-
-        return new AuthenticationHeaderValue("Bearer", token);
+        return token;
+    }
+    public async Task<bool> IsLoggedInAsync()
+    {
+        return await GetAccessTokenAsync() != null;
+    }
+    public async Task<bool> IsAdminAsync()
+    {
+        var token = await GetAccessTokenAsync();
+        if (token == null)
+        {
+            return false;
+        }
+        var role = _jwtSecurityTokenHandler.ReadJwtToken(token).Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+        if (role == null)
+        {
+            return false;
+        }
+        Console.WriteLine($"Test role: {role}");
+        return role.Contains("Admin");
+    }
+    /// <summary>
+    /// Dapatkan akses token. Bila token expired, akan otomatis refresh token dan me-return token baru.<br />
+    /// Catatan: Hanya panggil function ini di luar dari pre-rendering (tidak dalam OnInitialized()/OnInitializedAsync(), tapi dalam OnAfterRender()/OnAfterRenderAsync())<br />
+    /// Karena fungsi ini mengakses local storage untuk set token baru, dan local storage hanya dapat diakses di luar pre-rendering mode.
+    /// </summary>
+    /// <returns>AuthenticationHeaderValue yang bisa digunakan untuk meng-set _httpClient.DefaultRequestHeaders.Authorization, atau null bila token tidak ada.</returns>
+    public async Task<AuthenticationHeaderValue?> GetAuthAsync()
+    {
+        var a = await GetAccessTokenAsync();
+        if (a == null)
+        {
+            return null;
+        }
+        return new AuthenticationHeaderValue("Bearer", a);
     }
     private async Task ClearTokensAsync()
     {

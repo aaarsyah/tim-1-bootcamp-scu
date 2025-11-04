@@ -17,13 +17,13 @@
 <PageTitle>Checkout</PageTitle>
 
 <MudContainer Class="pa-4">
-    <MudStack Row="true" AlignItems="AlignItems.Center">
+    <MudStack Class="mx-4" Row="true" AlignItems="AlignItems.Center">
         <MudCheckBox T="bool?" 
              Value="selectAllCheckbox" 
              ValueChanged="OnSelectAllChanged" 
              Size="Size.Small" 
              Color="Color.Primary" />
-        <MudText>Pilih Semua</MudText>
+        <MudText Typo="Typo.h3" Style="font-weight: 400; font-size: 20px">Pilih Semua</MudText>
     </MudStack>
 
     <MudDivider Class="my-2" />
@@ -41,12 +41,12 @@
                 <MudImage Src="@item.Image" Style="width:100px; height:100px; object-fit:contain;" /> 
                 <MudContainer>
                     <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@item.Category</MudText>
-                    <MudText Style="color: #333333"><b>@item.Name</b></MudText>
-                    <MudText Style="color: #4F4F4F">
+                    <MudText Typo="Typo.h2">@item.Name</MudText>
+                    <MudText Typo="Typo.h4" Style="font-weight: 400; color: #4F4F4F">
                         Jadwal : @item.ScheduleDates.ToString("D", new CultureInfo("id-ID"))
                     </MudText>
-                    <MudText Color="Color.Primary">
-                        <b>IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))</b>
+                    <MudText Typo="Typo.h3" Color="Color.Primary" Style="font-size: 20px">
+                        IDR @item.Price.ToString("N0", new CultureInfo("id-ID"))
                     </MudText>
                 </MudContainer>
                 <MudSpacer />
@@ -58,11 +58,10 @@
             <MudDivider />
         }
     }
-
     <MudToolBar Class="mt-4">
-        <MudText>Total biaya: </MudText>
-        <MudText Color="Color.Primary">
-            <b>IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))</b>
+        <MudText Class="mr-6" Typo="Typo.h3" Style="font-weight: 400">Total biaya</MudText>
+        <MudText Typo="Typo.h2" Color="Color.Primary">
+            IDR @_itemList.Where(x => x.Selected).Sum(x => x.Price).ToString("N0", new CultureInfo("id-ID"))
         </MudText>
         <MudSpacer />
         <MudButton Class="px-10 py-2" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog">
@@ -84,7 +83,7 @@
         {
             return;
         }
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
@@ -194,7 +193,7 @@
     public async Task RemoveItem(ItemMy item)
     {
         // Dapatkan autentikasi
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page

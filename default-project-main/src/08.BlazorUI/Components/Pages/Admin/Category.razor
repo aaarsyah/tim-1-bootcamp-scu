@@ -14,7 +14,7 @@
 
 <PageTitle>Category</PageTitle>
 
-<MudText Typo="Typo.h5" Class="mt-4 mb-4">Category</MudText>
+<MudText Typo="Typo.h2" Class="mt-4 mb-4">Category</MudText>
 
 <MudButton Class="mb-6" Variant="Variant.Filled" Color="Color.Success" Size="Size.Large"
            OnClick="() => OpenCategoryDialog(null)">
@@ -23,7 +23,7 @@
 
 <MudTable Breakpoint="Breakpoint.Sm" Items="@category" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Category</MudText>
+        <MudText Typo="Typo.h2">Category</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
@@ -106,7 +106,7 @@
 
     private async Task DeleteCategory(int id)
     {
-        var auth = await AuthService.GetAccessTokenAsync();
+        var auth = await AuthService.GetAuthAsync();
         if (auth == null)
         {
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
