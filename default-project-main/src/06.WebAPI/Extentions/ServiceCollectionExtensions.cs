@@ -49,6 +49,29 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Method untuk konfigurasi database context dan connection
+    /// </summary>
+    /// <param name="services">IServiceCollection container</param>
+    /// <param name="configuration">IConfiguration untuk membaca appsettings.json</param>
+    /// <returns>IServiceCollection untuk method chaining</returns>
+    public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        // Daftarkan ProductDbContext ke DI container dengan In-Memory database
+        // In-Memory database: data disimpan di RAM, hilang ketika aplikasi restart
+        // Cocok untuk demo dan testing, tidak untuk Production
+        services.AddDbContext<AppleMusicDbContext>(options =>
+            options.UseInMemoryDatabase("AppleMusicDb")); // "AppleMusicDb" adalah nama database
+
+        // ALTERNATIF: Untuk SQL Server (Production), uncomment baris berikut:
+        // services.AddDbContext<ProductDbContext>(options =>
+        //     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+        // GetConnectionString akan membaca connection string dari appsettings.json
+
+        return services;
+    }
+
+
+    /// <summary>
     /// Method untuk konfigurasi SQL Server database dengan Entity Framework Core
     /// Code First approach dengan advanced configuration dan migration support
     /// Recommended untuk Production applications
@@ -229,11 +252,12 @@ public static class ServiceCollectionExtensions
             case "sqlite":
                 Console.WriteLine("🗄️ Using SQLite database provider");
                 return services.AddSqliteDatabase(configuration);
-            
             case "sqlserver":
                 Console.WriteLine("🗄️ Using SQL Server database provider");
                 return services.AddSqlServerDatabase(configuration);
-            
+            case "inmemory":
+                Console.WriteLine("🗄️ Using In-Memory database provider");
+                return services.AddDatabaseContext(configuration);
             default:
                 Console.WriteLine($"⚠️ Unknown database provider '{databaseProvider}', defaulting to SQL Server");
                 return services.AddSqlServerDatabase(configuration);
