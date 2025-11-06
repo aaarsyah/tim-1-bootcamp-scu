@@ -328,16 +328,12 @@
         }
     }
 
-    private string? currentPath;
-
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        currentPath = NavManager.Uri;
 
         NavManager.LocationChanged += async (_, __) =>
         {
-            currentPath = NavManager.Uri;
             await UpdateLogin();
             StateHasChanged(); // Refresh tampilan saat route berubah
         };

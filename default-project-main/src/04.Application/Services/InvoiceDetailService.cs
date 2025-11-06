@@ -15,15 +15,15 @@ public class InvoiceDetailService : IInvoiceDetailService
 {
     private readonly AppleMusicDbContext _context;
     private readonly IMapper _mapper;
-    private readonly ILogger<InvoiceDetailService> _logger;
+    //private readonly ILogger<InvoiceDetailService> _logger;
     /// <summary>
     /// Constructor
     /// </summary>
-    public InvoiceDetailService(AppleMusicDbContext context, IMapper mapper, ILogger<InvoiceDetailService> logger)
+    public InvoiceDetailService(AppleMusicDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
-        _logger = logger;
+        //_logger = logger;
     }
     /// <summary>
     /// Get InvoiceDetail-InvoiceDetail berdasarkan invoice id (hanya jika user id sesuai dengan invoice tersebut)

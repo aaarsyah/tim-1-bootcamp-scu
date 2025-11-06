@@ -4506,16 +4506,16 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'ConfigureMyClass' a static method.",
+          "message": "Make 'ConfigureCartItem' a static method.",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 421,
+                  "startLine": 397,
                   "startColumn": 22,
-                  "endLine": 421,
-                  "endColumn": 38
+                  "endLine": 397,
+                  "endColumn": 39
                 }
               }
             }
@@ -4527,16 +4527,37 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'ConfigureCartItem' a static method.",
+          "message": "Make 'ConfigurePaymentMethod' a static method.",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 397,
+                  "startLine": 511,
                   "startColumn": 22,
-                  "endLine": 397,
-                  "endColumn": 39
+                  "endLine": 511,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'ConfigureMyClass' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
+                "region": {
+                  "startLine": 421,
+                  "startColumn": 22,
+                  "endLine": 421,
+                  "endColumn": 38
                 }
               }
             }
@@ -4569,27 +4590,6 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'ConfigureCategory' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
-                "region": {
-                  "startLine": 128,
-                  "startColumn": 22,
-                  "endLine": 128,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
           "message": "Make 'ConfigureInvoice' a static method.",
           "locations": [
             {
@@ -4611,16 +4611,16 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'ConfigurePaymentMethod' a static method.",
+          "message": "Make 'ConfigureCategory' a static method.",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 511,
+                  "startLine": 128,
                   "startColumn": 22,
-                  "endLine": 511,
-                  "endColumn": 44
+                  "endLine": 128,
+                  "endColumn": 39
                 }
               }
             }
@@ -4717,27 +4717,6 @@
           "ruleId": "S1144",
           "level": "warning",
           "message": "Remove the unused private method 'LogEntityChanges'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
-                "region": {
-                  "startLine": 1478,
-                  "startColumn": 22,
-                  "endLine": 1478,
-                  "endColumn": 38
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'LogEntityChanges' a static method.",
           "locations": [
             {
               "resultFile": {
@@ -4922,6 +4901,27 @@
               "8": null,
               "9": null
             }
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'LogEntityChanges' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
+                "region": {
+                  "startLine": 1478,
+                  "startColumn": 22,
+                  "endLine": 1478,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
           }
         },
         {
@@ -5591,27 +5591,6 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigureCartItem' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
-                "region": {
-                  "startLine": 397,
-                  "startColumn": 22,
-                  "endLine": 397,
-                  "endColumn": 39
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
           "message": "Member 'ConfigureSchedule' does not access instance data and can be marked as static",
           "locations": [
             {
@@ -5654,15 +5633,15 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigureInvoiceDetail' does not access instance data and can be marked as static",
+          "message": "Member 'ConfigurePaymentMethod' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 483,
+                  "startLine": 511,
                   "startColumn": 22,
-                  "endLine": 483,
+                  "endLine": 511,
                   "endColumn": 44
                 }
               }
@@ -5696,15 +5675,36 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigurePaymentMethod' does not access instance data and can be marked as static",
+          "message": "Member 'ConfigureCartItem' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 511,
+                  "startLine": 397,
                   "startColumn": 22,
-                  "endLine": 511,
+                  "endLine": 397,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'ConfigureInvoiceDetail' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
+                "region": {
+                  "startLine": 483,
+                  "startColumn": 22,
+                  "endLine": 483,
                   "endColumn": 44
                 }
               }
@@ -5738,16 +5738,16 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigureCourse' does not access instance data and can be marked as static",
+          "message": "Member 'ConfigureAuditLog' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 76,
+                  "startLine": 544,
                   "startColumn": 22,
-                  "endLine": 76,
-                  "endColumn": 37
+                  "endLine": 544,
+                  "endColumn": 39
                 }
               }
             }
@@ -5759,16 +5759,16 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigureAuditLog' does not access instance data and can be marked as static",
+          "message": "Member 'ConfigureCourse' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 544,
+                  "startLine": 76,
                   "startColumn": 22,
-                  "endLine": 544,
-                  "endColumn": 39
+                  "endLine": 76,
+                  "endColumn": 37
                 }
               }
             }
@@ -5801,16 +5801,16 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'LogEntityChanges' does not access instance data and can be marked as static",
+          "message": "Member 'ConfigureUserRole' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 1478,
+                  "startLine": 280,
                   "startColumn": 22,
-                  "endLine": 1478,
-                  "endColumn": 38
+                  "endLine": 280,
+                  "endColumn": 39
                 }
               }
             }
@@ -5822,16 +5822,16 @@
         {
           "ruleId": "CA1822",
           "level": "note",
-          "message": "Member 'ConfigureUserRole' does not access instance data and can be marked as static",
+          "message": "Member 'LogEntityChanges' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/default-project-main/src/05.Infrastructure/Data/AppleMusicDbContext.cs",
                 "region": {
-                  "startLine": 280,
+                  "startLine": 1478,
                   "startColumn": 22,
-                  "endLine": 280,
-                  "endColumn": 39
+                  "endLine": 1478,
+                  "endColumn": 38
                 }
               }
             }

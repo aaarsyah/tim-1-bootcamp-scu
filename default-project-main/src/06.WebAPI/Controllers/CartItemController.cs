@@ -51,7 +51,7 @@ public class CartItemController : ControllerBase
             throw new TokenInvalidException();
         }
         _logger.LogInformation(
-            "Checkout request received for {UserId} checking out {ItemCartIds.Count} items",
+            "Checkout request received for {UserId} checking out {ItemCartIdsCount} items",
             request.ItemCartIds.Count,
             userId);
 

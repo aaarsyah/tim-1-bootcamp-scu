@@ -34,5 +34,5 @@ public interface ICartItemService
     Task<IEnumerable<CartItemResponseDto>> GetAllCartItemsAsync();
     Task<IEnumerable<CartItemResponseDto>> GetCartItemsByUserIdAsync(int userId);
     Task<bool> AddCourseToCartAsync(int userId, int scheduleid);
-    Task<bool> RemoveCourseFromCartAsync(int userId, int cartid);
+    Task<bool> RemoveCourseFromCartAsync(int userId, int cartItemId);
 }

@@ -15,6 +15,7 @@ namespace MyApp.Shared.DTOs;
 public class CheckoutRequestDto
 {
     [Required(ErrorMessage = "ItemCartIds is required")]
+    [MinLength(1, ErrorMessage = "ItemCartIds must contain at least one item")]
     public List<int> ItemCartIds { get; set; } = null!;
     [Required(ErrorMessage = "PaymentMethodId is required")]
     public int? PaymentMethodId { get; set; }

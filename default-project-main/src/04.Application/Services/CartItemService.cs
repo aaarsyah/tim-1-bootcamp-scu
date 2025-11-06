@@ -63,7 +63,7 @@ public class CartItemService : ICartItemService
     public async Task<CheckoutResponseDto> CheckoutItemsAsync(int userId, CheckoutRequestDto request)
     {
         _logger.LogInformation(
-            "Checking out {ItemCartIds.Count} items for {UserId}",
+            "Checking out {ItemCartIdsCount} items for {UserId}",
             request.ItemCartIds.Count,
             userId);
         // ===== VALIDATION: Cart item is not empty =====
@@ -118,12 +118,12 @@ public class CartItemService : ICartItemService
                     throw new ValidationException($"PaymentMethodId {request.PaymentMethodId} not found");
                 }
                 // ===== STEP 6 =====
-                foreach (var item in items)
-                {
-                    _context.CartItems.Remove(item);
-                }
-
-                // ===== STEP 7 =====
+                //foreach (var item in items)
+                //{
+                //    _context.CartItems.Remove(item);
+                //}
+                _context.CartItems.RemoveRange(items);
+                // ===== STEP 7 AND 8 =====
                 var invoice = new Invoice
                 {
                     RefCode = GenerateInvoiceId(),
@@ -143,10 +143,6 @@ public class CartItemService : ICartItemService
                         Price = item.Schedule.Course.Price,
                         ScheduleDate = item.Schedule.Date
                     });
-                }
-                // ===== STEP 8 =====
-                foreach (CartItem item in items)
-                {
                     _context.MyClasses.Add(new MyClass
                     {
                         UserId = user.Id,

@@ -6,9 +6,9 @@ public interface ICourseService
 {
     Task<IEnumerable<CourseDto>?> GetAllCourseAsync();
     Task<PaginatedResponse<IEnumerable<CourseDto>>?> GetAllCoursePaginatedAsync(int page, int pageSize);
-    Task<CourseDto?> GetCourseByIdAsync(int CourseId);
+    Task<CourseDto?> GetCourseByIdAsync(int courseId);
     Task<List<CategoryDto>> GetAllCategoriesAsync();
-    Task<CategoryDto?> GetCategoryByIdAsync(int CategoryId);
-    Task<List<CourseDto>> GetCourseByCategoryAsync(int CategoryId);
+    Task<CategoryDto?> GetCategoryByIdAsync(int categoryId);
+    Task<List<CourseDto>> GetCourseByCategoryAsync(int categoryId);
 
 }

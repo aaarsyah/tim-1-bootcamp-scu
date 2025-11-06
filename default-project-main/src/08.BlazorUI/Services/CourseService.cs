@@ -91,13 +91,13 @@ public class CourseService : ICourseService
             return null;
         }
     }
-    public async Task<CourseDto?> GetCourseByIdAsync(int CourseId)
+    public async Task<CourseDto?> GetCourseByIdAsync(int courseId)
     {
         //GetCourse
         var _httpClient = _factory.CreateClient("WebAPI");
         try
         {
-            var response = await _httpClient.GetAsync($"api/Course/{CourseId}");
+            var response = await _httpClient.GetAsync($"api/Course/{courseId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
@@ -141,13 +141,13 @@ public class CourseService : ICourseService
             return new();
         }
     }
-    public async Task<CategoryDto?> GetCategoryByIdAsync(int CategoryId)
+    public async Task<CategoryDto?> GetCategoryByIdAsync(int categoryId)
     {
         //GetCourse
         var _httpClient = _factory.CreateClient("WebAPI");
         try
         {
-            var response = await _httpClient.GetAsync($"api/Category/{CategoryId}");
+            var response = await _httpClient.GetAsync($"api/Category/{categoryId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();

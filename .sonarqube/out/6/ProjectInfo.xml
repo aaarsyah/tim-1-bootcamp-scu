@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <ProjectName>MyApp.WebAPI</ProjectName>
+  <ProjectName>MyApp.Application</ProjectName>
   <ProjectLanguage>C#</ProjectLanguage>
-  <ProjectType>Test</ProjectType>
-  <ProjectGuid>db26106c-aaa8-463f-8430-2971998b003e</ProjectGuid>
-  <FullPath>D:\BootcampProject\default-project-main\src\06.WebAPI\MyApp.WebAPI.csproj</FullPath>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>d6812387-a018-432c-adc5-939e513e4314</ProjectGuid>
+  <FullPath>D:\BootcampProject\default-project-main\src\04.Application\MyApp.Application.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResultFiles>
     <AnalysisResultFile Id="FilesToAnalyze" Location="D:\BootcampProject\.sonarqube\conf\6\FilesToAnalyze.txt" />

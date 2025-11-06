@@ -68,12 +68,10 @@
             <MudText>Bayar Sekarang</MudText>
         </MudButton>
     </MudToolBar>
-
 </MudContainer>
 
 @code {
     private bool? selectAllCheckbox = false;
-    private int _totalPrice = 0;
 
     private List<ItemMy> _itemList = new();
 
@@ -108,8 +106,6 @@
                     (int)c.Price,
                     c.Date
                 )).ToList();
-
-                UpdatePrice(); //tambahkan price di DTO
             }
         }
         catch (Exception ex)
@@ -173,20 +169,8 @@
         {
             item.Selected = value == true;
         }
-
-        //tambahkan Price di DTO
-        UpdatePrice();
         StateHasChanged();
     }
-
-    //Hitung total harga item yang dipilih
-    public void UpdatePrice()
-    {
-        _totalPrice = _itemList
-            .Where(i => i.Selected)
-            .Sum(i => i.Price);
-    }
-
 
     // belum konek API Controller remove bukan dari cartId melainkan scheduleId
 
@@ -209,7 +193,6 @@
             }
             _itemList.Remove(item);
             Snackbar.Add($"Item '{item.Name}' berhasil dihapus dari keranjang.", Severity.Success);
-            UpdatePrice();
             StateHasChanged();
         }
         catch (Exception ex)

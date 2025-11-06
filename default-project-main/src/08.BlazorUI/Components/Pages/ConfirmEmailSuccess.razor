@@ -25,7 +25,6 @@
 @code {
 
     private ConfirmEmailRequestDto _confirmEmailModel { get; set; } = new();
-    private bool _isTokenValid = true;
 
     [SupplyParameterFromQuery(Name = "email")]
     private string? Email { get; set; }
@@ -37,14 +36,15 @@
     {
         _confirmEmailModel ??= new ConfirmEmailRequestDto();
 
-        // Validate that we have email and token from query string
+        // Validasi apakah ada email dan taken
         if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Token))
         {
-            _isTokenValid = false;
+            // Langsung redirect ke home bila email atau token tidak ada
+            Navigation.GoToHome();
             return;
         }
 
-        // Set email and token from query parameters
+        // Set email dan token dari query parameters
         _confirmEmailModel.Email = Uri.UnescapeDataString(Email ?? string.Empty);
         _confirmEmailModel.AccessToken = Uri.UnescapeDataString(Token ?? string.Empty);
 
