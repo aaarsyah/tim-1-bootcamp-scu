@@ -6,14 +6,14 @@ namespace MyApp.BlazorUI.Services;
 public interface IAdminService
 {
     Task<List<CourseDto>> GetAllCourseAsync();
-    Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request);
-    Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request);
+    Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseRequestDto request);
+    Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseRequestDto request);
     Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id);
     Task<List<CategoryDto>> GetAllCategoryAsync();
-    Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryDto request);
-    Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryDto request);
+    Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryRequestDto request);
+    Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryRequestDto request);
     Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id);
-    Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto request);
-    Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto request);
+    Task<PaymentMethodDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentMethodRequestDto request);
+    Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentRequestDto request);
     Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id);
 }

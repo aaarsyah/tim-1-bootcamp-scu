@@ -57,7 +57,7 @@ public class CategoryService : ICategoryService
     /// <summary>
     /// Create new category
     /// </summary>
-    public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto createCategoryDto)
+    public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryRequestDto createCategoryDto)
     {
         var category = _mapper.Map<Category>(createCategoryDto);
 
@@ -93,7 +93,7 @@ public class CategoryService : ICategoryService
     /// <summary>
     /// Update category
     /// </summary>
-    public async Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto)
+    public async Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryRequestDto updateCategoryDto)
     {
         var category = await _context.Categories
             .FindAsync(id);

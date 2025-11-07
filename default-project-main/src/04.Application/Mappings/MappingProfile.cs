@@ -16,8 +16,8 @@ namespace MyApp.Application.Mappings
         {
             // Category mappings
             CreateMap<Category, CategoryDto>();
-            CreateMap<CreateCategoryDto, Category>();
-            CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<CreateCategoryRequestDto, Category>();
+            CreateMap<UpdateCategoryRequestDto, Category>();
 
             // Course mappings
             CreateMap<Course, CourseDto>()
@@ -26,13 +26,13 @@ namespace MyApp.Application.Mappings
                 .ForMember(dest => dest.ScheduleDates, 
                     opt => opt.MapFrom(src => src.Schedules.Select(s => s.Date).ToList()));
 
-            CreateMap<CreateCourseDto, Course>();
-            CreateMap<UpdateCourseDto, Course>();
+            CreateMap<CreateCourseRequestDto, Course>();
+            CreateMap<UpdateCourseRequestDto, Course>();
 
             // PaymentMethod mappings
-            CreateMap<PaymentMethod, PaymentDto>();
-            CreateMap<CreatePaymentDto, PaymentMethod>();
-            CreateMap<UpdatePaymentDto, PaymentMethod>();
+            CreateMap<PaymentMethod, PaymentMethodDto>();
+            CreateMap<CreatePaymentMethodRequestDto, PaymentMethod>();
+            CreateMap<UpdatePaymentRequestDto, PaymentMethod>();
 
             // User mappings
             CreateMap<User, UserDto>()
@@ -69,15 +69,15 @@ namespace MyApp.Application.Mappings
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Schedule.Course.ImageUrl))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Schedule.Date));
 
-            CreateMap<CreateMyClassDto, MyClass>();
-            CreateMap<UpdateMyClassDto, MyClass>();
+            CreateMap<CreateMyClassRequestDto, MyClass>();
+            CreateMap<UpdateMyClassRequestDto, MyClass>();
 
             // Schedule mappings
             CreateMap<Schedule, ScheduleDto>()
                 .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Course.Name));
 
-            CreateMap<CreateScheduleDto, Schedule>();
-            CreateMap<UpdateScheduleDto, Schedule>();
+            CreateMap<CreateScheduleRequestDto, Schedule>();
+            CreateMap<UpdateScheduleRequestDto, Schedule>();
         }
     }
 }

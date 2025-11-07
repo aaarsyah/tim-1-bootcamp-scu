@@ -27,19 +27,3 @@ public class InvoiceDto
     public string Email { get; set; } = string.Empty;
 
 }
-
-/// <summary>
-/// Create Invoice request
-/// </summary>
-public class CreateInvoiceDto
-{
-    /// <summary>
-    /// RefCode
-    /// </summary>
-    public string RefCode { get; set; } = string.Empty;
-
-    /// <summary>
-    /// TanggalBeli
-    /// </summary>
-    public DateTime CreatedAt { get; set; }
-}

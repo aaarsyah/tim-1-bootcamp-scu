@@ -17,7 +17,7 @@ public class CategoryDto
 /// <summary>
 /// Create category request
 /// </summary>
-public class CreateCategoryDto
+public class CreateCategoryRequestDto
 {
     public string Name { get; set; } = string.Empty;
     public string LongName { get; set; } = string.Empty;
@@ -25,7 +25,7 @@ public class CreateCategoryDto
     public string ImageUrl { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 }
-public class UpdateCategoryDto
+public class UpdateCategoryRequestDto
 {
     public string Name { get; set; } = string.Empty;
     public string LongName { get; set; } = string.Empty;

@@ -64,8 +64,10 @@ public class AuthenticationService : IAuthenticationService
     /// </summary>
     public async Task<bool> RegisterAsync(RegisterRequestDto request)
     {
+        // Ubah email menjadi huruf kecil
+        request.Email = request.Email.ToLower();
+
         // Cek apakah email sudah terdaftar
-        //var existingUser = await _userManager.FindByEmailAsync(request.Email);
         var existingUser = await _context.Users
             .FirstOrDefaultAsync(a => a.Email == request.Email);
         if (existingUser != null)

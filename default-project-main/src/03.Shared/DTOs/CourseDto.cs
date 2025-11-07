@@ -62,7 +62,7 @@ public class CourseDto
 /// <summary>
 /// Create product request
 /// </summary>
-public class CreateCourseDto
+public class CreateCourseRequestDto
 {
     /// <summary>
     /// Product name
@@ -94,7 +94,7 @@ public class CreateCourseDto
 /// <summary>
 /// Update product request
 /// </summary>
-public class UpdateCourseDto
+public class UpdateCourseRequestDto
 {
     /// <summary>
     /// Product name

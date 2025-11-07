@@ -63,7 +63,7 @@ public class MyClassController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<MyClassDto>> CreateMyClass(CreateMyClassDto createMyClassDto)
+    public async Task<ActionResult<MyClassDto>> CreateMyClass(CreateMyClassRequestDto createMyClassDto)
     {
         var result = await _myclassService.CreateMyClassAsync(createMyClassDto);
         return CreatedAtAction(nameof(GetMyClass), new { id = result.Id }, ApiResponse<MyClassDto>.SuccessResult(result));
@@ -74,7 +74,7 @@ public class MyClassController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MyClassDto>> UpdateMyClass(int id, UpdateMyClassDto updateMyClassDto)
+    public async Task<ActionResult<MyClassDto>> UpdateMyClass(int id, UpdateMyClassRequestDto updateMyClassDto)
     {
         var result = await _myclassService.UpdateMyClassAsync(id, updateMyClassDto);
         return Ok(ApiResponse<MyClassDto>.SuccessResult(result));

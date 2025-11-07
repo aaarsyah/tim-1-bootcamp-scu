@@ -3,13 +3,13 @@ using MyApp.Shared.DTOs;
 namespace MyApp.WebAPI.Services;
 public interface IPaymentService
 {
-    Task<IEnumerable<PaymentDto>> GetAllPaymentAsync();
+    Task<IEnumerable<PaymentMethodDto>> GetAllPaymentAsync();
  
-    Task<PaymentDto> GetPaymentByIdAsync(int id);
+    Task<PaymentMethodDto> GetPaymentByIdAsync(int id);
 
-    Task<PaymentDto> CreatePaymentAsync(CreatePaymentDto createPaymentDto);
+    Task<PaymentMethodDto> CreatePaymentAsync(CreatePaymentMethodRequestDto createPaymentDto);
     
-    Task<PaymentDto> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto);
+    Task<PaymentMethodDto> UpdatePaymentAsync(int id, UpdatePaymentRequestDto updatePaymentDto);
     
     Task<bool> DeletePaymentAsync(int id);
  

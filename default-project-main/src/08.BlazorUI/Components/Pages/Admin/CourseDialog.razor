@@ -16,7 +16,7 @@
         <MudTextField @bind-Value="Course.Name" Label="Name" Required="true" />
         <MudTextField @bind-Value="Course.Description" Label="Description" AutoGrow Required="true" />
         <MudTextField @bind-Value="Course.CategoryId" Label="CategoryId" Required="true" />
-        <MudTextField @bind-Value="Course.Price" Label="Harga" Required="true" />
+        <MudTextField @bind-Value="Course.Price" Label="Harga" Required="true" MaxLength="9" />
 
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
         <MudButton HtmlTag="label"
@@ -98,7 +98,7 @@
 
         if (IsUpdating)
         {
-            UpdateCourseDto updateCourseDto = new()
+            UpdateCourseRequestDto updateCourseDto = new()
             {
                 Name = Course.Name,
                 Description = Course.Description,
@@ -117,7 +117,7 @@
         }
         else
         {
-            CreateCourseDto createCourseDto = new()
+            CreateCourseRequestDto createCourseDto = new()
             {
                 Name = Course.Name,
                 Description = Course.Description,

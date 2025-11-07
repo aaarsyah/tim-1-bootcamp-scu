@@ -20,12 +20,12 @@ public interface ICategoryService
     /// <summary>
     /// Create new category
     /// </summary>
-    Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto createCategoryDto);
+    Task<CategoryDto> CreateCategoryAsync(CreateCategoryRequestDto createCategoryDto);
     
     /// <summary>
     /// Update category
     /// </summary>
-    Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto);
+    Task<CategoryDto> UpdateCategoryAsync(int id, UpdateCategoryRequestDto updateCategoryDto);
     
     /// <summary>
     /// Delete category

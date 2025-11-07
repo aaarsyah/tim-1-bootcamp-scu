@@ -18,7 +18,7 @@ public class MyClassDto
 
 }
 
-public class CreateMyClassDto
+public class CreateMyClassRequestDto
 {
 
     public int UserId { get; set; }
@@ -26,7 +26,7 @@ public class CreateMyClassDto
     public int ScheduleId { get; set; }
     
 }
-public class UpdateMyClassDto
+public class UpdateMyClassRequestDto
 {
     public int UserId { get; set; }
     

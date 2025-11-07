@@ -121,7 +121,7 @@ public class CheckoutService : ICheckoutService
             return null;
         }
     }
-    public async Task<List<PaymentDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization)
+    public async Task<List<PaymentMethodDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -130,7 +130,7 @@ public class CheckoutService : ICheckoutService
             var response = await _httpClient.GetAsync("api/payment");
             if (response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentDto>>>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentMethodDto>>>();
 
                 if (apiResponse?.Data != null)
                 {

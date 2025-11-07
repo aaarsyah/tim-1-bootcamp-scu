@@ -35,7 +35,7 @@ public class ScheduleController : ControllerBase
   
     [HttpGet("{id}")]
     [AllowAnonymous]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ScheduleDto>> GetSchedule(int id)
     {
@@ -46,9 +46,9 @@ public class ScheduleController : ControllerBase
   
     [HttpPost]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ScheduleDto>> CreateSchedule(CreateScheduleDto createScheduleDto)
+    public async Task<ActionResult<ScheduleDto>> CreateSchedule(CreateScheduleRequestDto createScheduleDto)
     {
         var result = await _scheduleService.CreateScheduleAsync(createScheduleDto);
         return CreatedAtAction(nameof(GetSchedule), new { id = result.Id }, ApiResponse<ScheduleDto>.SuccessResult(result));
@@ -57,9 +57,9 @@ public class ScheduleController : ControllerBase
   
     [HttpPut("{id}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ScheduleDto>> UpdateSchedule(int id, UpdateScheduleDto updateScheduleDto)
+    public async Task<ActionResult<ScheduleDto>> UpdateSchedule(int id, UpdateScheduleRequestDto updateScheduleDto)
     {
         var result = await _scheduleService.UpdateScheduleAsync(id, updateScheduleDto);
         return Ok(ApiResponse<ScheduleDto>.SuccessResult(result));

@@ -47,7 +47,7 @@ public class ScheduleService : IScheduleService
     }
 
   
-    public async Task<ScheduleDto> CreateScheduleAsync(CreateScheduleDto createScheduleDto)
+    public async Task<ScheduleDto> CreateScheduleAsync(CreateScheduleRequestDto createScheduleDto)
     {
         // Validate course exists
         var courseExists = await _context.Courses.AnyAsync(c => c.Id == createScheduleDto.CourseId);
@@ -68,7 +68,7 @@ public class ScheduleService : IScheduleService
     }
 
 
-    public async Task<ScheduleDto> UpdateScheduleAsync(int id, UpdateScheduleDto updateScheduleDto)
+    public async Task<ScheduleDto> UpdateScheduleAsync(int id, UpdateScheduleRequestDto updateScheduleDto)
     {
         var schedule = await _context.Schedules
                     .Include(p => p.Course)

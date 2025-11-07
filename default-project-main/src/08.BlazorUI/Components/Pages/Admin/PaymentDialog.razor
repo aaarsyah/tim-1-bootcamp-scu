@@ -52,7 +52,7 @@
     private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
-    public PaymentDto Payment { get; set; } = null!;
+    public PaymentMethodDto Payment { get; set; } = null!;
     [Parameter]
     public bool IsUpdating { get; set; }
     private string? previewLogoUrl;
@@ -90,11 +90,11 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        PaymentDto? result;
+        PaymentMethodDto? result;
 
         if (IsUpdating)
         {
-            UpdatePaymentDto updatePaymentDto = new()
+            UpdatePaymentRequestDto updatePaymentDto = new()
             {
                 Name = Payment.Name,
                 LogoUrl = Payment.LogoUrl,
@@ -110,7 +110,7 @@
         }
         else
         {
-            CreatePaymentDto createPaymentDto = new()
+            CreatePaymentMethodRequestDto createPaymentDto = new()
             {
                 Name = Payment.Name,
                 LogoUrl = Payment.LogoUrl,

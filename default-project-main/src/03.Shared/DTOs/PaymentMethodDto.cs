@@ -1,6 +1,6 @@
 namespace MyApp.Shared.DTOs;
 
-public class PaymentDto
+public class PaymentMethodDto
 {
     public int Id { get; set; }
   
@@ -14,14 +14,14 @@ public class PaymentDto
     public bool IsActive { get; set; } = true;
 }
 
-public class CreatePaymentDto
+public class CreatePaymentMethodRequestDto
 { 
     public string Name { get; set; } = string.Empty;
 
     public string LogoUrl { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 }
-public class UpdatePaymentDto
+public class UpdatePaymentRequestDto
 { 
     public string Name { get; set; } = string.Empty;
 

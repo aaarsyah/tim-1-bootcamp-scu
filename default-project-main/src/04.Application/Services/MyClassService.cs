@@ -52,7 +52,7 @@ public class MyClassService : IMyClassService
     }
 
   
-    public async Task<MyClassDto> CreateMyClassAsync(CreateMyClassDto createMyClassDto)
+    public async Task<MyClassDto> CreateMyClassAsync(CreateMyClassRequestDto createMyClassDto)
     {
         // Validate userId exists
         var userExists = await _context.Users.AnyAsync(c => c.Id == createMyClassDto.UserId);
@@ -92,7 +92,7 @@ public class MyClassService : IMyClassService
     }
 
  
-    public async Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto)
+    public async Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassRequestDto updateMyClassDto)
     {
         var myclass = await _context.MyClasses
             .FindAsync(id);

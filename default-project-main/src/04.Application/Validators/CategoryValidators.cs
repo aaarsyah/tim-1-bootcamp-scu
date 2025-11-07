@@ -6,7 +6,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for creating categories
     /// </summary>
-    public class CreateCategoryDtoValidator : AbstractValidator<CreateCategoryDto>
+    public class CreateCategoryDtoValidator : AbstractValidator<CreateCategoryRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -29,7 +29,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating categories
     /// </summary>
-    public class UpdateCategoryDtoValidator : AbstractValidator<UpdateCategoryDto>
+    public class UpdateCategoryDtoValidator : AbstractValidator<UpdateCategoryRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -51,7 +51,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for creating products
     /// </summary>
-    public class CreateCourseDtoValidator : AbstractValidator<CreateCourseDto>
+    public class CreateCourseDtoValidator : AbstractValidator<CreateCourseRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -81,7 +81,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating products
     /// </summary>
-    public class UpdateCourseDtoValidator : AbstractValidator<UpdateCourseDto>
+    public class UpdateCourseDtoValidator : AbstractValidator<UpdateCourseRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -109,7 +109,7 @@ namespace MyApp.Application.Validators
     }
 
     //Payment Method
-    public class CreatePaymentDtoValidator : AbstractValidator<CreatePaymentDto>
+    public class CreatePaymentDtoValidator : AbstractValidator<CreatePaymentMethodRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -128,7 +128,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating payment method
     /// </summary>
-    public class UpdatePaymentDtoValidator : AbstractValidator<UpdatePaymentDto>
+    public class UpdatePaymentDtoValidator : AbstractValidator<UpdatePaymentRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -145,7 +145,7 @@ namespace MyApp.Application.Validators
     }
    
     //MyClass
-    public class CreateMyClassDtoValidator : AbstractValidator<CreateMyClassDto>
+    public class CreateMyClassDtoValidator : AbstractValidator<CreateMyClassRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -163,7 +163,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating payment method
     /// </summary>
-    public class UpdateMyClassDtoValidator : AbstractValidator<UpdateMyClassDto>
+    public class UpdateMyClassDtoValidator : AbstractValidator<UpdateMyClassRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -179,7 +179,7 @@ namespace MyApp.Application.Validators
     }
 
     //Schedule
-    public class CreateScheduleDtoValidator : AbstractValidator<CreateScheduleDto>
+    public class CreateScheduleDtoValidator : AbstractValidator<CreateScheduleRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules
@@ -197,7 +197,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating payment method
     /// </summary>
-    public class UpdateScheduleDtoValidator : AbstractValidator<UpdateScheduleDto>
+    public class UpdateScheduleDtoValidator : AbstractValidator<UpdateScheduleRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules

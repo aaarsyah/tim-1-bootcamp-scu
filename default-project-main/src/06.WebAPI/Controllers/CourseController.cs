@@ -89,7 +89,7 @@ public class CourseController : ControllerBase // Inherit dari ControllerBase un
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ApiResponse<CourseDto>>> CreateCourse(CreateCourseDto createCourseDto)
+    public async Task<ActionResult<ApiResponse<CourseDto>>> CreateCourse(CreateCourseRequestDto createCourseDto)
     {
         var result = await _courseService.CreateCourseAsync(createCourseDto);
         return CreatedAtAction(nameof(GetCourse), new { id = result.Id }, ApiResponse<CourseDto>.SuccessResult(result));
@@ -108,7 +108,7 @@ public class CourseController : ControllerBase // Inherit dari ControllerBase un
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CourseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseDto updateCourseDto)
+    public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseRequestDto updateCourseDto)
     {
         //var validator = new UpdateCourseDtoValidator();
         //await validator.ValidateAndThrowAsync(updateCourseDto);

@@ -20,12 +20,12 @@ public interface ICourseService
     /// <summary>
     /// Create new product
     /// </summary>
-    Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto);
+    Task<CourseDto> CreateCourseAsync(CreateCourseRequestDto createCourseDto);
     
     /// <summary>
     /// Update product
     /// </summary>
-    Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto);
+    Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseRequestDto updateCourseDto);
     
     /// <summary>
     /// Delete product

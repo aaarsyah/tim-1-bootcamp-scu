@@ -55,7 +55,7 @@ public class AdminService : IAdminService
     }
 
 
-    public async Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseDto request)
+    public async Task<CourseDto?> CreateCourseAsync(AuthenticationHeaderValue authorization, CreateCourseRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -81,7 +81,7 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseDto request)
+    public async Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -157,7 +157,7 @@ public class AdminService : IAdminService
     }
 
 
-    public async Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryDto request)
+    public async Task<CategoryDto?> CreateCategoryAsync(AuthenticationHeaderValue authorization, CreateCategoryRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -183,7 +183,7 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryDto request)
+    public async Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -232,7 +232,7 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<List<PaymentDto>> GetAllPaymentMethodsAsync()
+    public async Task<List<PaymentMethodDto>> GetAllPaymentMethodsAsync()
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         try
@@ -240,7 +240,7 @@ public class AdminService : IAdminService
             var response = await _httpClient.GetAsync("api/Payment");
             if (response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentDto>>>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<List<PaymentMethodDto>>>();
 
                 if (apiResponse?.Data != null)
                 {
@@ -257,7 +257,7 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<PaymentDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentDto request)
+    public async Task<PaymentMethodDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentMethodRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -266,7 +266,7 @@ public class AdminService : IAdminService
             var response = await _httpClient.PostAsJsonAsync("api/Payment", request);
             if (response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentDto>>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentMethodDto>>();
 
                 if (apiResponse?.Data != null)
                 {
@@ -283,7 +283,7 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<PaymentDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentDto request)
+    public async Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
@@ -293,7 +293,7 @@ public class AdminService : IAdminService
             var response = await _httpClient.PutAsJsonAsync($"api/Payment/{id}", request);
             if (response.IsSuccessStatusCode)
             {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentDto>>();
+                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentMethodDto>>();
 
                 if (apiResponse?.Data != null)
                 {

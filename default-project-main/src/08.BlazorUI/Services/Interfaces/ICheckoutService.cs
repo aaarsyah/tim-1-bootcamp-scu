@@ -9,7 +9,7 @@ public interface ICheckoutService
     Task<bool> AddCourseToCartAsync(AuthenticationHeaderValue authorization, int scheduleId);
     Task<bool> RemoveCourseFromCart(AuthenticationHeaderValue authorization, int cartId);
     Task<CheckoutResponseDto?> CheckoutItemsAsync(AuthenticationHeaderValue authorization, CheckoutRequestDto request);
-    Task<List<PaymentDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization);
+    Task<List<PaymentMethodDto>> GetAllPaymentsAsync(AuthenticationHeaderValue authorization);
     Task<List<InvoiceDto>> GetAllInvoiceAdminAsync(AuthenticationHeaderValue authorization);
     Task<List<InvoiceDto>> GetSelfInvoicesAsync(AuthenticationHeaderValue authorization);
     Task<InvoiceDto?> GetInvoiceByIdAdminAsync(AuthenticationHeaderValue authorization, int invoiceId);

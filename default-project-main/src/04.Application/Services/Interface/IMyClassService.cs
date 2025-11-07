@@ -8,9 +8,9 @@ public interface IMyClassService
  
     Task<MyClassDto> GetMyClassByIdAsync(int id);
 
-    Task<MyClassDto> CreateMyClassAsync(CreateMyClassDto createMyClassDto);
+    Task<MyClassDto> CreateMyClassAsync(CreateMyClassRequestDto createMyClassDto);
     
-    Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassDto updateMyClassDto);
+    Task<MyClassDto> UpdateMyClassAsync(int id, UpdateMyClassRequestDto updateMyClassDto);
     
     Task<bool> DeleteMyClassAsync(int id);
  

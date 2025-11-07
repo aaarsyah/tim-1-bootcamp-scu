@@ -26,9 +26,9 @@ public class PaymentController : ControllerBase
     }
     [HttpGet]
     [Authorize]
-    [ProducesResponseType(typeof(ApiResponse<IEnumerable<PaymentDto>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<IEnumerable<PaymentMethodDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<ApiResponse<IEnumerable<PaymentDto>>>> GetAllPaymentMethods()
+    public async Task<ActionResult<ApiResponse<IEnumerable<PaymentMethodDto>>>> GetAllPaymentMethods()
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
@@ -36,15 +36,15 @@ public class PaymentController : ControllerBase
             throw new TokenInvalidException();
         }
         var result = await _paymentService.GetAllPaymentAsync();
-        return Ok(ApiResponse<IEnumerable<PaymentDto>>.SuccessResult(result));
+        return Ok(ApiResponse<IEnumerable<PaymentMethodDto>>.SuccessResult(result));
     }
 
     [HttpGet("{id}")]
     [Authorize]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<ApiResponse<PaymentDto>>> GetPayment(int id)
+    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> GetPayment(int id)
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
@@ -52,29 +52,29 @@ public class PaymentController : ControllerBase
             throw new TokenInvalidException();
         }
         var result = await _paymentService.GetPaymentByIdAsync(id);
-        return Ok(ApiResponse<PaymentDto>.SuccessResult(result));
+        return Ok(ApiResponse<PaymentMethodDto>.SuccessResult(result));
     }
 
 
     [HttpPost]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ApiResponse<PaymentDto>>> CreatePayment(CreatePaymentDto createPaymentDto)
+    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> CreatePayment(CreatePaymentMethodRequestDto createPaymentDto)
     {
         var result = await _paymentService.CreatePaymentAsync(createPaymentDto);
-        return CreatedAtAction(nameof(GetPayment), new { id = result.Id }, ApiResponse<PaymentDto>.SuccessResult(result));
+        return CreatedAtAction(nameof(GetPayment), new { id = result.Id }, ApiResponse<PaymentMethodDto>.SuccessResult(result));
     }
 
 
     [HttpPut("{id}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<PaymentDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<PaymentDto>>> UpdatePayment(int id, UpdatePaymentDto updatePaymentDto)
+    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> UpdatePayment(int id, UpdatePaymentRequestDto updatePaymentDto)
     {
         var result = await _paymentService.UpdatePaymentAsync(id, updatePaymentDto);
-        return Ok(ApiResponse<PaymentDto>.SuccessResult(result));
+        return Ok(ApiResponse<PaymentMethodDto>.SuccessResult(result));
     }
 
 

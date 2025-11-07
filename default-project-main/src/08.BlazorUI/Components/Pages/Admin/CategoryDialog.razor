@@ -94,7 +94,7 @@
 
         if (IsUpdating)
         {
-            UpdateCategoryDto updateCategoryDto = new()
+            UpdateCategoryRequestDto updateCategoryDto = new()
             {
                 Name = Category.Name,
                 LongName = Category.LongName,
@@ -112,7 +112,7 @@
         }
         else
         {
-            CreateCategoryDto createCategoryDto = new()
+            CreateCategoryRequestDto createCategoryDto = new()
             {
                 Name = Category.Name,
                 LongName = Category.LongName,

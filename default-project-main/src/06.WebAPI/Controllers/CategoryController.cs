@@ -69,7 +69,7 @@ public class CategoryController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryDto createCategoryDto, HttpStatusCode statusCode = HttpStatusCode.Created)
+    public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryRequestDto createCategoryDto, HttpStatusCode statusCode = HttpStatusCode.Created)
     {
         var result = await _categoryService.CreateCategoryAsync(createCategoryDto);
         //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
@@ -89,7 +89,7 @@ public class CategoryController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
+    public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(int id, UpdateCategoryRequestDto updateCategoryDto)
     {
         var result = await _categoryService.UpdateCategoryAsync(id, updateCategoryDto);
         return Ok(ApiResponse<CategoryDto>.SuccessResult(result));

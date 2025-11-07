@@ -55,7 +55,7 @@
     [Parameter]
     public CheckoutRequestDto CheckoutRequest { get; set; } = null!;
 
-    private List<PaymentDto> payments = new();
+    private List<PaymentMethodDto> payments = new();
     private string? selectedPayment;
     private int? selectedPaymentId;
 
@@ -91,7 +91,7 @@
         }
     }
 
-    private void SelectPayment(PaymentDto payment)
+    private void SelectPayment(PaymentMethodDto payment)
     {
         selectedPayment = payment.Name;
         selectedPaymentId = payment.Id;

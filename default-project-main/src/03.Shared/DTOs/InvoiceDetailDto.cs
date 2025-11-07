@@ -28,19 +28,3 @@ public class InvoiceDetailDto
     public DateOnly ScheduleDate { get; set; }
     
 }
-
-/// <summary>
-/// Create Invoice request
-/// </summary>
-public class CreateInvoiceDetailDto
-{
-    /// <summary>
-    /// RefCode
-    /// </summary>
-    public string RefCode { get; set; } = string.Empty;
-
-    /// <summary>
-    /// TanggalBeli
-    /// </summary>
-    public DateTime CreatedAt { get; set; }
-}

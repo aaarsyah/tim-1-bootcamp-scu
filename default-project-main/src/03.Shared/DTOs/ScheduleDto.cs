@@ -11,13 +11,13 @@ public class ScheduleDto
 
 }
 
-public class CreateScheduleDto
+public class CreateScheduleRequestDto
 {
 
     public DateOnly Date { get; set; }
     public int CourseId { get; set; }
 }
-public class UpdateScheduleDto
+public class UpdateScheduleRequestDto
 { 
  
     public DateOnly Date { get; set; }

@@ -146,7 +146,7 @@ public class CourseService : ICourseService
     /// <summary>
     /// Create new product
     /// </summary>
-    public async Task<CourseDto> CreateCourseAsync(CreateCourseDto createCourseDto)
+    public async Task<CourseDto> CreateCourseAsync(CreateCourseRequestDto createCourseDto)
     {
         // Validate category exists
         var categoryExists = await _context.Categories.AnyAsync(c => c.Id == createCourseDto.CategoryId);
@@ -192,7 +192,7 @@ public class CourseService : ICourseService
     /// <summary>
     /// Update product
     /// </summary>
-    public async Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseDto updateCourseDto)
+    public async Task<CourseDto> UpdateCourseAsync(int id, UpdateCourseRequestDto updateCourseDto)
     {
         var course = await _context.Courses
             .Include(p => p.Category)

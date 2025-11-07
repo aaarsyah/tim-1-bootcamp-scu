@@ -25,15 +25,15 @@ public class PaymentService : IPaymentService
     }
 
 
-    public async Task<IEnumerable<PaymentDto>> GetAllPaymentAsync()
+    public async Task<IEnumerable<PaymentMethodDto>> GetAllPaymentAsync()
     {
         var payments = await _context.PaymentMethods
             .ToListAsync();
-        return _mapper.Map<IEnumerable<PaymentDto>>(payments);
+        return _mapper.Map<IEnumerable<PaymentMethodDto>>(payments);
     }
 
 
-    public async Task<PaymentDto> GetPaymentByIdAsync(int id)
+    public async Task<PaymentMethodDto> GetPaymentByIdAsync(int id)
     {
         var payment = await _context.PaymentMethods
             .FirstOrDefaultAsync(c => c.Id == id);
@@ -41,11 +41,11 @@ public class PaymentService : IPaymentService
         {
             throw new NotFoundException("PaymentMethod Id", id);
         }
-        return _mapper.Map<PaymentDto>(payment);
+        return _mapper.Map<PaymentMethodDto>(payment);
     }
 
   
-    public async Task<PaymentDto> CreatePaymentAsync(CreatePaymentDto createPaymentDto)
+    public async Task<PaymentMethodDto> CreatePaymentAsync(CreatePaymentMethodRequestDto createPaymentDto)
     {
         var payment = _mapper.Map<PaymentMethod>(createPaymentDto);
 
@@ -75,11 +75,11 @@ public class PaymentService : IPaymentService
         _logger.LogInformation("Payment created: {PaymentName} with ID: {PaymentId}", 
             payment.Name, payment.Id);
 
-        return _mapper.Map<PaymentDto>(payment);
+        return _mapper.Map<PaymentMethodDto>(payment);
     }
 
  
-    public async Task<PaymentDto> UpdatePaymentAsync(int id, UpdatePaymentDto updatePaymentDto)
+    public async Task<PaymentMethodDto> UpdatePaymentAsync(int id, UpdatePaymentRequestDto updatePaymentDto)
     {
         var payment = await _context.PaymentMethods
             .FindAsync(id);
@@ -95,7 +95,7 @@ public class PaymentService : IPaymentService
         
         _logger.LogInformation("Payment updated: {PaymentId}", id);
 
-        return _mapper.Map<PaymentDto>(payment);
+        return _mapper.Map<PaymentMethodDto>(payment);
     }
 
   
