@@ -89,6 +89,7 @@ public class AdminService : IAdminService
         try
         {
             var response = await _httpClient.PutAsJsonAsync($"api/Course/{id}", request);
+            Console.WriteLine($"Response: {response.Content.ReadAsStringAsync().Result}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
@@ -290,7 +291,6 @@ public class AdminService : IAdminService
         try
         {
             var response = await _httpClient.PutAsJsonAsync($"api/Payment/{id}", request);
-            //Console.WriteLine($"Response: {response.Content.ReadAsStringAsync().Result}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentDto>>();

@@ -1,7 +1,9 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using MyApp.Shared.DTOs;
 using MyApp.Infrastructure.Data;
 using MyApp.WebAPI.Services;
-using FluentValidation;
+using MyApp.Application.Validators;
 using System.Reflection;
 
 namespace MyApp.WebAPI.Extensions;
@@ -159,11 +161,14 @@ public static class ServiceCollectionExtensions
     /// <returns>IServiceCollection untuk method chaining</returns>
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        // Scan assembly saat ini dan daftarkan semua classes yang implement AbstractValidator
-        // Assembly.GetExecutingAssembly() = assembly dimana code ini dijalankan
+        // Scan assembly yang mengandung semua classes yang implement AbstractValidator
+        // Assembly.GetExecutingAssembly() = assembly dimana code ini dijalankan (tidak mengandung classes yang dibutuhkan)
+        // Karena telah dipindahkan ke Application project, perlu mengambil assembly dari Application project
+        // typeof(RegisterRequestValidator).Assembly
+        // atau
+        // Assembly.GetAssembly(typeof(RegisterRequestValidator))
         // Akan menemukan: CreateCategoryDtoValidator, UpdateCategoryDtoValidator, dll
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        
+        services.AddValidatorsFromAssembly(typeof(RegisterRequestValidator).Assembly);
         return services;
     }
 

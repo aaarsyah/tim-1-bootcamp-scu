@@ -149,6 +149,41 @@ public class AuthenticationService : IAuthenticationService
             }
         });
     }
+
+    /// <summary>
+    /// Logout User
+    /// Invalidate refresh token
+    /// </summary>
+    public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(a => a.Email == request.Email);
+        if (user == null)
+        {
+            _logger.LogWarning("Confirm email failed: User not found or inactive for email: {Email}", request.Email);
+            throw new ValidationException("Invalid email");
+        }
+        // Uncomment bila dibutuhkan: Cek apakah user masih belum confirm email, bila sudah confirm email, batalkan
+        //if (user.EmailConfirmed)
+        //{
+        //    _logger.LogWarning("Confirm email failed: User already confirmed email: {Email}", request.Email);
+        //    throw new ValidationException("Invalid email");
+        //}
+        // Cek token valid dan belum expired
+        if (user.EmailConfirmationToken != request.EmailConfirmationToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
+        {
+            throw new ValidationException("Invalid or expired confirmation token");
+        }
+        // Tandai email sebagai terverifikasi
+        user.EmailConfirmed = true;
+        user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
+        user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        _logger.LogInformation("Confirm email success for: {Email}", request.Email);
+        return true;
+    }
     /// <summary>
     /// Login User
     /// Validasi credentials dan generate JWT tokens
@@ -316,40 +351,7 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
-    /// <summary>
-    /// Logout User
-    /// Invalidate refresh token
-    /// </summary>
-    public async Task<bool> ConfirmEmailAsync(ConfirmEmailRequestDto request)
-    {
-        var user = await _context.Users
-            .FirstOrDefaultAsync(a => a.Email == request.Email);
-        if (user == null)
-        {
-            _logger.LogWarning("Confirm email failed: User not found or inactive for email: {Email}", request.Email);
-            throw new ValidationException("Invalid email");
-        }
-        // Uncomment bila dibutuhkan: Cek apakah user masih belum confirm email, bila sudah confirm email, batalkan
-        //if (user.EmailConfirmed)
-        //{
-        //    _logger.LogWarning("Confirm email failed: User already confirmed email: {Email}", request.Email);
-        //    throw new ValidationException("Invalid email");
-        //}
-        // Cek token valid dan belum expired
-        if (user.EmailConfirmationToken != request.AccessToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
-        {
-            throw new ValidationException("Invalid or expired confirmation token");
-        }
-        // Tandai email sebagai terverifikasi
-        user.EmailConfirmed = true;
-        user.EmailConfirmationToken = null; // hapus token agar tidak bisa digunakan lagi
-        user.EmailConfirmationTokenExpiry = DateTime.UtcNow;
-
-        await _context.SaveChangesAsync();
-
-        _logger.LogInformation("Confirm email success for: {Email}", request.Email);
-        return true;
-    }
+    
 
     /// <summary> 
     /// Change Password for authenticated user = change password ketika sudah login di profile misalnya
@@ -372,7 +374,7 @@ public class AuthenticationService : IAuthenticationService
         //}
 
         // Verify password
-        if (!_passwordService.VerifyPassword(request.CurrentPassword, user.PasswordHash))
+        if (!_passwordService.VerifyPassword(request.Password, user.PasswordHash))
         {
             _logger.LogWarning("Password change failed for user: {UserId}", userId);
             throw new ValidationException("Invalid password.");

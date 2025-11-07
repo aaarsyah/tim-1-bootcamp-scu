@@ -7,29 +7,10 @@ namespace MyApp.Shared.DTOs;
 /// </summary>
 public class RegisterRequestDto
 {
-    [Required(ErrorMessage = "Name is required")]
-    [StringLength(64, ErrorMessage = "Name length cannot exceed 64 characters")] // Sesuai dengan batasan di database
     public string Name { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "Email is required")]
-    [StringLength(256, ErrorMessage = "Email length cannot exceed 256 characters")] // Sesuai dengan batasan di database
-    [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "Password is required")]
-    [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters and cannot exceed 100 characters")]
-    // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
-        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
     public string NewPassword { get; set; } = string.Empty;
-    
-    [Required(ErrorMessage = "Confirm password is required")]
-    [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
     public string ConfirmNewPassword { get; set; } = string.Empty;
-
-    //ketika registrasi email-confirm = false
-    //ketika confirm-email -> email-confirm = true
-    //isAdmin (role) = hanya dapat diubah pada tampilan Admin
 }
 
 /// <summary>
@@ -37,13 +18,8 @@ public class RegisterRequestDto
 /// </summary>
 public class LoginRequestDto
 {
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Password is required")]
     public string Password { get; set; } = string.Empty;
-
     public bool RememberMe { get; set; } = false; //checkbox remember me
 }
 
@@ -52,29 +28,15 @@ public class LoginRequestDto
 /// </summary>
 public class ForgotPasswordRequestDto
 {
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = string.Empty;
 }
 
 // Reset Password Request (GET) = Link
 public class ResetPasswordRequestDto
 {
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = string.Empty;
-    [Required(ErrorMessage = "Token is required")]
     public string PasswordResetToken { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Password is required")]
-    [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
-    // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
-        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
     public string NewPassword { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Confirm password is required")]
-    [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
     public string ConfirmNewPassword { get; set; } = string.Empty;
 }
 
@@ -82,7 +44,7 @@ public class ResetPasswordRequestDto
 public class ConfirmEmailRequestDto
 {
     public string Email { get; set; } = string.Empty;
-    public string AccessToken { get; set; } = string.Empty;
+    public string EmailConfirmationToken { get; set; } = string.Empty;
 }
 
 /// <summary>
@@ -137,10 +99,7 @@ public class ClaimDto
 /// </summary>
 public class RefreshTokenRequestDto
 {
-    [Required]
     public string AccessToken { get; set; } = string.Empty;
-    
-    [Required]
     public string RefreshToken { get; set; } = string.Empty;
 }
 
@@ -149,18 +108,8 @@ public class RefreshTokenRequestDto
 /// </summary>
 public class ChangePasswordRequestDto
 {
-    [Required]
-    public string CurrentPassword { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Password is required")]
-    [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
-    // special character yang dimaksud merujuk pada karakter yang terdaftar disini: https://owasp.org/www-community/password-special-characters
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[ -/:-@[-`{-~]).+$",
-        ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
+    public string Password { get; set; } = string.Empty;
     public string NewPassword { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Confirm password is required")]
-    [Compare("NewPassword", ErrorMessage = "Password and confirmation password do not match")]
     public string ConfirmNewPassword { get; set; } = string.Empty;
 }
 

@@ -23,15 +23,14 @@
                       Variant="Variant.Outlined"
                       Required="true"
                       RequiredError="Email Harus diisi!"
-                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah '@' dan '.'"})" />
-
-
+                      Validation="@(new EmailAddressAttribute() { ErrorMessage = "Format Email salah" })" />
         <MudTextField @bind-Value="_loginModel.Password"
                       Label="Password"
                       Variant="Variant.Outlined"
                       InputType="@_passwordInputType"
                       Required="true"
                       RequiredError="Password Harus Diisi!"
+                      MaxLength="72"
                       Adornment="Adornment.End"
                       AdornmentIcon="@_passwordIcon"
                       OnAdornmentClick="TogglePasswordVisibility"

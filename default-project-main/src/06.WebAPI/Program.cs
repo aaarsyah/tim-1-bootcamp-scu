@@ -7,15 +7,13 @@ using MyApp.WebAPI.Extensions;
 // Import custom middleware dari folder Middleware
 using MyApp.WebAPI.Middleware;
 using MyApp.Infrastructure.Configuration;
-using MyApp.Domain.Models;
 // Import FluentValidation ASP.NET Core integration
-using FluentValidation.AspNetCore;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 // Import System.Reflection untuk assembly operations
 using System.Reflection;
 using Serilog;
 using Serilog.Events;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -153,7 +151,11 @@ try
         cfg.AddProfile<MappingProfile>();
     });
 
-    builder.Services.AddFluentValidationAutoValidation();
+    builder.Services.AddFluentValidationAutoValidation(configuration =>
+    {
+        // Isi konfigurasi di sini
+    });
+
 
     builder.Services.AddCorsPolicy();
 

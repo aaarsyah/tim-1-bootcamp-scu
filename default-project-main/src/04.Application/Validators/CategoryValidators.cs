@@ -1,7 +1,7 @@
 using FluentValidation;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.WebAPI.Validators
+namespace MyApp.Application.Validators
 {
     /// <summary>
     /// Validator for creating categories
@@ -15,10 +15,10 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Category name is required")
-                .Length(2, 100).WithMessage("Category name must be between 2 and 100 characters");
+                .Length(2, 20).WithMessage("Category name must be between 2 and 20 characters");
 
             RuleFor(x => x.Description)
-                .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 4000 characters");
 
             RuleFor(x => x.ImageUrl)
                 .NotEmpty().WithMessage("Image Category is required");
@@ -38,10 +38,10 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Category name is required")
-                .Length(2, 100).WithMessage("Category name must be between 2 and 100 characters");
+                .Length(2, 20).WithMessage("Category name must be between 2 and 100 characters");
 
             RuleFor(x => x.Description)
-                .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 4000 characters");
 
             RuleFor(x => x.ImageUrl)
                 .NotEmpty().WithMessage("Image Category is required");
@@ -60,11 +60,11 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Course name is required")
-                .Length(2, 150).WithMessage("Course name must be between 2 and 200 characters");
+                .Length(2, 150).WithMessage("Course name must be between 2 and 150 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
-                .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 4000 characters");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
@@ -90,11 +90,11 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Course name is required")
-                .Length(2, 150).WithMessage("Course name must be between 2 and 200 characters");
+                .Length(2, 150).WithMessage("Course name must be between 2 and 150 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required")
-                .MaximumLength(4000).WithMessage("Description cannot exceed 1000 characters");
+                .MaximumLength(4000).WithMessage("Description cannot exceed 4000 characters");
 
             RuleFor(x => x.Price)
                 .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
@@ -118,7 +118,7 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Payment name is required")
-                .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
+                .Length(2, 20).WithMessage("Payment name must be between 2 and 20 characters");
 
             RuleFor(x => x.LogoUrl)
                 .NotEmpty().WithMessage("Logo Payment is required");
@@ -137,7 +137,7 @@ namespace MyApp.WebAPI.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Payment name is required")
-                .Length(2, 100).WithMessage("Payment name must be between 2 and 100 characters");
+                .Length(2, 20).WithMessage("Payment name must be between 2 and 20 characters");
 
             RuleFor(x => x.LogoUrl)
                 .NotEmpty().WithMessage("Logo Payment is required");

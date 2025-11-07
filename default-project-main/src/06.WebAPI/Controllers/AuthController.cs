@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyApp.Shared.DTOs;
 using MyApp.Base.Exceptions;
 using MyApp.WebAPI.Services;
-using MyApp.WebAPI.Validators;
+using MyApp.Application.Validators;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;

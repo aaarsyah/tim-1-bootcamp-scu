@@ -1,6 +1,8 @@
 // Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.Application.Validators;
 using MyApp.Infrastructure.Configuration;
 // Import DTOs untuk request/response objects
 using MyApp.Shared.DTOs;
@@ -108,6 +110,8 @@ public class CourseController : ControllerBase // Inherit dari ControllerBase un
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<CourseDto>>> UpdateCourse(int id, UpdateCourseDto updateCourseDto)
     {
+        //var validator = new UpdateCourseDtoValidator();
+        //await validator.ValidateAndThrowAsync(updateCourseDto);
         var result = await _courseService.UpdateCourseAsync(id, updateCourseDto);
         return Ok(ApiResponse<CourseDto>.SuccessResult(result));
     }

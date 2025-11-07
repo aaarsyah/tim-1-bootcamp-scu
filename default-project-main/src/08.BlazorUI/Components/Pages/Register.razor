@@ -29,7 +29,7 @@
                       Required="true"
                       RequiredError="Email Harus diisi!"
                       MaxLength="256"
-                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email Salah"})" />
+                      Validation="@(new EmailAddressAttribute() {ErrorMessage = "Format Email salah"})" />
         <MudTextField T="string"
                       Label="Password"
                       Variant="Variant.Outlined"
@@ -38,7 +38,7 @@
                       InputType="@_newPasswordInputType"
                       Required="true"
                       RequiredError="Password Harus Diisi!"
-                      MaxLength="100"
+                      MaxLength="72"
                       Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))"
                       Adornment="Adornment.End"
                       AdornmentIcon="@_newPasswordIcon"
@@ -51,8 +51,8 @@
                       InputType="@_confirmPasswordInputType"
                       Required="true"
                       RequiredError="Konfirmasi Password Harus Diisi!"
-                      MaxLength="100"
-                      Validation="@(new Func<string, string>(PasswordMatch))"
+                      MaxLength="72"
+                      Validation="@(new Func<string, string?>(PasswordMatch))"
                       Adornment="Adornment.End"
                       AdornmentIcon="@_confirmPasswordIcon"
                       OnAdornmentClick="ToggleConfirmPasswordVisibility"
@@ -152,11 +152,11 @@
             yield return "Password must contain at least one special character";
     }
 
-    private string PasswordMatch(string arg)
+    private string? PasswordMatch(string arg)
     {
         if (pwField1.Value != arg)
             return "Password tidak sesuai";
-        return string.Empty;
+        return null;
     }
 
     private async Task OnConfirm()

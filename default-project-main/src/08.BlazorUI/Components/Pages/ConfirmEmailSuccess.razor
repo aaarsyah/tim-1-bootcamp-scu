@@ -46,16 +46,16 @@
 
         // Set email dan token dari query parameters
         _confirmEmailModel.Email = Uri.UnescapeDataString(Email ?? string.Empty);
-        _confirmEmailModel.AccessToken = Uri.UnescapeDataString(Token ?? string.Empty);
+        _confirmEmailModel.EmailConfirmationToken = Uri.UnescapeDataString(Token ?? string.Empty);
 
 
         try
         {
             // Debug: Check if model has values
-            Console.WriteLine($"DEBUG - Email: '{_confirmEmailModel.Email}', Token: '{_confirmEmailModel.AccessToken}'");
+            Console.WriteLine($"DEBUG - Email: '{_confirmEmailModel.Email}', Token: '{_confirmEmailModel.EmailConfirmationToken}'");
 
             if (string.IsNullOrEmpty(_confirmEmailModel.Email) ||
-                string.IsNullOrEmpty(_confirmEmailModel.AccessToken))
+                string.IsNullOrEmpty(_confirmEmailModel.EmailConfirmationToken))
             {
                 Snackbar.Add("Email confirmation token invalid.", Severity.Warning);
                 return;
