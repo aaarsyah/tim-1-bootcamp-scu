@@ -1,9 +1,11 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Shared.DTOs;
-using MyApp.Infrastructure.Data;
-using MyApp.WebAPI.Services;
 using MyApp.Application.Validators;
+using MyApp.Infrastructure.Data;
+using MyApp.Infrastructure.Data.Repositories;
+using MyApp.Infrastructure.Data.Repositories.Interfaces;
+using MyApp.Shared.DTOs;
+using MyApp.WebAPI.Services;
 using System.Reflection;
 
 namespace MyApp.WebAPI.Extensions;
@@ -23,30 +25,41 @@ public static class ServiceCollectionExtensions
     {
         // Daftarkan CategoryService dengan lifetime Scoped (satu instance per HTTP request)
         // Interface ICategoryService akan di-resolve ke implementasi CategoryService
-        services.AddScoped<ICategoryService, CategoryService>();
         
         // Daftarkan ProductService dengan lifetime Scoped
         // Interface IProductService akan di-resolve ke implementasi ProductService
         // Purpose: Setup dependency injection
 
-        services.AddScoped<ICourseService, CourseService>();
-
-        services.AddScoped<IPaymentService, PaymentService>();
-        services.AddScoped<IMyClassService, MyClassService>();
-        services.AddScoped<IScheduleService, ScheduleService>();
-        services.AddScoped<ICartItemService, CartItemService>();
-        services.AddScoped<IInvoiceService, InvoiceService>();
-        services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
-
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
-        
-        services.AddScoped<IUserManagementService, UserManagementService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IPasswordService, PasswordService>();
 
 
         // Return services untuk method chaining (builder pattern)
+        return services;
+    }
+    public static IServiceCollection AddApplicationUnitOfWork(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        return services;
+    }
+    public static IServiceCollection AddApplicationRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+        // Daftarkan ProductRepository dengan lifetime Scoped
+        // Interface IProductRepository akan di-resolve ke implementasi ProductRepository
+        // Purpose: Setup dependency injection
+
+        services.AddScoped<ICourseRepository, CourseRepository>();
+
+        services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+        services.AddScoped<IMyClassRepository, MyClassRepository>();
+        services.AddScoped<IScheduleRepository, ScheduleRepository>();
+        services.AddScoped<ICartItemRepository, CartItemRepository>();
+        services.AddScoped<IInvoiceManagerRepository, InvoiceManagerRepository>();
+
+        services.AddScoped<IUserManagerRepository, UserManagerRepository>();
         return services;
     }
 

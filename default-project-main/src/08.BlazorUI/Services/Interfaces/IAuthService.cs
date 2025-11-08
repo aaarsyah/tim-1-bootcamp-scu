@@ -11,7 +11,6 @@ public interface IAuthService
     Task<bool> ChangePasswordAsync(AuthenticationHeaderValue authorization, ChangePasswordRequestDto request);
     Task<bool> ForgotPasswordAsync(ForgotPasswordRequestDto request);
     Task<bool> ResetPasswordAsync(ResetPasswordRequestDto request);
-    Task<UserDto?> GetCurrentUserAsync(AuthenticationHeaderValue authorization);
     Task LogoutAsync(AuthenticationHeaderValue authorization);
     Task<bool> IsLoggedInAsync();
     Task<bool> IsAdminAsync();

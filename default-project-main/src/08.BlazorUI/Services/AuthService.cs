@@ -154,27 +154,6 @@ public class AuthService : IAuthService
             return false;
         }
     }
-    public async Task<UserDto?> GetCurrentUserAsync(AuthenticationHeaderValue authorization)
-    {
-        var _httpClient = _factory.CreateClient("WebAPI");
-        _httpClient.DefaultRequestHeaders.Authorization = authorization;
-        try
-        {
-            var response = await _httpClient.GetAsync("api/auth/me");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
-                return apiResponse?.Data;
-            }
-
-            return null;
-        }
-        catch
-        {
-            return null;
-        }
-    }
     public async Task LogoutAsync(AuthenticationHeaderValue authorization)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
@@ -185,19 +164,19 @@ public class AuthService : IAuthService
 
             if (!response.IsSuccessStatusCode)
             {
-                // mungkin error karena token invalid, kita buang tokennya
+                // mungkin error karena token invalid, buang token dan anggap user sudah logout
                 await ClearTokensAsync();
 
-                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
+                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout();
                 return;
             }
             var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<UserDto>>();
             if (apiResponse == null)
             {
-                // mungkin error karena token invalid, kita buang tokennya
+                // mungkin error karena token invalid, buang token dan anggap user sudah logout
                 await ClearTokensAsync();
 
-                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout(); // Bagaimanapun juga user tidak ter-login
+                //((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout();
                 return;
             }
             //Berhasil
@@ -208,7 +187,7 @@ public class AuthService : IAuthService
         }
         catch
         {
-            // lost connection? Don't logout users yet.
+            // mungkin error karena putus koneksi? harusnya tidak akan terjadi ini
             return;
         }
 

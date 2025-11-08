@@ -32,7 +32,7 @@ namespace MyApp.Application.Mappings
             // PaymentMethod mappings
             CreateMap<PaymentMethod, PaymentMethodDto>();
             CreateMap<CreatePaymentMethodRequestDto, PaymentMethod>();
-            CreateMap<UpdatePaymentRequestDto, PaymentMethod>();
+            CreateMap<UpdatePaymentMethodRequestDto, PaymentMethod>();
 
             // User mappings
             CreateMap<User, UserDto>()

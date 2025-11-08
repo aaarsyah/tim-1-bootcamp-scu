@@ -80,8 +80,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("Courses");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -94,10 +93,10 @@ namespace MyApp.Infrastructure.Data
                         .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.Price)
                         .IsRequired()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint"); // tipe data di SQL server, setara dengan tipe data long
                 entity.Property(e => e.IsActive)
                         .IsRequired()
-                        .HasColumnType("bit")
+                        .HasColumnType("bit") // tipe data di SQL server, setara dengan tipe data bool
                         .HasDefaultValue(true);
                 entity.Property(e => e.CreatedAt)
                         .IsRequired()
@@ -132,8 +131,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("Categories");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -172,8 +170,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("Schedules");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -204,13 +201,7 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.CreatedAt)
                     .IsRequired()
                     .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(MAX_USERNAME_LENGTH)
-                    .HasDefaultValue("System");
                 entity.Property(e => e.UpdatedAt);
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Properties
                 entity.Property(e => e.IsActive)
                         .IsRequired()
@@ -292,15 +283,9 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.CreatedAt)
                     .IsRequired()
                     .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(MAX_USERNAME_LENGTH)
-                    .HasDefaultValue("System");
                 entity.Property(e => e.UpdatedAt);
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Indexes
-                //entity.HasIndex(e => e.Name).IsUnique(); //TODO: Uncomment this when it's ready
+                //entity.HasIndex(e => e.Name).IsUnique(); // Uncomment ini jika perlu indexing dari nama user
                 // Properties
                 entity.Property(e => e.Name)
                     .HasMaxLength(30);
@@ -320,13 +305,7 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.CreatedAt)
                     .IsRequired()
                     .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(MAX_USERNAME_LENGTH)
-                    .HasDefaultValue("System");
                 entity.Property(e => e.UpdatedAt);
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Relationship dengan ItemCart
                 entity.HasOne(e => e.User)
                     .WithMany(e => e.UserRoles)
@@ -351,13 +330,7 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.CreatedAt)
                     .IsRequired()
                     .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(MAX_USERNAME_LENGTH)
-                    .HasDefaultValue("System");
                 entity.Property(e => e.UpdatedAt);
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Relationship dengan User
                 entity.HasOne(e => e.User)
                     .WithMany(e2 => e2.UserClaims)
@@ -375,13 +348,7 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.CreatedAt)
                     .IsRequired()
                     .HasDefaultValueSql("GETUTCDATE()");
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(MAX_USERNAME_LENGTH)
-                    .HasDefaultValue("System");
                 entity.Property(e => e.UpdatedAt);
-                entity.Property(e => e.UpdatedBy)
-                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 // Relationship dengan User
                 entity.HasOne(e => e.Role)
                     .WithMany(u => u.RoleClaims)
@@ -401,8 +368,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("CartItems");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -425,8 +391,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("MyClasses");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -449,8 +414,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("Invoices");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Unique Index
@@ -487,8 +451,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("InvoiceDetails");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 entity.Property(e => e.CourseName)
@@ -515,8 +478,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("PaymentMethods");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -550,8 +512,7 @@ namespace MyApp.Infrastructure.Data
                 entity.ToTable("AuditLogs");
                 // Base Entity
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.RefId)
-                    .IsUnique();
+                entity.HasIndex(e => e.RefId).IsUnique();
                 entity.Property(e => e.RefId)
                     .IsRequired();
                 // Properties
@@ -594,8 +555,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Drummer class",
                     Description = "Pelajari teknik bermain drum dari dasar hingga mahir, termasuk ritme, koordinasi tangan-kaki, dan improvisasi.",
                     ImageUrl = "img/Class1.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -605,8 +565,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Pianist class",
                     Description = "Kuasai piano dari dasar sampai teknik lanjutan, termasuk membaca not, improvisasi, dan interpretasi musik.",
                     ImageUrl = "img/Class2.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -616,8 +575,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Guitarist class",
                     Description = "Pelajari gitar akustik dan elektrik, teknik petikan, chord, solo, dan improvisasi kreatif.",
                     ImageUrl = "img/Class3.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -627,8 +585,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Bassist class",
                     Description = "Belajar bass untuk menciptakan groove yang solid, memahami teknik slap, fingerstyle, dan improvisasi musik.",
                     ImageUrl = "img/Class4.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -638,8 +595,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Violinist class",
                     Description = "Pelajari biola dari teknik dasar, membaca not, hingga ekspresi musik klasik dan modern.",
                     ImageUrl = "img/Class5.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -649,8 +605,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Singer class",
                     Description = "Kembangkan kemampuan vokal, teknik pernapasan, kontrol nada, serta ekspresi dan interpretasi lagu.",
                     ImageUrl = "img/Class6.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -660,8 +615,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Flutist class",
                     Description = "Belajar flute dari teknik dasar embouchure, fingering, hingga memainkan melodi klasik dan kontemporer.",
                     ImageUrl = "img/Class7.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 },
                 new Category
                 {
@@ -671,8 +625,7 @@ namespace MyApp.Infrastructure.Data
                     LongName = "Saxophonist class",
                     Description = "Kuasai saxophone dengan belajar teknik embouchure, breath control, improvisasi jazz, dan interpretasi musik modern.",
                     ImageUrl = "img/Class8.svg",
-                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System"
+                    CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
             modelBuilder.Entity<Course>().HasData(
@@ -685,7 +638,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing1.svg",
                     Price = 8500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 1
                 },
                 new Course
@@ -697,7 +649,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing4.svg",
                     Price = 2200000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 1
                 },
                 new Course
@@ -709,7 +660,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing5.svg",
                     Price = 11650000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 2
                 },
                 new Course
@@ -721,7 +671,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing22.svg",
                     Price = 7000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 2
                 },
                 new Course
@@ -733,7 +682,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing2.svg",
                     Price = 1600000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 3
                 },
                 new Course
@@ -745,7 +693,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing33.svg",
                     Price = 3500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 3
                 },
                 new Course
@@ -757,7 +704,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing44.svg",
                     Price = 2000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 4
                 },
                 new Course
@@ -769,7 +715,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing45.svg",
                     Price = 4500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 4
                 },
                 new Course
@@ -781,7 +726,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing3.svg",
                     Price = 3000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 5
                 },
                 new Course
@@ -793,7 +737,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing55.svg",
                     Price = 6000000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 5
                 },
                 new Course
@@ -805,7 +748,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing66.svg",
                     Price = 2500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 6
                 },
                 new Course
@@ -817,7 +759,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing66.svg",
                     Price = 5500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 6
                 },
                 new Course
@@ -829,7 +770,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing67.svg",
                     Price = 2200000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 7
                 },
                 new Course
@@ -841,7 +781,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing77.svg",
                     Price = 4800000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 7
                 },
                 new Course
@@ -853,7 +792,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing6.svg",
                     Price = 7350000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 8
                 },
                 new Course
@@ -865,7 +803,6 @@ namespace MyApp.Infrastructure.Data
                     ImageUrl = "img/Landing88.svg",
                     Price = 4500000,
                     CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                    CreatedBy = "System",
                     CategoryId = 8
                 }
             );
@@ -1219,8 +1156,7 @@ namespace MyApp.Infrastructure.Data
                     PasswordHash = "$2a$11$0exJ.g3UuG5OkMlez9izxO14dodhcBEkxV49ryAGqbL0urtb3L5Cq", //Password: Admin123@
                     Email = "admin@applemusic.com",
                     EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new User
                 {
@@ -1230,8 +1166,7 @@ namespace MyApp.Infrastructure.Data
                     Name = "Nur Imam Iskandar",
                     Email = "nurimamiskandar@gmail.com",
                     EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 }
                 ,
                 new User
@@ -1242,8 +1177,7 @@ namespace MyApp.Infrastructure.Data
                     Name = "Iskandar",
                     Email = "imam.stmik15@gmail.com",
                     EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new User
                 {
@@ -1254,8 +1188,7 @@ namespace MyApp.Infrastructure.Data
                     Name = "Dummy User",
                     Email = "iniemaildummysaya@gmail.com",
                     EmailConfirmed = false,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new User
                 {
@@ -1265,8 +1198,7 @@ namespace MyApp.Infrastructure.Data
                     Name = "yusri sahrul",
                     Email = "yusrisahrul.works@gmail.com",
                     EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new User
                 {
@@ -1276,8 +1208,7 @@ namespace MyApp.Infrastructure.Data
                     Name = "yusri sahrul test",
                     Email = "yusribootcamp@gmail.com",
                     EmailConfirmed = true,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 }
             );
 
@@ -1288,8 +1219,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("40d61f76-7458-4f51-b7be-f665eaaf53f3"),
                     UserId = 1,
                     RoleId = 2,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new UserRole
                 {
@@ -1297,8 +1227,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("58536f91-0d39-4144-9092-2a587203054b"),
                     UserId = 2,
                     RoleId = 1,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new UserRole
                 {
@@ -1306,8 +1235,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("bee22858-a299-4adc-9349-d0d27146b2aa"),
                     UserId = 3,
                     RoleId = 1,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new UserRole
                 {
@@ -1315,8 +1243,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("12a54832-934c-4a98-96a7-3d0343f87568"),
                     UserId = 4,
                     RoleId = 1,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new UserRole
                 {
@@ -1324,8 +1251,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("435bcec6-301f-48c0-aeb5-72e275dc500a"),
                     UserId = 5,
                     RoleId = 1,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new UserRole
                 {
@@ -1333,8 +1259,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("d493a9b6-1f7e-45a7-8482-32636583e8f3"),
                     UserId = 6,
                     RoleId = 2,
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 }
             );
 
@@ -1346,8 +1271,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("e7b86411-acc4-4e6f-b132-8349974d973b"),
                     Name = "User",
                     Description = "Standard user with basic access",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new Role
                 {
@@ -1355,10 +1279,8 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("c444bd50-1a9d-4a33-a0d9-b9b375e81a68"),
                     Name = "Admin",
                     Description = "Administrator with management access",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 }
-                
             );
 
 
@@ -1369,8 +1291,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("43380776-ac70-4350-a64b-82050eb436c7"),
                     Name = "Gopay",
                     LogoUrl = "img/Payment1.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new PaymentMethod
                 {
@@ -1378,8 +1299,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("17604b46-fd7f-41fd-8a5b-9281a3de15b1"),
                     Name = "OVO",
                     LogoUrl = "img/Payment2.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new PaymentMethod
                 {
@@ -1387,8 +1307,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("4aa1dd7f-8c22-446d-a3f5-a25548068daf"),
                     Name = "DANA",
                     LogoUrl = "img/Payment3.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new PaymentMethod
                 {
@@ -1396,8 +1315,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("11816d5a-aa8d-4363-95dc-2edcabc66fd5"),
                     Name = "Mandiri",
                     LogoUrl = "img/Payment4.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new PaymentMethod
                 {
@@ -1405,8 +1323,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("e4788b84-999f-43ee-b6fe-dead0c41c189"),
                     Name = "BCA",
                     LogoUrl = "img/Payment5.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 },
                 new PaymentMethod
                 {
@@ -1414,8 +1331,7 @@ namespace MyApp.Infrastructure.Data
                     RefId = new Guid("6a63902e-c624-41b7-b47a-a57c14514efb"),
                     Name = "BNI",
                     LogoUrl = "img/Payment6.svg",
-                    CreatedAt = seedDate,
-                    CreatedBy = "System"
+                    CreatedAt = seedDate
                 }
             );
         }

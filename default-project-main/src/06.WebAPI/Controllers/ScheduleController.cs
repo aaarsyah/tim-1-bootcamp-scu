@@ -1,8 +1,14 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.Application.Feature.Categories.Commands;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.Schedules.Commands;
+using MyApp.Application.Feature.Schedules.Queries;
 using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using Org.BouncyCastle.Ocsp;
 
 namespace MyApp.WebAPI.Controllers;
 
@@ -11,15 +17,15 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class ScheduleController : ControllerBase
 {
-    private readonly IScheduleService _scheduleService;
+    private readonly IMediator _mediator;
     private readonly ILogger<ScheduleController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public ScheduleController(IScheduleService scheduleService, ILogger<ScheduleController> logger)
+    public ScheduleController(IMediator mediator, ILogger<ScheduleController> logger)
     {
-        _scheduleService = scheduleService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -28,19 +34,21 @@ public class ScheduleController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<ScheduleDto>>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ScheduleDto>>> GetAllSchedules()
     {
-        var result = await _scheduleService.GetAllScheduleAsync();
-        return Ok(ApiResponse<IEnumerable<ScheduleDto>>.SuccessResult(result));
+        var query = new GetAllSchedulesQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
   
-    [HttpGet("{id}")]
+    [HttpGet("{refId:Guid}")]
     [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ScheduleDto>> GetSchedule(int id)
+    public async Task<ActionResult<ScheduleDto>> GetSchedule(Guid refId)
     {
-        var result = await _scheduleService.GetScheduleByIdAsync(id);
-        return Ok(ApiResponse<ScheduleDto>.SuccessResult(result));
+        var query = new GetScheduleByRefIdQuery { RefId = refId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
   
@@ -50,30 +58,19 @@ public class ScheduleController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ScheduleDto>> CreateSchedule(CreateScheduleRequestDto createScheduleDto)
     {
-        var result = await _scheduleService.CreateScheduleAsync(createScheduleDto);
-        return CreatedAtAction(nameof(GetSchedule), new { id = result.Id }, ApiResponse<ScheduleDto>.SuccessResult(result));
+        var command = new CreateScheduleCommand { createScheduleDto = createScheduleDto };
+        var result = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetSchedule), new { result.Data?.RefId }, result);
     }
 
-  
-    [HttpPut("{id}")]
-    [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ScheduleDto>> UpdateSchedule(int id, UpdateScheduleRequestDto updateScheduleDto)
-    {
-        var result = await _scheduleService.UpdateScheduleAsync(id, updateScheduleDto);
-        return Ok(ApiResponse<ScheduleDto>.SuccessResult(result));
-
-    }
-
-
-    [HttpDelete("{id}")]
+    [HttpDelete("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteSchedule(int id)
+    public async Task<IActionResult> DeleteSchedule(Guid refId)
     {
-        var result = await _scheduleService.DeleteScheduleAsync(id);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new DeleteScheduleCommand { RefId = refId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

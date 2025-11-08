@@ -1,9 +1,12 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Shared.DTOs;
-using MyApp.Base.Exceptions;
-using MyApp.WebAPI.Services;
+using MyApp.Application.Feature.Authentications.Commands;
 using MyApp.Application.Validators;
+using MyApp.Base.Exceptions;
+using MyApp.Domain.Models;
+using MyApp.Shared.DTOs;
+using MyApp.WebAPI.Services;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -23,17 +26,14 @@ namespace MyApp.WebAPI.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthenticationService _authenticationService;
-    private readonly IUserManagementService _userManagementService;
+    private readonly IMediator _mediator;
     private readonly ILogger<AuthController> _logger;
 
     public AuthController(
-        IAuthenticationService authenticationService,
-        IUserManagementService userManagementService,
+        IMediator mediator,
         ILogger<AuthController> logger)
     {
-        _authenticationService = authenticationService;
-        _userManagementService = userManagementService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -42,24 +42,26 @@ public class AuthController : ControllerBase
     /// POST /api/auth/register
     /// </summary>
     [HttpPost("register")]
-    [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ApiResponse<bool>>> Register([FromBody] RegisterRequestDto request)
+    public async Task<ActionResult<ApiResponse<object>>> Register([FromBody] RegisterRequestDto request)
     {
-        var result = await _authenticationService.RegisterAsync(request);
+        var command = new RegisterCommand { RegisterDto = request,  };
+        var result = await _mediator.Send(command);
 
-        return Ok(ApiResponse<object>.SuccessResult());
+        return Ok(result);
         // Semua error akan throw exception dan akan di catch di middleware
     }
 
     [HttpPost("confirm-email")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<object>>> ConfirmEmail([FromBody] ConfirmEmailRequestDto request)
     {
-        var result = await _authenticationService.ConfirmEmailAsync(request);
+        var command = new ConfirmEmailCommand { ConfirmEmailDto = request, };
+        var result = await _mediator.Send(command);
 
-        return Ok(ApiResponse<object>.SuccessResult());
+        return Ok(result);
         // Semua error akan throw exception dan akan di catch di middleware
     }
 
@@ -69,12 +71,13 @@ public class AuthController : ControllerBase
     /// </summary>
     [HttpPost("login")]
     [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<AuthResponseDto>>> Login([FromBody] LoginRequestDto request)
     {
-        var result = await _authenticationService.LoginAsync(request);
+        var command = new LoginCommand { LoginDto = request, };
+        var result = await _mediator.Send(command);
         
-       return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+        return Ok(result);
         // Semua error akan throw exception dan akan di catch di middleware
     }
 
@@ -84,12 +87,13 @@ public class AuthController : ControllerBase
     /// </summary>
     [HttpPost("refresh-token")]
     [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<AuthResponseDto>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<AuthResponseDto>>> RefreshToken([FromBody] RefreshTokenRequestDto request)
     {
-        var result = await _authenticationService.RefreshTokenAsync(request);
+        var command = new RefreshTokenCommand { RefreshTokenDto = request, };
+        var result = await _mediator.Send(command);
         
-        return Ok(ApiResponse<AuthResponseDto>.SuccessResult(result));
+        return Ok(result);
         // Semua error akan throw exception dan akan di catch di middleware
     }
 
@@ -101,16 +105,17 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<ApiResponse<object>>> Logout()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        var result = await _authenticationService.LogoutAsync(userId);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new LogoutCommand { UserRefId = userRefId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -121,75 +126,41 @@ public class AuthController : ControllerBase
     [HttpPost("change-password")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<object>>> ChangePassword([FromBody] ChangePasswordRequestDto request)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        var result = await _authenticationService.ChangePasswordAsync(userId, request);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new ChangePasswordCommand { UserRefId = userRefId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
     /// Request password reset new
     /// </summary>
     [HttpPost("forgot-password")]
-    [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDto request)
+    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ApiResponse<object>>> ForgotPassword([FromBody] ForgotPasswordRequestDto request)
     {
-        var validator = new ForgotPasswordRequestValidator();
-        var validationResult = await validator.ValidateAsync(request);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
-        }
-        var result = await _authenticationService.ForgotPasswordAsync(request);
-        return Ok(ApiResponse<bool>.SuccessResult(result));
+        var command = new ForgotPasswordCommand { ForgotPasswordDto = request };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
     /// Reset password with token
     /// </summary>
     [HttpPost("reset-password")]
-    [ProducesResponseType(typeof(ApiResponse<bool>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDto request)
+    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<ApiResponse<object>>> ResetPassword([FromBody] ResetPasswordRequestDto request)
     {
-        var validator = new ResetPasswordRequestValidator();
-        var validationResult = await validator.ValidateAsync(request);
-
-        if (!validationResult.IsValid)
-            throw new ValidationException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
-
-        var result = await _authenticationService.ResetPasswordAsync(request);
-        return Ok(ApiResponse<bool>.SuccessResult(result));
-
-        // var command = new ResetPasswordCommand { Request = request };
-        // var result = await _mediator.Send(command);
-        
-    }
-
-    /// <summary>
-    /// Get Current User Profile
-    /// GET /api/auth/me
-    /// Requires: JWT Token
-    /// </summary>
-    [HttpGet("me")]
-    [Authorize]
-    [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<UserDto>>> GetProfile()
-    {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-        var profile = await _userManagementService.GetUserProfileAsync(userId);
-        return Ok(ApiResponse<UserDto>.SuccessResult(profile));
+        var command = new ResetPasswordCommand { ResetPasswordDto = request };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

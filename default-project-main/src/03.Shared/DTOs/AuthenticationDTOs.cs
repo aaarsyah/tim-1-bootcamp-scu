@@ -57,7 +57,6 @@ public class AuthResponseDto
     public string AccessToken { get; set; } = string.Empty;
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime AccessTokenExpiry { get; set; }
-    public UserDto? User { get; set; }
 }
 
 /// <summary>
@@ -66,6 +65,7 @@ public class AuthResponseDto
 public class UserDto
 {
     public int Id { get; set; }
+    public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public bool EmailConfirmed { get; set; }
@@ -81,6 +81,7 @@ public class UserDto
 /// </summary>
 public class RoleDto
 {
+    public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 }

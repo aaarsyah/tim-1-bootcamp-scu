@@ -1,23 +1,28 @@
 // Import Entity Framework Core untuk database operations
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using MyApp.Application.Feature.Authentications.Commands;
+using MyApp.Application.Mappings;
+using MyApp.Infrastructure.Configuration;
 // Import AppleMusicDbContext dari folder Data
 using MyApp.Infrastructure.Data;
+using MyApp.Infrastructure.Data.Repositories;
+using MyApp.Infrastructure.Data.Repositories.Interfaces;
+
 // Import extension methods dari folder Extensions
 using MyApp.WebAPI.Extensions;
 // Import custom middleware dari folder Middleware
 using MyApp.WebAPI.Middleware;
-using MyApp.Infrastructure.Configuration;
+using MyApp.WebAPI.Services;
+using Serilog;
+using Serilog.Events;
 // Import FluentValidation ASP.NET Core integration
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 // Import System.Reflection untuk assembly operations
 using System.Reflection;
-using Serilog;
-using Serilog.Events;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
-using MyApp.Application.Mappings;
 
 // ===== STEP 1: CONFIGURE SERILOG LOGGING =====
 // Purpose: Setup structured logging before anything else
@@ -44,6 +49,10 @@ try
     // Buat WebApplicationBuilder - pattern builder untuk konfigurasi aplikasi
     // args adalah command line arguments yang diterima aplikasi
     var builder = WebApplication.CreateBuilder(args);
+
+    // TODO: Pasang license key (gratis) untuk AutoMapper dan MediatR
+    builder.Logging.AddFilter("LuckyPennySoftware.AutoMapper.License", LogLevel.None);
+    builder.Logging.AddFilter("LuckyPennySoftware.MediatR.License", LogLevel.None);
 
     // ===== STEP 2: USE SERILOG FOR LOGGING =====
     builder.Host.UseSerilog();
@@ -142,14 +151,29 @@ try
     //DI Service
     builder.Services.AddApplicationServices();
 
+    // Register Repositori dan Unit-Of-Work
+    builder.Services
+        .AddApplicationRepositories()
+        .AddApplicationUnitOfWork();
+
+    // Register MediatR for CQRS
+    builder.Services.AddMediatR(cfg => {
+        cfg.LicenseKey = string.Empty; // TODO: Pasang license key (nanti saja kalau ada waktu)
+        cfg.RegisterServicesFromAssembly(typeof(RegisterCommand).Assembly);
+    }
+    );
+
     // ===== STEP 9: ADD CONTROLLERS =====
     builder.Services.AddControllers();
 
     builder.Services.AddSqlServerDatabase(builder.Configuration);
 
     builder.Services.AddAutoMapper(cfg => {
+        cfg.LicenseKey = string.Empty; // TODO: Pasang license key (nanti saja kalau ada waktu)
         cfg.AddProfile<MappingProfile>();
     });
+
+
 
     builder.Services.AddFluentValidationAutoValidation(configuration =>
     {
@@ -210,13 +234,6 @@ try
             }
         });
     });
-
-    // // Register MediatR for CQRS
-    // builder.Services.AddMediatR(cfg => 
-    //     cfg.RegisterServicesFromAssembly(typeof(MyApp.Application.Services.IJwtTokenService).Assembly));
-
-    // // Register FluentValidation
-    // builder.Services.AddValidatorsFromAssembly(typeof(MyApp.Application.Services.IJwtTokenService).Assembly);
 
     // // Register Caching
     // builder.Services.AddMemoryCache();

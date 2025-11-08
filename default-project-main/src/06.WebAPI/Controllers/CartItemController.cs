@@ -1,8 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.Application.Feature.CartItems.Commands;
+using MyApp.Application.Feature.CartItems.Queries;
 using MyApp.Base.Exceptions;
 using MyApp.Shared.DTOs;
-using MyApp.WebAPI.Services;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -24,16 +26,17 @@ namespace MyApp.WebAPI.Controllers;
 [Route("api/[controller]")]
 public class CartItemController : ControllerBase
 {
-    private readonly ICartItemService _cartItemService;
+    private readonly IMediator _mediator;
     private readonly ILogger<CartItemController> _logger;
 
     public CartItemController(
-        ICartItemService transactionService,
+        IMediator mediator,
         ILogger<CartItemController> logger)
     {
-        _cartItemService = transactionService;
+        _mediator = mediator;
         _logger = logger;
     }
+
     /// <summary>
     /// Checkout items
     /// </summary>
@@ -42,25 +45,24 @@ public class CartItemController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<CheckoutResponseDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ApiResponse<CheckoutResponseDto>> CheckoutItems(
-        [FromBody] CheckoutRequestDto request)
+    public async Task<ActionResult<ApiResponse<CheckoutResponseDto>>> CheckoutItems(
+        [FromBody] CheckoutRequestDto2 request)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
         _logger.LogInformation(
-            "Checkout request received for {UserId} checking out {ItemCartIdsCount} items",
-            request.ItemCartIds.Count,
-            userId);
+            "Checkout request received for {UserRefId} checking out {ItemCartIdsCount} items",
+            request.ItemCartRefIds.Count,
+            userRefId);
 
         // Call service - no try-catch needed!
         // Exceptions handled by GlobalExceptionHandlingMiddleware
-        var result = await _cartItemService.CheckoutItemsAsync(userId, request);
-
-        // Buat success response dengan custom message
-        return ApiResponse<CheckoutResponseDto>.SuccessResult(result);
+        var command = new CheckoutCartItemsCommand { UserRefId = userRefId, CheckoutDto = request };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
     /// <summary>
     /// GET endpoint untuk mengambil products dengan pagination dan filtering
@@ -74,19 +76,19 @@ public class CartItemController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<ApiResponse<IEnumerable<CartItemResponseDto>>>> GetOwnCartItems()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
         // [FromQuery] attribute: bind query string parameters ke object properties
         // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
-        // Panggil service method untuk get products dengan filtering
-        var result = await _cartItemService.GetCartItemsByUserIdAsync(userId);
+        var query = new GetAllCartItemsByUserRefIdQuery { UserRefId = userRefId };
+        var result = await _mediator.Send(query);
 
         // Return 200 OK
-        return Ok(ApiResponse<IEnumerable<CartItemResponseDto>>.SuccessResult(result));
+        return Ok(result);
     }
 
      /// <summary>
@@ -96,10 +98,10 @@ public class CartItemController : ControllerBase
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-    public async Task<ActionResult<ApiResponse<object>>> AddCourseToCart([FromQuery] int scheduleid)
+    public async Task<ActionResult<ApiResponse<object>>> AddCourseToCart([FromQuery] Guid scheduleRefId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
@@ -107,7 +109,8 @@ public class CartItemController : ControllerBase
         // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
         // Panggil service method untuk get products dengan filtering
-        await _cartItemService.AddCourseToCartAsync(userId, scheduleid);
+        var command = new AddCourseToCartCommand { UserRefId = userRefId, ScheduleRefId = scheduleRefId };
+        var result = await _mediator.Send(command);
 
         // Return 200 OK
         return Ok(ApiResponse<object>.SuccessResult());
@@ -120,10 +123,10 @@ public class CartItemController : ControllerBase
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)] // Swagger documentation
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)] // Swagger documentation
-    public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart([FromQuery] int cartid)
+    public async Task<ActionResult<ApiResponse<object>>> RemoveCourseFromCart([FromQuery] Guid cartItemRefId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
@@ -131,7 +134,8 @@ public class CartItemController : ControllerBase
         // Contoh: ?pageNumber=1&pageSize=10 akan di-bind ke parameters.PageNumber dan parameters.PageSize
 
         // Panggil service method untuk get products dengan filtering
-        await _cartItemService.RemoveCourseFromCartAsync(userId, cartid);
+        var command = new RemoveCourseFromCartCommand { UserRefId = userRefId, CartItemRefId = cartItemRefId };
+        var result = await _mediator.Send(command);
 
         // Return 200 OK
         return Ok(ApiResponse<object>.SuccessResult());

@@ -3,7 +3,7 @@ namespace MyApp.Shared.DTOs;
 public class MyClassDto
 {
     public int Id { get; set; }
-
+    public Guid RefId { get; set; }
     public int UserId { get; set; }
 
     public int ScheduleId { get; set; }

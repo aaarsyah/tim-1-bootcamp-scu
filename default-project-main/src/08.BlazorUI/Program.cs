@@ -9,6 +9,10 @@ using MyApp.BlazorUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// TODO: Pasang license key (gratis) untuk AutoMapper dan MediatR
+builder.Logging.AddFilter("LuckyPennySoftware.AutoMapper.License", LogLevel.None);
+builder.Logging.AddFilter("LuckyPennySoftware.MediatR.License", LogLevel.None);
+
 // Add MudBlazor services
 builder.Services.AddMudServices();
 

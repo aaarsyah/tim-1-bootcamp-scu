@@ -14,6 +14,6 @@ public interface IAdminService
     Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryRequestDto request);
     Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id);
     Task<PaymentMethodDto?> CreatePaymentMethodAsync(AuthenticationHeaderValue authorization, CreatePaymentMethodRequestDto request);
-    Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentRequestDto request);
+    Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentMethodRequestDto request);
     Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id);
 }

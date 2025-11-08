@@ -1,9 +1,16 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Shared.DTOs;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Feature.CartItems.Commands;
+using MyApp.Application.Feature.Categories.Commands;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.Schedules.Commands;
+using MyApp.Application.Feature.Schedules.Queries;
 using MyApp.Base.Exceptions;
+using MyApp.Infrastructure.Configuration;
+using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using Org.BouncyCastle.Ocsp;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -24,14 +31,12 @@ namespace MyApp.WebAPI.Controllers;
 [Authorize] // Semua endpoints butuh authentication
 public class UserManagementController : ControllerBase
 {
-    private readonly IUserManagementService _userManagementService;
+    private readonly IMediator _mediator;
     private readonly ILogger<UserManagementController> _logger;
 
-    public UserManagementController(
-        IUserManagementService userManagementService,
-        ILogger<UserManagementController> logger)
+    public UserManagementController(IMediator mediator, ILogger<UserManagementController> logger)
     {
-        _userManagementService = userManagementService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -45,9 +50,9 @@ public class UserManagementController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<UserDto>>), StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse<IEnumerable<UserDto>>>> GetAllUsers()
     {
-        var user = await _userManagementService.GetAllUsersAsync();
-        
-        return Ok(ApiResponse<IEnumerable<UserDto>>.SuccessResult(user));
+        var query = new GetAllUsersQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -55,14 +60,15 @@ public class UserManagementController : ControllerBase
     /// GET /api/usermanagement/users/{userId}
     /// Requires: Admin role or higher
     /// </summary>
-    [HttpGet("users/{userId}")]
+    [HttpGet("users/{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<UserDto>>> GetUser(int userId)
+    public async Task<ActionResult<ApiResponse<UserDto>>> GetUser(Guid refId)
     {
-        var user = await _userManagementService.GetUserProfileAsync(userId);
-        return Ok(ApiResponse<UserDto>.SuccessResult(user));
+        var query = new GetUserByRefIdQuery { RefId = refId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     [HttpGet("roles")]
@@ -70,8 +76,9 @@ public class UserManagementController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<RoleDto>>), StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse<IEnumerable<RoleDto>>>> GetAllRoles()
     {
-        var user = await _userManagementService.GetAllRolesAsync();
-        return Ok(ApiResponse<IEnumerable<RoleDto>>.SuccessResult(user));
+        var query = new GetAllRolesQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -79,14 +86,14 @@ public class UserManagementController : ControllerBase
     /// POST /api/usermanagement/users/{userId}/roles
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/roles/add")]
+    [HttpPut("users/{refId:Guid}/roles/add")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> AssignRole(int userId, [FromBody] RoleRequestDto request)
+    public async Task<ActionResult<ApiResponse<object>>> AssignRole(Guid refId, [FromBody] RoleRequestDto request)
     {
-        var result = await _userManagementService.AddRoleToUserAsync(userId, request.RoleName);
-        
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new AddRoleToUserCommand { RefId = refId, RoleDto = request };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -94,14 +101,14 @@ public class UserManagementController : ControllerBase
     /// DELETE /api/usermanagement/users/{userId}/roles/{roleName}
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/roles/remove")]
+    [HttpPut("users/{refId:Guid}/roles/remove")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> RemoveRole(int userId, [FromBody] RoleRequestDto request)
+    public async Task<ActionResult<ApiResponse<object>>> RemoveRole(Guid refId, [FromBody] RoleRequestDto request)
     {
-        var result = await _userManagementService.RemoveRoleFromUserAsync(userId, request.RoleName);
-
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new RemoveRoleFromUserCommand { RefId = refId, RoleDto = request };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -109,14 +116,14 @@ public class UserManagementController : ControllerBase
     /// POST /api/usermanagement/users/{userId}/claims
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/claims/add")]
+    [HttpPut("users/{refId:Guid}/claims/add")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> SetClaim(int userId, [FromBody] ClaimDto claim)
+    public async Task<ActionResult<ApiResponse<object>>> SetClaim(Guid refId, [FromBody] ClaimDto claim)
     {
-        var result = await _userManagementService.SetClaimForUserAsync(userId, claim.Type, claim.Value);
-
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new SetClaimForUserCommand { RefId = refId, ClaimType = claim.Type, ClaimValue = claim.Value };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -124,14 +131,14 @@ public class UserManagementController : ControllerBase
     /// DELETE /api/usermanagement/users/{userId}/claims
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/claims/remove")]
+    [HttpPut("users/{refId:Guid}/claims/remove")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> RemoveClaim(int userId, [FromBody] ClaimDto claim)
+    public async Task<ActionResult<ApiResponse<object>>> RemoveClaim(Guid refId, [FromBody] ClaimDto claim)
     {
-        var result = await _userManagementService.RemoveClaimFromUserAsync(userId, claim.Type);
-
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new RemoveClaimFromUserCommand { RefId = refId, ClaimType = claim.Type };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
@@ -139,40 +146,41 @@ public class UserManagementController : ControllerBase
     /// DELETE /api/usermanagement/users/{userId}
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/activate")]
+    [HttpPut("users/{refId:Guid}/activate")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> ActivateUser(int userId)
+    public async Task<ActionResult<ApiResponse<object>>> ActivateUser(Guid refId)
     {
-        var result = await _userManagementService.ActivateUserAsync(userId);
-
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new SetActiveForUserCommand { RefId = refId, isActive = true };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
     /// <summary>
     /// Deactivate User
     /// DELETE /api/usermanagement/users/{userId}
     /// Requires: Admin role
     /// </summary>
-    [HttpPut("users/{userId}/deactivate")]
+    [HttpPut("users/{refId:Guid}/deactivate")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<object>>> DeactivateUser(int userId)
+    public async Task<ActionResult<ApiResponse<object>>> DeactivateUser(Guid refId)
     {
-        var result = await _userManagementService.DeactivateUserAsync(userId);
-
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new SetActiveForUserCommand { RefId = refId, isActive = false };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
     [HttpGet("users/me")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<UserDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<ApiResponse<UserDto>>> GetSelfUser()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        var result = await _userManagementService.GetUserProfileAsync(userId);
-        return Ok(ApiResponse<UserDto>.SuccessResult(result));
+        var command = new GetUserByRefIdQuery { RefId = userRefId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

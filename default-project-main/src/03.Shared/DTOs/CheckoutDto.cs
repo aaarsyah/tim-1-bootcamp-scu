@@ -20,6 +20,14 @@ public class CheckoutRequestDto
     [Required(ErrorMessage = "PaymentMethodId is required")]
     public int? PaymentMethodId { get; set; }
 }
+public class CheckoutRequestDto2
+{
+    [Required(ErrorMessage = "ItemCartIds is required")]
+    [MinLength(1, ErrorMessage = "ItemCartIds must contain at least one item")]
+    public List<Guid> ItemCartRefIds { get; set; } = null!;
+    [Required(ErrorMessage = "PaymentMethodId is required")]
+    public Guid PaymentMethodRefId { get; set; }
+}
 public class CheckoutResponseDto
 {
     public int InvoiceId { get; set; }
@@ -44,6 +52,7 @@ public class CartItemResponseDto
     /// Id: Primary key
     /// </summary>
     public int Id { get; set; }
+    public Guid RefId { get; set; }
     /// <summary>
     /// User (foreign key): Pengguna yang terkait
     /// </summary>

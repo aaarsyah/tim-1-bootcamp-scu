@@ -58,7 +58,7 @@
         </MudTd>
         <MudTd DataLabel="CategoryId">@context.CategoryId</MudTd>
         <MudTd DataLabel="Harga">@context.Price</MudTd>
-        <MudTd DataLabel="Jadwal"> @string.Join(",\n", @context.ScheduleDates.Select(d => d.ToString("yyyy-MM-dd")))</MudTd>
+        <MudTd DataLabel="Jadwal"> @string.Join(", ", @context.ScheduleDates.Select(d => d.ToString("yyyy-MM-dd")))</MudTd>
         <MudTd DataLabel="Status">
             @if (context.IsActive)
             {

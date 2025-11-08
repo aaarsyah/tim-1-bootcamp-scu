@@ -1,7 +1,11 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Feature.CartItems.Queries;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.Invoices.Queries;
 using MyApp.Base.Exceptions;
+using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
 using System.Security.Claims;
@@ -16,15 +20,15 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class InvoiceController : ControllerBase
 {
-    private readonly IInvoiceService _invoiceService;
+    private readonly IMediator _mediator;
     private readonly ILogger<InvoiceController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public InvoiceController(IInvoiceService invoiceService, ILogger<InvoiceController> logger)
+    public InvoiceController(IMediator mediator, ILogger<InvoiceController> logger)
     {
-        _invoiceService = invoiceService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -38,14 +42,9 @@ public class InvoiceController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDto>>), StatusCodes.Status200OK)] // Swagger documentation
     public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDto>>>> GetAllInvoices()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-
-        var result = await _invoiceService.GetAllInvoicesAsync();
-        return Ok(ApiResponse<IEnumerable<InvoiceDto>>.SuccessResult(result));
+        var query = new GetAllInvoicesQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -58,59 +57,54 @@ public class InvoiceController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDto>>), StatusCodes.Status200OK)] // Swagger documentation
     public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDto>>>> GetSelfInvoices()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-
-        var result = await _invoiceService.GetAllInvoicesByUserIdAsync(userId);
-        return Ok(ApiResponse<IEnumerable<InvoiceDto>>.SuccessResult(result)); 
+        var query = new GetAllInvoicesByUserRefIdQuery { UserRefId = userRefId };
+        var result = await _mediator.Send(query);
+        return Ok(result); 
     }
 
     /// <summary>
     /// Get invoice by ID (ADMIN)
     /// </summary>
-    /// <param name="id">invoice ID</param>
+    /// <param name="refId">invoice ID</param>
     /// <returns>invoice details</returns>
     /// <response code="200">Returns the invoice</response>
     /// <response code="404">invoice not found</response>
-    [HttpGet("admin/{id}")]
+    [HttpGet("admin/{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<InvoiceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<InvoiceDto>>> GetInvoiceAdmin(int id)
+    public async Task<ActionResult<ApiResponse<InvoiceDto>>> GetInvoiceAdmin(Guid refId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-
-        var result = await _invoiceService.GetInvoiceByIdAsync(id);
-        return Ok(ApiResponse<InvoiceDto>.SuccessResult(result));
+        var query = new GetInvoiceByRefIdAsyncProtectedQuery { RefId = refId, IsPrivileged = true, UserRefId = Guid.Empty };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
     /// Get invoice by ID
     /// </summary>
-    /// <param name="id">invoice ID</param>
+    /// <param name="refId">invoice ID</param>
     /// <returns>invoice details</returns>
     /// <response code="200">Returns the invoice</response>
     /// <response code="404">invoice not found</response>
-    [HttpGet("{id}")]
+    [HttpGet("{refId:Guid}")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<InvoiceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<InvoiceDto>>> GetInvoice(int id)
+    public async Task<ActionResult<ApiResponse<InvoiceDto>>> GetInvoice(Guid refId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        
-        var result = await _invoiceService.GetInvoiceByIdPersonalAsync(userId, id);
-        return Ok(ApiResponse<InvoiceDto>.SuccessResult(result));
+        var query = new GetInvoiceByRefIdAsyncProtectedQuery { RefId = refId, IsPrivileged = false, UserRefId = userRefId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 }

@@ -26,15 +26,7 @@ public abstract class AuditableEntity : BaseEntity
     /// </summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     /// <summary>
-    /// CreatedBy: Pelaku entity dibuat
-    /// </summary>
-    public string CreatedBy { get; set; } = string.Empty;
-    /// <summary>
     /// UpdatedAt: Tanggal dan waktu entity diubah
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
-    /// <summary>
-    /// UpdatedBy: Pelaku entity diubah
-    /// </summary>
-    public string? UpdatedBy { get; set; }
 }

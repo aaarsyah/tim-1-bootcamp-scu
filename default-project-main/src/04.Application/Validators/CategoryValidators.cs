@@ -128,7 +128,7 @@ namespace MyApp.Application.Validators
     /// <summary>
     /// Validator for updating payment method
     /// </summary>
-    public class UpdatePaymentDtoValidator : AbstractValidator<UpdatePaymentRequestDto>
+    public class UpdatePaymentDtoValidator : AbstractValidator<UpdatePaymentMethodRequestDto>
     {
         /// <summary>
         /// Constructor with validation rules

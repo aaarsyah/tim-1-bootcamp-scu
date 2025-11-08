@@ -3,7 +3,7 @@ namespace MyApp.Shared.DTOs;
 public class PaymentMethodDto
 {
     public int Id { get; set; }
-  
+    public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
 
     public string LogoUrl { get; set; } = string.Empty;
@@ -21,7 +21,7 @@ public class CreatePaymentMethodRequestDto
     public string LogoUrl { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 }
-public class UpdatePaymentRequestDto
+public class UpdatePaymentMethodRequestDto
 { 
     public string Name { get; set; } = string.Empty;
 

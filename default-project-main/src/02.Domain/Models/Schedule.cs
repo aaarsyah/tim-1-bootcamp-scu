@@ -19,11 +19,6 @@ public class Schedule : BaseEntity
     /// </summary>
     public DateTime CreatedAt { get; set; }
     /// <summary>
-    /// UpdatedAt: Tangal perubahan kelas pelajaran<br />
-    /// Catatan: Digunakan pada page Admin
-    /// </summary>
-    public DateTime UpdatedAt { get; set; }
-    /// <summary>
     /// CourseId (foreign key): Kelas pelajaran yang terkait
     /// </summary>
     public int CourseId { get; set; }

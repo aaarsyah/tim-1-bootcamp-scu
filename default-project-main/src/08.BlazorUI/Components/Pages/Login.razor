@@ -126,7 +126,7 @@
             if (result != null)
             {
                 Snackbar.Add("Login successful!", Severity.Success);
-                if (result.User != null && result.User.Roles.Contains("Admin"))
+                if (await AuthService.IsAdminAsync())
                 {
                     Navigation.GoToDashboard();
                 }

@@ -1,9 +1,13 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.Invoices.Queries;
 using MyApp.Base.Exceptions;
+using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using Org.BouncyCastle.Ocsp;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -16,15 +20,15 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class InvoiceDetailController : ControllerBase
 {
-    private readonly IInvoiceDetailService _invoiceDetailService;
+    private readonly IMediator _mediator;
     private readonly ILogger<InvoiceDetailController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public InvoiceDetailController(IInvoiceDetailService invoiceDetailService, ILogger<InvoiceDetailController> logger)
+    public InvoiceDetailController(IMediator mediator, ILogger<InvoiceDetailController> logger)
     {
-        _invoiceDetailService = invoiceDetailService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -33,18 +37,14 @@ public class InvoiceDetailController : ControllerBase
     /// </summary>
     /// <returns>List of InvoiceDetail</returns>
     /// <response code="200">Returns the list of invoice</response>
-    [HttpGet("admin/{invoiceId:int}")]
+    [HttpGet("admin/{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)] // Swagger documentation
-    public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceIdAdmin(int invoiceId)
+    public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceIdAdmin(Guid refId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-        var result = await _invoiceDetailService.GetInvoiceDetailsByInvoiceIdAsync(invoiceId);
-        return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
+        var query = new GetInvoiceDetailsByInvoiceIdProtectedQuery { RefId = refId, IsPrivileged = true, UserRefId = Guid.Empty };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -52,18 +52,19 @@ public class InvoiceDetailController : ControllerBase
     /// </summary>
     /// <returns>List of InvoiceDetail</returns>
     /// <response code="200">Returns the list of invoice</response>
-    [HttpGet("{invoiceId:int}")]
+    [HttpGet("{refId:Guid}")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<InvoiceDetailDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceId(int invoiceId)
+    public async Task<ActionResult<ApiResponse<IEnumerable<InvoiceDetailDto>>>> GetInvoiceDetailsByInvoiceId(Guid refId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        var result = await _invoiceDetailService.GetInvoiceDetailsByInvoiceIdPersonalAsync(userId, invoiceId);
-        return Ok(ApiResponse<IEnumerable<InvoiceDetailDto>>.SuccessResult(result));
+        var query = new GetInvoiceDetailsByInvoiceIdProtectedQuery { RefId = refId, IsPrivileged = false, UserRefId = userRefId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 }

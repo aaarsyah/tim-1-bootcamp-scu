@@ -1,9 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.Application.Feature.Categories.Commands;
+using MyApp.Application.Feature.Categories.Queries;
 using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
-using MyApp.WebAPI.Services;
-using System.Net;
 
 namespace MyApp.WebAPI.Controllers;
 
@@ -15,15 +16,15 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class CategoryController : ControllerBase
 {
-    private readonly ICategoryService _categoryService;
+    private readonly IMediator _mediator;
     private readonly ILogger<CategoryController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
+    public CategoryController(IMediator mediator, ILogger<CategoryController> logger)
     {
-        _categoryService = categoryService;
+        _mediator = mediator;
         _logger = logger;
     }
 
@@ -37,25 +38,27 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<CategoryDto>>), StatusCodes.Status200OK)] // Swagger documentation
     public async Task<ActionResult<ApiResponse<IEnumerable<CategoryDto>>>> GetAllCategories()
     {
-        var result = await _categoryService.GetAllCategoriesAsync();
-        return Ok(ApiResponse<IEnumerable<CategoryDto>>.SuccessResult(result));
+        var query = new GetAllCategoriesQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
     /// Get category by ID
     /// </summary>
-    /// <param name="id">Category ID</param>
+    /// <param name="refId">Category ID</param>
     /// <returns>Category details</returns>
     /// <response code="200">Returns the category</response>
     /// <response code="404">Category not found</response>
-    [HttpGet("{id}")]
+    [HttpGet("{refId:Guid}")]
     [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<CategoryDto>>> GetCategory(int id)
+    public async Task<ActionResult<ApiResponse<CategoryDto>>> GetCategory(Guid refId)
     {
-        var result = await _categoryService.GetCategoryByIdAsync(id);
-        return Ok(ApiResponse<CategoryDto>.SuccessResult(result));
+        var query = new GetCategoryByRefIdQuery { RefId = refId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     /// <summary>
@@ -69,46 +72,48 @@ public class CategoryController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryRequestDto createCategoryDto, HttpStatusCode statusCode = HttpStatusCode.Created)
+    public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryRequestDto createCategoryDto)
     {
-        var result = await _categoryService.CreateCategoryAsync(createCategoryDto);
-        //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
-        return CreatedAtAction(nameof(GetCategory), new { id = result.Id }, ApiResponse<CategoryDto>.SuccessResult(result));
+        var command = new CreateCategoryCommand { createCategoryDto = createCategoryDto };
+        var result = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetCategory), new { result.Data?.RefId }, result);
 
     }
 
     /// <summary>
     /// Update category
     /// </summary>
-    /// <param name="id">Category ID</param>
+    /// <param name="refId">Category ID</param>
     /// <param name="updateCategoryDto">Updated category data</param>
     /// <returns>Updated category</returns>
     /// <response code="200">Category updated successfully</response>
     /// <response code="404">Category not found</response>
-    [HttpPut("{id}")]
+    [HttpPut("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<CategoryDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(int id, UpdateCategoryRequestDto updateCategoryDto)
+    public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(Guid refId, UpdateCategoryRequestDto updateCategoryDto)
     {
-        var result = await _categoryService.UpdateCategoryAsync(id, updateCategoryDto);
-        return Ok(ApiResponse<CategoryDto>.SuccessResult(result));
+        var command = new UpdateCategoryCommand { RefId = refId, updateCategoryDto = updateCategoryDto };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>
     /// Delete category
     /// </summary>
-    /// <param name="id">Category ID</param>
+    /// <param name="refId">Category ID</param>
     /// <returns>No content</returns>
     /// <response code="204">Category deleted successfully</response>
     /// <response code="404">Category not found</response>
-    [HttpDelete("{id}")]
+    [HttpDelete("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<object>>> DeleteCategory(int id)
+    public async Task<ActionResult<ApiResponse<object>>> DeleteCategory(Guid refId)
     {
-        var result = await _categoryService.DeleteCategoryAsync(id);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new DeleteCategoryCommand { RefId = refId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

@@ -1,9 +1,15 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Feature.Categories.Commands;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.MyClasses.Commands;
+using MyApp.Application.Feature.MyClasses.Queries;
 using MyApp.Base.Exceptions;
+using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using Org.BouncyCastle.Ocsp;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -13,81 +19,65 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class MyClassController : ControllerBase
 {
-    private readonly IMyClassService _myclassService;
+    private readonly IMediator _mediator;
     private readonly ILogger<MyClassController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public MyClassController(IMyClassService myclassService, ILogger<MyClassController> logger)
+    public MyClassController(IMediator mediator, ILogger<MyClassController> logger)
     {
-        _myclassService = myclassService;
+        _mediator = mediator;
         _logger = logger;
     }
 
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(IEnumerable<MyClassDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<MyClassDto>>> MyClassService()
+    public async Task<ActionResult<IEnumerable<MyClassDto>>> GetSelfMyClass()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+        var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))
         {
             throw new TokenInvalidException();
         }
-        try
-        {
-            var myclass = await _myclassService.GetMyClassesByUserIdAsync(userId);
-            return Ok(myclass);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving myclass");
-            return StatusCode(500, "Internal server error");
-        }
+        var query = new GetAllMyClassesByUserRefIdQuery { UserRefId = userRefId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
   
-    [HttpGet("{id}")]
+    [HttpGet("{refId:Guid}")]
     [AllowAnonymous]
     [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<MyClassDto>>> GetMyClass(int id)
+    public async Task<ActionResult<ApiResponse<MyClassDto>>> GetMyClass(Guid refId)
     {
-        var result = await _myclassService.GetMyClassByIdAsync(id);
-        return Ok(ApiResponse<MyClassDto>.SuccessResult(result));
+        var query = new GetMyClassByRefIdQuery { RefId = refId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
-  
     [HttpPost]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<MyClassDto>> CreateMyClass(CreateMyClassRequestDto createMyClassDto)
     {
-        var result = await _myclassService.CreateMyClassAsync(createMyClassDto);
-        return CreatedAtAction(nameof(GetMyClass), new { id = result.Id }, ApiResponse<MyClassDto>.SuccessResult(result));
+        var command = new CreateMyClassCommand { createMyClassDto = createMyClassDto };
+        var result = await _mediator.Send(command);
+        //return Created(ApiResponse<CategoryDto>.SuccessResult(result));
+        return CreatedAtAction(nameof(GetMyClass), new { result.Data?.RefId }, result);
     }
 
-  
-    [HttpPut("{id}")]
-    [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
-    [ProducesResponseType(typeof(ApiResponse<MyClassDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<MyClassDto>> UpdateMyClass(int id, UpdateMyClassRequestDto updateMyClassDto)
-    {
-        var result = await _myclassService.UpdateMyClassAsync(id, updateMyClassDto);
-        return Ok(ApiResponse<MyClassDto>.SuccessResult(result));
-    }
-
-
-    [HttpDelete("{id}")]
+    [HttpDelete("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<object>>> DeleteMyClass(int id)
+    public async Task<ActionResult<ApiResponse<object>>> DeleteMyClass(Guid refId)
     {
-        var result = await _myclassService.DeleteMyClassAsync(id);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new DeleteMyClassCommand { RefId = refId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

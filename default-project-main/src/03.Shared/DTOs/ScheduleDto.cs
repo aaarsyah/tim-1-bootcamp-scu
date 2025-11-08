@@ -3,7 +3,7 @@ namespace MyApp.Shared.DTOs;
 public class ScheduleDto
 {
     public int Id { get; set; }
-
+    public Guid RefId { get; set; }
     public DateOnly Date { get; set; }
 
     public string CourseName { get; set; } = string.Empty;

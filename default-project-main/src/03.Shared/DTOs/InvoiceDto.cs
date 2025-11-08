@@ -9,7 +9,7 @@ public class InvoiceDto
     /// Invoice ID
     /// </summary>
     public int Id { get; set; }
-
+    public Guid RefId { get; set; }
     /// <summary>
     /// RefCode name
     /// </summary>

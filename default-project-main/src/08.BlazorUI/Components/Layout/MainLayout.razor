@@ -292,7 +292,7 @@
         try
         {
             var auth = await AuthService.GetAuthAsync();
-            await AuthService.LogoutAsync(auth); // TODO: Apa yang terjadi bila token invalid dan user mencoba logout?
+            await AuthService.LogoutAsync(auth);
         }
         catch (Exception ex)
         {

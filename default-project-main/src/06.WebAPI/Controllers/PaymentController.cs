@@ -1,9 +1,15 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Feature.Categories.Commands;
+using MyApp.Application.Feature.Categories.Queries;
+using MyApp.Application.Feature.PaymentMethods.Commands;
+using MyApp.Application.Feature.PaymentMethods.Queries;
 using MyApp.Base.Exceptions;
+using MyApp.Infrastructure.Configuration;
 using MyApp.Shared.DTOs;
 using MyApp.WebAPI.Services;
+using Org.BouncyCastle.Ocsp;
 using System.Security.Claims;
 
 namespace MyApp.WebAPI.Controllers;
@@ -13,15 +19,15 @@ namespace MyApp.WebAPI.Controllers;
 [Produces("application/json")]
 public class PaymentController : ControllerBase
 {
-    private readonly IPaymentService _paymentService;
+    private readonly IMediator _mediator;
     private readonly ILogger<PaymentController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public PaymentController(IPaymentService paymentService, ILogger<PaymentController> logger)
+    public PaymentController(IMediator mediator, ILogger<PaymentController> logger)
     {
-        _paymentService = paymentService;
+        _mediator = mediator;
         _logger = logger;
     }
     [HttpGet]
@@ -30,31 +36,22 @@ public class PaymentController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<ApiResponse<IEnumerable<PaymentMethodDto>>>> GetAllPaymentMethods()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-        var result = await _paymentService.GetAllPaymentAsync();
-        return Ok(ApiResponse<IEnumerable<PaymentMethodDto>>.SuccessResult(result));
+        var query = new GetAllPaymentMethodsQuery { };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{refId:Guid}")]
     [Authorize]
     [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> GetPayment(int id)
+    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> GetPayment(Guid refId)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
-        {
-            throw new TokenInvalidException();
-        }
-        var result = await _paymentService.GetPaymentByIdAsync(id);
-        return Ok(ApiResponse<PaymentMethodDto>.SuccessResult(result));
+        var query = new GetPaymentMethodByRefIdQuery { RefId = refId };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
-
 
     [HttpPost]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
@@ -62,29 +59,32 @@ public class PaymentController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> CreatePayment(CreatePaymentMethodRequestDto createPaymentDto)
     {
-        var result = await _paymentService.CreatePaymentAsync(createPaymentDto);
-        return CreatedAtAction(nameof(GetPayment), new { id = result.Id }, ApiResponse<PaymentMethodDto>.SuccessResult(result));
+        var command = new CreatePaymentMethodCommand { createPaymentMethodDto = createPaymentDto };
+        var result = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetPayment), new { result.Data?.RefId }, result);
     }
 
 
-    [HttpPut("{id}")]
+    [HttpPut("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<PaymentMethodDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> UpdatePayment(int id, UpdatePaymentRequestDto updatePaymentDto)
+    public async Task<ActionResult<ApiResponse<PaymentMethodDto>>> UpdatePayment(Guid refId, UpdatePaymentMethodRequestDto updatePaymentDto)
     {
-        var result = await _paymentService.UpdatePaymentAsync(id, updatePaymentDto);
-        return Ok(ApiResponse<PaymentMethodDto>.SuccessResult(result));
+        var command = new UpdatePaymentMethodCommand { RefId = refId, updatePaymentMethodDto = updatePaymentDto };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{refId:Guid}")]
     [Authorize(Policy = AuthorizationPolicies.RequireAdminRole)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<object>>> DeletePayment(int id)
+    public async Task<ActionResult<ApiResponse<object>>> DeletePayment(Guid refId)
     {
-        var result = await _paymentService.DeletePaymentAsync(id);
-        return Ok(ApiResponse<object>.SuccessResult());
+        var command = new DeletePaymentMethodCommand { RefId = refId };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }
