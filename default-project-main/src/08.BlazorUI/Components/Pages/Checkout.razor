@@ -99,7 +99,7 @@
             if (result != null)
             {
                 _itemList = result.Select(c => new ItemMy(
-                    c.Id,
+                    c.RefId,
                     c.ImageUrl,
                     c.CategoryName,
                     c.CourseName,
@@ -122,15 +122,15 @@
             return;
         }
 
-        var selectedCartIds = _itemList
+        var selectedCartRefIds = _itemList
             .Where(x => x.Selected)
-            .Select(x => x.Id)
+            .Select(x => x.RefId)
             .ToList();
 
         var checkoutRequest = new CheckoutRequestDto
             {
-                ItemCartIds = selectedCartIds,
-                PaymentMethodId = null
+                ItemCartRefIds = selectedCartRefIds,
+                PaymentMethodRefId = Guid.Empty
             };
 
         var parameters = new DialogParameters();
@@ -185,7 +185,7 @@
         }
         try
         {
-            var result = await CheckoutService.RemoveCourseFromCart(auth, item.Id);
+            var result = await CheckoutService.RemoveCourseFromCart(auth, item.RefId);
             if (!result)
             {
                 Snackbar.Add($"Gagal menghapus item", Severity.Error);
@@ -203,7 +203,7 @@
 
     public class ItemMy
     {
-        public int Id { get; set; }
+        public Guid RefId { get; set; }
         public bool Selected { get; set; }
         public string Image { get; set; }
         public string Category { get; set; }
@@ -211,9 +211,9 @@
         public int Price { get; set; }
         public DateOnly ScheduleDates { get; set; }
 
-        public ItemMy(int id, string image, string category, string name, int price, DateOnly scheduleDates)
+        public ItemMy(Guid refId, string image, string category, string name, int price, DateOnly scheduleDates)
         {
-            Id = id;
+            RefId = refId;
             Image = image;
             Category = category;
             Name = name;

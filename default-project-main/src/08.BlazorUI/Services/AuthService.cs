@@ -239,12 +239,14 @@ public class AuthService : IAuthService
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    await ClearTokensAsync();
                     return null; // API menolak refresh (mungkin token invalid)
                 }
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<AuthResponseDto>>();
 
                 if (apiResponse?.Data == null)
                 {
+                    await ClearTokensAsync();
                     return null; // hasil keluaran API invalid (mungkin token invalid)
                 }
                 await SetTokensAsync(apiResponse.Data.AccessToken, apiResponse.Data.RefreshToken);

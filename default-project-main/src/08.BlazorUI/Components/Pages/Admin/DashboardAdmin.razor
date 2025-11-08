@@ -89,7 +89,7 @@
         <MudTd DataLabel="TotalPrice">@context.TotalPrice.ToString("C0", new CultureInfo("id-ID"))</MudTd>
         <MudTd DataLabel="Action">
             <MudButton Variant="Variant.Filled" Color="Color.Warning" Size="Size.Small"
-                       OnClick="() => Navigation.GoToDetailsInvoiceAdmin(context.Id)">
+                       OnClick="() => Navigation.GoToDetailsInvoiceAdmin(context.RefId)">
                 Details
             </MudButton>
         </MudTd>

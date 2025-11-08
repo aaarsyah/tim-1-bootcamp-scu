@@ -79,14 +79,14 @@ public class NavigationManagerExt
         _navigation.NavigateTo("/invoice");
     }
 
-    public void GoToDetailsInvoice(int invoiceId)
+    public void GoToDetailsInvoice(Guid invoiceRefId)
     {
-        _navigation.NavigateTo($"/details-invoice/{invoiceId}");
+        _navigation.NavigateTo($"/details-invoice/{invoiceRefId}");
     }
 
-    public void GoToDetailsInvoiceAdmin(int invoiceId)
+    public void GoToDetailsInvoiceAdmin(Guid invoiceRefId)
     {
-        _navigation.NavigateTo($"/details-invoice-admin/{invoiceId}");
+        _navigation.NavigateTo($"/details-invoice-admin/{invoiceRefId}");
     }
 
     public void GoToDashboard()
@@ -119,14 +119,14 @@ public class NavigationManagerExt
         _navigation.NavigateTo($"/success-purchase?method={selectedPayment}");
     }
 
-    public void GoToListMenu(int categoryId)
+    public void GoToListMenu(Guid categoryRefId)
     {
-        _navigation.NavigateTo($"/listmenu/{categoryId}");
+        _navigation.NavigateTo($"/listmenu/{categoryRefId}");
     }
 
-    public void GoToDetail(int courseId)
+    public void GoToDetail(Guid courseRefId)
     {
-        _navigation.NavigateTo($"/detail/{courseId}");
+        _navigation.NavigateTo($"/detail/{courseRefId}");
     }
 }
 

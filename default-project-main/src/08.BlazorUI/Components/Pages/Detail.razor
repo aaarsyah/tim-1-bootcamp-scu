@@ -1,4 +1,4 @@
-@page "/detail/{CourseId:int}"
+@page "/detail/{CourseRefIdS}"
 
 @using System.Globalization
 @using MyApp.Shared.DTOs
@@ -92,7 +92,7 @@
                     @foreach (var c in OtherCourses)
                     {
                         <MudItem xs="12" md="6" lg="4">
-                            <MudLink Color="Color.Default" OnClick="@(async () => { CourseId = c.Id; await OnInitializedAsync(); Navigation.GoToDetail(c.Id); })">
+                            <MudLink Color="Color.Default" OnClick="@(async () => { CourseRefId = c.RefId; await OnInitializedAsync(); Navigation.GoToDetail(c.RefId); })">
                                 <MudImage Src="@c.ImageUrl"></MudImage>
                                 <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@c.CategoryName</MudText>
                                 <MudText Typo="Typo.h3">@c.Name</MudText>
@@ -108,33 +108,45 @@
 
 @code {
     [Parameter]
-    public int CourseId { get; set; }
+    public string CourseRefIdS { get; set; } = null!;
+
+    private Guid CourseRefId { get; set; }
 
     private CourseDto? Course { get; set; }
     private List<CourseDto>? OtherCourses { get; set; }
     private DateOnly _date;
     private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
 
-
+    protected override void OnInitialized()
+    {
+        if(!Guid.TryParse(CourseRefIdS, out Guid guid))
+        {
+            // Invalid Guid, redirect to home
+            Navigation.GoToHome();
+            return;
+        }
+        CourseRefId = guid;
+    }
     protected override async Task OnInitializedAsync()
     {
         // Ambil data course by id
-        var result = await CourseService.GetCourseByIdAsync(CourseId);
-        if (result != null)
+        var result = await CourseService.GetCourseByIdAsync(CourseRefId);
+        if (result == null)
         {
-            Course = result;
-
-            ScheduleDates = Course.ScheduleDates.ToArray();
-
-            if (ScheduleDates.Length > 0)
-                _date = ScheduleDates[0];
+            // TODO: Display Not Found error
+            Navigation.GoToHome();
+            return;
         }
+        Course = result;
+        ScheduleDates = Course.ScheduleDates.ToArray();
+        if (ScheduleDates.Length > 0)
+            _date = ScheduleDates[0];
         // Ambil courses lain untuk rekomendasi
         var result2 = await CourseService.GetAllCourseAsync();
         if (result2 != null)
         {
             OtherCourses = result2
-                .Where(c => c.Id != CourseId && c.IsActive)
+                .Where(c => c.RefId != CourseRefId && c.IsActive)
                 .ToList();
         }
     }
@@ -156,12 +168,12 @@
             return;
         }
 
-        var scheduleId = selectedSchedule.Id;
-        Console.WriteLine($"ScheduleId yang dikirim: {scheduleId}");
+        var scheduleRefId = selectedSchedule.RefId;
+        Console.WriteLine($"ScheduleId yang dikirim: {scheduleRefId}");
 
 
         // 2️. Tambahkan item ke cart
-        var resultadd = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
+        var resultadd = await CheckoutService.AddCourseToCartAsync(auth, scheduleRefId);
         if (!resultadd)
         {
             Snackbar.Add("Gagal menambahkan ke keranjang", Severity.Error);
@@ -176,13 +188,13 @@
         var cartItems = resultget;
 
         // Ambil item terbaru untuk scheduleId ini
-        var lastCartItem = cartItems.OrderByDescending(c => c.Id).First();
-        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.Id}");
+        var lastCartItem = cartItems.OrderByDescending(c => c.RefId).First();
+        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.RefId}");
 
         var checkoutRequest = new CheckoutRequestDto
         {
-            ItemCartIds = new List<int> { lastCartItem.Id },
-            PaymentMethodId = null
+            ItemCartRefIds = new List<Guid> { lastCartItem.RefId },
+            PaymentMethodRefId = Guid.Empty
         };
 
         var parameters = new DialogParameters();
@@ -237,10 +249,10 @@
                 return;
             }
 
-            var scheduleId = selectedSchedule.Id; 
+            var scheduleRefId = selectedSchedule.RefId;
 
             // Panggil endpoint backend
-            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleId);
+            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleRefId);
             if (!result)
             {
                 Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);

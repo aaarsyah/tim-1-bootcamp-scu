@@ -5,10 +5,10 @@ using MyApp.Shared.DTOs;
 
 namespace MyApp.Application.Feature.Schedules.Queries;
 
-public class GetAllSchedulesQuery : IRequest<ApiResponse<List<CategoryDto>>>
+public class GetAllSchedulesQuery : IRequest<ApiResponse<List<ScheduleDto>>>
 {
 }
-public class GetAllSchedulesQueryHandler : IRequestHandler<GetAllSchedulesQuery, ApiResponse<List<CategoryDto>>>
+public class GetAllSchedulesQueryHandler : IRequestHandler<GetAllSchedulesQuery, ApiResponse<List<ScheduleDto>>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,13 +17,13 @@ public class GetAllSchedulesQueryHandler : IRequestHandler<GetAllSchedulesQuery,
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    public async Task<ApiResponse<List<CategoryDto>>> Handle(GetAllSchedulesQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<List<ScheduleDto>>> Handle(GetAllSchedulesQuery request, CancellationToken cancellationToken)
     {
         // TODO: Tambahkan caching
         var Schedules = await _unitOfWork.Schedules.GetAllAsync();
 
-        var SchedulesDto = _mapper.Map<List<CategoryDto>>(Schedules);
+        var SchedulesDto = _mapper.Map<List<ScheduleDto>>(Schedules);
 
-        return ApiResponse<List<CategoryDto>>.SuccessResult(SchedulesDto);
+        return ApiResponse<List<ScheduleDto>>.SuccessResult(SchedulesDto);
     }
 }

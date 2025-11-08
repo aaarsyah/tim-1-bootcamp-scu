@@ -1,0 +1,721 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace MyApp.Infrastructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    LongName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentMethods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    LogoUrl = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentMethods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RefreshTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EmailConfirmationToken = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    EmailConfirmationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PasswordResetToken = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FailedLoginAttempts = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    LockoutEnd = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.CheckConstraint("CK_Email", "[Email] LIKE '%@%.%'");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Price = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.CheckConstraint("CK_Price", "[Price] >= 0");
+                    table.ForeignKey(
+                        name: "FK_Courses_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoleClaims_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Action = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    TimeOfAction = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    EntityName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    EntityId = table.Column<int>(type: "int", nullable: true),
+                    OldValues = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    NewValues = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    UserAgent = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditLogs_Users_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RefCode = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    PaymentMethodId = table.Column<int>(type: "int", nullable: true),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_PaymentMethods_PaymentMethodId",
+                        column: x => x.PaymentMethodId,
+                        principalTable: "PaymentMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClaims_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false, defaultValueSql: "CONVERT (DATE, GETUTCDATE())"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvoiceDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InvoiceId = table.Column<int>(type: "int", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Price = table.Column<long>(type: "bigint", nullable: false),
+                    ScheduleDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetails_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MyClasses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ScheduleId = table.Column<int>(type: "int", nullable: false),
+                    RefId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MyClasses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MyClasses_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MyClasses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "CreatedAt", "Description", "ImageUrl", "IsActive", "LongName", "Name", "RefId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Pelajari teknik bermain drum dari dasar hingga mahir, termasuk ritme, koordinasi tangan-kaki, dan improvisasi.", "img/Class1.svg", true, "Drummer class", "Drum", new Guid("a2f2a74c-9819-4051-852e-93e859c54661") },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Kuasai piano dari dasar sampai teknik lanjutan, termasuk membaca not, improvisasi, dan interpretasi musik.", "img/Class2.svg", true, "Pianist class", "Piano", new Guid("407c4bf0-7f0c-44fc-b3ad-9a4f18a75f29") },
+                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Pelajari gitar akustik dan elektrik, teknik petikan, chord, solo, dan improvisasi kreatif.", "img/Class3.svg", true, "Guitarist class", "Gitar", new Guid("90aa4952-165f-4225-98e4-5a569b83aa8c") },
+                    { 4, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar bass untuk menciptakan groove yang solid, memahami teknik slap, fingerstyle, dan improvisasi musik.", "img/Class4.svg", true, "Bassist class", "Bass", new Guid("3b470c4e-d847-43b1-9784-a8cc2082cf9e") },
+                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Pelajari biola dari teknik dasar, membaca not, hingga ekspresi musik klasik dan modern.", "img/Class5.svg", true, "Violinist class", "Biola", new Guid("9b648b45-327b-44ce-853a-c4ce17b7fd20") },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Kembangkan kemampuan vokal, teknik pernapasan, kontrol nada, serta ekspresi dan interpretasi lagu.", "img/Class6.svg", true, "Singer class", "Menyanyi", new Guid("e4ea4121-bf90-4ba9-bc87-2c106c6acbbe") },
+                    { 7, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar flute dari teknik dasar embouchure, fingering, hingga memainkan melodi klasik dan kontemporer.", "img/Class7.svg", true, "Flutist class", "Flute", new Guid("595b8600-4d24-44dc-9e40-6dfd87892cfa") },
+                    { 8, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Kuasai saxophone dengan belajar teknik embouchure, breath control, improvisasi jazz, dan interpretasi musik modern.", "img/Class8.svg", true, "Saxophonist class", "Saxophone", new Guid("e17ec48c-b705-4448-b916-9867d292e517") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PaymentMethods",
+                columns: new[] { "Id", "CreatedAt", "IsActive", "LogoUrl", "Name", "RefId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment1.svg", "Gopay", new Guid("43380776-ac70-4350-a64b-82050eb436c7") },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment2.svg", "OVO", new Guid("17604b46-fd7f-41fd-8a5b-9281a3de15b1") },
+                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment3.svg", "DANA", new Guid("4aa1dd7f-8c22-446d-a3f5-a25548068daf") },
+                    { 4, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment4.svg", "Mandiri", new Guid("11816d5a-aa8d-4363-95dc-2edcabc66fd5") },
+                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment5.svg", "BCA", new Guid("e4788b84-999f-43ee-b6fe-dead0c41c189") },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), true, "img/Payment6.svg", "BNI", new Guid("6a63902e-c624-41b7-b47a-a57c14514efb") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "RefId", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Standard user with basic access", "User", new Guid("e7b86411-acc4-4e6f-b132-8349974d973b"), null },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "Administrator with management access", "Admin", new Guid("c444bd50-1a9d-4a33-a0d9-b9b375e81a68"), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "IsActive", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "admin@applemusic.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Super Admin", "$2a$11$0exJ.g3UuG5OkMlez9izxO14dodhcBEkxV49ryAGqbL0urtb3L5Cq", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("f37e30ef-bacd-4023-be66-da243fc25964"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "nurimamiskandar@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Nur Imam Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("5c24001d-62ba-45cf-ad61-b91f38fea0bc"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "imam.stmik15@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "Iskandar", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("17039ada-1855-41f1-9bec-15c24acada86"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt" },
+                values: new object[] { 4, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "iniemaildummysaya@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Dummy User", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("e33a410d-c70e-4fd7-91bd-e629911c929f"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "EmailConfirmationToken", "EmailConfirmationTokenExpiry", "EmailConfirmed", "IsActive", "LastLoginAt", "LockoutEnd", "Name", "PasswordHash", "PasswordResetToken", "PasswordResetTokenExpiry", "RefId", "RefreshToken", "RefreshTokenExpiry", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusrisahrul.works@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "yusri sahrul", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("55edc09e-db51-49da-98fb-7f2f25ddc2b8"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), "yusribootcamp@gmail.com", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, null, null, "yusri sahrul test", "", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("c8097c3e-ab7f-48fb-95d4-01a912451575"), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courses",
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "ImageUrl", "IsActive", "Name", "Price", "RefId" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus drum eksklusif dengan mentor profesional Eno Netral, fokus pada teknik, groove, dan improvisasi.", "img/Landing1.svg", true, "Kursus Drummer Special Coach (Eno Netral)", 8500000L, new Guid("d236d9db-5312-48d7-b171-a340c134f6f6") },
+                    { 2, 1, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus drum untuk anak-anak, belajar ritme dasar, koordinasi tangan-kaki, dan bermain lagu sederhana.", "img/Landing4.svg", true, "Drummer for kids (Level Basic/1)", 2200000L, new Guid("633473ab-67d5-4460-9f9a-a8eef9be341d") },
+                    { 3, 2, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar piano dari dasar hingga mahir, termasuk teknik, sight-reading, dan repertoar klasik & modern.", "img/Landing5.svg", true, "Kursus Piano : From Zero to Pro (Full Package)", 11650000L, new Guid("250ef74f-6bec-4a29-b101-0d6ed27437ad") },
+                    { 4, 2, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kuasai improvisasi piano jazz, belajar chord voicing, scales, dan bermain bersama band.", "img/Landing22.svg", true, "Piano Jazz Improvisation", 7000000L, new Guid("2cc98cec-0887-4171-bfeb-b23d68e6e9e1") },
+                    { 5, 3, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.", "img/Landing2.svg", true, "[Beginner] Guitar class for kids", 1600000L, new Guid("602558bf-e45c-4ff5-80ac-c3f4fba1300e") },
+                    { 6, 3, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar teknik gitar rock, solo, power chord, dan riff untuk pemula hingga menengah.", "img/Landing33.svg", true, "Guitar Rock Techniques", 3500000L, new Guid("217cdf56-0c1c-419e-885c-302488474f13") },
+                    { 7, 4, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus bass untuk pemula, belajar teknik dasar, groove, dan memainkan lagu sederhana.", "img/Landing44.svg", true, "Bass Fundamentals for Beginners", 2000000L, new Guid("ed415851-8d59-44bc-ad4c-c79cc871564e") },
+                    { 8, 4, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Pelajari teknik lanjutan bass, termasuk slap, tapping, dan improvisasi untuk berbagai genre musik.", "img/Landing45.svg", true, "Advanced Bass Techniques", 4500000L, new Guid("ff17199d-6790-4052-b04b-96d3149b877c") },
+                    { 9, 5, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus biola level menengah, belajar teknik bowing, vibrato, dan ekspresi musikal.", "img/Landing3.svg", true, "Biola Mid-Level Course", 3000000L, new Guid("1afb6912-52ff-46df-a8ac-feb53bfc7326") },
+                    { 10, 5, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar teknik lanjutan biola, interpretasi musik klasik, dan persiapan tampil di konser.", "img/Landing55.svg", true, "Violin Advanced Performance", 6000000L, new Guid("c1de03ce-528f-4d52-ab9e-bb156e3fc0c1") },
+                    { 11, 6, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus menyanyi untuk pemula, fokus pada teknik pernapasan, kontrol nada, dan penguatan suara.", "img/Landing66.svg", true, "Vocal Training for Beginners", 2500000L, new Guid("1b507945-91bf-4904-ac4a-09a18d0e27d1") },
+                    { 12, 6, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kuasai teknik vokal lanjutan, ekspresi musik, vibrato, dan performa panggung profesional.", "img/Landing66.svg", true, "Advanced Vocal Mastery", 5500000L, new Guid("ce44161a-a1e3-4fde-889a-dab9f1355e20") },
+                    { 13, 7, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus flute pemula, belajar teknik embouchure, fingering, dan memainkan melodi sederhana.", "img/Landing67.svg", true, "Flute Basics for Beginners", 2200000L, new Guid("174bc8e5-e615-4877-b4c2-5202cc70e9d8") },
+                    { 14, 7, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Pelajari teknik lanjutan flute, interpretasi musik, dinamika, dan ekspresi panggung.", "img/Landing77.svg", true, "Flute Performance & Expression", 4800000L, new Guid("20cd6469-d4c0-486f-84ee-0a3d9805b921") },
+                    { 15, 8, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Kursus saxophone level expert, belajar improvisasi jazz, teknik embouchure, dan performa profesional.", "img/Landing6.svg", true, "Expert Level Saxophone", 7350000L, new Guid("039dfcd8-7258-4417-8359-5f47fbd44e18") },
+                    { 16, 8, new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Belajar teknik dasar hingga improvisasi jazz di saxophone untuk pemula hingga menengah.", "img/Landing88.svg", true, "Saxophone Jazz Essentials", 4500000L, new Guid("c3a3d793-bad8-4f3f-856e-b71de82deb2a") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserRoles",
+                columns: new[] { "Id", "CreatedAt", "RefId", "RoleId", "UpdatedAt", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("40d61f76-7458-4f51-b7be-f665eaaf53f3"), 2, null, 1 },
+                    { 2, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("58536f91-0d39-4144-9092-2a587203054b"), 1, null, 2 },
+                    { 3, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("bee22858-a299-4adc-9349-d0d27146b2aa"), 1, null, 3 },
+                    { 4, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("12a54832-934c-4a98-96a7-3d0343f87568"), 1, null, 4 },
+                    { 5, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("435bcec6-301f-48c0-aeb5-72e275dc500a"), 1, null, 5 },
+                    { 6, new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("d493a9b6-1f7e-45a7-8482-32636583e8f3"), 2, null, 6 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Schedules",
+                columns: new[] { "Id", "CourseId", "CreatedAt", "Date", "RefId" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b") },
+                    { 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05") },
+                    { 3, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9") },
+                    { 4, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1") },
+                    { 5, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3") },
+                    { 6, 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9") },
+                    { 7, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d") },
+                    { 8, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337") },
+                    { 9, 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("d59b88dc-9880-412f-8702-fa36ab470805") },
+                    { 10, 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620") },
+                    { 11, 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23") },
+                    { 12, 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1") },
+                    { 13, 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("797150ca-baa3-400b-b88f-e3d11b086a76") },
+                    { 14, 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15") },
+                    { 15, 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("e1f2d3c4-5678-4f9a-b123-abcdef123456") },
+                    { 16, 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("f1a2b3c4-5678-4a9b-cdef-123456abcdef") },
+                    { 17, 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("f2b3c4d5-6789-4b0c-def1-234567abcdef") },
+                    { 18, 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("f3c4d5e6-7890-4c1d-ef12-345678abcdef") },
+                    { 19, 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("f4d5e6f7-8901-4d2e-f123-456789abcdef") },
+                    { 20, 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("a7b8c9d0-9012-4e3f-8123-56789abcdef0") },
+                    { 21, 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("b8c9d0e1-0123-4f4a-9234-6789abcdef01") },
+                    { 22, 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("c9d0e1f2-1234-4a5b-a345-789abcdef012") },
+                    { 23, 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("d0e1f2a3-2345-4b6c-b456-89abcdef0123") },
+                    { 24, 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("e1f2a3b4-3456-4c7d-c567-9abcdef01234") },
+                    { 25, 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("e8ad711c-43bd-43a2-98c6-3d46b3667812") },
+                    { 26, 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("cbd109ea-3589-488a-bf07-668b46f6bc8a") },
+                    { 27, 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("670e7315-12b0-4dda-8adb-34de699cf3be") },
+                    { 28, 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("20ee3579-1c49-4e8f-8554-3a1ff11411e2") },
+                    { 29, 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("7cceb84e-1fb3-4834-b594-903edb63e1a1") },
+                    { 30, 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("5d4ab8e2-0383-4d71-9d70-9e1b6e86ec94") },
+                    { 31, 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("26f85f8d-9f30-4b2d-88f1-1170c0cfd7bc") },
+                    { 32, 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("c68ce666-4fb9-41f1-8823-cb5ef12a26ee") },
+                    { 33, 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("fc1e014b-d804-45e6-b9e6-ca7cb863deee") },
+                    { 34, 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("bacae46f-be78-4e4e-ad18-7050a9fcf125") },
+                    { 35, 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("c9444095-c496-4a71-9e60-3932449f5f91") },
+                    { 36, 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("7b89ba88-8d47-438b-938d-e4a6b207ee93") },
+                    { 37, 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("0a5b10b7-5b2b-4323-99f7-d4016697b191") },
+                    { 38, 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("7f10395a-f36e-455b-9dbc-7c39210d3ee6") },
+                    { 39, 13, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("237fc072-5e2e-4f10-b980-0d18b889cab1") },
+                    { 40, 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("b04045b4-13af-4d8c-921c-971e0c5cf904") },
+                    { 41, 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("c244ef8a-3222-4002-be2b-d53a7fc6e787") },
+                    { 42, 14, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("2bb5eaf0-f3a6-4842-a191-161cc51b4bf0") },
+                    { 43, 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("c6666efa-2e35-4bac-810f-10e694a6d7db") },
+                    { 44, 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("1083cf7b-d1ef-4953-901b-64c72ae82160") },
+                    { 45, 15, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("4e0ad8cb-938d-4f9d-9786-34550d529dcc") },
+                    { 46, 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 25), new Guid("db796688-95bb-4aa4-8a08-d846dd81e1d3") },
+                    { 47, 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 26), new Guid("172ac710-0583-42f9-b27d-653fc99251cf") },
+                    { 48, 16, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateOnly(2022, 10, 27), new Guid("5923917b-fefd-4525-aab3-12813aa6c41c") }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditLogs_EntityId",
+                table: "AuditLogs",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditLogs_RefId",
+                table: "AuditLogs",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_RefId",
+                table: "CartItems",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_ScheduleId",
+                table: "CartItems",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_UserId",
+                table: "CartItems",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_RefId",
+                table: "Categories",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_CategoryId",
+                table: "Courses",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_RefId",
+                table: "Courses",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_InvoiceId",
+                table: "InvoiceDetails",
+                column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_RefId",
+                table: "InvoiceDetails",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_PaymentMethodId",
+                table: "Invoices",
+                column: "PaymentMethodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_RefCode",
+                table: "Invoices",
+                column: "RefCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_RefId",
+                table: "Invoices",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_UserId",
+                table: "Invoices",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyClasses_RefId",
+                table: "MyClasses",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyClasses_ScheduleId",
+                table: "MyClasses",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MyClasses_UserId",
+                table: "MyClasses",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PaymentMethods_RefId",
+                table: "PaymentMethods",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleClaims_RefId",
+                table: "RoleClaims",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleClaims_RoleId",
+                table: "RoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_RefId",
+                table: "Roles",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_CourseId",
+                table: "Schedules",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_RefId",
+                table: "Schedules",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaims_RefId",
+                table: "UserClaims",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaims_UserId",
+                table: "UserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_RefId",
+                table: "UserRoles",
+                column: "RefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_RoleId",
+                table: "UserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_UserId",
+                table: "UserRoles",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RefId",
+                table: "Users",
+                column: "RefId",
+                unique: true);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "AuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "InvoiceDetails");
+
+            migrationBuilder.DropTable(
+                name: "MyClasses");
+
+            migrationBuilder.DropTable(
+                name: "RoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "UserClaims");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "Invoices");
+
+            migrationBuilder.DropTable(
+                name: "Schedules");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethods");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+        }
+    }
+}

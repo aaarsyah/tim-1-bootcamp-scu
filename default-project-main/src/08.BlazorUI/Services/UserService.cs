@@ -65,13 +65,13 @@ public class UserService : IUserService
             return new();
         }
     }
-    public async Task<bool> AddRoleToUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+    public async Task<bool> AddRoleToUserAsync(AuthenticationHeaderValue authorization, Guid userRefId, RoleRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/add", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/roles/add", request);
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -86,13 +86,13 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<bool> RemoveRoleFromUserAsync(AuthenticationHeaderValue authorization, int userId, RoleRequestDto request)
+    public async Task<bool> RemoveRoleFromUserAsync(AuthenticationHeaderValue authorization, Guid userRefId, RoleRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/roles/remove", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/roles/remove", request);
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -107,13 +107,13 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<bool> SetClaimForUserAsync(AuthenticationHeaderValue authorization, int userId, ClaimDto request)
+    public async Task<bool> SetClaimForUserAsync(AuthenticationHeaderValue authorization, Guid userRefId, ClaimDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/claims/add", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/claims/add", request);
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -128,13 +128,13 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<bool> RemoveClaimFromUserAsync(AuthenticationHeaderValue authorization, int userId, ClaimDto request)
+    public async Task<bool> RemoveClaimFromUserAsync(AuthenticationHeaderValue authorization, Guid userRefId, ClaimDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/claims/remove", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/claims/remove", request);
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -149,13 +149,13 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<bool> ActivateUserAsync(AuthenticationHeaderValue authorization, int userId)
+    public async Task<bool> ActivateUserAsync(AuthenticationHeaderValue authorization, Guid userRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/activate", new { });
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/activate", new { });
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -169,13 +169,13 @@ public class UserService : IUserService
             return false;
         }
     }
-    public async Task<bool> DeactivateUserAsync(AuthenticationHeaderValue authorization, int userId)
+    public async Task<bool> DeactivateUserAsync(AuthenticationHeaderValue authorization, Guid userRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userId}/deactivate", new { });
+            var response = await _httpClient.PutAsJsonAsync($"api/UserManagement/users/{userRefId}/deactivate", new { });
             if (!response.IsSuccessStatusCode)
             {
                 return false;

@@ -38,9 +38,7 @@ public class CourseService : ICourseService
 
                 if (apiResponse?.Data?.Data != null)
                 {
-                    return apiResponse.Data.Data
-                        .OrderBy(c => c.Id) // urutkan berdasarkan ID terkecil (ascending)
-                        .ToList();
+                    return apiResponse.Data.Data.ToList();
                 }
                 return null;
             }
@@ -91,13 +89,13 @@ public class CourseService : ICourseService
             return null;
         }
     }
-    public async Task<CourseDto?> GetCourseByIdAsync(int courseId)
+    public async Task<CourseDto?> GetCourseByIdAsync(Guid courseRefId)
     {
         //GetCourse
         var _httpClient = _factory.CreateClient("WebAPI");
         try
         {
-            var response = await _httpClient.GetAsync($"api/Course/{courseId}");
+            var response = await _httpClient.GetAsync($"api/Course/{courseRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CourseDto>>();
@@ -141,13 +139,13 @@ public class CourseService : ICourseService
             return new();
         }
     }
-    public async Task<CategoryDto?> GetCategoryByIdAsync(int categoryId)
+    public async Task<CategoryDto?> GetCategoryByIdAsync(Guid categoryRefId)
     {
         //GetCourse
         var _httpClient = _factory.CreateClient("WebAPI");
         try
         {
-            var response = await _httpClient.GetAsync($"api/Category/{categoryId}");
+            var response = await _httpClient.GetAsync($"api/Category/{categoryRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
@@ -167,12 +165,12 @@ public class CourseService : ICourseService
         }
     }
 
-    public async Task<List<CourseDto>> GetCourseByCategoryAsync(int categoryId)
+    public async Task<List<CourseDto>> GetCourseByCategoryAsync(Guid categoryRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         try
         {
-            var response = await _httpClient.GetAsync($"api/Course/v2?CategoryId={categoryId}");
+            var response = await _httpClient.GetAsync($"api/Course/v2?CategoryId={categoryRefId}");
             var rawJson = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Response JSON: {rawJson}");
 
@@ -187,7 +185,7 @@ public class CourseService : ICourseService
             if (apiResponse?.Data?.Data != null)
             {
                 return apiResponse.Data.Data
-                    .Where(c => c.IsActive && c.CategoryId == categoryId)
+                    .Where(c => c.IsActive && c.CategoryRefId == categoryRefId)
                     .ToList();
             }
 

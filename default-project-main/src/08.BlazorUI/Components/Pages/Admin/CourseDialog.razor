@@ -15,7 +15,7 @@
     <DialogContent>
         <MudTextField @bind-Value="Course.Name" Label="Name" Required="true" />
         <MudTextField @bind-Value="Course.Description" Label="Description" AutoGrow Required="true" />
-        <MudTextField @bind-Value="Course.CategoryId" Label="CategoryId" Required="true" />
+        <MudTextField @bind-Value="Course.CategoryRefId" Label="CategoryRefId" Required="true" />
         <MudTextField @bind-Value="Course.Price" Label="Harga" Required="true" MaxLength="9" />
 
         <InputFile id="fileInput" OnChange="UploadImage" hidden accept="image/*" />
@@ -105,9 +105,9 @@
                 Price = Course.Price,
                 ImageUrl = Course.ImageUrl,
                 IsActive = Course.IsActive,
-                CategoryId = Course.CategoryId
+                CategoryRefId = Course.CategoryRefId
             };
-            result = await AdminService.UpdateCourseAsync(auth, Course.Id, updateCourseDto);
+            result = await AdminService.UpdateCourseAsync(auth, Course.RefId, updateCourseDto);
             if (result == null)
             {
                 Snackbar.Add($"Gagal mengedit course", Severity.Error);
@@ -124,7 +124,7 @@
                 Price = Course.Price,
                 ImageUrl = Course.ImageUrl,
                 IsActive = Course.IsActive,
-                CategoryId = Course.CategoryId
+                CategoryRefId = Course.CategoryRefId
             };
             result = await AdminService.CreateCourseAsync(auth, createCourseDto);
             if (result == null)

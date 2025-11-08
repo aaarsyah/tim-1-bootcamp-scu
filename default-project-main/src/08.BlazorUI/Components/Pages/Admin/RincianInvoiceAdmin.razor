@@ -1,4 +1,4 @@
-@page "/details-invoice-admin/{InvoiceId:int}"
+@page "/details-invoice-admin/{InvoiceRefIdS}"
 @using MyApp.BlazorUI.Services
 @using MyApp.Shared.DTOs
 @using System.Globalization
@@ -24,7 +24,7 @@
             <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" />
         </div>
     }
-    else if (Elements == null || !Elements.Any())
+    else if (invoiceDetails == null || !invoiceDetails.Any())
     {
         <MudText Class="mt-6" Typo="Typo.subtitle1" Align="Align.Center">
             Tidak ada data rincian invoice.
@@ -42,7 +42,7 @@
             <MudText Typo="Typo.subtitle1" Class="mb-4 fw-bold"><b>Total Harga: @($"IDR {Invoice.TotalPrice:N0}")</b></MudText>
         </MudItem>
 
-        <MudTable T="InvoiceDetailDto" Items="@Elements" Hover="true" Breakpoint="Breakpoint.Sm"
+        <MudTable T="InvoiceDetailDto" Items="@invoiceDetails" Hover="true" Breakpoint="Breakpoint.Sm"
                   Class="mt-4"
                   @ref="mudTable"
                   RowClass="cursor-pointer"
@@ -50,19 +50,19 @@
                   OnRowClick="RowClickEvent">
 
             <HeaderContent>
-                <MudTh Style="background-color: #F8D24B; color: black;">No</MudTh>
+                <MudTh Style="background-color: #F8D24B; color: black;">No.</MudTh>
                 <MudTh Style="background-color: #F8D24B; color: black;">Nama Course</MudTh>
                 <MudTh Style="background-color: #F8D24B; color: black;">Kategori</MudTh>
                 <MudTh Style="background-color: #F8D24B; color: black;">Jadwal</MudTh>
                 <MudTh Style="background-color: #F8D24B; color: black;">Harga</MudTh>
             </HeaderContent>
 
-            <RowTemplate Context="item">
-                <MudTd DataLabel="No">@(Elements.IndexOf(item) + 1)</MudTd>
-                <MudTd DataLabel="NamaCourse">@item.CourseName</MudTd>
-                <MudTd DataLabel="Kategori">@item.CategoryName</MudTd>
-                <MudTd DataLabel="JadwalKursus">@item.ScheduleDate.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
-                <MudTd DataLabel="Harga">@($"IDR {item.Price:N0}")</MudTd>
+            <RowTemplate>
+                <MudTd DataLabel="No.">@(invoiceDetails.IndexOf(context) + 1)</MudTd>
+                <MudTd DataLabel="NamaCourse">@context.CourseName</MudTd>
+                <MudTd DataLabel="Kategori">@context.CategoryName</MudTd>
+                <MudTd DataLabel="JadwalKursus">@context.ScheduleDate.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudTd>
+                <MudTd DataLabel="Harga">@($"IDR {context.Price:N0}")</MudTd>
             </RowTemplate>
         </MudTable>
     }
@@ -70,14 +70,26 @@
 
 @code {
     [Parameter]
-    public int InvoiceId { get; set; }
+    public string InvoiceRefIdS { get; set; }
+
+    private Guid InvoiceRefId { get; set; }
 
     private bool isLoading = true;
     private MudTable<InvoiceDetailDto> mudTable;
     private int selectedRowNumber = -1;
-    private List<InvoiceDetailDto> Elements = new();
+    private List<InvoiceDetailDto> invoiceDetails = new();
     private InvoiceDto Invoice = new();
 
+    protected override void OnInitialized()
+    {
+        if (!Guid.TryParse(InvoiceRefIdS, out Guid guid))
+        {
+            // Invalid Guid, redirect to home
+            Navigation.GoToHome();
+            return;
+        }
+        InvoiceRefId = guid;
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender)
@@ -90,7 +102,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        var invoice = await CheckoutService.GetInvoiceByIdAdminAsync(auth, InvoiceId);
+        var invoice = await CheckoutService.GetInvoiceByIdAdminAsync(auth, InvoiceRefId);
         if (invoice == null)
         {
             // Tidak ada invoice, kosong
@@ -99,7 +111,7 @@
             return;
         }
         Invoice = invoice;
-        Elements = await CheckoutService.GetInvoiceDetailsByInvoiceIdAdminAsync(auth, InvoiceId); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
+        invoiceDetails = await CheckoutService.GetInvoiceDetailsByInvoiceIdAdminAsync(auth, InvoiceRefId); // TODO: .OrderByDescending(i => i.CreatedAt).ToList()
         isLoading = false;
         StateHasChanged();
     }

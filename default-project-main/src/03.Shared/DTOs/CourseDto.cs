@@ -5,10 +5,6 @@ namespace MyApp.Shared.DTOs;
 /// </summary>
 public class CourseDto
 {
-    /// <summary>
-    /// Product ID
-    /// </summary>
-    public int Id { get; set; }
     public Guid RefId { get; set; }
     /// <summary>
     /// Product name
@@ -44,7 +40,7 @@ public class CourseDto
     /// <summary>
     /// Category ID
     /// </summary>
-    public int CategoryId { get; set; }
+    public Guid CategoryRefId { get; set; }
 
 
     /// <summary>
@@ -88,7 +84,7 @@ public class CreateCourseRequestDto
     /// <summary>
     /// Category ID
     /// </summary>
-    public int CategoryId { get; set; }
+    public Guid CategoryRefId { get; set; }
 }
 
 /// <summary>
@@ -125,5 +121,5 @@ public class UpdateCourseRequestDto
     /// <summary>
     /// Category ID
     /// </summary>
-    public int CategoryId { get; set; }
+    public Guid CategoryRefId { get; set; }
 }

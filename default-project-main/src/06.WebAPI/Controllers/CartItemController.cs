@@ -46,7 +46,7 @@ public class CartItemController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<CheckoutResponseDto>>> CheckoutItems(
-        [FromBody] CheckoutRequestDto2 request)
+        [FromBody] CheckoutRequestDto request)
     {
         var userClaimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userClaimIdentifier == null || !Guid.TryParse(userClaimIdentifier.Value, out Guid userRefId))

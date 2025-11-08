@@ -8,7 +8,7 @@ using MyApp.Infrastructure.Data;
 
 #nullable disable
 
-namespace MyApp.WebAPI.Migrations
+namespace MyApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppleMusicDbContext))]
     partial class AppleMusicDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace MyApp.WebAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -121,10 +121,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(4000)
@@ -158,9 +154,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RefId")
@@ -173,7 +166,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Pelajari teknik bermain drum dari dasar hingga mahir, termasuk ritme, koordinasi tangan-kaki, dan improvisasi.",
                             ImageUrl = "img/Class1.svg",
                             IsActive = true,
@@ -185,7 +177,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kuasai piano dari dasar sampai teknik lanjutan, termasuk membaca not, improvisasi, dan interpretasi musik.",
                             ImageUrl = "img/Class2.svg",
                             IsActive = true,
@@ -197,7 +188,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Pelajari gitar akustik dan elektrik, teknik petikan, chord, solo, dan improvisasi kreatif.",
                             ImageUrl = "img/Class3.svg",
                             IsActive = true,
@@ -209,7 +199,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar bass untuk menciptakan groove yang solid, memahami teknik slap, fingerstyle, dan improvisasi musik.",
                             ImageUrl = "img/Class4.svg",
                             IsActive = true,
@@ -221,7 +210,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Pelajari biola dari teknik dasar, membaca not, hingga ekspresi musik klasik dan modern.",
                             ImageUrl = "img/Class5.svg",
                             IsActive = true,
@@ -233,7 +221,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kembangkan kemampuan vokal, teknik pernapasan, kontrol nada, serta ekspresi dan interpretasi lagu.",
                             ImageUrl = "img/Class6.svg",
                             IsActive = true,
@@ -245,7 +232,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 7,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar flute dari teknik dasar embouchure, fingering, hingga memainkan melodi klasik dan kontemporer.",
                             ImageUrl = "img/Class7.svg",
                             IsActive = true,
@@ -257,7 +243,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 8,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kuasai saxophone dengan belajar teknik embouchure, breath control, improvisasi jazz, dan interpretasi musik modern.",
                             ImageUrl = "img/Class8.svg",
                             IsActive = true,
@@ -282,10 +267,6 @@ namespace MyApp.WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -318,9 +299,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -339,7 +317,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 1,
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus drum eksklusif dengan mentor profesional Eno Netral, fokus pada teknik, groove, dan improvisasi.",
                             ImageUrl = "img/Landing1.svg",
                             IsActive = true,
@@ -352,7 +329,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 2,
                             CategoryId = 1,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus drum untuk anak-anak, belajar ritme dasar, koordinasi tangan-kaki, dan bermain lagu sederhana.",
                             ImageUrl = "img/Landing4.svg",
                             IsActive = true,
@@ -365,7 +341,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 3,
                             CategoryId = 2,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar piano dari dasar hingga mahir, termasuk teknik, sight-reading, dan repertoar klasik & modern.",
                             ImageUrl = "img/Landing5.svg",
                             IsActive = true,
@@ -378,7 +353,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 4,
                             CategoryId = 2,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kuasai improvisasi piano jazz, belajar chord voicing, scales, dan bermain bersama band.",
                             ImageUrl = "img/Landing22.svg",
                             IsActive = true,
@@ -391,7 +365,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 5,
                             CategoryId = 3,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.Kursus gitar pemula untuk anak-anak, fokus belajar chord dasar, petikan, dan lagu sederhana.",
                             ImageUrl = "img/Landing2.svg",
                             IsActive = true,
@@ -404,7 +377,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 6,
                             CategoryId = 3,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar teknik gitar rock, solo, power chord, dan riff untuk pemula hingga menengah.",
                             ImageUrl = "img/Landing33.svg",
                             IsActive = true,
@@ -417,7 +389,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 7,
                             CategoryId = 4,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus bass untuk pemula, belajar teknik dasar, groove, dan memainkan lagu sederhana.",
                             ImageUrl = "img/Landing44.svg",
                             IsActive = true,
@@ -430,7 +401,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 8,
                             CategoryId = 4,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Pelajari teknik lanjutan bass, termasuk slap, tapping, dan improvisasi untuk berbagai genre musik.",
                             ImageUrl = "img/Landing45.svg",
                             IsActive = true,
@@ -443,7 +413,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 9,
                             CategoryId = 5,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus biola level menengah, belajar teknik bowing, vibrato, dan ekspresi musikal.",
                             ImageUrl = "img/Landing3.svg",
                             IsActive = true,
@@ -456,7 +425,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 10,
                             CategoryId = 5,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar teknik lanjutan biola, interpretasi musik klasik, dan persiapan tampil di konser.",
                             ImageUrl = "img/Landing55.svg",
                             IsActive = true,
@@ -469,7 +437,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 11,
                             CategoryId = 6,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus menyanyi untuk pemula, fokus pada teknik pernapasan, kontrol nada, dan penguatan suara.",
                             ImageUrl = "img/Landing66.svg",
                             IsActive = true,
@@ -482,7 +449,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 12,
                             CategoryId = 6,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kuasai teknik vokal lanjutan, ekspresi musik, vibrato, dan performa panggung profesional.",
                             ImageUrl = "img/Landing66.svg",
                             IsActive = true,
@@ -495,7 +461,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 13,
                             CategoryId = 7,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus flute pemula, belajar teknik embouchure, fingering, dan memainkan melodi sederhana.",
                             ImageUrl = "img/Landing67.svg",
                             IsActive = true,
@@ -508,7 +473,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 14,
                             CategoryId = 7,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Pelajari teknik lanjutan flute, interpretasi musik, dinamika, dan ekspresi panggung.",
                             ImageUrl = "img/Landing77.svg",
                             IsActive = true,
@@ -521,7 +485,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 15,
                             CategoryId = 8,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Kursus saxophone level expert, belajar improvisasi jazz, teknik embouchure, dan performa profesional.",
                             ImageUrl = "img/Landing6.svg",
                             IsActive = true,
@@ -534,7 +497,6 @@ namespace MyApp.WebAPI.Migrations
                             Id = 16,
                             CategoryId = 8,
                             CreatedAt = new DateTime(2022, 10, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Belajar teknik dasar hingga improvisasi jazz di saxophone untuk pemula hingga menengah.",
                             ImageUrl = "img/Landing88.svg",
                             IsActive = true,
@@ -668,10 +630,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -693,9 +651,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RefId")
@@ -708,7 +663,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment1.svg",
                             Name = "Gopay",
@@ -718,7 +672,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment2.svg",
                             Name = "OVO",
@@ -728,7 +681,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment3.svg",
                             Name = "DANA",
@@ -738,7 +690,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment4.svg",
                             Name = "Mandiri",
@@ -748,7 +699,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment5.svg",
                             Name = "BCA",
@@ -758,7 +708,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             IsActive = true,
                             LogoUrl = "img/Payment6.svg",
                             Name = "BNI",
@@ -779,13 +728,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue("System");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -802,10 +744,6 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RefId")
@@ -818,7 +756,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Standard user with basic access",
                             Name = "User",
                             RefId = new Guid("e7b86411-acc4-4e6f-b132-8349974d973b")
@@ -827,7 +764,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Description = "Administrator with management access",
                             Name = "Admin",
                             RefId = new Guid("c444bd50-1a9d-4a33-a0d9-b9b375e81a68")
@@ -855,13 +791,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue("System");
-
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
@@ -870,10 +799,6 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -907,9 +832,6 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
@@ -926,8 +848,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("7e0ea9d3-10e6-4762-a4b9-5569e398f03b")
                         },
                         new
                         {
@@ -935,8 +856,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("692dfbe2-4ed6-4eb8-9cc8-395820d3ad05")
                         },
                         new
                         {
@@ -944,8 +864,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("332ffdfb-b8d6-4e06-823c-ec2111c4afa9")
                         },
                         new
                         {
@@ -953,8 +872,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("9be1b178-ada5-48a6-a580-13a606b8a3c1")
                         },
                         new
                         {
@@ -962,8 +880,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("abf7194c-d954-407d-af3b-8ebfb946d8f3")
                         },
                         new
                         {
@@ -971,8 +888,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("b2bc0584-af24-4896-a5cc-7642cabff8d9")
                         },
                         new
                         {
@@ -980,8 +896,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("336e590c-a8ec-49ac-af12-6f08c837e93d")
                         },
                         new
                         {
@@ -989,8 +904,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("392a3fce-9a3b-41f3-8d2d-5a1547a0b337")
                         },
                         new
                         {
@@ -998,8 +912,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("d59b88dc-9880-412f-8702-fa36ab470805")
                         },
                         new
                         {
@@ -1007,8 +920,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("80dd8f4a-6d80-4f37-b201-0855f20a5620")
                         },
                         new
                         {
@@ -1016,8 +928,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("06c3d0ff-45e6-46f5-94b7-f76b5aed1a23")
                         },
                         new
                         {
@@ -1025,8 +936,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("ebd1b0d8-72a7-4a17-ae78-65b3d8f54db1")
                         },
                         new
                         {
@@ -1034,8 +944,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("797150ca-baa3-400b-b88f-e3d11b086a76")
                         },
                         new
                         {
@@ -1043,8 +952,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("d3f704ec-3ba8-4cfa-95c2-d99ce4a71c15")
                         },
                         new
                         {
@@ -1052,8 +960,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("e1f2d3c4-5678-4f9a-b123-abcdef123456"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("e1f2d3c4-5678-4f9a-b123-abcdef123456")
                         },
                         new
                         {
@@ -1061,8 +968,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("f1a2b3c4-5678-4a9b-cdef-123456abcdef"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("f1a2b3c4-5678-4a9b-cdef-123456abcdef")
                         },
                         new
                         {
@@ -1070,8 +976,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("f2b3c4d5-6789-4b0c-def1-234567abcdef"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("f2b3c4d5-6789-4b0c-def1-234567abcdef")
                         },
                         new
                         {
@@ -1079,8 +984,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("f3c4d5e6-7890-4c1d-ef12-345678abcdef"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("f3c4d5e6-7890-4c1d-ef12-345678abcdef")
                         },
                         new
                         {
@@ -1088,8 +992,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("f4d5e6f7-8901-4d2e-f123-456789abcdef"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("f4d5e6f7-8901-4d2e-f123-456789abcdef")
                         },
                         new
                         {
@@ -1097,8 +1000,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("a7b8c9d0-9012-4e3f-8123-56789abcdef0"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("a7b8c9d0-9012-4e3f-8123-56789abcdef0")
                         },
                         new
                         {
@@ -1106,8 +1008,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 7,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("b8c9d0e1-0123-4f4a-9234-6789abcdef01"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("b8c9d0e1-0123-4f4a-9234-6789abcdef01")
                         },
                         new
                         {
@@ -1115,8 +1016,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("c9d0e1f2-1234-4a5b-a345-789abcdef012"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("c9d0e1f2-1234-4a5b-a345-789abcdef012")
                         },
                         new
                         {
@@ -1124,8 +1024,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("d0e1f2a3-2345-4b6c-b456-89abcdef0123"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("d0e1f2a3-2345-4b6c-b456-89abcdef0123")
                         },
                         new
                         {
@@ -1133,8 +1032,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 8,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("e1f2a3b4-3456-4c7d-c567-9abcdef01234"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("e1f2a3b4-3456-4c7d-c567-9abcdef01234")
                         },
                         new
                         {
@@ -1142,8 +1040,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("e8ad711c-43bd-43a2-98c6-3d46b3667812"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("e8ad711c-43bd-43a2-98c6-3d46b3667812")
                         },
                         new
                         {
@@ -1151,8 +1048,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("cbd109ea-3589-488a-bf07-668b46f6bc8a"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("cbd109ea-3589-488a-bf07-668b46f6bc8a")
                         },
                         new
                         {
@@ -1160,8 +1056,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 9,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("670e7315-12b0-4dda-8adb-34de699cf3be"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("670e7315-12b0-4dda-8adb-34de699cf3be")
                         },
                         new
                         {
@@ -1169,8 +1064,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("20ee3579-1c49-4e8f-8554-3a1ff11411e2"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("20ee3579-1c49-4e8f-8554-3a1ff11411e2")
                         },
                         new
                         {
@@ -1178,8 +1072,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("7cceb84e-1fb3-4834-b594-903edb63e1a1"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("7cceb84e-1fb3-4834-b594-903edb63e1a1")
                         },
                         new
                         {
@@ -1187,8 +1080,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 10,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("5d4ab8e2-0383-4d71-9d70-9e1b6e86ec94"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("5d4ab8e2-0383-4d71-9d70-9e1b6e86ec94")
                         },
                         new
                         {
@@ -1196,8 +1088,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("26f85f8d-9f30-4b2d-88f1-1170c0cfd7bc"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("26f85f8d-9f30-4b2d-88f1-1170c0cfd7bc")
                         },
                         new
                         {
@@ -1205,8 +1096,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("c68ce666-4fb9-41f1-8823-cb5ef12a26ee"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("c68ce666-4fb9-41f1-8823-cb5ef12a26ee")
                         },
                         new
                         {
@@ -1214,8 +1104,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 11,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("fc1e014b-d804-45e6-b9e6-ca7cb863deee"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("fc1e014b-d804-45e6-b9e6-ca7cb863deee")
                         },
                         new
                         {
@@ -1223,8 +1112,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("bacae46f-be78-4e4e-ad18-7050a9fcf125"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("bacae46f-be78-4e4e-ad18-7050a9fcf125")
                         },
                         new
                         {
@@ -1232,8 +1120,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("c9444095-c496-4a71-9e60-3932449f5f91"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("c9444095-c496-4a71-9e60-3932449f5f91")
                         },
                         new
                         {
@@ -1241,8 +1128,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 12,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("7b89ba88-8d47-438b-938d-e4a6b207ee93"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("7b89ba88-8d47-438b-938d-e4a6b207ee93")
                         },
                         new
                         {
@@ -1250,8 +1136,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 13,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("0a5b10b7-5b2b-4323-99f7-d4016697b191"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("0a5b10b7-5b2b-4323-99f7-d4016697b191")
                         },
                         new
                         {
@@ -1259,8 +1144,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 13,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("7f10395a-f36e-455b-9dbc-7c39210d3ee6"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("7f10395a-f36e-455b-9dbc-7c39210d3ee6")
                         },
                         new
                         {
@@ -1268,8 +1152,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 13,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("237fc072-5e2e-4f10-b980-0d18b889cab1"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("237fc072-5e2e-4f10-b980-0d18b889cab1")
                         },
                         new
                         {
@@ -1277,8 +1160,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 14,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("b04045b4-13af-4d8c-921c-971e0c5cf904"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("b04045b4-13af-4d8c-921c-971e0c5cf904")
                         },
                         new
                         {
@@ -1286,8 +1168,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 14,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("c244ef8a-3222-4002-be2b-d53a7fc6e787"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("c244ef8a-3222-4002-be2b-d53a7fc6e787")
                         },
                         new
                         {
@@ -1295,8 +1176,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 14,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("2bb5eaf0-f3a6-4842-a191-161cc51b4bf0"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("2bb5eaf0-f3a6-4842-a191-161cc51b4bf0")
                         },
                         new
                         {
@@ -1304,8 +1184,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 15,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("c6666efa-2e35-4bac-810f-10e694a6d7db"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("c6666efa-2e35-4bac-810f-10e694a6d7db")
                         },
                         new
                         {
@@ -1313,8 +1192,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 15,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("1083cf7b-d1ef-4953-901b-64c72ae82160"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("1083cf7b-d1ef-4953-901b-64c72ae82160")
                         },
                         new
                         {
@@ -1322,8 +1200,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 15,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("4e0ad8cb-938d-4f9d-9786-34550d529dcc"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("4e0ad8cb-938d-4f9d-9786-34550d529dcc")
                         },
                         new
                         {
@@ -1331,8 +1208,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 16,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 25),
-                            RefId = new Guid("db796688-95bb-4aa4-8a08-d846dd81e1d3"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("db796688-95bb-4aa4-8a08-d846dd81e1d3")
                         },
                         new
                         {
@@ -1340,8 +1216,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 16,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 26),
-                            RefId = new Guid("172ac710-0583-42f9-b27d-653fc99251cf"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("172ac710-0583-42f9-b27d-653fc99251cf")
                         },
                         new
                         {
@@ -1349,8 +1224,7 @@ namespace MyApp.WebAPI.Migrations
                             CourseId = 16,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Date = new DateOnly(2022, 10, 27),
-                            RefId = new Guid("5923917b-fefd-4525-aab3-12813aa6c41c"),
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RefId = new Guid("5923917b-fefd-4525-aab3-12813aa6c41c")
                         });
                 });
 
@@ -1366,13 +1240,6 @@ namespace MyApp.WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue("System");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -1437,10 +1304,6 @@ namespace MyApp.WebAPI.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RefId")
@@ -1456,7 +1319,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "admin@applemusic.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
@@ -1472,7 +1334,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "nurimamiskandar@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
@@ -1488,7 +1349,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "imam.stmik15@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
@@ -1504,7 +1364,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "iniemaildummysaya@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = false,
@@ -1520,7 +1379,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "yusrisahrul.works@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
@@ -1536,7 +1394,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             Email = "yusribootcamp@gmail.com",
                             EmailConfirmationTokenExpiry = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailConfirmed = true,
@@ -1571,22 +1428,11 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue("System");
-
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -1614,13 +1460,6 @@ namespace MyApp.WebAPI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasDefaultValue("System");
-
                     b.Property<Guid>("RefId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1629,10 +1468,6 @@ namespace MyApp.WebAPI.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -1653,7 +1488,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("40d61f76-7458-4f51-b7be-f665eaaf53f3"),
                             RoleId = 2,
                             UserId = 1
@@ -1662,7 +1496,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("58536f91-0d39-4144-9092-2a587203054b"),
                             RoleId = 1,
                             UserId = 2
@@ -1671,7 +1504,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("bee22858-a299-4adc-9349-d0d27146b2aa"),
                             RoleId = 1,
                             UserId = 3
@@ -1680,7 +1512,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("12a54832-934c-4a98-96a7-3d0343f87568"),
                             RoleId = 1,
                             UserId = 4
@@ -1689,7 +1520,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("435bcec6-301f-48c0-aeb5-72e275dc500a"),
                             RoleId = 1,
                             UserId = 5
@@ -1698,7 +1528,6 @@ namespace MyApp.WebAPI.Migrations
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedBy = "System",
                             RefId = new Guid("d493a9b6-1f7e-45a7-8482-32636583e8f3"),
                             RoleId = 2,
                             UserId = 6

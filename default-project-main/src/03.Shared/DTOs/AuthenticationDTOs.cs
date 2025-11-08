@@ -64,7 +64,6 @@ public class AuthResponseDto
 /// </summary>
 public class UserDto
 {
-    public int Id { get; set; }
     public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;

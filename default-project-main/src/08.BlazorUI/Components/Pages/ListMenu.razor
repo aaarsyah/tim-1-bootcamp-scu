@@ -1,4 +1,4 @@
-@page "/listmenu/{CategoryId:int}"
+@page "/listmenu/{CategoryRefIdS}"
 
 @using System.Globalization
 @using MyApp.BlazorUI.Services
@@ -37,7 +37,7 @@
             @foreach (var course in Courses)
             {
                 <MudItem xs="12" sm="6" md="4" lg="3">
-                    <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id))" Color="Color.Default">
+                    <MudLink OnClick="@(() => Navigation.GoToDetail(course.RefId))" Color="Color.Default">
                         <MudImage Src="@(!string.IsNullOrEmpty(course.ImageUrl) ? course.ImageUrl : "img/default-course.svg")" Class="w-100 mb-2" />
                         <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@course.CategoryName</MudText>
                         <MudText Typo="Typo.h3">@course.Name</MudText>
@@ -59,7 +59,9 @@
 
 @code {
     [Parameter]
-    public int CategoryId { get; set; }
+    public String CategoryRefIdS { get; set; }
+
+    private Guid CategoryRefId { get; set; }
 
     private string? CategoryName;
     private string? CategoryDescription;
@@ -70,25 +72,37 @@
     private bool IsCategoryLoading = true;
     private bool IsCourseLoading = true;
 
+    protected override void OnInitialized()
+    {
+        if (!Guid.TryParse(CategoryRefIdS, out Guid guid))
+        {
+            // Invalid Guid, redirect to home
+            Navigation.GoToHome();
+            return;
+        }
+        CategoryRefId = guid;
+    }
     protected override async Task OnInitializedAsync()
     {
         // Fetch Category by Id
-        var result = await CourseService.GetCategoryByIdAsync(CategoryId);
-        if (result != null)
+        var result = await CourseService.GetCategoryByIdAsync(CategoryRefId);
+        if (result == null)
         {
-            CategoryName = result.Name;
-            CategoryDescription = result.Description;
-            CategoryImage = !string.IsNullOrEmpty(result.ImageUrl)
-                ? result.ImageUrl
-                : "img/Class1.svg";
+            // TODO: Display Not Found error
+            Navigation.GoToHome();
+            return;
         }
-
+        CategoryName = result.Name;
+        CategoryDescription = result.Description;
+        CategoryImage = !string.IsNullOrEmpty(result.ImageUrl)
+            ? result.ImageUrl
+            : "img/Class1.svg";
         // Fetch all courses
-        var result2 = await CourseService.GetCourseByCategoryAsync(CategoryId);
+        var result2 = await CourseService.GetCourseByCategoryAsync(CategoryRefId);
         if (result2 != null)
         {
             Courses = result2
-                .Where(c => c.IsActive && c.CategoryId == CategoryId) // filter by category
+                .Where(c => c.IsActive && c.CategoryRefId == CategoryRefId) // filter by category
                 .ToList();
         }
         IsCourseLoading = false;

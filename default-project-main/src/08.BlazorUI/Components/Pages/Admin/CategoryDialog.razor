@@ -102,7 +102,7 @@
                 ImageUrl = Category.ImageUrl,
                 IsActive = Category.IsActive
             };
-            result = await AdminService.UpdateCategoryAsync(auth, Category.Id, updateCategoryDto);
+            result = await AdminService.UpdateCategoryAsync(auth, Category.RefId, updateCategoryDto);
             if (result == null)
             {
                 Snackbar.Add($"Gagal mengedit category", Severity.Error);

@@ -16,14 +16,6 @@ public class CheckoutRequestDto
 {
     [Required(ErrorMessage = "ItemCartIds is required")]
     [MinLength(1, ErrorMessage = "ItemCartIds must contain at least one item")]
-    public List<int> ItemCartIds { get; set; } = null!;
-    [Required(ErrorMessage = "PaymentMethodId is required")]
-    public int? PaymentMethodId { get; set; }
-}
-public class CheckoutRequestDto2
-{
-    [Required(ErrorMessage = "ItemCartIds is required")]
-    [MinLength(1, ErrorMessage = "ItemCartIds must contain at least one item")]
     public List<Guid> ItemCartRefIds { get; set; } = null!;
     [Required(ErrorMessage = "PaymentMethodId is required")]
     public Guid PaymentMethodRefId { get; set; }
@@ -51,20 +43,7 @@ public class CartItemResponseDto
     /// <summary>
     /// Id: Primary key
     /// </summary>
-    public int Id { get; set; }
     public Guid RefId { get; set; }
-    /// <summary>
-    /// User (foreign key): Pengguna yang terkait
-    /// </summary>
-    public int UserId { get; set; }
-    /// <summary>
-    /// User: Pengguna yang terkait
-    /// </summary>
-    public string UserName { get; set; } = string.Empty;
-    /// <summary>
-    /// Schedule (foreign key): Jadwal kelas yang terkait
-    /// </summary>
-    public int ScheduleId { get; set; }
 
     /// <summary>
     /// Nama Course

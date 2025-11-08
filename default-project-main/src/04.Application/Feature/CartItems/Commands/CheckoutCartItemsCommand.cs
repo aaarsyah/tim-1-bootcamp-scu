@@ -12,7 +12,7 @@ namespace MyApp.Application.Feature.CartItems.Commands;
 public class CheckoutCartItemsCommand : IRequest<ApiResponse<CheckoutResponseDto>>
 {
     public Guid UserRefId { get; set; }
-    public CheckoutRequestDto2 CheckoutDto { get; set; }
+    public CheckoutRequestDto CheckoutDto { get; set; }
 }
 public class CheckoutCartItemsCommandHandler : IRequestHandler<CheckoutCartItemsCommand, ApiResponse<CheckoutResponseDto>>
 {

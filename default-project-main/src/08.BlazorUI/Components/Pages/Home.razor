@@ -93,7 +93,7 @@
                 {
                     <MudItem xs="12" sm="6" md="4" lg="3">
                         <MudPaper Class="course-card" Elevation="0">
-                            <MudLink OnClick="@(() => Navigation.GoToDetail(course.Id.Value))" Color="Color.Default">
+                            <MudLink OnClick="@(() => Navigation.GoToDetail(course.RefId))" Color="Color.Default">
                                 <MudImage Src="@course.Image"
                                         Class="w-100 mb-2"
                                         Alt="@course.Title" />
@@ -143,7 +143,7 @@
                     @foreach (var category in Categories)
                     {
                         <MudItem xs="3" sm="3" md="3" lg="3" Class="d-flex justify-space-evenly">
-                            <MudLink OnClick="@(() => Navigation.GoToListMenu(category.Id.Value))" Color="Color.Default">
+                            <MudLink OnClick="@(() => Navigation.GoToListMenu(category.RefId))" Color="Color.Default">
                                 <MudImage Class="w-100 mb-2"
                                           Src="@category.Image"
                                           Alt="@category.Name" />
@@ -188,8 +188,8 @@
         </MudContainer>
 
 @code {
-    private record CourseCard(string Category, string Title, string Price, string Image, int? Id = null);
-    private record CategoryItem(string Name, string Image, int? Id = null);
+    private record CourseCard(string Category, string Title, string Price, string Image, Guid RefId);
+    private record CategoryItem(string Name, string Image, Guid RefId);
 
     private IEnumerable<CourseCard>? FeaturedCourses;
     private IEnumerable<CategoryItem>? Categories;
@@ -262,7 +262,7 @@
                     .Select(c => new CategoryItem(
                         Name: c.Name,
                         Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-category.svg" : c.ImageUrl,
-                        Id: c.Id
+                        RefId: c.RefId
                     ));
             }
         }
@@ -278,6 +278,6 @@
         Title: c.Name,
         Price: $"IDR {c.Price.ToString("N0", new CultureInfo("id-ID"))}",
         Image: string.IsNullOrEmpty(c.ImageUrl) ? "img/default-course.svg" : c.ImageUrl,
-        Id: c.Id
+        RefId: c.RefId
     );
 }

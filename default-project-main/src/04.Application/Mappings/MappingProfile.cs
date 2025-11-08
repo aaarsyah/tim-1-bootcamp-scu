@@ -21,6 +21,8 @@ namespace MyApp.Application.Mappings
 
             // Course mappings
             CreateMap<Course, CourseDto>()
+                .ForMember(dest => dest.CategoryRefId,
+                    opt => opt.MapFrom(src => src.Category.RefId))
                 .ForMember(dest => dest.CategoryName,
                     opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.ScheduleDates, 
@@ -44,7 +46,6 @@ namespace MyApp.Application.Mappings
 
             // User CartItem
             CreateMap<CartItem, CartItemResponseDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
                 .ForMember(dest => dest.CourseName,
                            opt => opt.MapFrom(src => src.Schedule.Course.Name))
                 .ForMember(dest => dest.Date, 

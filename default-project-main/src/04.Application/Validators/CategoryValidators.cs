@@ -70,8 +70,8 @@ namespace MyApp.Application.Validators
                 .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
                 .LessThanOrEqualTo(999999999).WithMessage("Price cannot exceed IDR 999,999,999");
 
-            RuleFor(x => x.CategoryId)
-                .GreaterThan(0).WithMessage("Valid category is required");
+            RuleFor(x => x.CategoryRefId)
+                .NotEmpty().WithMessage("Valid category is required");
 
             RuleFor(x => x.ImageUrl)
                 .NotEmpty().WithMessage("Image Course is required");
@@ -100,8 +100,8 @@ namespace MyApp.Application.Validators
                 .GreaterThan(0).WithMessage("Price must be greater than IDR 0")
                 .LessThanOrEqualTo(999999999).WithMessage("Price cannot exceed IDR 999,999,999");
 
-            RuleFor(x => x.CategoryId)
-                .GreaterThan(0).WithMessage("Valid category is required");
+            RuleFor(x => x.CategoryRefId)
+                .NotEmpty().WithMessage("Valid category is required");
 
             RuleFor(x => x.ImageUrl)
                 .NotEmpty().WithMessage("Image Course is required");

@@ -65,7 +65,7 @@
                 <MudTd DataLabel="Jumlah Kursus">@item.TotalCourse</MudTd>
                 <MudTd DataLabel="Total Harga">IDR @item.TotalPrice.ToString("N0", new CultureInfo("id-ID"))</MudTd>
                 <MudTd>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Navigation.GoToDetailsInvoice(item.Id))" Style="width: 180px">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Navigation.GoToDetailsInvoice(item.RefId))" Style="width: 180px">
                         <MudText Typo="Typo.h4" Style="font-weight: 700; font-size: 14px">Rincian</MudText>
                     </MudButton>
                 </MudTd>

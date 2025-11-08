@@ -37,13 +37,13 @@ public class CheckoutService : ICheckoutService
             return new();
         }
     }
-    public async Task<bool> AddCourseToCartAsync(AuthenticationHeaderValue authorization, int scheduleId)
+    public async Task<bool> AddCourseToCartAsync(AuthenticationHeaderValue authorization, Guid scheduleRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         var query = new Dictionary<string, string?>
         {
-            ["scheduleid"] = scheduleId.ToString()
+            ["scheduleRefId"] = scheduleRefId.ToString()
         };
         try
         {
@@ -66,13 +66,13 @@ public class CheckoutService : ICheckoutService
             return false;
         }
     }
-    public async Task<bool> RemoveCourseFromCart(AuthenticationHeaderValue authorization, int cartId)
+    public async Task<bool> RemoveCourseFromCart(AuthenticationHeaderValue authorization, Guid cartItemRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         var query = new Dictionary<string, string?>
         {
-            ["cartid"] = cartId.ToString()
+            ["cartItemRefId"] = cartItemRefId.ToString()
         };
         try
         {
@@ -200,13 +200,13 @@ public class CheckoutService : ICheckoutService
         }
     }
 
-    public async Task<InvoiceDto?> GetInvoiceByIdAdminAsync(AuthenticationHeaderValue authorization, int invoiceId)
+    public async Task<InvoiceDto?> GetInvoiceByIdAdminAsync(AuthenticationHeaderValue authorization, Guid invoiceRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.GetAsync($"api/Invoice/admin/{invoiceId}");
+            var response = await _httpClient.GetAsync($"api/Invoice/admin/{invoiceRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<InvoiceDto>>();
@@ -226,13 +226,13 @@ public class CheckoutService : ICheckoutService
         }
     }
 
-    public async Task<InvoiceDto?> GetInvoiceByIdAsync(AuthenticationHeaderValue authorization, int invoiceId)
+    public async Task<InvoiceDto?> GetInvoiceByIdAsync(AuthenticationHeaderValue authorization, Guid invoiceRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.GetAsync($"api/Invoice/{invoiceId}");
+            var response = await _httpClient.GetAsync($"api/Invoice/{invoiceRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<InvoiceDto>>();
@@ -252,13 +252,13 @@ public class CheckoutService : ICheckoutService
         }
     }
 
-    public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAdminAsync(AuthenticationHeaderValue authorization, int invoiceId)
+    public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAdminAsync(AuthenticationHeaderValue authorization, Guid invoiceRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.GetAsync($"api/InvoiceDetail/admin/{invoiceId}");
+            var response = await _httpClient.GetAsync($"api/InvoiceDetail/admin/{invoiceRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();
@@ -277,13 +277,13 @@ public class CheckoutService : ICheckoutService
             return new();
         }
     }
-    public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAsync(AuthenticationHeaderValue authorization, int invoiceId)
+    public async Task<List<InvoiceDetailDto>> GetInvoiceDetailsByInvoiceIdAsync(AuthenticationHeaderValue authorization, Guid invoiceRefId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         try
         {
-            var response = await _httpClient.GetAsync($"api/InvoiceDetail/{invoiceId}");
+            var response = await _httpClient.GetAsync($"api/InvoiceDetail/{invoiceRefId}");
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<InvoiceDetailDto>>>();

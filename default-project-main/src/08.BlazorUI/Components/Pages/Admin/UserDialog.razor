@@ -59,7 +59,7 @@
             Snackbar.Add($"Pilih role yang sesuai", Severity.Error);
             return;
         }
-        var result = await UserService.AddRoleToUserAsync(auth, User.Id, new RoleRequestDto() { RoleName = roleName });
+        var result = await UserService.AddRoleToUserAsync(auth, User.RefId, new RoleRequestDto() { RoleName = roleName });
         if (!result)
         {
             Snackbar.Add($"Gagal menambahkan role ke user", Severity.Error);
@@ -80,7 +80,7 @@
             Snackbar.Add($"Pilih role yang sesuai", Severity.Error);
             return;
         }
-        var result = await UserService.RemoveRoleFromUserAsync(auth, User.Id, new RoleRequestDto() { RoleName = roleName });
+        var result = await UserService.RemoveRoleFromUserAsync(auth, User.RefId, new RoleRequestDto() { RoleName = roleName });
         if (!result)
         {
             Snackbar.Add($"Gagal menghapus role dari user", Severity.Error);
@@ -96,7 +96,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        var result = await UserService.DeactivateUserAsync(auth, User.Id);
+        var result = await UserService.DeactivateUserAsync(auth, User.RefId);
         if (!result)
         {
             Snackbar.Add($"Gagal menonaktifkan user", Severity.Error);
@@ -113,7 +113,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        var result = await UserService.ActivateUserAsync(auth, User.Id);
+        var result = await UserService.ActivateUserAsync(auth, User.RefId);
         if (!result)
         {
             Snackbar.Add($"Gagal mengaktifkan user", Severity.Error);

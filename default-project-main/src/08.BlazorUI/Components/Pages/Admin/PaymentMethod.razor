@@ -23,7 +23,7 @@
     Add Payment Method
 </MudButton>
 
-<MudTable Breakpoint="Breakpoint.Sm" Items="@payment" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
+<MudTable Breakpoint="Breakpoint.Sm" Items="@paymentMethods" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h2">Payment Method</MudText>
         <MudSpacer />
@@ -32,14 +32,14 @@
                       IconSize="Size.Medium" Class="mt-0" />
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>ID</MudTh>
+        <MudTh>No.</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>Logo</MudTh>
         <MudTh>Status</MudTh>
         <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="No.">@(paymentMethods.IndexOf(context) + 1)</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Logo">
                 <MudImage Src="@context.LogoUrl"
@@ -69,7 +69,7 @@
                 Edit
             </MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
-                       OnClick="() => DeletePayment(context.Id)">
+                       OnClick="() => DeletePayment(context.RefId)">
                 Delete
             </MudButton>
         </MudTd>
@@ -80,7 +80,7 @@
 </MudTable>
 
 @code {
-    private IEnumerable<PaymentMethodDto> payment = new List<PaymentMethodDto>();
+    private List<PaymentMethodDto> paymentMethods = new List<PaymentMethodDto>();
     private bool hover = true;
     private string searchString1 = "";
     private PaymentMethodDto selectedItem1 = null;
@@ -114,7 +114,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        payment = await CheckoutService.GetAllPaymentsAsync(auth);
+        paymentMethods = await CheckoutService.GetAllPaymentsAsync(auth);
     }
 
     private bool FilterFunc1(PaymentMethodDto u) => FilterFunc(u, searchString1);
@@ -126,7 +126,7 @@
         return false;
     }
 
-    private async Task DeletePayment(int id)
+    private async Task DeletePayment(Guid refId)
     {
         var auth = await AuthService.GetAuthAsync();
         if (auth == null)
@@ -134,7 +134,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        bool result = await PaymentService.DeletePaymentMethodAsync(auth, id);
+        bool result = await PaymentService.DeletePaymentMethodAsync(auth, refId);
         if (result) await LoadPayments();
         Snackbar.Add("Berhasil menghapus payment method", Severity.Success);
     }
@@ -149,7 +149,7 @@
         {
             paymentItemClone = new PaymentMethodDto()
             {
-                Id = paymentItem.Id,
+                RefId = paymentItem.RefId,
                 Name = paymentItem.Name,
                 LogoUrl = paymentItem.LogoUrl,
                 CreatedAt = paymentItem.CreatedAt,

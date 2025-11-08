@@ -100,7 +100,7 @@
                 LogoUrl = Payment.LogoUrl,
                 IsActive = Payment.IsActive
             };
-            result = await PaymentService.UpdatePaymentMethodAsync(auth, Payment.Id, updatePaymentDto);
+            result = await PaymentService.UpdatePaymentMethodAsync(auth, Payment.RefId, updatePaymentDto);
             if (result == null)
             {
                 Snackbar.Add($"Gagal mengedit payment method", Severity.Error);

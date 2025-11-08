@@ -39,9 +39,7 @@ public class AdminService : IAdminService
 
                 if (apiResponse?.Data?.Data != null)
                 {
-                    return apiResponse.Data.Data
-                            .OrderBy(c => c.Id) // urutkan berdasarkan ID terkecil (ascending)
-                            .ToList();
+                    return apiResponse.Data.Data.ToList();
                 }
                 return new();
             }
@@ -81,14 +79,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, int id, UpdateCourseRequestDto request)
+    public async Task<CourseDto?> UpdateCourseAsync(AuthenticationHeaderValue authorization, Guid refId, UpdateCourseRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/Course/{id}", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/Course/{refId}", request);
             Console.WriteLine($"Response: {response.Content.ReadAsStringAsync().Result}");
             if (response.IsSuccessStatusCode)
             {
@@ -109,14 +107,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, int id)
+    public async Task<bool> DeleteCourseAsync(AuthenticationHeaderValue authorization, Guid refId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/Course/{id}");
+            var response = await _httpClient.DeleteAsync($"api/Course/{refId}");
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -183,14 +181,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, int id, UpdateCategoryRequestDto request)
+    public async Task<CategoryDto?> UpdateCategoryAsync(AuthenticationHeaderValue authorization, Guid refId, UpdateCategoryRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/Category/{id}", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/Category/{refId}", request);
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<CategoryDto>>();
@@ -210,14 +208,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, int id)
+    public async Task<bool> DeleteCategoryAsync(AuthenticationHeaderValue authorization, Guid refId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/Category/{id}");
+            var response = await _httpClient.DeleteAsync($"api/Category/{refId}");
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -283,14 +281,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, int id, UpdatePaymentMethodRequestDto request)
+    public async Task<PaymentMethodDto?> UpdatePaymentMethodAsync(AuthenticationHeaderValue authorization, Guid refId, UpdatePaymentMethodRequestDto request)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.PutAsJsonAsync($"api/Payment/{id}", request);
+            var response = await _httpClient.PutAsJsonAsync($"api/Payment/{refId}", request);
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadFromJsonAsync<ApiResponse<PaymentMethodDto>>();
@@ -310,14 +308,14 @@ public class AdminService : IAdminService
         }
     }
 
-    public async Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, int id)
+    public async Task<bool> DeletePaymentMethodAsync(AuthenticationHeaderValue authorization, Guid refId)
     {
         var _httpClient = _factory.CreateClient("WebAPI");
         _httpClient.DefaultRequestHeaders.Authorization = authorization;
         //
         try
         {
-            var response = await _httpClient.DeleteAsync($"api/Payment/{id}");
+            var response = await _httpClient.DeleteAsync($"api/Payment/{refId}");
             if (!response.IsSuccessStatusCode)
             {
                 return false;

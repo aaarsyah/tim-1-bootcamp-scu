@@ -6,11 +6,6 @@ namespace MyApp.Shared.DTOs;
 public class InvoiceDetailDto
 {
     /// <summary>
-    /// Invoice Detail ID
-    /// </summary>
-    public int Id { get; set; }
-    public Guid RefId { get; set; }
-    /// <summary>
     /// Nama Course
     /// </summary>
     public string CourseName { get; set; } = string.Empty;

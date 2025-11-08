@@ -5,10 +5,6 @@ namespace MyApp.Shared.DTOs;
 /// </summary>
 public class InvoiceDto
 {
-    /// <summary>
-    /// Invoice ID
-    /// </summary>
-    public int Id { get; set; }
     public Guid RefId { get; set; }
     /// <summary>
     /// RefCode name

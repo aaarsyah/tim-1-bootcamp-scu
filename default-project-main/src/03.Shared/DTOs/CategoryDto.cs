@@ -2,7 +2,6 @@ namespace MyApp.Shared.DTOs;
 
 public class CategoryDto
 {
-    public int Id { get; set; }
     public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string LongName { get; set; } = string.Empty;

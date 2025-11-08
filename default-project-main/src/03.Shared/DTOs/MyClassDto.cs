@@ -2,11 +2,9 @@ namespace MyApp.Shared.DTOs;
 
 public class MyClassDto
 {
-    public int Id { get; set; }
     public Guid RefId { get; set; }
-    public int UserId { get; set; }
-
-    public int ScheduleId { get; set; }
+    public Guid UserRefId { get; set; }
+    public Guid ScheduleRefId { get; set; }
     public string ImageUrl { get; set; } = string.Empty;
 
     public DateOnly Date { get; set; }

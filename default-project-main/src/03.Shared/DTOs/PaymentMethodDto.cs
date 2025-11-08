@@ -2,7 +2,6 @@ namespace MyApp.Shared.DTOs;
 
 public class PaymentMethodDto
 {
-    public int Id { get; set; }
     public Guid RefId { get; set; }
     public string Name { get; set; } = string.Empty;
 

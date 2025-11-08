@@ -57,7 +57,7 @@
 
     private List<PaymentMethodDto> payments = new();
     private string? selectedPayment;
-    private int? selectedPaymentId;
+    private Guid selectedPaymentRefId;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -94,7 +94,7 @@
     private void SelectPayment(PaymentMethodDto payment)
     {
         selectedPayment = payment.Name;
-        selectedPaymentId = payment.Id;
+        selectedPaymentRefId = payment.RefId;
         StateHasChanged();
     }
 
@@ -108,13 +108,13 @@
             return;
         }
         //
-        if (selectedPaymentId == null)
+        if (selectedPaymentRefId == Guid.Empty)
         {
             Snackbar.Add("Silakan pilih metode pembayaran dulu!", Severity.Warning);
             return;
         }
 
-        CheckoutRequest.PaymentMethodId = selectedPaymentId.Value;
+        CheckoutRequest.PaymentMethodRefId = selectedPaymentRefId;
 
         var result = await CheckoutService.CheckoutItemsAsync(auth, CheckoutRequest);
         if (result == null)

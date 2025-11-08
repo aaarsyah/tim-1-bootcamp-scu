@@ -21,7 +21,7 @@
     Add Category
 </MudButton>
 
-<MudTable Breakpoint="Breakpoint.Sm" Items="@category" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem">
+<MudTable Breakpoint="Breakpoint.Sm" Items="@categories" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem">
     <ToolBarContent>
         <MudText Typo="Typo.h2">Category</MudText>
         <MudSpacer />
@@ -30,7 +30,7 @@
                       IconSize="Size.Medium" Class="mt-0" />
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>ID</MudTh>
+        <MudTh>No.</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>Description</MudTh>
         <MudTh>Picture</MudTh>
@@ -38,7 +38,7 @@
         <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="No.">@(categories.IndexOf(context) + 1)</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Description">
             <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">
@@ -69,7 +69,7 @@
                 Edit
             </MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small" Class="ml-2"
-                       OnClick="() => DeleteCategory(context.Id)">
+                       OnClick="() => DeleteCategory(context.RefId)">
                 Delete
             </MudButton>
         </MudTd>
@@ -80,7 +80,7 @@
 </MudTable>
 
 @code {
-    private IEnumerable<CategoryDto> category = new List<CategoryDto>();
+    private List<CategoryDto> categories = new List<CategoryDto>();
     private bool hover = true;
     private string searchString = "";
     private CategoryDto selectedItem = null;
@@ -92,7 +92,7 @@
 
     private async Task LoadCategories()
     {
-        category = await AdminService.GetAllCategoryAsync();
+        categories = await AdminService.GetAllCategoryAsync();
     }
 
     private bool FilterFunc1(CategoryDto u) => FilterFunc(u, searchString);
@@ -104,7 +104,7 @@
         return false;
     }
 
-    private async Task DeleteCategory(int id)
+    private async Task DeleteCategory(Guid refId)
     {
         var auth = await AuthService.GetAuthAsync();
         if (auth == null)
@@ -112,7 +112,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        bool result = await AdminService.DeleteCategoryAsync(auth, id);
+        bool result = await AdminService.DeleteCategoryAsync(auth, refId);
         if (result) await LoadCategories();
         Snackbar.Add("Berhasil menghapus category", Severity.Success);
     }
@@ -127,7 +127,7 @@
         {
             categoryItemClone = new CategoryDto()
             {
-                Id = categoryItem.Id,
+                RefId = categoryItem.RefId,
                 Name = categoryItem.Name,
                 LongName = categoryItem.LongName,
                 Description = categoryItem.Description,

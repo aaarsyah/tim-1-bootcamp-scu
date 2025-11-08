@@ -22,7 +22,7 @@
     Add Course
 </MudButton>
 
-<MudTable Breakpoint="Breakpoint.Sm" Items="@course" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
+<MudTable Breakpoint="Breakpoint.Sm" Items="@courses" Hover="@hover" Filter="FilterFunc1" @bind-SelectedItem="selectedItem1">
     <ToolBarContent>
         <MudText Typo="Typo.h2">Course</MudText>
         <MudSpacer />
@@ -31,18 +31,18 @@
                       IconSize="Size.Medium" Class="mt-0" />
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>ID</MudTh>
+        <MudTh>No.</MudTh>
         <MudTh>Name</MudTh>
         <MudTh>Description</MudTh>
         <MudTh>Picture</MudTh>
-        <MudTh>CategoryId</MudTh>
+        <MudTh>CategoryRefId</MudTh>
         <MudTh>Harga</MudTh>
         <MudTh>Jadwal</MudTh>
         <MudTh>Status</MudTh>
         <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="No.">@(courses.IndexOf(context) + 1)</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Description">
             <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">
@@ -56,7 +56,7 @@
                           Height="40"
                           Class="rounded-md mt-1" />
         </MudTd>
-        <MudTd DataLabel="CategoryId">@context.CategoryId</MudTd>
+        <MudTd DataLabel="CategoryRefId">@context.CategoryRefId</MudTd>
         <MudTd DataLabel="Harga">@context.Price</MudTd>
         <MudTd DataLabel="Jadwal"> @string.Join(", ", @context.ScheduleDates.Select(d => d.ToString("yyyy-MM-dd")))</MudTd>
         <MudTd DataLabel="Status">
@@ -81,7 +81,7 @@
             </MudButton>
             <br />
             <MudButton Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
-                       OnClick="() => DeleteCourse(context.Id)">
+                       OnClick="() => DeleteCourse(context.RefId)">
                 Delete
             </MudButton>
         </MudTd>
@@ -92,7 +92,7 @@
 </MudTable>
 
 @code {
-    private IEnumerable<CourseDto> course = new List<CourseDto>();
+    private List<CourseDto> courses = new List<CourseDto>();
     private bool hover = true;
     private string searchString = "";
     private CourseDto selectedItem1 = null;
@@ -104,7 +104,7 @@
 
     private async Task LoadCourses()
     {
-        course = await AdminService.GetAllCourseAsync();
+        courses = await AdminService.GetAllCourseAsync();
     }
 
     private bool FilterFunc1(CourseDto u) => FilterFunc(u, searchString);
@@ -116,7 +116,7 @@
         return false;
     }
 
-    private async Task DeleteCourse(int id)
+    private async Task DeleteCourse(Guid refId)
     {
         var auth = await AuthService.GetAuthAsync();
         if (auth == null)
@@ -124,7 +124,7 @@
             Navigation.GoToLogin(); // User belum login, arahkan user ke login page
             return;
         }
-        bool result = await AdminService.DeleteCourseAsync(auth, id);
+        bool result = await AdminService.DeleteCourseAsync(auth, refId);
         if (result) await LoadCourses();
         Snackbar.Add("Berhasil menghapus course", Severity.Success);
     }
@@ -139,14 +139,14 @@
         {
             courseItemClone = new CourseDto()
             {
-                Id = courseItem.Id,
+                RefId = courseItem.RefId,
                 Name = courseItem.Name,
                 Description = courseItem.Description,
                 Price = courseItem.Price,
                 ImageUrl = courseItem.ImageUrl,
                 IsActive = courseItem.IsActive,
                 CreatedAt = courseItem.CreatedAt,
-                CategoryId = courseItem.CategoryId,
+                CategoryRefId = courseItem.CategoryRefId,
                 CategoryName = courseItem.CategoryName,
                 ScheduleDates = new(),
                 Schedules = new()
