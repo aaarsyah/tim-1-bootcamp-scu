@@ -25,8 +25,6 @@ namespace MyApp.Infrastructure.Data.Repositories
     }
     public interface ICategoryRepository : ICrudRepository<Category>
     {
-        //Task<IEnumerable<Category>> GetActiveCategoriesAsync();
-        //Task<Category?> GetCategoryWithProductsAsync(int categoryId);
     }
     public interface ICourseRepository : ICrudRepository<Course>
     {

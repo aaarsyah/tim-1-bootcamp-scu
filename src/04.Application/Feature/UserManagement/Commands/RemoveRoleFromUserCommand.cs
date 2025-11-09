@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.UserManagement.Commands;
 public class RemoveRoleFromUserCommand : IRequest<ApiResponse<object>>
 {
     public Guid RefId { get; set; }
-    public RoleRequestDto RoleDto { get; set; } = null!;
+    public required RoleRequestDto RoleDto { get; set; }
 }
 public class RemoveRoleFromUserCommandHandler : IRequestHandler<RemoveRoleFromUserCommand, ApiResponse<object>>
 {

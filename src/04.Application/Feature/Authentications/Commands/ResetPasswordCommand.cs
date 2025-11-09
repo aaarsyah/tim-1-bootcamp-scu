@@ -11,7 +11,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class ResetPasswordCommand : IRequest<ApiResponse<object>>
 {
-    public ResetPasswordRequestDto ResetPasswordDto { get; set; }
+    public required ResetPasswordRequestDto ResetPasswordDto { get; set; }
 }
 public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, ApiResponse<object>>
 {

@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.PaymentMethods.Commands;
 public class UpdatePaymentMethodCommand : IRequest<ApiResponse<PaymentMethodDto>>
 {
     public Guid RefId { get; set; }
-    public UpdatePaymentMethodRequestDto updatePaymentMethodDto { get; set; } = null!;
+    public required UpdatePaymentMethodRequestDto updatePaymentMethodDto { get; set; }
 }
 public class UpdatePaymentMethodCommandHandler : IRequestHandler<UpdatePaymentMethodCommand, ApiResponse<PaymentMethodDto>>
 {

@@ -9,7 +9,7 @@ namespace MyApp.Application.Feature.Schedules.Commands;
 
 public class CreateScheduleCommand : IRequest<ApiResponse<ScheduleDto>>
 {
-    public CreateScheduleRequestDto createScheduleDto { get; set; } = null!;
+    public required CreateScheduleRequestDto createScheduleDto { get; set; }
 }
 public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleCommand, ApiResponse<ScheduleDto>>
 {

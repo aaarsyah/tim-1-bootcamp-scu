@@ -9,7 +9,7 @@ namespace MyApp.Application.Feature.MyClasses.Commands;
 
 public class CreateMyClassCommand : IRequest<ApiResponse<MyClassDto>>
 {
-    public CreateMyClassRequestDto createMyClassDto { get; set; } = null!;
+    public required CreateMyClassRequestDto createMyClassDto { get; set; }
 }
 public class CreateMyClassCommandHandler : IRequestHandler<CreateMyClassCommand, ApiResponse<MyClassDto>>
 {

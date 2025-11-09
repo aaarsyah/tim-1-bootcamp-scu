@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.UserManagement.Commands;
 public class RemoveClaimFromUserCommand : IRequest<ApiResponse<object>>
 {
     public Guid RefId { get; set; }
-    public string ClaimType { get; set; }
+    public required string ClaimType { get; set; }
 }
 public class RemoveClaimFromUserCommandHandler : IRequestHandler<RemoveClaimFromUserCommand, ApiResponse<object>>
 {

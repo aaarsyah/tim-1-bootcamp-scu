@@ -25,14 +25,13 @@ public class EmailService : IEmailService
         
         // Load email settings from configuration
         
-        _smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com";
-        _smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "465"); //587
-        //_smtpUser = _configuration["EmailSettings:SmtpUser"] ?? "addindaarsyah@gmail.com";
-        _smtpUser = string.Empty; // di-set empty untuk kepentingan demo
-        _smtpPassword = _configuration["EmailSettings:SmtpPassword"] ?? "mjru kfkz ibks wfwz";
+        _smtpHost = _configuration["EmailSettings:SmtpHost"] ?? "localhost";
+        _smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"] ?? "587");
+        _smtpUser = _configuration["EmailSettings:SmtpUser"] ?? string.Empty;
+        _smtpPassword = _configuration["EmailSettings:SmtpPassword"] ?? string.Empty;
         _fromEmail = _configuration["EmailSettings:FromEmail"] ?? _smtpUser;
-        _fromName = _configuration["EmailSettings:FromName"] ?? "AppleMusic Support";
-        _enableSsl = bool.Parse(_configuration["EmailSettings:EnableSsl"] ?? "true");
+        _fromName = _configuration["EmailSettings:FromName"] ?? string.Empty;
+        _enableSsl = bool.Parse(_configuration["EmailSettings:EnableSsl"] ?? "false");
     }
 
     private async Task SendEmailAsync(string toEmail, string toName, string subject, string htmlBody)

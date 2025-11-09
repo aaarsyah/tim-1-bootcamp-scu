@@ -2702,7 +2702,7 @@ GD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAdminService.cs
 refIdV [
 )[ \
 ;\ ]
-} œL
+} ÐM
 ;D:\BootcampProject\src\08.BlazorUI\Services\ErrorService.cs
 	namespace 	
 MyApp
@@ -2793,11 +2793,11 @@ BadRequest+ 5
 null* .
 ). /
 throw0 5
-new6 9
-	Exception: C
-(C D
-)D E
-;E F
+new6 9!
+ArgumentNullException: O
+(O P
+)P Q
+;Q R
 var 
 error 
 = 
@@ -2836,11 +2836,11 @@ Extensions/ 9
 null0 4
 )4 5
 throw6 ;
-new< ?
-	Exception@ I
-(I J
-)J K
-;K L
+new< ?!
+ArgumentNullException@ U
+(U V
+)V W
+;W X
 if 
 ( 
 problemDetails &
@@ -2874,9 +2874,9 @@ Extensions? I
 ;/ 0
 } 
 catch   
-(   
-	Exception    
-)    !
+(   !
+ArgumentNullException   ,
+)  , -
 {!! 
 return"" 
 $str"" 6
@@ -2915,11 +2915,11 @@ Extensions? I
 null((* .
 )((. /
 throw((0 5
-new((6 9
-	Exception((: C
-(((C D
-)((D E
-;((E F
+new((6 9!
+ArgumentNullException((: O
+(((O P
+)((P Q
+;((Q R
 var)) 
 error)) 
 =)) 
@@ -2958,11 +2958,11 @@ Extensions))/ 9
 null..0 4
 )..4 5
 throw..6 ;
-new..< ?
-	Exception..@ I
-(..I J
-)..J K
-;..K L
+new..< ?!
+ArgumentNullException..@ U
+(..U V
+)..V W
+;..W X
 return00 
 problemDetails00 )
 .00) *
@@ -2970,9 +2970,9 @@ Extensions))/ 9
 ;00/ 0
 }11 
 catch22 
-(22 
-	Exception22  
-)22  !
+(22 !
+ArgumentNullException22 ,
+)22, -
 {33 
 return44 
 $str44 2
@@ -3011,11 +3011,11 @@ Extensions))/ 9
 null::* .
 )::. /
 throw::0 5
-new::6 9
-	Exception::: C
-(::C D
-)::D E
-;::E F
+new::6 9!
+ArgumentNullException::: O
+(::O P
+)::P Q
+;::Q R
 var;; 
 error;; 
 =;; 
@@ -3067,11 +3067,11 @@ Extensions;;/ 9
 nullDD0 4
 )DD4 5
 throwDD6 ;
-newDD< ?
-	ExceptionDD@ I
-(DDI J
-)DDJ K
-;DDK L
+newDD< ?!
+ArgumentNullExceptionDD@ U
+(DDU V
+)DDV W
+;DDW X
 returnEE 
 problemDetailsEE )
 .EE) *
@@ -3079,9 +3079,9 @@ Extensions;;/ 9
 ;EE/ 0
 }FF 
 catchGG 
-(GG 
-	ExceptionGG  
-)GG  !
+(GG !
+ArgumentNullExceptionGG ,
+)GG, -
 {HH 
 returnII 
 $strII D
@@ -3120,11 +3120,11 @@ Extensions;;/ 9
 nullOO* .
 )OO. /
 throwOO0 5
-newOO6 9
-	ExceptionOO: C
-(OOC D
-)OOD E
-;OOE F
+newOO6 9!
+ArgumentNullExceptionOO: O
+(OOO P
+)OOP Q
+;OOQ R
 varPP 
 errorPP 
 =PP 
@@ -3163,11 +3163,11 @@ ExtensionsPP/ 9
 nullUU0 4
 )UU4 5
 throwUU6 ;
-newUU< ?
-	ExceptionUU@ I
-(UUI J
-)UUJ K
-;UUK L
+newUU< ?!
+ArgumentNullExceptionUU@ U
+(UUU V
+)UUV W
+;UUW X
 returnVV 
 problemDetailsVV )
 .VV) *
@@ -3175,9 +3175,9 @@ ExtensionsPP/ 9
 ;VV/ 0
 }WW 
 catchXX 
-(XX 
-	ExceptionXX  
-)XX  !
+(XX !
+ArgumentNullExceptionXX ,
+)XX, -
 {YY 
 returnZZ 
 $strZZ 9
@@ -3216,11 +3216,11 @@ ExtensionsPP/ 9
 null``* .
 )``. /
 throw``0 5
-new``6 9
-	Exception``: C
-(``C D
-)``D E
-;``E F
+new``6 9!
+ArgumentNullException``: O
+(``O P
+)``P Q
+;``Q R
 ifaa 
 (aa 
 problemDetailsaa &
@@ -3230,11 +3230,11 @@ ExtensionsPP/ 9
 nullaa0 4
 )aa4 5
 throwaa6 ;
-newaa< ?
-	Exceptionaa@ I
-(aaI J
-)aaJ K
-;aaK L
+newaa< ?!
+ArgumentNullExceptionaa@ U
+(aaU V
+)aaV W
+;aaW X
 returnbb 
 problemDetailsbb )
 .bb) *
@@ -3242,9 +3242,9 @@ ExtensionsPP/ 9
 ;bb/ 0
 }cc 
 catchdd 
-(dd 
-	Exceptiondd  
-)dd  !
+(dd !
+ArgumentNullExceptiondd ,
+)dd, -
 {ee 
 returnff 
 $strff 2
@@ -3257,7 +3257,390 @@ ExtensionsPP/ 9
 ;ii 
 }jj 	
 }kk 
-}ll Ð‘
+}ll Õ5
+FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
+	namespace 	
+MyApp
+ 
+. 
+BlazorUI 
+. 
+Services !
+;! "
+public 
+class #
+CustomAuthStateProvider $
+:% &'
+AuthenticationStateProvider' B
+{		 
+private
+
+ 
+readonly
+
+  
+ILocalStorageService
+
+ )
+_localStorage
+
+* 7
+;
+
+7 8
+private 
+readonly 
+IHttpClientFactory '
+_factory( 0
+;0 1
+private 
+readonly 
+AuthenticationState (
+
+_anonymous) 3
+;3 4
+public 
+#
+CustomAuthStateProvider "
+(" # 
+ILocalStorageService# 7
+localStorage8 D
+,D E
+IHttpClientFactoryF X
+factoryY `
+)` a
+{ 
+_localStorage 
+= 
+localStorage $
+;$ %
+_factory 
+= 
+factory 
+; 
+
+_anonymous 
+= 
+new 
+AuthenticationState ,
+(, -
+new- 0
+ClaimsPrincipal1 @
+(@ A
+newA D
+ClaimsIdentityE S
+(S T
+)T U
+)U V
+)V W
+;W X
+} 
+public 
+
+override 
+async 
+Task 
+< 
+AuthenticationState 2
+>2 3'
+GetAuthenticationStateAsync4 O
+(O P
+)P Q
+{ 
+var 
+_httpClient 
+= 
+_factory "
+." #
+CreateClient# /
+(/ 0
+$str0 8
+)8 9
+;9 :
+try 
+{ 	
+var 
+token 
+= 
+await 
+_localStorage +
+.+ ,
+GetItemAsync, 8
+<8 9
+string9 ?
+>? @
+(@ A
+$strA L
+)L M
+;M N
+if 
+( 
+string 
+. 
+IsNullOrWhiteSpace )
+() *
+token* /
+)/ 0
+)0 1
+return 
+
+_anonymous !
+;! "
+_httpClient 
+. !
+DefaultRequestHeaders -
+.- .
+Authorization. ;
+=< =
+new> A%
+AuthenticationHeaderValueB [
+([ \
+$str\ d
+,d e
+tokenf k
+)k l
+;l m
+var   
+claims   
+=   
+ParseClaimsFromJwt   +
+(  + ,
+token  , 1
+)  1 2
+;  2 3
+var!! 
+expiry!! 
+=!! 
+claims!! 
+.!!  
+FirstOrDefault!!  .
+(!!. /
+c!!/ 0
+=>!!1 3
+c!!4 5
+.!!5 6
+Type!!6 :
+==!!; =
+$str!!> C
+)!!C D
+?!!D E
+.!!E F
+Value!!F K
+;!!K L
+if## 
+(## 
+expiry## 
+!=## 
+null## 
+)## 
+{$$ 
+var%% 
+expiryDateTime%% "
+=%%# $
+DateTimeOffset%%% 3
+.%%3 4
+FromUnixTimeSeconds%%4 G
+(%%G H
+long%%H L
+.%%L M
+Parse%%M R
+(%%R S
+expiry%%S Y
+)%%Y Z
+)%%Z [
+;%%[ \
+if'' 
+('' 
+expiryDateTime'' "
+<=''# %
+DateTimeOffset''& 4
+.''4 5
+UtcNow''5 ;
+)''; <
+{(( 
+await)) 
+_localStorage)) '
+.))' (
+RemoveItemAsync))( 7
+())7 8
+$str))8 C
+)))C D
+;))D E
+return** 
+
+_anonymous** %
+;**% &
+}++ 
+},, 
+var.. 
+user.. 
+=.. 
+new.. 
+ClaimsPrincipal.. *
+(..* +
+new..+ .
+ClaimsIdentity../ =
+(..= >
+claims..> D
+,..D E
+$str..F K
+)..K L
+)..L M
+;..M N
+return// 
+new// 
+AuthenticationState// *
+(//* +
+user//+ /
+)/// 0
+;//0 1
+}00 	
+catch11 
+(11 
+	Exception11 
+)11 
+{22 	
+return33 
+
+_anonymous33 
+;33 
+}44 	
+}55 
+public77 
+
+void77 $
+NotifyUserAuthentication77 (
+(77( )
+string77) /
+token770 5
+)775 6
+{88 
+var99 
+claims99 
+=99 
+ParseClaimsFromJwt99 '
+(99' (
+token99( -
+)99- .
+;99. /
+var:: 
+authenticatedUser:: 
+=:: 
+new::  #
+ClaimsPrincipal::$ 3
+(::3 4
+new::4 7
+ClaimsIdentity::8 F
+(::F G
+claims::G M
+,::M N
+$str::O T
+)::T U
+)::U V
+;::V W
+var;; 
+	authState;; 
+=;; 
+Task;; 
+.;; 
+
+FromResult;; '
+(;;' (
+new;;( +
+AuthenticationState;;, ?
+(;;? @
+authenticatedUser;;@ Q
+);;Q R
+);;R S
+;;;S T,
+ NotifyAuthenticationStateChanged<< (
+(<<( )
+	authState<<) 2
+)<<2 3
+;<<3 4
+}== 
+public?? 
+
+void?? 
+NotifyUserLogout??  
+(??  !
+)??! "
+{@@ 
+varAA 
+	authStateAA 
+=AA 
+TaskAA 
+.AA 
+
+FromResultAA '
+(AA' (
+
+_anonymousAA( 2
+)AA2 3
+;AA3 4,
+ NotifyAuthenticationStateChangedBB (
+(BB( )
+	authStateBB) 2
+)BB2 3
+;BB3 4
+}CC 
+privateEE 
+IEnumerableEE 
+<EE 
+ClaimEE 
+>EE 
+ParseClaimsFromJwtEE 1
+(EE1 2
+stringEE2 8
+jwtEE9 <
+)EE< =
+{FF 
+varGG 
+handlerGG 
+=GG 
+newGG #
+JwtSecurityTokenHandlerGG 1
+(GG1 2
+)GG2 3
+;GG3 4
+varHH 
+tokenHH 
+=HH 
+handlerHH 
+.HH 
+ReadJwtTokenHH (
+(HH( )
+jwtHH) ,
+)HH, -
+;HH- .
+returnII 
+tokenII 
+.II 
+ClaimsII 
+;II 
+}JJ 
+publicKK 
+
+asyncKK 
+TaskKK 
+<KK 
+boolKK 
+>KK 
+isLoggedInAsyncKK +
+(KK+ ,
+)KK, -
+{LL 
+returnMM 
+awaitMM '
+GetAuthenticationStateAsyncMM 0
+(MM0 1
+)MM1 2
+!=MM3 5
+
+_anonymousMM6 @
+;MM@ A
+}NN 
+}OO Ð‘
 <D:\BootcampProject\src\08.BlazorUI\Services\CourseService.cs
 	namespace 	
 MyApp
@@ -4654,390 +5037,7 @@ StatusCode
 ÄÄ 	
 }
 ÅÅ 
-}ÇÇ Õ5
-FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
-	namespace 	
-MyApp
- 
-. 
-BlazorUI 
-. 
-Services !
-;! "
-public 
-class #
-CustomAuthStateProvider $
-:% &'
-AuthenticationStateProvider' B
-{		 
-private
-
- 
-readonly
-
-  
-ILocalStorageService
-
- )
-_localStorage
-
-* 7
-;
-
-7 8
-private 
-readonly 
-IHttpClientFactory '
-_factory( 0
-;0 1
-private 
-readonly 
-AuthenticationState (
-
-_anonymous) 3
-;3 4
-public 
-#
-CustomAuthStateProvider "
-(" # 
-ILocalStorageService# 7
-localStorage8 D
-,D E
-IHttpClientFactoryF X
-factoryY `
-)` a
-{ 
-_localStorage 
-= 
-localStorage $
-;$ %
-_factory 
-= 
-factory 
-; 
-
-_anonymous 
-= 
-new 
-AuthenticationState ,
-(, -
-new- 0
-ClaimsPrincipal1 @
-(@ A
-newA D
-ClaimsIdentityE S
-(S T
-)T U
-)U V
-)V W
-;W X
-} 
-public 
-
-override 
-async 
-Task 
-< 
-AuthenticationState 2
->2 3'
-GetAuthenticationStateAsync4 O
-(O P
-)P Q
-{ 
-var 
-_httpClient 
-= 
-_factory "
-." #
-CreateClient# /
-(/ 0
-$str0 8
-)8 9
-;9 :
-try 
-{ 	
-var 
-token 
-= 
-await 
-_localStorage +
-.+ ,
-GetItemAsync, 8
-<8 9
-string9 ?
->? @
-(@ A
-$strA L
-)L M
-;M N
-if 
-( 
-string 
-. 
-IsNullOrWhiteSpace )
-() *
-token* /
-)/ 0
-)0 1
-return 
-
-_anonymous !
-;! "
-_httpClient 
-. !
-DefaultRequestHeaders -
-.- .
-Authorization. ;
-=< =
-new> A%
-AuthenticationHeaderValueB [
-([ \
-$str\ d
-,d e
-tokenf k
-)k l
-;l m
-var   
-claims   
-=   
-ParseClaimsFromJwt   +
-(  + ,
-token  , 1
-)  1 2
-;  2 3
-var!! 
-expiry!! 
-=!! 
-claims!! 
-.!!  
-FirstOrDefault!!  .
-(!!. /
-c!!/ 0
-=>!!1 3
-c!!4 5
-.!!5 6
-Type!!6 :
-==!!; =
-$str!!> C
-)!!C D
-?!!D E
-.!!E F
-Value!!F K
-;!!K L
-if## 
-(## 
-expiry## 
-!=## 
-null## 
-)## 
-{$$ 
-var%% 
-expiryDateTime%% "
-=%%# $
-DateTimeOffset%%% 3
-.%%3 4
-FromUnixTimeSeconds%%4 G
-(%%G H
-long%%H L
-.%%L M
-Parse%%M R
-(%%R S
-expiry%%S Y
-)%%Y Z
-)%%Z [
-;%%[ \
-if'' 
-('' 
-expiryDateTime'' "
-<=''# %
-DateTimeOffset''& 4
-.''4 5
-UtcNow''5 ;
-)''; <
-{(( 
-await)) 
-_localStorage)) '
-.))' (
-RemoveItemAsync))( 7
-())7 8
-$str))8 C
-)))C D
-;))D E
-return** 
-
-_anonymous** %
-;**% &
-}++ 
-},, 
-var.. 
-user.. 
-=.. 
-new.. 
-ClaimsPrincipal.. *
-(..* +
-new..+ .
-ClaimsIdentity../ =
-(..= >
-claims..> D
-,..D E
-$str..F K
-)..K L
-)..L M
-;..M N
-return// 
-new// 
-AuthenticationState// *
-(//* +
-user//+ /
-)/// 0
-;//0 1
-}00 	
-catch11 
-(11 
-	Exception11 
-)11 
-{22 	
-return33 
-
-_anonymous33 
-;33 
-}44 	
-}55 
-public77 
-
-void77 $
-NotifyUserAuthentication77 (
-(77( )
-string77) /
-token770 5
-)775 6
-{88 
-var99 
-claims99 
-=99 
-ParseClaimsFromJwt99 '
-(99' (
-token99( -
-)99- .
-;99. /
-var:: 
-authenticatedUser:: 
-=:: 
-new::  #
-ClaimsPrincipal::$ 3
-(::3 4
-new::4 7
-ClaimsIdentity::8 F
-(::F G
-claims::G M
-,::M N
-$str::O T
-)::T U
-)::U V
-;::V W
-var;; 
-	authState;; 
-=;; 
-Task;; 
-.;; 
-
-FromResult;; '
-(;;' (
-new;;( +
-AuthenticationState;;, ?
-(;;? @
-authenticatedUser;;@ Q
-);;Q R
-);;R S
-;;;S T,
- NotifyAuthenticationStateChanged<< (
-(<<( )
-	authState<<) 2
-)<<2 3
-;<<3 4
-}== 
-public?? 
-
-void?? 
-NotifyUserLogout??  
-(??  !
-)??! "
-{@@ 
-varAA 
-	authStateAA 
-=AA 
-TaskAA 
-.AA 
-
-FromResultAA '
-(AA' (
-
-_anonymousAA( 2
-)AA2 3
-;AA3 4,
- NotifyAuthenticationStateChangedBB (
-(BB( )
-	authStateBB) 2
-)BB2 3
-;BB3 4
-}CC 
-privateEE 
-IEnumerableEE 
-<EE 
-ClaimEE 
->EE 
-ParseClaimsFromJwtEE 1
-(EE1 2
-stringEE2 8
-jwtEE9 <
-)EE< =
-{FF 
-varGG 
-handlerGG 
-=GG 
-newGG #
-JwtSecurityTokenHandlerGG 1
-(GG1 2
-)GG2 3
-;GG3 4
-varHH 
-tokenHH 
-=HH 
-handlerHH 
-.HH 
-ReadJwtTokenHH (
-(HH( )
-jwtHH) ,
-)HH, -
-;HH- .
-returnII 
-tokenII 
-.II 
-ClaimsII 
-;II 
-}JJ 
-publicKK 
-
-asyncKK 
-TaskKK 
-<KK 
-boolKK 
->KK 
-isLoggedInAsyncKK +
-(KK+ ,
-)KK, -
-{LL 
-returnMM 
-awaitMM '
-GetAuthenticationStateAsyncMM 0
-(MM0 1
-)MM1 2
-!=MM3 5
-
-_anonymousMM6 @
-;MM@ A
-}NN 
-}OO ˆç
+}ÇÇ ˆç
 >D:\BootcampProject\src\08.BlazorUI\Services\CheckoutService.cs
 	namespace 	
 MyApp

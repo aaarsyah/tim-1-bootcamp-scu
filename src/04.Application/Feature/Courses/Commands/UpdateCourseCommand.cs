@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.Courses.Commands;
 public class UpdateCourseCommand : IRequest<ApiResponse<CourseDto>>
 {
     public Guid RefId { get; set; }
-    public UpdateCourseRequestDto UpdateCourseDto { get; set; } = null!;
+    public required UpdateCourseRequestDto UpdateCourseDto { get; set; }
 }
 public class UpdateCourseCommandHandler : IRequestHandler<UpdateCourseCommand, ApiResponse<CourseDto>>
 {

@@ -49,7 +49,7 @@ public class PaginatedResponse<T>
     /// <summary>
     /// Paginated data
     /// </summary>
-    public T Data { get; set; }
+    public required T Data { get; set; }
     /// <summary>
     /// Current page number
     /// </summary>

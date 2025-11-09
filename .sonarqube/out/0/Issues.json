@@ -12,18 +12,18 @@
       },
       "results": [
         {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
+          "ruleId": "CA1869",
+          "level": "note",
+          "message": "Avoid creating a new 'JsonSerializerOptions' instance for every serialization operation. Cache and reuse instances instead.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/01.Base/Exceptions/PermissionException.cs",
+                "uri": "file:///D:/BootcampProject/src/03.Shared/ErrorResponse.cs",
                 "region": {
-                  "startLine": 23,
-                  "startColumn": 5,
-                  "endLine": 23,
-                  "endColumn": 8
+                  "startLine": 62,
+                  "startColumn": 47,
+                  "endLine": 66,
+                  "endColumn": 10
                 }
               }
             }
@@ -34,20 +34,18 @@
         }
       ],
       "rules": {
-        "S125": {
-          "id": "S125",
-          "shortDescription": "Sections of code should not be commented out",
-          "fullDescription": "Commented-out code distracts the focus from the actual executed code. It creates a noise that increases maintenance code. And because it is never executed, it quickly becomes out of date and invalid.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-125",
+        "CA1869": {
+          "id": "CA1869",
+          "shortDescription": "Cache and reuse 'JsonSerializerOptions' instances",
+          "fullDescription": "Avoid creating a new 'JsonSerializerOptions' instance for every serialization operation. Cache and reuse instances instead. Single use 'JsonSerializerOptions' instances can substantially degrade the performance of your application.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1869",
           "properties": {
-            "category": "Major Code Smell",
+            "category": "Performance",
             "isEnabledByDefault": true,
             "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
             ]
           }
         }

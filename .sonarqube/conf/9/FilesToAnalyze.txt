@@ -28,5 +28,6 @@ C:\Users\User\.nuget\packages\xunit.runner.visualstudio\3.1.5\build\net8.0\xunit
 D:\BootcampProject\src\06.WebAPI\dab-build.cmd
 D:\BootcampProject\src\06.WebAPI\Dockerfile
 D:\BootcampProject\src\06.WebAPI\logs\app-20251109.log
+D:\BootcampProject\src\06.WebAPI\logs\app-20251110.log
 D:\BootcampProject\src\06.WebAPI\Properties\launchSettings.json
 D:\BootcampProject\src\06.WebAPI\dab-options.json.user

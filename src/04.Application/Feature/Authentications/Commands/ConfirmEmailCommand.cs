@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class ConfirmEmailCommand : IRequest<ApiResponse<object>>
 {
-    public ConfirmEmailRequestDto ConfirmEmailDto { get; set; }
+    public required ConfirmEmailRequestDto ConfirmEmailDto { get; set; }
 }
 public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ApiResponse<object>>
 {
@@ -31,12 +31,6 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
             _logger.LogWarning("Confirm email failed: User not found or inactive for email: {Email}", request.ConfirmEmailDto.Email);
             throw new ValidationException("Invalid email");
         }
-        // Uncomment bila dibutuhkan: Cek apakah user masih belum confirm email, bila sudah confirm email, batalkan
-        //if (user.EmailConfirmed)
-        //{
-        //    _logger.LogWarning("Confirm email failed: User already confirmed email: {Email}", request.Email);
-        //    throw new ValidationException("Invalid email");
-        //}
         // Cek token valid dan belum expired
         if (user.EmailConfirmationToken != request.ConfirmEmailDto.EmailConfirmationToken || user.EmailConfirmationTokenExpiry < DateTime.UtcNow)
         {

@@ -33,6 +33,30 @@
           }
         },
         {
+          "ruleId": "CA1860",
+          "level": "note",
+          "message": "Prefer comparing 'Count' to 0 rather than using 'Any()', both for clarity and for performance",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/06.WebAPI/Extensions/DatabaseExtensions.cs",
+                "region": {
+                  "startLine": 295,
+                  "startColumn": 34,
+                  "endLine": 295,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "DiagnosticPropertyKey": "Count"
+            }
+          }
+        },
+        {
           "ruleId": "CA1822",
           "level": "note",
           "message": "Member 'GenerateCorrelationId' does not access instance data and can be marked as static",
@@ -62,10 +86,10 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/06.WebAPI/Extensions/DatabaseExtensions.cs",
                 "region": {
-                  "startLine": 295,
-                  "startColumn": 34,
-                  "endLine": 295,
-                  "endColumn": 46
+                  "startLine": 233,
+                  "startColumn": 13,
+                  "endLine": 233,
+                  "endColumn": 32
                 }
               }
             }
@@ -90,30 +114,6 @@
                   "startColumn": 17,
                   "endLine": 146,
                   "endColumn": 40
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "DiagnosticPropertyKey": "Count"
-            }
-          }
-        },
-        {
-          "ruleId": "CA1860",
-          "level": "note",
-          "message": "Prefer comparing 'Count' to 0 rather than using 'Any()', both for clarity and for performance",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/06.WebAPI/Extensions/DatabaseExtensions.cs",
-                "region": {
-                  "startLine": 233,
-                  "startColumn": 13,
-                  "endLine": 233,
-                  "endColumn": 32
                 }
               }
             }

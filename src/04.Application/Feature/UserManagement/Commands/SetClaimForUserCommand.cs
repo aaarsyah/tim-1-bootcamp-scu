@@ -10,8 +10,8 @@ namespace MyApp.Application.Feature.UserManagement.Commands;
 public class SetClaimForUserCommand : IRequest<ApiResponse<object>>
 {
     public Guid RefId { get; set; }
-    public string ClaimType { get; set; }
-    public string ClaimValue { get; set; }
+    public required string ClaimType { get; set; }
+    public required string ClaimValue { get; set; }
 }
 public class SetClaimForUserCommandHandler : IRequestHandler<SetClaimForUserCommand, ApiResponse<object>>
 {

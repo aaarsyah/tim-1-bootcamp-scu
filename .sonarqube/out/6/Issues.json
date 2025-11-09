@@ -12,52 +12,18 @@
       },
       "results": [
         {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'CategoryRefIdS' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
-                "region": {
-                  "startLine": 62,
-                  "startColumn": 19,
-                  "endLine": 62,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
-                "region": {
-                  "startLine": 62,
-                  "startColumn": 19,
-                  "endLine": 62,
-                  "endColumn": 33
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "CS8625",
           "level": "warning",
           "message": "Cannot convert null literal to non-nullable reference type.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Course.razor",
                 "region": {
-                  "startLine": 71,
-                  "startColumn": 37,
-                  "endLine": 71,
-                  "endColumn": 41
+                  "startLine": 98,
+                  "startColumn": 39,
+                  "endLine": 98,
+                  "endColumn": 43
                 }
               }
             }
@@ -69,16 +35,16 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'NavigationManager' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "message": "Non-nullable property 'MudDialog' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
                 "region": {
-                  "startLine": 59,
-                  "startColumn": 31,
-                  "endLine": 59,
-                  "endColumn": 48
+                  "startLine": 40,
+                  "startColumn": 32,
+                  "endLine": 40,
+                  "endColumn": 41
                 }
               }
             }
@@ -86,12 +52,12 @@
           "relatedLocations": [
             {
               "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
                 "region": {
-                  "startLine": 59,
-                  "startColumn": 31,
-                  "endLine": 59,
-                  "endColumn": 48
+                  "startLine": 40,
+                  "startColumn": 32,
+                  "endLine": 40,
+                  "endColumn": 41
                 }
               }
             }
@@ -158,6 +124,40 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
+          "message": "Non-nullable property 'NavigationManager' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 31,
+                  "endLine": 59,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 31,
+                  "endLine": 59,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
           "message": "Non-nullable field '_form' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable.",
           "locations": [
             {
@@ -181,294 +181,6 @@
                   "startColumn": 21,
                   "endLine": 74,
                   "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8625",
-          "level": "warning",
-          "message": "Cannot convert null literal to non-nullable reference type.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
-                "region": {
-                  "startLine": 86,
-                  "startColumn": 40,
-                  "endLine": 86,
-                  "endColumn": 44
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable field 'mudTable' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Invoice.razor",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 34,
-                  "endLine": 78,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Invoice.razor",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 34,
-                  "endLine": 78,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'InvoiceRefIdS' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
-                "region": {
-                  "startLine": 82,
-                  "startColumn": 19,
-                  "endLine": 82,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
-                "region": {
-                  "startLine": 82,
-                  "startColumn": 19,
-                  "endLine": 82,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable field 'mudTable' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
-                "region": {
-                  "startLine": 87,
-                  "startColumn": 40,
-                  "endLine": 87,
-                  "endColumn": 48
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
-                "region": {
-                  "startLine": 87,
-                  "startColumn": 40,
-                  "endLine": 87,
-                  "endColumn": 48
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'MudDialog' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
-                "region": {
-                  "startLine": 40,
-                  "startColumn": 32,
-                  "endLine": 40,
-                  "endColumn": 41
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
-                "region": {
-                  "startLine": 40,
-                  "startColumn": 32,
-                  "endLine": 40,
-                  "endColumn": 41
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'InvoiceRefIdS' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
-                "region": {
-                  "startLine": 73,
-                  "startColumn": 19,
-                  "endLine": 73,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
-                "region": {
-                  "startLine": 73,
-                  "startColumn": 19,
-                  "endLine": 73,
-                  "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable field 'mudTable' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 40,
-                  "endLine": 78,
-                  "endColumn": 48
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 40,
-                  "endLine": 78,
-                  "endColumn": 48
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8625",
-          "level": "warning",
-          "message": "Cannot convert null literal to non-nullable reference type.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
-                "region": {
-                  "startLine": 22,
-                  "startColumn": 45,
-                  "endLine": 22,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8625",
-          "level": "warning",
-          "message": "Cannot convert null literal to non-nullable reference type.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/DashboardAdmin.razor",
-                "region": {
-                  "startLine": 108,
-                  "startColumn": 42,
-                  "endLine": 108,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8625",
-          "level": "warning",
-          "message": "Cannot convert null literal to non-nullable reference type.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Course.razor",
-                "region": {
-                  "startLine": 98,
-                  "startColumn": 39,
-                  "endLine": 98,
-                  "endColumn": 43
                 }
               }
             }
@@ -605,48 +317,6 @@
                   "startColumn": 21,
                   "endLine": 96,
                   "endColumn": 26
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8625",
-          "level": "warning",
-          "message": "Cannot convert null literal to non-nullable reference type.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
-                "region": {
-                  "startLine": 86,
-                  "startColumn": 46,
-                  "endLine": 86,
-                  "endColumn": 50
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8604",
-          "level": "warning",
-          "message": "Possible null reference argument for parameter 'authorization' in 'Task IAuthService.LogoutAsync(AuthenticationHeaderValue authorization)'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
-                "region": {
-                  "startLine": 295,
-                  "startColumn": 43,
-                  "endLine": 295,
-                  "endColumn": 47
                 }
               }
             }
@@ -668,48 +338,6 @@
                   "startColumn": 21,
                   "endLine": 61,
                   "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 3
-          }
-        },
-        {
-          "ruleId": "CS0649",
-          "level": "warning",
-          "message": "Field 'Invoice.mudTable' is never assigned to, and will always have its default value null",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Invoice.razor",
-                "region": {
-                  "startLine": 78,
-                  "startColumn": 34,
-                  "endLine": 78,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 4
-          }
-        },
-        {
-          "ruleId": "CS0414",
-          "level": "warning",
-          "message": "The field 'MainLayout._theme' is assigned but its value is never used",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
-                "region": {
-                  "startLine": 306,
-                  "startColumn": 23,
-                  "endLine": 306,
-                  "endColumn": 29
                 }
               }
             }
@@ -1201,48 +829,6 @@
           }
         },
         {
-          "ruleId": "S4663",
-          "level": "warning",
-          "message": "Remove this empty comment",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
-                "region": {
-                  "startLine": 123,
-                  "startColumn": 9,
-                  "endLine": 123,
-                  "endColumn": 11
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4663",
-          "level": "warning",
-          "message": "Remove this empty comment",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
-                "region": {
-                  "startLine": 139,
-                  "startColumn": 9,
-                  "endLine": 139,
-                  "endColumn": 11
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S1192",
           "level": "warning",
           "message": "Define a constant instead of using this literal 'WebAPI' 8 times.",
@@ -1348,151 +934,6 @@
               "4": null,
               "5": null,
               "6": null
-            }
-          }
-        },
-        {
-          "ruleId": "S1192",
-          "level": "warning",
-          "message": "Define a constant instead of using this literal 'WebAPI' 11 times.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 49,
-                  "endLine": 17,
-                  "endColumn": 57
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 42,
-                  "startColumn": 49,
-                  "endLine": 42,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 71,
-                  "startColumn": 49,
-                  "endLine": 71,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 101,
-                  "startColumn": 49,
-                  "endLine": 101,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 126,
-                  "startColumn": 49,
-                  "endLine": 126,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 152,
-                  "startColumn": 49,
-                  "endLine": 152,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 177,
-                  "startColumn": 49,
-                  "endLine": 177,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 205,
-                  "startColumn": 49,
-                  "endLine": 205,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 231,
-                  "startColumn": 49,
-                  "endLine": 231,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 257,
-                  "startColumn": 49,
-                  "endLine": 257,
-                  "endColumn": 57
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
-                "region": {
-                  "startLine": 282,
-                  "startColumn": 49,
-                  "endLine": 282,
-                  "endColumn": 57
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "0": null,
-              "1": null,
-              "2": null,
-              "3": null,
-              "4": null,
-              "5": null,
-              "6": null,
-              "7": null,
-              "8": null,
-              "9": null
             }
           }
         },
@@ -1654,6 +1095,298 @@
           }
         },
         {
+          "ruleId": "S4663",
+          "level": "warning",
+          "message": "Remove this empty comment",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
+                "region": {
+                  "startLine": 123,
+                  "startColumn": 9,
+                  "endLine": 123,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4663",
+          "level": "warning",
+          "message": "Remove this empty comment",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 9,
+                  "endLine": 139,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'WebAPI' 11 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 49,
+                  "endLine": 17,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 49,
+                  "endLine": 42,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 49,
+                  "endLine": 71,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 101,
+                  "startColumn": 49,
+                  "endLine": 101,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 126,
+                  "startColumn": 49,
+                  "endLine": 126,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 152,
+                  "startColumn": 49,
+                  "endLine": 152,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 177,
+                  "startColumn": 49,
+                  "endLine": 177,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 205,
+                  "startColumn": 49,
+                  "endLine": 205,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 231,
+                  "startColumn": 49,
+                  "endLine": 231,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 257,
+                  "startColumn": 49,
+                  "endLine": 257,
+                  "endColumn": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CheckoutService.cs",
+                "region": {
+                  "startLine": 282,
+                  "startColumn": 49,
+                  "endLine": 282,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null,
+              "5": null,
+              "6": null,
+              "7": null,
+              "8": null,
+              "9": null
+            }
+          }
+        },
+        {
+          "ruleId": "S6562",
+          "level": "warning",
+          "message": "Provide the \"DateTimeKind\" when creating this object.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 34,
+                  "endLine": 44,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6562",
+          "level": "warning",
+          "message": "Provide the \"DateTimeKind\" when creating this object.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Edit-profil.razor",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 35,
+                  "endLine": 33,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2933",
+          "level": "warning",
+          "message": "Make 'UserName' 'readonly'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 20,
+                  "endLine": 42,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2933",
+          "level": "warning",
+          "message": "Make 'UserEmail' 'readonly'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 20,
+                  "endLine": 43,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2933",
+          "level": "warning",
+          "message": "Make 'BirthDate' 'readonly'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 22,
+                  "endLine": 44,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "S1192",
           "level": "warning",
           "message": "Define a constant instead of using this literal 'WebAPI' 9 times.",
@@ -1775,6 +1508,69 @@
           }
         },
         {
+          "ruleId": "S1144",
+          "level": "warning",
+          "message": "Remove the unused private method 'EditProfile'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 18,
+                  "endLine": 46,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1144",
+          "level": "warning",
+          "message": "Remove the unused private method 'Logout'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 18,
+                  "endLine": 52,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2933",
+          "level": "warning",
+          "message": "Make '_forgotPasswordModel' 'readonly'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ForgotPassword.razor",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 38,
+                  "endLine": 57,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "S4663",
           "level": "warning",
           "message": "Remove this empty comment",
@@ -1787,27 +1583,6 @@
                   "startColumn": 9,
                   "endLine": 135,
                   "endColumn": 11
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6562",
-          "level": "warning",
-          "message": "Provide the \"DateTimeKind\" when creating this object.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Edit-profil.razor",
-                "region": {
-                  "startLine": 33,
-                  "startColumn": 35,
-                  "endLine": 33,
-                  "endColumn": 60
                 }
               }
             }
@@ -1840,16 +1615,16 @@
         {
           "ruleId": "S2933",
           "level": "warning",
-          "message": "Make '_forgotPasswordModel' 'readonly'.",
+          "message": "Make '_isDarkMode' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ForgotPassword.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
                 "region": {
-                  "startLine": 57,
-                  "startColumn": 38,
-                  "endLine": 57,
-                  "endColumn": 58
+                  "startLine": 310,
+                  "startColumn": 18,
+                  "endLine": 310,
+                  "endColumn": 29
                 }
               }
             }
@@ -1859,9 +1634,9 @@
           }
         },
         {
-          "ruleId": "S3459",
+          "ruleId": "S2933",
           "level": "warning",
-          "message": "Remove unassigned field 'mudTable', or set its value.",
+          "message": "Make 'mudTable' 'readonly'.",
           "locations": [
             {
               "resultFile": {
@@ -1882,142 +1657,16 @@
         {
           "ruleId": "S2933",
           "level": "warning",
-          "message": "Make 'MyCustomTheme' 'readonly'.",
+          "message": "Make '_registerModel' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Register.razor",
                 "region": {
-                  "startLine": 190,
-                  "startColumn": 14,
-                  "endLine": 190,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make '_isDarkMode' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
-                "region": {
-                  "startLine": 305,
-                  "startColumn": 18,
-                  "endLine": 305,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make '_theme' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
-                "region": {
-                  "startLine": 306,
-                  "startColumn": 23,
-                  "endLine": 306,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'UserName' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 42,
-                  "startColumn": 20,
-                  "endLine": 42,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'UserEmail' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 20,
-                  "endLine": 43,
-                  "endColumn": 29
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'BirthDate' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 44,
-                  "startColumn": 22,
-                  "endLine": 44,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6562",
-          "level": "warning",
-          "message": "Provide the \"DateTimeKind\" when creating this object.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 44,
-                  "startColumn": 34,
-                  "endLine": 44,
-                  "endColumn": 59
+                  "startLine": 106,
+                  "startColumn": 32,
+                  "endLine": 106,
+                  "endColumn": 46
                 }
               }
             }
@@ -2069,60 +1718,18 @@
           }
         },
         {
-          "ruleId": "S1144",
+          "ruleId": "S2933",
           "level": "warning",
-          "message": "Remove the unused private field '_theme'.",
+          "message": "Make 'IsCategoryLoading' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
                 "region": {
-                  "startLine": 306,
-                  "startColumn": 5,
-                  "endLine": 306,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
-                "region": {
-                  "startLine": 89,
-                  "startColumn": 5,
-                  "endLine": 89,
-                  "endColumn": 9
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1144",
-          "level": "warning",
-          "message": "Remove the unused private method 'EditProfile'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 46,
+                  "startLine": 72,
                   "startColumn": 18,
-                  "endLine": 46,
-                  "endColumn": 29
+                  "endLine": 72,
+                  "endColumn": 35
                 }
               }
             }
@@ -2132,18 +1739,18 @@
           }
         },
         {
-          "ruleId": "S1144",
+          "ruleId": "S2933",
           "level": "warning",
-          "message": "Remove the unused private method 'Logout'.",
+          "message": "Make '_resetPasswordModel' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ResetPassword.razor",
                 "region": {
-                  "startLine": 52,
-                  "startColumn": 18,
-                  "endLine": 52,
-                  "endColumn": 24
+                  "startLine": 81,
+                  "startColumn": 37,
+                  "endLine": 81,
+                  "endColumn": 56
                 }
               }
             }
@@ -2161,9 +1768,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
                 "region": {
-                  "startLine": 145,
+                  "startLine": 140,
                   "startColumn": 9,
-                  "endLine": 145,
+                  "endLine": 140,
                   "endColumn": 11
                 }
               }
@@ -2182,9 +1789,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
                 "region": {
-                  "startLine": 160,
+                  "startLine": 155,
                   "startColumn": 9,
-                  "endLine": 160,
+                  "endLine": 155,
                   "endColumn": 11
                 }
               }
@@ -2197,16 +1804,16 @@
         {
           "ruleId": "S2933",
           "level": "warning",
-          "message": "Make '_registerModel' 'readonly'.",
+          "message": "Make 'hover' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Register.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
                 "region": {
-                  "startLine": 106,
-                  "startColumn": 32,
-                  "endLine": 106,
-                  "endColumn": 46
+                  "startLine": 84,
+                  "startColumn": 18,
+                  "endLine": 84,
+                  "endColumn": 23
                 }
               }
             }
@@ -2239,132 +1846,6 @@
         {
           "ruleId": "S2933",
           "level": "warning",
-          "message": "Make '_resetPasswordModel' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ResetPassword.razor",
-                "region": {
-                  "startLine": 81,
-                  "startColumn": 37,
-                  "endLine": 81,
-                  "endColumn": 56
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
-                "region": {
-                  "startLine": 74,
-                  "startColumn": 5,
-                  "endLine": 74,
-                  "endColumn": 9
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
-                "region": {
-                  "startLine": 106,
-                  "startColumn": 5,
-                  "endLine": 106,
-                  "endColumn": 9
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'IsCategoryLoading' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
-                "region": {
-                  "startLine": 72,
-                  "startColumn": 18,
-                  "endLine": 72,
-                  "endColumn": 35
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'hover' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Category.razor",
-                "region": {
-                  "startLine": 84,
-                  "startColumn": 18,
-                  "endLine": 84,
-                  "endColumn": 23
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Checkout.razor",
-                "region": {
-                  "startLine": 151,
-                  "startColumn": 9,
-                  "endLine": 151,
-                  "endColumn": 13
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
           "message": "Make 'hover' 'readonly'.",
           "locations": [
             {
@@ -2384,18 +1865,60 @@
           }
         },
         {
-          "ruleId": "S4663",
+          "ruleId": "S2933",
           "level": "warning",
-          "message": "Remove this empty comment",
+          "message": "Make 'hover' 'readonly'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/CheckoutDialog.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
                 "region": {
-                  "startLine": 110,
-                  "startColumn": 9,
-                  "endLine": 110,
-                  "endColumn": 11
+                  "startLine": 69,
+                  "startColumn": 18,
+                  "endLine": 69,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2933",
+          "level": "warning",
+          "message": "Make 'ItemsPerPage' 'readonly'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Home.razor",
+                "region": {
+                  "startLine": 197,
+                  "startColumn": 17,
+                  "endLine": 197,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
+                "region": {
+                  "startLine": 102,
+                  "startColumn": 5,
+                  "endLine": 102,
+                  "endColumn": 9
                 }
               }
             }
@@ -2453,11 +1976,11 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Detail.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Checkout.razor",
                 "region": {
-                  "startLine": 215,
+                  "startLine": 151,
                   "startColumn": 9,
-                  "endLine": 215,
+                  "endLine": 151,
                   "endColumn": 13
                 }
               }
@@ -2468,18 +1991,39 @@
           }
         },
         {
-          "ruleId": "S2933",
+          "ruleId": "S4663",
           "level": "warning",
-          "message": "Make 'ItemsPerPage' 'readonly'.",
+          "message": "Remove this empty comment",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Home.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/CheckoutDialog.razor",
                 "region": {
-                  "startLine": 197,
-                  "startColumn": 17,
-                  "endLine": 197,
-                  "endColumn": 29
+                  "startLine": 110,
+                  "startColumn": 9,
+                  "endLine": 110,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Detail.razor",
+                "region": {
+                  "startLine": 215,
+                  "startColumn": 9,
+                  "endLine": 215,
+                  "endColumn": 13
                 }
               }
             }
@@ -2501,27 +2045,6 @@
                   "startColumn": 16,
                   "endLine": 136,
                   "endColumn": 20
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make 'hover' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
-                "region": {
-                  "startLine": 69,
-                  "startColumn": 18,
-                  "endLine": 69,
-                  "endColumn": 23
                 }
               }
             }
@@ -2636,48 +2159,6 @@
           }
         },
         {
-          "ruleId": "S1135",
-          "level": "warning",
-          "message": "Complete the task associated to this 'TODO' comment.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
-                "region": {
-                  "startLine": 321,
-                  "startColumn": 69,
-                  "endLine": 321,
-                  "endColumn": 73
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1135",
-          "level": "warning",
-          "message": "Complete the task associated to this 'TODO' comment.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
-                "region": {
-                  "startLine": 91,
-                  "startColumn": 16,
-                  "endLine": 91,
-                  "endColumn": 20
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S2325",
           "level": "warning",
           "message": "Make 'ParseClaimsFromJwt' a static method.",
@@ -2690,90 +2171,6 @@
                   "startColumn": 32,
                   "endLine": 69,
                   "endColumn": 50
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1075",
-          "level": "warning",
-          "message": "Refactor your code not to use hardcoded absolute paths or URIs.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Program.cs",
-                "region": {
-                  "startLine": 28,
-                  "startColumn": 69,
-                  "endLine": 28,
-                  "endColumn": 93
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
-          "message": "Member 'ParseClaimsFromJwt' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CustomAuthStateProvider.cs",
-                "region": {
-                  "startLine": 69,
-                  "startColumn": 32,
-                  "endLine": 69,
-                  "endColumn": 50
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6966",
-          "level": "warning",
-          "message": "Await RunAsync instead.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Program.cs",
-                "region": {
-                  "startLine": 66,
-                  "startColumn": 1,
-                  "endLine": 66,
-                  "endColumn": 10
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'FilterFunc' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
-                "region": {
-                  "startLine": 96,
-                  "startColumn": 18,
-                  "endLine": 96,
-                  "endColumn": 28
                 }
               }
             }
@@ -2825,18 +2222,18 @@
           }
         },
         {
-          "ruleId": "S6608",
-          "level": "warning",
-          "message": "Indexing at 0 should be used instead of the \"Enumerable\" extension method \"First\"",
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'ParseClaimsFromJwt' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/CustomAuthStateProvider.cs",
                 "region": {
-                  "startLine": 101,
-                  "startColumn": 24,
-                  "endLine": 101,
-                  "endColumn": 29
+                  "startLine": 69,
+                  "startColumn": 32,
+                  "endLine": 69,
+                  "endColumn": 50
                 }
               }
             }
@@ -2846,18 +2243,18 @@
           }
         },
         {
-          "ruleId": "S1481",
+          "ruleId": "S1135",
           "level": "warning",
-          "message": "Remove the unused local variable 'result'.",
+          "message": "Complete the task associated to this 'TODO' comment.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Layout/MainLayout.razor",
                 "region": {
-                  "startLine": 129,
-                  "startColumn": 13,
-                  "endLine": 129,
-                  "endColumn": 19
+                  "startLine": 325,
+                  "startColumn": 69,
+                  "endLine": 325,
+                  "endColumn": 73
                 }
               }
             }
@@ -2867,18 +2264,18 @@
           }
         },
         {
-          "ruleId": "S2325",
+          "ruleId": "S1075",
           "level": "warning",
-          "message": "Make 'Logout' a static method.",
+          "message": "Refactor your code not to use hardcoded absolute paths or URIs.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Program.cs",
                 "region": {
-                  "startLine": 52,
-                  "startColumn": 18,
-                  "endLine": 52,
-                  "endColumn": 24
+                  "startLine": 28,
+                  "startColumn": 69,
+                  "endLine": 28,
+                  "endColumn": 93
                 }
               }
             }
@@ -2888,18 +2285,18 @@
           }
         },
         {
-          "ruleId": "S2325",
+          "ruleId": "S1135",
           "level": "warning",
-          "message": "Make 'PasswordStrength' a static method.",
+          "message": "Complete the task associated to this 'TODO' comment.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Login.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ListMenu.razor",
                 "region": {
-                  "startLine": 82,
-                  "startColumn": 33,
-                  "endLine": 82,
-                  "endColumn": 49
+                  "startLine": 91,
+                  "startColumn": 16,
+                  "endLine": 91,
+                  "endColumn": 20
                 }
               }
             }
@@ -2909,18 +2306,18 @@
           }
         },
         {
-          "ruleId": "S3626",
+          "ruleId": "S6966",
           "level": "warning",
-          "message": "Remove this redundant jump.",
+          "message": "Await RunAsync instead.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Login.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Program.cs",
                 "region": {
-                  "startLine": 87,
-                  "startColumn": 13,
-                  "endLine": 87,
-                  "endColumn": 25
+                  "startLine": 66,
+                  "startColumn": 1,
+                  "endLine": 66,
+                  "endColumn": 10
                 }
               }
             }
@@ -2930,18 +2327,207 @@
           }
         },
         {
-          "ruleId": "S1481",
+          "ruleId": "S3928",
           "level": "warning",
-          "message": "Remove the unused local variable 'result'.",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Checkout.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
                 "region": {
-                  "startLine": 148,
-                  "startColumn": 13,
-                  "endLine": 148,
-                  "endColumn": 19
+                  "startLine": 19,
+                  "startColumn": 55,
+                  "endLine": 19,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 61,
+                  "endLine": 25,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 55,
+                  "endLine": 40,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 61,
+                  "endLine": 46,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 55,
+                  "endLine": 58,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 68,
+                  "startColumn": 61,
+                  "endLine": 68,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 55,
+                  "endLine": 79,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 61,
+                  "endLine": 85,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 96,
+                  "startColumn": 55,
+                  "endLine": 96,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3928",
+          "level": "warning",
+          "message": "Use a constructor overloads that allows a more meaningful exception message to be provided.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 61,
+                  "endLine": 97,
+                  "endColumn": 88
                 }
               }
             }
@@ -3254,16 +2840,16 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'GetErrorAsync' a static method.",
+          "message": "Make 'FilterFunc' a static method.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
                 "region": {
-                  "startLine": 7,
-                  "startColumn": 32,
-                  "endLine": 7,
-                  "endColumn": 45
+                  "startLine": 92,
+                  "startColumn": 18,
+                  "endLine": 92,
+                  "endColumn": 28
                 }
               }
             }
@@ -3273,207 +2859,18 @@
           }
         },
         {
-          "ruleId": "S112",
+          "ruleId": "S6608",
           "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
+          "message": "Indexing at 0 should be used instead of the \"Enumerable\" extension method \"First\"",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 55,
-                  "endLine": 19,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 25,
-                  "startColumn": 61,
-                  "endLine": 25,
-                  "endColumn": 76
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 40,
-                  "startColumn": 55,
-                  "endLine": 40,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 61,
-                  "endLine": 46,
-                  "endColumn": 76
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 58,
-                  "startColumn": 55,
-                  "endLine": 58,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 68,
-                  "startColumn": 61,
-                  "endLine": 68,
-                  "endColumn": 76
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 79,
-                  "startColumn": 55,
-                  "endLine": 79,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 85,
-                  "startColumn": 61,
-                  "endLine": 85,
-                  "endColumn": 76
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
-                "region": {
-                  "startLine": 96,
-                  "startColumn": 55,
-                  "endLine": 96,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S112",
-          "level": "warning",
-          "message": "'System.Exception' should not be thrown by user code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
                 "region": {
                   "startLine": 97,
-                  "startColumn": 61,
+                  "startColumn": 24,
                   "endLine": 97,
-                  "endColumn": 76
+                  "endColumn": 29
                 }
               }
             }
@@ -3506,6 +2903,279 @@
         {
           "ruleId": "S2325",
           "level": "warning",
+          "message": "Make 'GetErrorAsync' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 32,
+                  "endLine": 7,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1481",
+          "level": "warning",
+          "message": "Remove the unused local variable 'result'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserManagement.razor",
+                "region": {
+                  "startLine": 125,
+                  "startColumn": 13,
+                  "endLine": 125,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 55,
+                  "endLine": 19,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 61,
+                  "endLine": 25,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 55,
+                  "endLine": 40,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 61,
+                  "endLine": 46,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 55,
+                  "endLine": 58,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 68,
+                  "startColumn": 61,
+                  "endLine": 68,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 55,
+                  "endLine": 79,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 85,
+                  "startColumn": 61,
+                  "endLine": 85,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 96,
+                  "startColumn": 55,
+                  "endLine": 96,
+                  "endColumn": 82
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA2208",
+          "level": "note",
+          "message": "Call the ArgumentNullException constructor that contains a message and/or paramName parameter",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Services/ErrorService.cs",
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 61,
+                  "endLine": 97,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'FilterFunc' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Course.razor",
+                "region": {
+                  "startLine": 112,
+                  "startColumn": 18,
+                  "endLine": 112,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
           "message": "Make 'FilterFunc' a static method.",
           "locations": [
             {
@@ -3525,77 +3195,171 @@
           }
         },
         {
-          "ruleId": "MUD0002",
+          "ruleId": "S2325",
           "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(292,24)-(292,80)'",
+          "message": "Make 'FilterFunc' a static method.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Edit-profil.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_Edit_profil_razor.g.cs",
-                "region": {
-                  "startLine": 293,
-                  "startColumn": 25,
-                  "endLine": 293,
-                  "endColumn": 81
+                  "startLine": 117,
+                  "startColumn": 18,
+                  "endLine": 117,
+                  "endColumn": 28
                 }
               }
             }
           ],
           "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.Edit_profil"
-            }
+            "warningLevel": 1
           }
         },
         {
-          "ruleId": "MUD0002",
+          "ruleId": "S3267",
           "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(312,16)-(312,72)'",
+          "message": "Loop should be simplified by calling Select(role => role.Name))",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/SuccessPurchase.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_SuccessPurchase_razor.g.cs",
-                "region": {
-                  "startLine": 313,
-                  "startColumn": 17,
-                  "endLine": 313,
-                  "endColumn": 73
+                  "startLine": 20,
+                  "startColumn": 35,
+                  "endLine": 20,
+                  "endColumn": 40
                 }
               }
             }
           ],
           "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.SuccessPurchase"
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'RowClickEvent' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
+                "region": {
+                  "startLine": 119,
+                  "startColumn": 18,
+                  "endLine": 119,
+                  "endColumn": 31
+                }
+              }
             }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'Logout' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 18,
+                  "endLine": 52,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1481",
+          "level": "warning",
+          "message": "Remove the unused local variable 'result'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Checkout.razor",
+                "region": {
+                  "startLine": 148,
+                  "startColumn": 13,
+                  "endLine": 148,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'PasswordStrength' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Login.razor",
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 33,
+                  "endLine": 82,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S3626",
+          "level": "warning",
+          "message": "Remove this redundant jump.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Login.razor",
+                "region": {
+                  "startLine": 87,
+                  "startColumn": 13,
+                  "endLine": 87,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'RowClickEvent' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Invoice.razor",
+                "region": {
+                  "startLine": 101,
+                  "startColumn": 18,
+                  "endLine": 101,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
           }
         },
         {
@@ -3673,164 +3437,6 @@
           }
         },
         {
-          "ruleId": "MUD0002",
-          "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(345,24)-(345,80)'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Profil.razor",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_Profil_razor.g.cs",
-                "region": {
-                  "startLine": 346,
-                  "startColumn": 25,
-                  "endLine": 346,
-                  "endColumn": 81
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.Profil"
-            }
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'RowClickEvent' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Invoice.razor",
-                "region": {
-                  "startLine": 101,
-                  "startColumn": 18,
-                  "endLine": 101,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "MUD0002",
-          "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(550,20)-(550,76)'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ForgotPassword.razor",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_ForgotPassword_razor.g.cs",
-                "region": {
-                  "startLine": 551,
-                  "startColumn": 21,
-                  "endLine": 551,
-                  "endColumn": 77
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.ForgotPassword"
-            }
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'RowClickEvent' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
-                "region": {
-                  "startLine": 132,
-                  "startColumn": 18,
-                  "endLine": 132,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3267",
-          "level": "warning",
-          "message": "Loop should be simplified by calling Select(role => role.Name))",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/UserDialog.razor",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 35,
-                  "endLine": 20,
-                  "endColumn": 40
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'RowClickEvent' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/RincianInvoiceAdmin.razor",
-                "region": {
-                  "startLine": 119,
-                  "startColumn": 18,
-                  "endLine": 119,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S3626",
           "level": "warning",
           "message": "Remove this redundant jump.",
@@ -3854,16 +3460,16 @@
         {
           "ruleId": "S2325",
           "level": "warning",
-          "message": "Make 'FilterFunc' a static method.",
+          "message": "Make 'RowClickEvent' a static method.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/Course.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/RincianInvoice.razor",
                 "region": {
-                  "startLine": 112,
+                  "startLine": 132,
                   "startColumn": 18,
-                  "endLine": 112,
-                  "endColumn": 28
+                  "endLine": 132,
+                  "endColumn": 31
                 }
               }
             }
@@ -3915,18 +3521,18 @@
           }
         },
         {
-          "ruleId": "S2325",
+          "ruleId": "S1481",
           "level": "warning",
-          "message": "Make 'FilterFunc' a static method.",
+          "message": "Remove the unused local variable 'result'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Admin/PaymentMethod.razor",
+                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Detail.razor",
                 "region": {
-                  "startLine": 122,
-                  "startColumn": 18,
-                  "endLine": 122,
-                  "endColumn": 28
+                  "startLine": 212,
+                  "startColumn": 13,
+                  "endLine": 212,
+                  "endColumn": 19
                 }
               }
             }
@@ -3954,138 +3560,6 @@
           ],
           "properties": {
             "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1481",
-          "level": "warning",
-          "message": "Remove the unused local variable 'result'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Detail.razor",
-                "region": {
-                  "startLine": 212,
-                  "startColumn": 13,
-                  "endLine": 212,
-                  "endColumn": 19
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "MUD0002",
-          "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(663,20)-(663,76)'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/ResetPassword.razor",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_ResetPassword_razor.g.cs",
-                "region": {
-                  "startLine": 664,
-                  "startColumn": 21,
-                  "endLine": 664,
-                  "endColumn": 77
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.ResetPassword"
-            }
-          }
-        },
-        {
-          "ruleId": "MUD0002",
-          "level": "warning",
-          "message": "Illegal Attribute 'Direction' on 'MudStack' using pattern 'LowerCase' source location '(1019,20)-(1019,76)'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Register.razor",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_Register_razor.g.cs",
-                "region": {
-                  "startLine": 1020,
-                  "startColumn": 21,
-                  "endLine": 1020,
-                  "endColumn": 77
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.Register"
-            }
-          }
-        },
-        {
-          "ruleId": "MUD0002",
-          "level": "warning",
-          "message": "Illegal Attribute 'DisableGutters' on 'MudContainer' using pattern 'LowerCase' source location '(1665,12)-(1665,74)'",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/Components/Pages/Home.razor",
-                "region": {
-                  "startLine": 1,
-                  "startColumn": 1,
-                  "endLine": 1,
-                  "endColumn": 1
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_Home_razor.g.cs",
-                "region": {
-                  "startLine": 1666,
-                  "startColumn": 13,
-                  "endLine": 1666,
-                  "endColumn": 75
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ClassName": "MyApp.BlazorUI.Components.Pages.Home"
-            }
           }
         },
         {
@@ -4128,7 +3602,7 @@
         {
           "ruleId": "MUD0002",
           "level": "warning",
-          "message": "Illegal Attribute 'AlignItems' on 'MudGrid' using pattern 'LowerCase' source location '(2153,16)-(2153,77)'",
+          "message": "Illegal Attribute 'AlignItems' on 'MudGrid' using pattern 'LowerCase' source location '(2152,16)-(2152,77)'",
           "locations": [
             {
               "resultFile": {
@@ -4147,9 +3621,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/BootcampProject/src/08.BlazorUI/obj/Release/net9.0/Microsoft.CodeAnalysis.Razor.Compiler/Microsoft.NET.Sdk.Razor.SourceGenerators.RazorSourceGenerator/Components_Pages_Home_razor.g.cs",
                 "region": {
-                  "startLine": 2154,
+                  "startLine": 2153,
                   "startColumn": 17,
-                  "endLine": 2154,
+                  "endLine": 2153,
                   "endColumn": 78
                 }
               }
@@ -4180,6 +3654,22 @@
             ]
           }
         },
+        "CA2208": {
+          "id": "CA2208",
+          "shortDescription": "Instantiate argument exceptions correctly",
+          "fullDescription": "A call is made to the default (parameterless) constructor of an exception type that is or derives from ArgumentException, or an incorrect string argument is passed to a parameterized constructor of an exception type that is or derives from ArgumentException.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2208",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
         "CS0168": {
           "id": "CS0168",
           "shortDescription": "Variable is declared but never used",
@@ -4199,48 +3689,6 @@
           "shortDescription": "Field is never used",
           "defaultLevel": "warning",
           "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0169)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        },
-        "CS0414": {
-          "id": "CS0414",
-          "shortDescription": "Field is assigned but its value is never used",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0414)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        },
-        "CS0649": {
-          "id": "CS0649",
-          "shortDescription": "Field is never assigned to, and will always have its default value",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0649)",
-          "properties": {
-            "category": "Compiler",
-            "isEnabledByDefault": true,
-            "tags": [
-              "Compiler",
-              "Telemetry"
-            ]
-          }
-        },
-        "CS8604": {
-          "id": "CS8604",
-          "shortDescription": "Possible null reference argument.",
-          "defaultLevel": "warning",
-          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8604)",
           "properties": {
             "category": "Compiler",
             "isEnabledByDefault": true,
@@ -4297,22 +3745,6 @@
           "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-1075",
           "properties": {
             "category": "Minor Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
-        "S112": {
-          "id": "S112",
-          "shortDescription": "General or reserved exceptions should never be thrown",
-          "fullDescription": "This rule raises an issue when a general or reserved exception is thrown.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-112",
-          "properties": {
-            "category": "Major Code Smell",
             "isEnabledByDefault": true,
             "tags": [
               "C#",
@@ -4488,23 +3920,6 @@
             ]
           }
         },
-        "S3459": {
-          "id": "S3459",
-          "shortDescription": "Unassigned members should be removed",
-          "fullDescription": "Fields and auto-properties that are never assigned to hold the default values for their types. They are either pointless code or, more likely, mistakes.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3459",
-          "properties": {
-            "category": "Minor Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
         "S3626": {
           "id": "S3626",
           "shortDescription": "Jump statements should not be redundant",
@@ -4531,6 +3946,23 @@
           "properties": {
             "category": "Critical Code Smell",
             "isEnabledByDefault": false,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S3928": {
+          "id": "S3928",
+          "shortDescription": "Parameter names used into ArgumentException constructors should match an existing one ",
+          "fullDescription": "Some constructors of the ArgumentException, ArgumentNullException, ArgumentOutOfRangeException and DuplicateWaitObjectException classes must be fed with a valid parameter name. This rule raises an issue in two cases:",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-3928",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
             "tags": [
               "C#",
               "MainSourceScope",

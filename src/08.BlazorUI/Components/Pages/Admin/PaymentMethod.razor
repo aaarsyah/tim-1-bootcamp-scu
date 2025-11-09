@@ -83,12 +83,7 @@
     private List<PaymentMethodDto> paymentMethods = new List<PaymentMethodDto>();
     private bool hover = true;
     private string searchString1 = "";
-    private PaymentMethodDto selectedItem1 = null;
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     await LoadPayments();
-    // }
+    private PaymentMethodDto selectedItem1 = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -139,7 +134,7 @@
         Snackbar.Add("Berhasil menghapus payment method", Severity.Success);
     }
 
-    private async Task OpenPaymentDialog(PaymentMethodDto paymentItem)
+    private async Task OpenPaymentDialog(PaymentMethodDto? paymentItem)
     {
         var parameters = new DialogParameters();
         //

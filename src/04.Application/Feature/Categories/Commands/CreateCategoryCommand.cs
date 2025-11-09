@@ -9,7 +9,7 @@ namespace MyApp.Application.Feature.Categories.Commands;
 
 public class CreateCategoryCommand : IRequest<ApiResponse<CategoryDto>>
 {
-    public CreateCategoryRequestDto createCategoryDto { get; set; } = null!;
+    public required CreateCategoryRequestDto CreateCategoryDto { get; set; }
 }
 public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ApiResponse<CategoryDto>>
 {
@@ -24,8 +24,8 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     }
     public async Task<ApiResponse<CategoryDto>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = _mapper.Map<Category>(request.createCategoryDto);
-        var imageurl = request.createCategoryDto.ImageUrl;
+        var category = _mapper.Map<Category>(request.CreateCategoryDto);
+        var imageurl = request.CreateCategoryDto.ImageUrl;
         // === Upload Image (jika ImageUrl berisi base64 dari client) ===
         if (!string.IsNullOrWhiteSpace(imageurl) &&
             imageurl.StartsWith("data:image"))

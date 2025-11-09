@@ -74,13 +74,13 @@
         }
 
         <!-- Register button -->
-        <MudStack Direction="Row" Spacing="5" Row="true">
-            <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
+        <MudStack Spacing="5" Row="true">
+            <MudButton OnClick="OnConfirm" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(_isLoading || !string.IsNullOrEmpty(_successMessage))" Class="mt-4" Style="width: 140px; height: 43px; border-radius: 8px">
                 <MudText Typo="Typo.h4" Style="font-weight: 500; font-size: 15px">Daftar</MudText>
             </MudButton>
                     
             <!-- Login Link -->
-            <div Class="d-flex align-center mt-4">
+            <div class="d-flex align-center mt-4">
                 <MudText Typo="Typo.body1" Class="d-flex align-center">
                     Sudah punya akun? 
                     <MudLink OnClick="Navigation.GoToLogin" Color="Color.Primary" Class="ml-1">Login disini</MudLink>
@@ -179,7 +179,7 @@
             {
                 _successMessage = "Registration successful! Please check your email to confirm your account.";
                 Snackbar.Add("Registration successful!", Severity.Success);
-
+                StateHasChanged();
                 // Redirect to login after 2 seconds
                 await Task.Delay(5000);
                 Navigation.GoToHome();

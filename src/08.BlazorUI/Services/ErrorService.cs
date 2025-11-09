@@ -16,20 +16,20 @@ public class ErrorService
                 try
                 {
                     var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    if (problemDetails == null) throw new Exception();
+                    if (problemDetails == null) throw new ArgumentNullException();
                     var error = problemDetails.Extensions["errorCode"]?.ToString();
                     if (error == "VALIDATION_ERROR") //Error yang dihandle pada endpoint
                     {
                         return problemDetails.Title;
                     }
-                    if (problemDetails.Title == null) throw new Exception();
+                    if (problemDetails.Title == null) throw new ArgumentNullException();
                     if (problemDetails.Title == "One or more validation errors occurred.") //Disebabkan dari DTO validation error
                     {
                         return string.Join(",", problemDetails.Extensions["errors"]);
                     }
                     return problemDetails.Title;
                 }
-                catch (Exception)
+                catch (ArgumentNullException)
                 {
                     return "Generic Bad Request error";
                 }
@@ -37,17 +37,17 @@ public class ErrorService
                 try
                 {
                     var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    if (problemDetails == null) throw new Exception();
+                    if (problemDetails == null) throw new ArgumentNullException();
                     var error = problemDetails.Extensions["errorCode"]?.ToString();
                     if (error == "INVALID_TOKEN") //Error yang dihandle pada endpoint
                     {
                         return problemDetails.Title;
                     }
-                    if (problemDetails.Title == null) throw new Exception(); //Disebabkan dari AuthorizeAttribute
+                    if (problemDetails.Title == null) throw new ArgumentNullException(); //Disebabkan dari AuthorizeAttribute
 
                     return problemDetails.Title;
                 }
-                catch (Exception)
+                catch (ArgumentNullException)
                 {
                     return "You are not logged in";
                 }
@@ -55,7 +55,7 @@ public class ErrorService
                 try
                 {
                     var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    if (problemDetails == null) throw new Exception();
+                    if (problemDetails == null) throw new ArgumentNullException();
                     var error = problemDetails.Extensions["errorCode"]?.ToString();
                     if (error == "ACCOUNT_LOCKED") //Error yang dihandle pada endpoint
                     {
@@ -65,10 +65,10 @@ public class ErrorService
                     {
                         return problemDetails.Title;
                     }
-                    if (problemDetails.Title == null) throw new Exception(); //Disebabkan dari AuthorizeAttribute yang require admin role
+                    if (problemDetails.Title == null) throw new ArgumentNullException(); //Disebabkan dari AuthorizeAttribute yang require admin role
                     return problemDetails.Title;
                 }
-                catch (Exception)
+                catch (ArgumentNullException)
                 {
                     return "You are not allowed to access this page";
                 }
@@ -76,16 +76,16 @@ public class ErrorService
                 try
                 {
                     var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    if (problemDetails == null) throw new Exception();
+                    if (problemDetails == null) throw new ArgumentNullException();
                     var error = problemDetails.Extensions["errorCode"]?.ToString();
                     if (error == "NOT_FOUND") //Error yang dihandle pada endpoint
                     {
                         return problemDetails.Title;
                     }
-                    if (problemDetails.Title == null) throw new Exception();
+                    if (problemDetails.Title == null) throw new ArgumentNullException();
                     return problemDetails.Title;
                 }
-                catch (Exception)
+                catch (ArgumentNullException)
                 {
                     return "This resource does not exist";
                 }
@@ -93,11 +93,11 @@ public class ErrorService
                 try
                 {
                     var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-                    if (problemDetails == null) throw new Exception();
-                    if (problemDetails.Title == null) throw new Exception();
+                    if (problemDetails == null) throw new ArgumentNullException();
+                    if (problemDetails.Title == null) throw new ArgumentNullException();
                     return problemDetails.Title;
                 }
-                catch (Exception)
+                catch (ArgumentNullException)
                 {
                     return "Internal server error";
                 }

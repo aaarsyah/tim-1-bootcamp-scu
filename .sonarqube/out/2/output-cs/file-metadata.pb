@@ -1,4 +1,10 @@
-m
-bD:\BootcampProject\src\07.Client\obj\Release\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.csutf-8]
-RD:\BootcampProject\src\07.Client\obj\Release\net9.0\MyApp.Client.GlobalUsings.g.csutf-8[
-PD:\BootcampProject\src\07.Client\obj\Release\net9.0\MyApp.Client.AssemblyInfo.csutf-8
+W
+LD:\BootcampProject\src\01.Base\obj\Release\net9.0\MyApp.Base.AssemblyInfo.csutf-8k
+`D:\BootcampProject\src\01.Base\obj\Release\net9.0\.NETCoreApp,Version=v9.0.AssemblyAttributes.csutf-8Y
+ND:\BootcampProject\src\01.Base\obj\Release\net9.0\MyApp.Base.GlobalUsings.g.csutf-8I
+@D:\BootcampProject\src\01.Base\Exceptions\ValidationException.csutf-8I
+@D:\BootcampProject\src\01.Base\Exceptions\PermissionException.csutf-8G
+>D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.csutf-8F
+=D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.csutf-8M
+DD:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.csutf-81
+(D:\BootcampProject\src\01.Base\Entity.csutf-8

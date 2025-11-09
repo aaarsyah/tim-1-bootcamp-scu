@@ -187,7 +187,7 @@
 
 @code {
     [Inject] private NavigationManager NavManager { get; set; } = default!;
-    MudTheme MyCustomTheme = new MudTheme()
+    readonly MudTheme MyCustomTheme = new MudTheme()
     {
         PaletteLight = new PaletteLight()
         {
@@ -292,6 +292,11 @@
         try
         {
             var auth = await AuthService.GetAuthAsync();
+            if (auth == null)
+            {
+                Navigation.GoToHome2(); // User belum login (tapi mau logout), arahkan user ke home page
+                return;
+            }
             await AuthService.LogoutAsync(auth);
         }
         catch (Exception ex)
@@ -303,7 +308,6 @@
 
     private bool _drawerOpen = true;
     private bool _isDarkMode = false;
-    private MudTheme? _theme = null;
 
     private bool popoverOpen = false;
 

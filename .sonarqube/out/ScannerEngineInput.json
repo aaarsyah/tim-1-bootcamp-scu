@@ -10,7 +10,7 @@
     },
     {
       "key": "sonar.scanner.bootstrapStartTime",
-      "value": "1762697107000"
+      "value": "1762728595000"
     },
     {
       "key": "sonar.projectKey",
@@ -38,47 +38,7 @@
     },
     {
       "key": "sonar.modules",
-      "value": "B684BEA8-11FE-4F3C-8912-F082AABAC469,524BBC9A-0FEB-4559-904A-6391BCC9AE62,1134FE39-E03B-41EA-89FA-4A742F1E5446,0B512082-4CFC-F6AF-0703-58D87CF343E8,EEE0655B-C2B1-4E5B-935A-6DEDBBCEEC1C,7635DE55-D2D4-493B-B7F8-F7501FF14612,D6812387-A018-432C-ADC5-939E513E4314,D72A34BA-C90B-1B7B-22D0-A825B09E3C91,DB26106C-AAA8-463F-8430-2971998B003E"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectKey",
-      "value": "BootcampProject:B684BEA8-11FE-4F3C-8912-F082AABAC469"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectName",
-      "value": "MyApp.Base"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectBaseDir",
-      "value": "D:\\BootcampProject\\src\\01.Base"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.working.directory",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\.sonar\\mod0"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.sourceEncoding",
-      "value": "utf-8"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.tests",
-      "value": ""
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.sources",
-      "value": "D:\\BootcampProject\\src\\01.Base\\Entity.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\AuthenticationException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\BaseApiException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\NotFoundException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\PermissionException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\ValidationException.cs,D:\\BootcampProject\\src\\01.Base\\obj\\MyApp.Base.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\01.Base\\obj\\project.assets.json,D:\\BootcampProject\\src\\01.Base\\bin\\Release\\net9.0\\MyApp.Base.deps.json,D:\\BootcampProject\\src\\01.Base\\obj\\Release\\net9.0\\MyApp.Base.sourcelink.json"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.analyzer.projectOutPaths",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\0"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.roslyn.reportFilePaths",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\0\\Issues.json"
-    },
-    {
-      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.scanner.telemetry",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\0\\Telemetry.json"
+      "value": "524BBC9A-0FEB-4559-904A-6391BCC9AE62,B684BEA8-11FE-4F3C-8912-F082AABAC469,1134FE39-E03B-41EA-89FA-4A742F1E5446,0B512082-4CFC-F6AF-0703-58D87CF343E8,EEE0655B-C2B1-4E5B-935A-6DEDBBCEEC1C,7635DE55-D2D4-493B-B7F8-F7501FF14612,D6812387-A018-432C-ADC5-939E513E4314,D72A34BA-C90B-1B7B-22D0-A825B09E3C91,DB26106C-AAA8-463F-8430-2971998B003E"
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.projectKey",
@@ -94,7 +54,7 @@
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.working.directory",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\.sonar\\mod1"
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\.sonar\\mod0"
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.sourceEncoding",
@@ -106,19 +66,59 @@
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.sources",
-      "value": "D:\\BootcampProject\\src\\03.Shared\\obj\\MyApp.Shared.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\03.Shared\\obj\\project.assets.json,D:\\BootcampProject\\src\\03.Shared\\bin\\Release\\net9.0\\MyApp.Shared.deps.json,D:\\BootcampProject\\src\\03.Shared\\obj\\Release\\net9.0\\MyApp.Shared.sourcelink.json,D:\\BootcampProject\\src\\03.Shared\\ApiResponse.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\AuthenticationDTOs.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CategoryDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CheckoutDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CourseDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\InvoiceDetailDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\InvoiceDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\MyClassDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\PaymentMethodDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\ScheduleDto.cs,D:\\BootcampProject\\src\\03.Shared\\ErrorResponse.cs"
+      "value": "D:\\BootcampProject\\src\\03.Shared\\ApiResponse.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\AuthenticationDTOs.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CategoryDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CheckoutDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\CourseDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\InvoiceDetailDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\InvoiceDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\MyClassDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\PaymentMethodDto.cs,D:\\BootcampProject\\src\\03.Shared\\DTOs\\ScheduleDto.cs,D:\\BootcampProject\\src\\03.Shared\\ErrorResponse.cs,D:\\BootcampProject\\src\\03.Shared\\obj\\MyApp.Shared.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\03.Shared\\obj\\project.assets.json,D:\\BootcampProject\\src\\03.Shared\\bin\\Release\\net9.0\\MyApp.Shared.deps.json,D:\\BootcampProject\\src\\03.Shared\\obj\\Release\\net9.0\\MyApp.Shared.sourcelink.json"
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.cs.analyzer.projectOutPaths",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\1"
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\0"
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.cs.roslyn.reportFilePaths",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\1\\Issues.json"
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\0\\Issues.json"
     },
     {
       "key": "524BBC9A-0FEB-4559-904A-6391BCC9AE62.sonar.cs.scanner.telemetry",
-      "value": "D:\\BootcampProject\\.sonarqube\\out\\1\\Telemetry.json"
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\0\\Telemetry.json"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectKey",
+      "value": "BootcampProject:B684BEA8-11FE-4F3C-8912-F082AABAC469"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectName",
+      "value": "MyApp.Base"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.projectBaseDir",
+      "value": "D:\\BootcampProject\\src\\01.Base"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.working.directory",
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\.sonar\\mod1"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.sourceEncoding",
+      "value": "utf-8"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.tests",
+      "value": ""
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.sources",
+      "value": "D:\\BootcampProject\\src\\01.Base\\obj\\MyApp.Base.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\01.Base\\obj\\project.assets.json,D:\\BootcampProject\\src\\01.Base\\bin\\Release\\net9.0\\MyApp.Base.deps.json,D:\\BootcampProject\\src\\01.Base\\obj\\Release\\net9.0\\MyApp.Base.sourcelink.json,D:\\BootcampProject\\src\\01.Base\\Entity.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\AuthenticationException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\BaseApiException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\NotFoundException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\PermissionException.cs,D:\\BootcampProject\\src\\01.Base\\Exceptions\\ValidationException.cs"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.analyzer.projectOutPaths",
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\2"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.roslyn.reportFilePaths",
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\2\\Issues.json"
+    },
+    {
+      "key": "B684BEA8-11FE-4F3C-8912-F082AABAC469.sonar.cs.scanner.telemetry",
+      "value": "D:\\BootcampProject\\.sonarqube\\out\\2\\Telemetry.json"
     },
     {
       "key": "1134FE39-E03B-41EA-89FA-4A742F1E5446.sonar.projectKey",
@@ -386,7 +386,7 @@
     },
     {
       "key": "DB26106C-AAA8-463F-8430-2971998B003E.sonar.tests",
-      "value": "D:\\BootcampProject\\src\\06.WebAPI\\appsettings.Development.json,D:\\BootcampProject\\src\\06.WebAPI\\appsettings.json,D:\\BootcampProject\\src\\06.WebAPI\\dab-options.json,D:\\BootcampProject\\src\\06.WebAPI\\Dockerfile,D:\\BootcampProject\\src\\06.WebAPI\\obj\\MyApp.WebAPI.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\project.assets.json,D:\\BootcampProject\\src\\06.WebAPI\\Properties\\launchSettings.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\appsettings.Development.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\appsettings.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\dab-options.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.deps.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.runtimeconfig.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.staticwebassets.endpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.staticwebassets.runtime.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\ApiEndpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\rpswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.sourcelink.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjimswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjsmcshtml.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjsmrazor.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rpswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.build.endpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.build.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.development.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\EndpointInfo\\MyApp.WebAPI.json,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\AuthController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CartItemController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CategoryController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CourseController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\InvoiceController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\InvoiceDetailController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\MyClassController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\PaymentController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\ScheduleController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\UserManagementController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Extensions\\DatabaseExtensions.cs,D:\\BootcampProject\\src\\06.WebAPI\\Extensions\\ServiceCollectionExtensions.cs,D:\\BootcampProject\\src\\06.WebAPI\\Middleware\\CorrelationIdMiddleware.cs,D:\\BootcampProject\\src\\06.WebAPI\\Middleware\\GlobalExceptionHandlingMiddleware.cs,D:\\BootcampProject\\src\\06.WebAPI\\Program.cs,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.GlobalUsings.g.cs,\"D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs\",D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.AssemblyInfo.cs,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.MvcApplicationPartsAssemblyInfo.cs,D:\\BootcampProject\\src\\06.WebAPI\\dab-build.cmd,D:\\BootcampProject\\src\\06.WebAPI\\logs\\app-20251109.log,D:\\BootcampProject\\src\\06.WebAPI\\dab-options.json.user"
+      "value": "D:\\BootcampProject\\src\\06.WebAPI\\appsettings.Development.json,D:\\BootcampProject\\src\\06.WebAPI\\appsettings.json,D:\\BootcampProject\\src\\06.WebAPI\\dab-options.json,D:\\BootcampProject\\src\\06.WebAPI\\Dockerfile,D:\\BootcampProject\\src\\06.WebAPI\\obj\\MyApp.WebAPI.csproj.nuget.dgspec.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\project.assets.json,D:\\BootcampProject\\src\\06.WebAPI\\Properties\\launchSettings.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\appsettings.Development.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\appsettings.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\dab-options.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.deps.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.runtimeconfig.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.staticwebassets.endpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\bin\\Release\\net9.0\\MyApp.WebAPI.staticwebassets.runtime.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\ApiEndpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\rpswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.sourcelink.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjimswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjsmcshtml.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rjsmrazor.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\rpswa.dswa.cache.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.build.endpoints.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.build.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\staticwebassets.development.json,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Debug\\net9.0\\EndpointInfo\\MyApp.WebAPI.json,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\AuthController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CartItemController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CategoryController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\CourseController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\InvoiceController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\InvoiceDetailController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\MyClassController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\PaymentController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\ScheduleController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Controllers\\UserManagementController.cs,D:\\BootcampProject\\src\\06.WebAPI\\Extensions\\DatabaseExtensions.cs,D:\\BootcampProject\\src\\06.WebAPI\\Extensions\\ServiceCollectionExtensions.cs,D:\\BootcampProject\\src\\06.WebAPI\\Middleware\\CorrelationIdMiddleware.cs,D:\\BootcampProject\\src\\06.WebAPI\\Middleware\\GlobalExceptionHandlingMiddleware.cs,D:\\BootcampProject\\src\\06.WebAPI\\Program.cs,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.GlobalUsings.g.cs,\"D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\.NETCoreApp,Version=v9.0.AssemblyAttributes.cs\",D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.AssemblyInfo.cs,D:\\BootcampProject\\src\\06.WebAPI\\obj\\Release\\net9.0\\MyApp.WebAPI.MvcApplicationPartsAssemblyInfo.cs,D:\\BootcampProject\\src\\06.WebAPI\\dab-build.cmd,D:\\BootcampProject\\src\\06.WebAPI\\logs\\app-20251109.log,D:\\BootcampProject\\src\\06.WebAPI\\logs\\app-20251110.log,D:\\BootcampProject\\src\\06.WebAPI\\dab-options.json.user"
     },
     {
       "key": "DB26106C-AAA8-463F-8430-2971998B003E.sonar.cs.analyzer.projectOutPaths",

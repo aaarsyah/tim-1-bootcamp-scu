@@ -88,35 +88,35 @@ namespace MyApp.Infrastructure.Data
                     .IsRequired()
                     .HasMaxLength(150);
                 entity.Property(e => e.Description)
-                        .HasMaxLength(MAX_DESCRIPTION_LENGTH);
+                    .HasMaxLength(MAX_DESCRIPTION_LENGTH);
                 entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(MAX_URL_LENGTH);
+                    .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.Price)
-                        .IsRequired()
-                        .HasColumnType("bigint"); // tipe data di SQL server, setara dengan tipe data long
+                    .IsRequired()
+                    .HasColumnType("bigint"); // tipe data di SQL server, setara dengan tipe data long
                 entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit") // tipe data di SQL server, setara dengan tipe data bool
-                        .HasDefaultValue(true);
+                    .IsRequired()
+                    .HasColumnType("bit") // tipe data di SQL server, setara dengan tipe data bool
+                    .HasDefaultValue(true);
                 entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 // Relationship dengan Category
                 entity.HasOne(e => e.Category)
-                        .WithMany(e => e.Courses)
-                        .HasForeignKey(e => e.CategoryId)
-                        .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
+                    .WithMany(e => e.Courses)
+                    .HasForeignKey(e => e.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict); // Larang penghapusan Category bila ada Courses yang terhubung
                 // Relationship dengan Schedule
                 entity.HasMany(e => e.Schedules)
-                        .WithOne(e => e.Course)
-                        .HasForeignKey(e => e.CourseId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
+                    .WithOne(e => e.Course)
+                    .HasForeignKey(e => e.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Schedule yang terhubung bila Courses dihapus
                 // Constraint
                 entity.ToTable(e => e.HasCheckConstraint(
-                        "CK_Price", "[Price] >= 0"));
+                    "CK_Price", "[Price] >= 0"));
             });
         }
 
@@ -136,25 +136,25 @@ namespace MyApp.Infrastructure.Data
                     .IsRequired();
                 // Properties
                 entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    .IsRequired()
+                    .HasMaxLength(20);
                 entity.Property(e => e.LongName)
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    .IsRequired()
+                    .HasMaxLength(50);
                 entity.Property(e => e.Description)
-                        .HasMaxLength(MAX_DESCRIPTION_LENGTH);
+                    .HasMaxLength(MAX_DESCRIPTION_LENGTH);
                 entity.Property(e => e.ImageUrl)
-                        .HasMaxLength(MAX_URL_LENGTH);
+                    .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    .IsRequired()
+                    .HasColumnType("bit")
+                    .HasDefaultValue(true);
                 entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Courses lagi
             });
         }
@@ -175,8 +175,8 @@ namespace MyApp.Infrastructure.Data
                     .IsRequired();
                 // Properties
                 entity.Property(e => e.Date)
-                        .IsRequired()
-                        .HasDefaultValueSql("CONVERT (DATE, GETUTCDATE())");
+                    .IsRequired()
+                    .HasDefaultValueSql("CONVERT (DATE, GETUTCDATE())");
                 // Tak usah configure relationship sama Courses lagi
             });
         }
@@ -204,61 +204,61 @@ namespace MyApp.Infrastructure.Data
                 entity.Property(e => e.UpdatedAt);
                 // Properties
                 entity.Property(e => e.IsActive)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    .IsRequired()
+                    .HasColumnType("bit")
+                    .HasDefaultValue(false);
                 entity.Property(e => e.RefreshToken)
-                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                    .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.RefreshTokenExpiry)
-                        .IsRequired();
+                    .IsRequired();
                 entity.Property(e => e.EmailConfirmationToken)
-                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                    .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.EmailConfirmationTokenExpiry)
-                        .IsRequired();
+                    .IsRequired();
                 entity.Property(e => e.PasswordResetToken)
-                        .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
+                    .HasMaxLength(100); // 64 bytes * 8 / 6 = 85.33 characters long in Base64
                 entity.Property(e => e.PasswordResetTokenExpiry)
-                        .IsRequired();
+                    .IsRequired();
                 entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(MAX_USERNAME_LENGTH);
+                    .IsRequired()
+                    .HasMaxLength(MAX_USERNAME_LENGTH);
                 entity.Property(e => e.Email)
-                        .IsRequired()
-                        .HasMaxLength(MAX_EMAIL_LENGTH);
+                    .IsRequired()
+                    .HasMaxLength(MAX_EMAIL_LENGTH);
                 entity.Property(e => e.PasswordHash)
-                        .IsRequired()
-                        .HasMaxLength(256); // berapa panjangnya ya?
+                    .IsRequired()
+                    .HasMaxLength(256); // berapa panjangnya ya?
                 entity.Property(e => e.EmailConfirmed)
-                        .IsRequired()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    .IsRequired()
+                    .HasColumnType("bit")
+                    .HasDefaultValue(false);
                 entity.Property(e => e.FailedLoginAttempts)
-                        .IsRequired()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                    .IsRequired()
+                    .HasColumnType("integer")
+                    .HasDefaultValue(0);
                 entity.Property(e => e.LockoutEnd)
-                        .HasDefaultValueSql(null);
+                    .HasDefaultValueSql(null);
                 entity.Property(e => e.LastLoginAt)
-                        .HasDefaultValueSql(null);
+                    .HasDefaultValueSql(null);
 
                 // Relationship dengan ItemCart
                 entity.HasMany<CartItem>()
-                        .WithOne(e => e.User)
-                        .HasForeignKey(e => e.UserId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
+                    .WithOne(e => e.User)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila User dihapus
                 // Relationship dengan Participant
                 entity.HasMany<MyClass>()
-                        .WithOne(e => e.User)
-                        .HasForeignKey(e => e.UserId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
+                    .WithOne(e => e.User)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila User dihapus
                 // Relationship dengan Invoice
                 entity.HasMany<Invoice>()
-                        .WithOne(e => e.User)
-                        .HasForeignKey(e => e.UserId)
-                        .OnDelete(DeleteBehavior.SetNull); // Putuskan semua Invoice yang terhubung bila User dihapus
+                    .WithOne(e => e.User)
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.SetNull); // Putuskan semua Invoice yang terhubung bila User dihapus
                 // Constraint
                 entity.ToTable(e => e.HasCheckConstraint(
-                        "CK_Email", "[Email] LIKE '%@%.%'"));
+                    "CK_Email", "[Email] LIKE '%@%.%'"));
             });
 
             
@@ -375,9 +375,9 @@ namespace MyApp.Infrastructure.Data
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan Schedule
                 entity.HasOne(e => e.Schedule)
-                        .WithMany()
-                        .HasForeignKey(e => e.ScheduleId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila Schedule dihapus
+                    .WithMany()
+                    .HasForeignKey(e => e.ScheduleId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua CartItem yang terhubung bila Schedule dihapus
             });
         }
         /// <summary>
@@ -398,9 +398,9 @@ namespace MyApp.Infrastructure.Data
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan Schedule
                 entity.HasOne(e => e.Schedule)
-                        .WithMany()
-                        .HasForeignKey(e => e.ScheduleId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
+                    .WithMany()
+                    .HasForeignKey(e => e.ScheduleId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua Participant yang terhubung bila Schedule dihapus
             });
         }
         /// <summary>
@@ -422,22 +422,22 @@ namespace MyApp.Infrastructure.Data
                     .IsUnique();
                 // Properties
                 entity.Property(e => e.RefCode)
-                        .IsRequired()
-                        .HasMaxLength(32);
+                    .IsRequired()
+                    .HasMaxLength(32);
                 entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama User lagi
                 // Relationship dengan PaymentMethod
                 entity.HasOne(e => e.PaymentMethod)
-                        .WithMany()
-                        .HasForeignKey(e => e.PaymentMethodId)
-                        .OnDelete(DeleteBehavior.SetNull); // Putuskan semua InvoiceDetails yang terhubung bila Invoice dihapus
+                    .WithMany()
+                    .HasForeignKey(e => e.PaymentMethodId)
+                    .OnDelete(DeleteBehavior.SetNull); // Putuskan semua InvoiceDetails yang terhubung bila Invoice dihapus
                 // Relationship dengan InvoiceDetails
                  entity.HasMany(e => e.InvoiceDetails)
-                        .WithOne()
-                        .HasForeignKey(e => e.InvoiceId)
-                        .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
+                    .WithOne()
+                    .HasForeignKey(e => e.InvoiceId)
+                    .OnDelete(DeleteBehavior.Cascade); // Hapus juga semua InvoiceDetails yang terhubung bila Invoice dihapus
             });
         }
         /// <summary>
@@ -483,16 +483,16 @@ namespace MyApp.Infrastructure.Data
                     .IsRequired();
                 // Properties
                 entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    .IsRequired()
+                    .HasMaxLength(20);
                 entity.Property(e => e.LogoUrl)
-                        .HasMaxLength(MAX_URL_LENGTH);
+                    .HasMaxLength(MAX_URL_LENGTH);
                 entity.Property(e => e.CreatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(e => e.UpdatedAt)
-                        .IsRequired()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    .IsRequired()
+                    .HasDefaultValueSql("GETUTCDATE()");
                 // Tak usah configure relationship sama Invoice lagi
             });
         }
@@ -1360,8 +1360,7 @@ namespace MyApp.Infrastructure.Data
                 // Update timestamp saat entity di-modify
                 entry.Entity.UpdatedAt = DateTime.UtcNow;
 
-                // Optional: Log changes untuk debugging atau audit purposes
-                // LogEntityChanges(entry);
+                // Optional: Log entity changes untuk debugging atau audit purposes
             }
 
             // ========== AUDIT TRAIL UNTUK CATEGORIES ==========
@@ -1377,10 +1376,8 @@ namespace MyApp.Infrastructure.Data
             // ========== ADDITIONAL BUSINESS LOGIC ==========
 
             // Contoh: Validate business rules sebelum save
-            // ValidateBusinessRules();
 
             // Contoh: Handle soft deletes
-            // HandleSoftDeletes();
 
             // Call base SaveChangesAsync untuk actually persist changes ke database
             return await base.SaveChangesAsync(cancellationToken);

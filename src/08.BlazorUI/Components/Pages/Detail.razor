@@ -108,7 +108,7 @@
 
 @code {
     [Parameter]
-    public string CourseRefIdS { get; set; } = null!;
+    public string CourseRefIdS { get; set; } = string.Empty;
 
     private Guid CourseRefId { get; set; }
 
@@ -119,7 +119,7 @@
 
     protected override void OnInitialized()
     {
-        if(!Guid.TryParse(CourseRefIdS, out Guid guid))
+        if (string.IsNullOrEmpty(CourseRefIdS) || !Guid.TryParse(CourseRefIdS, out Guid guid))
         {
             // Invalid Guid, redirect to home
             Navigation.GoToHome();

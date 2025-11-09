@@ -72,7 +72,7 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ApiResponse<CategoryDto>>> CreateCategory(CreateCategoryRequestDto createCategoryDto)
     {
-        var command = new CreateCategoryCommand { createCategoryDto = createCategoryDto };
+        var command = new CreateCategoryCommand { CreateCategoryDto = createCategoryDto };
         var result = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetCategory), new { result.Data?.RefId }, result);
 
@@ -92,7 +92,7 @@ public class CategoryController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse<>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<CategoryDto>>> UpdateCategory(Guid refId, UpdateCategoryRequestDto updateCategoryDto)
     {
-        var command = new UpdateCategoryCommand { RefId = refId, updateCategoryDto = updateCategoryDto };
+        var command = new UpdateCategoryCommand { RefId = refId, UpdateCategoryDto = updateCategoryDto };
         var result = await _mediator.Send(command);
         return Ok(result);
     }

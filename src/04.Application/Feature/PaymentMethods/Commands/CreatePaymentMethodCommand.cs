@@ -9,7 +9,7 @@ namespace MyApp.Application.Feature.PaymentMethods.Commands;
 
 public class CreatePaymentMethodCommand : IRequest<ApiResponse<PaymentMethodDto>>
 {
-    public CreatePaymentMethodRequestDto createPaymentMethodDto { get; set; } = null!;
+    public required CreatePaymentMethodRequestDto createPaymentMethodDto { get; set; }
 }
 public class CreatePaymentMethodCommandHandler : IRequestHandler<CreatePaymentMethodCommand, ApiResponse<PaymentMethodDto>>
 {

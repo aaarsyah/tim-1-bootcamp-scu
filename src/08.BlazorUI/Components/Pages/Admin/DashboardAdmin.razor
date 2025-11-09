@@ -105,7 +105,7 @@
     private int _totalPayment = 0;
     private int _totalInvoice = 0;
     private string searchString = "";
-    private InvoiceDto selectedInvoice = null;
+    private InvoiceDto selectedInvoice = null!;
     private IEnumerable<InvoiceDto> invoices = new List<InvoiceDto>();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

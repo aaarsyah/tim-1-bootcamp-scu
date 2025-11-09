@@ -12,7 +12,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class RegisterCommand : IRequest<ApiResponse<object>>
 {
-    public RegisterRequestDto RegisterDto { get; set; }
+    public required RegisterRequestDto RegisterDto { get; set; }
 }
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiResponse<object>>
 {
@@ -77,15 +77,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiRespon
                     await _unitOfWork.UserManager.AddRoleToUserAsync(user, userRole);
                 }
 
-                //// Add default claims
-                //var userClaim = new UserClaim
-                //{
-                //    UserId = user.Id,
-                //    ClaimType = "can_view_profile",
-                //    ClaimValue = "true",
-                //    CreatedAt = DateTime.UtcNow,
-                //    UpdatedAt = DateTime.UtcNow
-                //}; // TODO: Belum tahu claim mau diapakan
+                // TODO: Tambahkan claim bila perlu 
 
                 // Save user role dan claims
                 

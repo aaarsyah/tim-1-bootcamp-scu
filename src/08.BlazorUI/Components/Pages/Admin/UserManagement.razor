@@ -68,11 +68,7 @@
     private IEnumerable<RoleDto> roles = new List<RoleDto>();
     private bool hover = true;
     private string searchString1 = "";
-    private UserDto selectedItem1 = null;
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    // }
+    private UserDto selectedItem1 = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

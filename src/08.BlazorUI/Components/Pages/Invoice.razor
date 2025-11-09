@@ -75,7 +75,7 @@
 </MudContainer>
 
 @code {
-    private MudTable<InvoiceDto> mudTable;
+    private MudTable<InvoiceDto> mudTable = null!;
     private int selectedRowNumber = -1;
     private bool isLoading = true;
     private List<InvoiceDto> Elements = new();

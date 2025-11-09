@@ -79,19 +79,19 @@
 
 @code {
     [Parameter]
-    public string InvoiceRefIdS { get; set; }
+    public string InvoiceRefIdS { get; set; } = string.Empty;
 
     private Guid InvoiceRefId { get; set; }
 
     private bool isLoading = true;
-    private MudTable<InvoiceDetailDto> mudTable;
+    private MudTable<InvoiceDetailDto> mudTable = null!;
     private int selectedRowNumber = -1;
     private List<InvoiceDetailDto> Elements = new();
     private InvoiceDto Invoice = new();
 
     protected override void OnInitialized()
     {
-        if (!Guid.TryParse(InvoiceRefIdS, out Guid guid))
+        if (string.IsNullOrEmpty(InvoiceRefIdS) || !Guid.TryParse(InvoiceRefIdS, out Guid guid))
         {
             // Invalid Guid, redirect to home
             Navigation.GoToHome();

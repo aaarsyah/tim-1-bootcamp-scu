@@ -17,11 +17,6 @@ public class PermissionException : BaseApiException
         : base(403, "DENIED", message, details) // StatusCodes.Status403Forbidden
     {
     }
-    // Apa ya kegunaan innerException?
-    //public PermissionException(string message, Exception innerException, object? details = null)
-    //    : base(403, "DENIED", message, innerException, details)
-    //{
-    //}
 }
 public class AccountLockedException : BaseApiException
 {

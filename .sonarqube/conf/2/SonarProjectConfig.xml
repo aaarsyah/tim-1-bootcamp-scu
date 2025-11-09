@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SonarProjectConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/analyzer/2021/1">
   <AnalysisConfigPath>D:\BootcampProject\.sonarqube\conf\SonarQubeAnalysisConfig.xml</AnalysisConfigPath>
-  <ProjectPath>D:\BootcampProject\src\07.Client\MyApp.Client.csproj</ProjectPath>
+  <ProjectPath>D:\BootcampProject\src\01.Base\MyApp.Base.csproj</ProjectPath>
   <FilesToAnalyzePath>D:\BootcampProject\.sonarqube\conf\2\FilesToAnalyze.txt</FilesToAnalyzePath>
   <OutPath>D:\BootcampProject\.sonarqube\out\2</OutPath>
   <ProjectType>Product</ProjectType>

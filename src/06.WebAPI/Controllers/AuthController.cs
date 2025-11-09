@@ -128,7 +128,7 @@ public class AuthController : ControllerBase
         {
             throw new TokenInvalidException();
         }
-        var command = new ChangePasswordCommand { UserRefId = userRefId };
+        var command = new ChangePasswordCommand { UserRefId = userRefId, ChangePasswordDto = request };
         var result = await _mediator.Send(command);
         return Ok(result);
     }

@@ -1,13 +1,24 @@
-i
-@D:\BootcampProject\src\01.Base\Exceptions\ValidationException.cs 8jr	
-s
-@D:\BootcampProject\src\01.Base\Exceptions\PermissionException.cs 8j$r	
- !"#$%&'h
->D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.cs 8jr	
-ê
-=D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.cs 8j'	
- !$%&'(+,-6789r")./01234:;<=>?@AÇ123=>?k
-DD:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.cs 8jr	
-X
-(D:\BootcampProject\src\01.Base\Entity.cs 8j	
-r Ç
+ñ
+1D:\BootcampProject\src\03.Shared\ErrorResponse.cs 8j;	
+ !"%&'(+,-./234569:;FGHJLNOPQRUXYZ[]^_`r#)07<=>?@ABCDVWabÇ)0>@T
+4D:\BootcampProject\src\03.Shared\DTOs\ScheduleDto.cs 8r	ÇW
+3D:\BootcampProject\src\03.Shared\DTOs\InvoiceDto.cs 8j		
+r
+ÇX
+3D:\BootcampProject\src\03.Shared\DTOs\MyClassDto.cs 8r
+ Çb
+9D:\BootcampProject\src\03.Shared\DTOs\PaymentMethodDto.cs 8r
+Ç^
+9D:\BootcampProject\src\03.Shared\DTOs\InvoiceDetailDto.cs 8j	
+rÇØ
+2D:\BootcampProject\src\03.Shared\DTOs\CourseDto.cs .8.jC	
+ #$%()*./05:;<?@ADEFIJKOPQTUVZ[\_`adefijkopqtuvyz{r!!&+1368=>BGLRSWX]^bglrw|}Ç
+1BGRbgrÄ
+4D:\BootcampProject\src\03.Shared\DTOs\CheckoutDto.cs 8j	
+ !"+,-012567:;<ABCr#%'()*.38=?DFÇ38Dm
+4D:\BootcampProject\src\03.Shared\DTOs\CategoryDto.cs "8"jr	 !"#Ç !÷
+;D:\BootcampProject\src\03.Shared\DTOs\AuthenticationDTOs.cs L8Lj#"+2347>?@JNOPXYZabcjkltuvrM	
+ #$%&'(),-./05689:;<ABCDEFGHIJKLQRSTUV[\]^_defghmnopqrwxyz{Ç
+%&'(./89:DETU]^fgopqzï
+/D:\BootcampProject\src\03.Shared\ApiResponse.cs '8)jn
+&'(+,-.123567:;<?@ADEFIJKNOPSTUklmpqruvwz{|ÉÑÖâçéèíìîóòôúùû°¢£¶ß®´¨≠rY	 !"#$%)/048=BGLQVWXYZ[\^_`abcdefghinosx}~ÄÅÜáàâäãêëïöü§©ÆØxÇ!\^Äàâ

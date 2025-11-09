@@ -3,29 +3,29 @@ FD:\BootcampProject\src\04.Application\Validators\CategoryValidators.cs
  
 8
 jP"#$34589:QRSVWXorstÄÅÇÖÜáìñóò£§•®©™µ∏π∫≈∆« ÀÃr∑	
- !%&'()+,./0167;<=>?ABCEFGIJLMNOTUYZ[\]_`acdeghjklmpquvwxy{|}~ÉÑàâäãåéèêëîïôöõúûü†°¶ß´¨≠Æ∞±≤≥∂∑ªºΩæ¿¡¬√»…ÕŒœ–“”‘’◊Ç&'+.=AEIL[_cgjw{äéõû≠∞Ω¿œ“‚
-BD:\BootcampProject\src\04.Application\Validators\AuthValidators.cs 8j	OTUsxyrq	
- !#$%&'()*+,-/0123456789;<=>?@ABCDFGHIJKLMNPQRSVWXYZ[]^_`abcdeghijklmnopqrtuvwz{|}~ÄÇ
-'*36?AJLWYaknp{}Ú
->D:\BootcampProject\src\04.Application\Services\TokenService.cs$ 8j:&'()4:FGHIRlmnoçéèêïñöûü£§•¨≠ÆØr§	
- !"#$*+,-./015789:;<=>?@BCDJKLMNOPQRSTUWYZ[]^_`acdefghijpqrstuwxyz{|}~ÄÅÉÑÖÜáàâäãëíìîóòôöõú†°¶ß©™∞±≤≥¥µ∂∑π∫ªºΩxÇB"#-/15:;<?BCNOPQST[]^`cghu{|}~ÄÉÑàâóòôöõ†°¶ß©≤∂ªå
+ !%&'()+,./0167;<=>?ABCEFGIJLMNOTUYZ[\]_`acdeghjklmpquvwxy{|}~ÉÑàâäãåéèêëîïôöõúûü†°¶ß´¨≠Æ∞±≤≥∂∑ªºΩæ¿¡¬√»…ÕŒœ–“”‘’◊Ç&'+.=AEIL[_cgjw{äéõû≠∞Ω¿œ“á
+XD:\BootcampProject\src\04.Application\Feature\UserManagement\Queries\GetAllUsersQuery.cs 8jr	
+ÇÏ
+>D:\BootcampProject\src\04.Application\Services\TokenService.cs$ 8j4&'()4:FGHIRlmnoçéèêïñöû¢©™´¨r§	
+ !"#$*+,-./015789:;<=>?@BCDJKLMNOPQRSTUWYZ[]^_`acdefghijpqrstuwxyz{|}~ÄÅÉÑÖÜáàâäãëíìîóòôöõúü†£§¶ß≠ÆØ∞±≤≥¥∂∑∏π∫xÇB"#-/15:;<?BCNOPQST[]^`cghu{|}~ÄÉÑàâóòôöõü†£§¶Ø≥∏Ü
 AD:\BootcampProject\src\04.Application\Services\PasswordService.cs 8
-j
- #%&'(+,-.0r	
-!+,-.123xÇ
-!+,-.1a
+j
+ #$%&r	
+!#$%&()*xÇ
+!#$%&(a
 ID:\BootcampProject\src\04.Application\Services\Interface\ITokenService.csj	r
 Y
 LD:\BootcampProject\src\04.Application\Services\Interface\IPasswordService.csrV
-ID:\BootcampProject\src\04.Application\Services\Interface\IEmailService.csr¬
->D:\BootcampProject\src\04.Application\Services\EmailService.cs& 8j	*@ACFIr«
- !"#$&'()+,-./01345689:;<>ADGJLMNOPQRSUVWXYZ[\]^_`abcdefghijklmnoqrtuvwxyz{|}~ÄÅÇÉÑÖÜáàâäãåçéèëíîïñóòôöõúùûü†°¢£§•¶ß®©™´¨≠ÆØ∞±xÇ !"#+-./0456<ADGJLPQqëØ»
+ID:\BootcampProject\src\04.Application\Services\Interface\IEmailService.csræ
+>D:\BootcampProject\src\04.Application\Services\EmailService.cs& 8j	)?@BEHr∆
+ !"#%&'(*+,-./02345789:;=@CFIKLMNOPQRTUVWXYZ[\]^_`abcdefghijklmnpqstuvwxyz{|}~ÄÅÇÉÑÖÜáàâäãåçéêëìîïñóòôöõúùûü†°¢£§•¶ß®©™´¨≠ÆØ∞xÇ !"*,-./345;@CFIKOPpêÆ»
 @D:\BootcampProject\src\04.Application\Mappings\MappingProfile.cs 8j	"'/9?BLr9
  #$%()*+,-01234567:;<=@CDEFGIJMNPQRSTxÇ- #$%()*+,-01234567:;<=@CDEFGIJMNPQî
 [D:\BootcampProject\src\04.Application\Feature\UserManagement\Queries\GetUserByRefIdQuery.cs 8jr	
- !"xÇ á
-XD:\BootcampProject\src\04.Application\Feature\UserManagement\Queries\GetAllUsersQuery.cs 8jr	
-Çá
+ !"xÇ ‚
+BD:\BootcampProject\src\04.Application\Validators\AuthValidators.cs 8j	OTUsxyrq	
+ !#$%&'()*+,-/0123456789;<=>?@ABCDFGHIJKLMNPQRSVWXYZ[]^_`abcdeghijklmnopqrtuvwz{|}~ÄÇ
+'*36?AJLWYaknp{}á
 XD:\BootcampProject\src\04.Application\Feature\UserManagement\Queries\GetAllRolesQuery.cs 8jr	
 Çú
 _D:\BootcampProject\src\04.Application\Feature\UserManagement\Commands\SetClaimForUserCommand.cs	 8	r#
@@ -41,9 +41,7 @@ cD:\BootcampProject\src\04.Application\Feature\UserManagement\Commands\RemoveCla
 ]D:\BootcampProject\src\04.Application\Feature\UserManagement\Commands\AddRoleToUserCommand.cs 8	r,
  !"#$&'()*+-/01xÇ "#&'(*-/ê
 ZD:\BootcampProject\src\04.Application\Feature\Schedules\Queries\GetScheduleByRefIdQuery.cs 8r	
- !"xÇ Ü
-WD:\BootcampProject\src\04.Application\Feature\Schedules\Queries\GetAllSchedulesQuery.cs 8jr	
-Çñ
+ !"xÇ ñ
 YD:\BootcampProject\src\04.Application\Feature\Schedules\Commands\DeleteScheduleCommand.cs	 8r"
  !#%&'xÇ
  !#%ë
@@ -62,6 +60,8 @@ cD:\BootcampProject\src\04.Application\Feature\PaymentMethods\Commands\CreatePay
  "#%&')*+./124579:;xÇ"#%&')*+.124579í
 YD:\BootcampProject\src\04.Application\Feature\MyClasses\Queries\GetMyClassByRefIdQuery.cs 8jr	
 !"#xÇ!Ü
+WD:\BootcampProject\src\04.Application\Feature\Schedules\Queries\GetAllSchedulesQuery.cs 8jr	
+ÇÜ
 WD:\BootcampProject\src\04.Application\Feature\MyClasses\Queries\GetAllMyClassesQuery.cs 8jr	
 Çò
 bD:\BootcampProject\src\04.Application\Feature\MyClasses\Queries\GetAllMyClassesByUserRefIdQuery.cs 8r	
@@ -116,17 +116,17 @@ j'.01r-
 ZD:\BootcampProject\src\04.Application\Feature\CartItems\Commands\AddCourseToCartCommand.cs 8
 j!*078r5	 "#$%&'()+,-./1234569;=>?xÇ"$&(+,.3469;=ƒ
 ^D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ResetPasswordCommand.cs 8j,159@r8
- !"#%&'()*-./02367:;<>ACEFGxÇ#%&()-.0267:;<>ACEÚ
-YD:\BootcampProject\src\04.Application\Feature\Authentications\Commands\RegisterCommand.cs 8j'269FHPQSTUVWXZ^delmprR	 !"#$%&()*+,./013457:;<=>?@ABCEFJKLMN\_`bfhijknopqrstxÇ !"#()+./037=>?BEFJKM\_`bfhnop
-VD:\BootcampProject\src\04.Application\Feature\Authentications\Commands\LoginCommand.cs" 8j+,7<CFHUWZ^rX
- !"#$%&'()-./012345689:;=>?@ADEGJKLMNPRSVX[\_`abceghijklmnopx	Ç$!"#$%)-.01358:=?@DGJLMPRVX[\_`abcelnõ
+ !"#%&'()*-./02367:;<>ACEFGxÇ#%&()-.0267:;<>ACEÎ
+YD:\BootcampProject\src\04.Application\Feature\Authentications\Commands\RegisterCommand.cs 8j'269FHPRV\]dehrR	 !"#$%&()*+,./013457:;<=>?@ABCEFJKLMNTWXZ^`abcfghijklxÇ !"#()+./037=>?BEFJKMTWXZ^`fgh€
+]D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\RefreshTokenCommand.cs 8j!.DHrL	 "#$%&()*+,/0123456789:;<=>?@ABCEFIJKMNOPQRSTUVxÇ"#%()+/02468:<>@BEFIJKRT¨
+]D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ConfirmEmailCommand.cs 8j"')r+	 !#$%&()*,./01xÇ #%()*,./õ
 WD:\BootcampProject\src\04.Application\Feature\Authentications\Commands\LogoutCommand.cs
  8j"r&
  !#$%'()*xÇ
- #$%'(ﬁ
-]D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\RefreshTokenCommand.cs 8j!.245IMrL	 "#$%&()*+,/01789:;<=>?@ABCDEFGHJKNOPRSTUVWXYZ[xÇ"#%()+/079;=?ACEGJKNOPWYπ
-_D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ForgotPasswordCommand.cs 8j&*.158r0	 !"$'()+,/01369;=>?xÇ"$')+/01369;=∞
-]D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ConfirmEmailCommand.cs 8j"#%&(-/r+	 !)*+,./024567xÇ )+./0245Ø
+ #$%'(
+VD:\BootcampProject\src\04.Application\Feature\Authentications\Commands\LoginCommand.cs# 8j	+6;BETVY]rY
+ !"#$%&'(),-./012345789:<=>?@CDFGIJKLMOQRUWZ[^_`abdfghijklmnox	Ç%!"#$%),-/02479<>?CFGIKLOQUWZ[^_`abdkmπ
+_D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ForgotPasswordCommand.cs 8j&*.158r0	 !"$'()+,/01369;=>?xÇ"$')+/01369;=Ø
 _D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ChangePasswordCommand.cs 8j'.r.
  !"#$%()*+,/02345xÇ!"$(*+/023k
 BD:\BootcampProject\src\04.Application\Configuration\JwtSettings.cs 8jr	

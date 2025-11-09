@@ -9,7 +9,7 @@ namespace MyApp.Application.Feature.Courses.Commands;
 
 public class CreateCourseCommand : IRequest<ApiResponse<CourseDto>>
 {
-    public CreateCourseRequestDto createCourseDto { get; set; } = null!;
+    public required CreateCourseRequestDto createCourseDto { get; set; }
 }
 public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, ApiResponse<CourseDto>>
 {

@@ -59,7 +59,7 @@
 
 @code {
     [Parameter]
-    public String CategoryRefIdS { get; set; }
+    public string CategoryRefIdS { get; set; } = string.Empty;
 
     private Guid CategoryRefId { get; set; }
 
@@ -74,7 +74,7 @@
 
     protected override void OnInitialized()
     {
-        if (!Guid.TryParse(CategoryRefIdS, out Guid guid))
+        if (string.IsNullOrEmpty(CategoryRefIdS) || !Guid.TryParse(CategoryRefIdS, out Guid guid))
         {
             // Invalid Guid, redirect to home
             Navigation.GoToHome();

@@ -32,20 +32,11 @@ public class PasswordService : IPasswordService
         // Minimum 8 characters, at least one uppercase, one lowercase, one number, and one special character
         if (password.Length < 8) return false;
 
-        //foreach (char c in password)
-        //{
-        //    if (char.IsUpper(c)) hasUpper = true;
-        //    else if (char.IsLower(c)) hasLower = true;
-        //    else if (char.IsDigit(c)) hasDigit = true;
-        //    else if (!char.IsLetterOrDigit(c)) hasSpecial = true;
-        //}
-
         if (!Regex.IsMatch(password, @"[A-Z]", RegexOptions.NonBacktracking)) return false; //hasUpper
         if (!Regex.IsMatch(password, @"[a-z]", RegexOptions.NonBacktracking)) return false; //hasLower
         if (!Regex.IsMatch(password, @"\d", RegexOptions.NonBacktracking)) return false; //hasDigit
         if (!Regex.IsMatch(password, @"[ -/:-@[-`{-~]", RegexOptions.NonBacktracking)) return false; //hasSpecial
 
-        //return hasUpper && hasLower && hasDigit && hasSpecial;
         return true;
     }
 }

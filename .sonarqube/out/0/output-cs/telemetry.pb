@@ -1,1 +1,1 @@
-FR0D:\BootcampProject\src\01.Base\MyApp.Base.csproj¢net9.0òCSharp13
+JR4D:\BootcampProject\src\03.Shared\MyApp.Shared.csproj¢net9.0òCSharp13

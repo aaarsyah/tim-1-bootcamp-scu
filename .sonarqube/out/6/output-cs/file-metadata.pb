@@ -10,9 +10,9 @@ HD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\ICourseService.csutf-8
 JD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\ICheckoutService.csutf-8O
 FD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAuthService.csutf-8P
 GD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAdminService.csutf-8D
-;D:\BootcampProject\src\08.BlazorUI\Services\ErrorService.csutf-8E
-<D:\BootcampProject\src\08.BlazorUI\Services\CourseService.csutf-8O
-FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.csutf-8G
+;D:\BootcampProject\src\08.BlazorUI\Services\ErrorService.csutf-8O
+FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.csutf-8E
+<D:\BootcampProject\src\08.BlazorUI\Services\CourseService.csutf-8G
 >D:\BootcampProject\src\08.BlazorUI\Services\CheckoutService.csutf-8C
 :D:\BootcampProject\src\08.BlazorUI\Services\AuthService.csutf-8D
 ;D:\BootcampProject\src\08.BlazorUI\Services\AdminService.csutf-86

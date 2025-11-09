@@ -1,6 +1,11 @@
-﻿D:\BootcampProject\src\01.Base\Entity.cs
-D:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.cs
-D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.cs
-D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.cs
-D:\BootcampProject\src\01.Base\Exceptions\PermissionException.cs
-D:\BootcampProject\src\01.Base\Exceptions\ValidationException.cs
+﻿D:\BootcampProject\src\03.Shared\ApiResponse.cs
+D:\BootcampProject\src\03.Shared\DTOs\AuthenticationDTOs.cs
+D:\BootcampProject\src\03.Shared\DTOs\CategoryDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\CheckoutDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\CourseDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\InvoiceDetailDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\InvoiceDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\MyClassDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\PaymentMethodDto.cs
+D:\BootcampProject\src\03.Shared\DTOs\ScheduleDto.cs
+D:\BootcampProject\src\03.Shared\ErrorResponse.cs

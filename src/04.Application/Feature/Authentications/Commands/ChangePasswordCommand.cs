@@ -12,7 +12,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 public class ChangePasswordCommand : IRequest<ApiResponse<object>>
 {
     public Guid UserRefId { get; set; }
-    public ChangePasswordRequestDto ChangePasswordDto { get; set; }
+    public required ChangePasswordRequestDto ChangePasswordDto { get; set; }
 }
 public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ApiResponse<object>>
 {
@@ -43,7 +43,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
             throw new ValidationException("Invalid password.");
         }
 
-        //var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+        // Ganti password baru (change password)
         user.PasswordHash = _passwordService.HashPassword(request.ChangePasswordDto.NewPassword);
         user.UpdatedAt = DateTime.UtcNow;
 

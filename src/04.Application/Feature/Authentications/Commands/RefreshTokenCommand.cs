@@ -12,7 +12,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class RefreshTokenCommand : IRequest<ApiResponse<AuthResponseDto>>
 {
-    public RefreshTokenRequestDto RefreshTokenDto { get; set; }
+    public required RefreshTokenRequestDto RefreshTokenDto { get; set; }
 }
 public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, ApiResponse<AuthResponseDto>>
 {
@@ -47,11 +47,6 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, A
         var user = await _unitOfWork.UserManager.GetUserByRefIdAsync(userRefId);
         if (user == null)
         {
-            //return new AuthResponseDto
-            //{
-            //    Success = false,
-            //    Message = "Invalid refresh token"
-            //};
             throw new ValidationException("User is invalid");
         }
         if (!user.EmailConfirmed)

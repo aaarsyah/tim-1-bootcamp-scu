@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.Categories.Commands;
 public class UpdateCategoryCommand : IRequest<ApiResponse<CategoryDto>>
 {
     public Guid RefId { get; set; }
-    public UpdateCategoryRequestDto updateCategoryDto { get; set; } = null!;
+    public required UpdateCategoryRequestDto UpdateCategoryDto { get; set; }
 }
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ApiResponse<CategoryDto>>
 {
@@ -32,7 +32,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
             throw new NotFoundException("Category RefId", request.RefId);
         }
 
-        _mapper.Map(request.updateCategoryDto, category);
+        _mapper.Map(request.UpdateCategoryDto, category);
         var updatedCategory = await _unitOfWork.Categories.UpdateAsync(category);
         await _unitOfWork.SaveChangesAsync();
 

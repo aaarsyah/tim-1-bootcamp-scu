@@ -156,13 +156,10 @@ public class TokenService : ITokenService
         };
 
         // Add roles ke claims
-        //var roles = await _userManager.GetRolesAsync(user);
         var roles = user.UserRoles.Select(e => e.Role).Select(e => e.Name).ToList();
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         // Add user custom claims
-        //var userClaims = await _userManager.GetClaimsAsync(user);
-        //var claims = await _userManager.GetClaimsAsync(user);
         var userClaims = user.UserClaims.Select(a => new Claim(a.ClaimType, a.ClaimValue)).ToList();
         claims.AddRange(userClaims);
 

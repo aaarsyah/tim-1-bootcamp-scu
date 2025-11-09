@@ -11,7 +11,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class LoginCommand : IRequest<ApiResponse<AuthResponseDto>>
 {
-    public LoginRequestDto LoginDto { get; set; }
+    public required LoginRequestDto LoginDto { get; set; }
 }
 public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<AuthResponseDto>>
 {
@@ -41,7 +41,6 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
         _logger.LogInformation("Login attempt for email: {Email}", request.LoginDto.Email);
 
         // Cari user berdasarkan email
-        //var user = await _userManager.FindByEmailAsync(request.Email);
         var user = await _unitOfWork.UserManager.GetUserByEmailAsync(request.LoginDto.Email);
         if (user == null)
         {
@@ -69,12 +68,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
         {
             // Increment failed attempts
             user.FailedLoginAttempts++;
-            //_logger.LogWarning("Login failed for email: {Email}. Reason: {Reason}", request.Email, result.ToString());
+            _logger.LogWarning("Login failed for email: {Email}. Reason: Invalid password", user.Email);
 
             if (user.FailedLoginAttempts >= MAX_FAILED_ATTEMPTS)
             {
                 user.LockoutEnd = DateTime.UtcNow.AddMinutes(LOCKOUT_TIME_MINUTES);
-                _logger.LogWarning($"Account locked for user: {user.Email}");
+                _logger.LogWarning("Account locked for user: {Email}", user.Email);
             }
 
             await _unitOfWork.SaveChangesAsync();
@@ -84,7 +83,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<Aut
 
         // Reset failed attempts on successful login
         user.FailedLoginAttempts = 0;
-        //user.LockoutEnd = null; // Tidak perlu reset LockoutEnd, karena lockout sudah expired ketika user sudah bisa login
+        // Tidak perlu reset LockoutEnd, karena lockout sudah expired ketika user sudah bisa login
         user.LastLoginAt = DateTime.UtcNow;
 
         // Generate JWT tokens

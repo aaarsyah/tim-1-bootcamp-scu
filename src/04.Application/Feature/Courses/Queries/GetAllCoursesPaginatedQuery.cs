@@ -7,7 +7,7 @@ namespace MyApp.Application.Feature.Courses.Queries;
 
 public class GetAllCoursesPaginatedQuery : IRequest<ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>
 {
-    public CourseQueryParameters Parameters;
+    public required CourseQueryParameters Parameters;
 }
 public class GetAllCoursesPaginatedQueryHandler : IRequestHandler<GetAllCoursesPaginatedQuery, ApiResponse<PaginatedResponse<IEnumerable<CourseDto>>>>
 {

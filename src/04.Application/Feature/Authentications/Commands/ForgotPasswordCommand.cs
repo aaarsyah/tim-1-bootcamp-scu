@@ -10,7 +10,7 @@ namespace MyApp.Application.Feature.Authentications.Commands;
 
 public class ForgotPasswordCommand : IRequest<ApiResponse<object>>
 {
-    public ForgotPasswordRequestDto ForgotPasswordDto { get; set; }
+    public required ForgotPasswordRequestDto ForgotPasswordDto { get; set; }
 }
 public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, ApiResponse<object>>
 {
