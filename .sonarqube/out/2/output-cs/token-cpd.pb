@@ -1,80 +1,5 @@
-å	
-UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\ValidationException.cs
-	namespace 	
-MyApp
- 
-. 
-Base 
-. 
-
-Exceptions 
-;  
-public		 
-class		 
-ValidationException		  
-:		! "
-BaseApiException		# 3
-{
-
- 
-public 
-
-ValidationException 
-( 
-string %
-message& -
-,- .
-object/ 5
-?5 6
-details7 >
-=? @
-nullA E
-)E F
-: 	
-base
- 
-( 
-$num 
-, 
-$str &
-,& '
-message( /
-,/ 0
-details1 8
-)8 9
-{ 
-} 
-public 
-
-ValidationException 
-( 
-
-Dictionary )
-<) *
-string* 0
-,0 1
-string2 8
-[8 9
-]9 :
->: ;
-errors< B
-)B C
-: 	
-base
- 
-( 
-$num 
-, 
-$str &
-,& '
-$str( Q
-,Q R
-errorsS Y
-)Y Z
-{ 
-} 
-} Á
-UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\PermissionException.cs
+¬
+@D:\BootcampProject\src\01.Base\Exceptions\PermissionException.cs
 	namespace 	
 MyApp
  
@@ -187,8 +112,83 @@ Exceptions 
 )$$8 9
 {%% 
 }&& 
-}'' ò
-SD:\BootcampProject\default-project-main\src\01.Base\Exceptions\NotFoundException.cs
+}'' Ð	
+@D:\BootcampProject\src\01.Base\Exceptions\ValidationException.cs
+	namespace 	
+MyApp
+ 
+. 
+Base 
+. 
+
+Exceptions 
+;  
+public		 
+class		 
+ValidationException		  
+:		! "
+BaseApiException		# 3
+{
+
+ 
+public 
+
+ValidationException 
+( 
+string %
+message& -
+,- .
+object/ 5
+?5 6
+details7 >
+=? @
+nullA E
+)E F
+: 	
+base
+ 
+( 
+$num 
+, 
+$str &
+,& '
+message( /
+,/ 0
+details1 8
+)8 9
+{ 
+} 
+public 
+
+ValidationException 
+( 
+
+Dictionary )
+<) *
+string* 0
+,0 1
+string2 8
+[8 9
+]9 :
+>: ;
+errors< B
+)B C
+: 	
+base
+ 
+( 
+$num 
+, 
+$str &
+,& '
+$str( Q
+,Q R
+errorsS Y
+)Y Z
+{ 
+} 
+} Ý
+>D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.cs
 	namespace 	
 MyApp
  
@@ -295,8 +295,8 @@ Exceptions 
 ); <
 { 
 } 
-} ²
-RD:\BootcampProject\default-project-main\src\01.Base\Exceptions\BaseApiException.cs
+} 
+=D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.cs
 	namespace 	
 MyApp
  
@@ -427,9 +427,9 @@ statusCode== 
 details?? 
 ;?? 
 }@@ 
-}AA â
+}AA Í
 
-YD:\BootcampProject\default-project-main\src\01.Base\Exceptions\AuthenticationException.cs
+DD:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.cs
 	namespace 	
 MyApp
  
@@ -506,8 +506,8 @@ Exceptions 
 ); <
 { 
 } 
-} ú
-=D:\BootcampProject\default-project-main\src\01.Base\Entity.cs
+} È	
+(D:\BootcampProject\src\01.Base\Entity.cs
 	namespace 	
 MyApp
  
@@ -572,44 +572,18 @@ BaseEntity( 2
 UtcNow7 =
 ;= >
 public 
-
-string 
-	CreatedBy 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-=* +
-string, 2
-.2 3
-Empty3 8
-;8 9
-public## 
 
-DateTime## 
-?## 
-	UpdatedAt## 
-{##  
-get##! $
-;##$ %
-set##& )
-;##) *
-}##+ ,
-public'' 
-
-string'' 
-?'' 
-	UpdatedBy'' 
-{'' 
-get'' "
-;''" #
-set''$ '
-;''' (
-}'') *
-}(( ê
-=D:\BootcampProject\default-project-main\src\01.Base\Class1.cs
+DateTime 
+? 
+	UpdatedAt 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+}   Õ
+(D:\BootcampProject\src\01.Base\Class1.cs
 	namespace 	
 MyApp
  

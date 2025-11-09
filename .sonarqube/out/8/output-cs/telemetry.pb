@@ -1,0 +1,1 @@
+_RID:\BootcampProject\tests\04.Application.Tests\04.Application.Tests.csproj¢net9.0òCSharp13

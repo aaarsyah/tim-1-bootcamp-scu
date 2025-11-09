@@ -1,1 +1,1 @@
-cRMD:\BootcampProject\default-project-main\src\08.BlazorUI\MyApp.BlazorUI.csproj¢net9.0òCSharp13
+ZRDD:\BootcampProject\src\05.Infrastructure\MyApp.Infrastructure.csproj¢net9.0òCSharp13

@@ -1,11 +1,1 @@
-﻿D:\BootcampProject\default-project-main\src\03.Shared\ApiResponse.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\AuthenticationDTOs.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\CategoryDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\CheckoutDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\CourseDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\InvoiceDetailDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\InvoiceDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\MyClassDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\PaymentDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\DTOs\ScheduleDto.cs
-D:\BootcampProject\default-project-main\src\03.Shared\ErrorResponse.cs
+﻿D:\BootcampProject\src\07.Client\Class1.cs

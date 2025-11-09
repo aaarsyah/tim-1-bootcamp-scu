@@ -1,11 +1,5 @@
-¥
-UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\ValidationException.cs
-
-		  
-& -( /
-7 >1 8
-< BS Yÿ
-UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\PermissionException.cs
+ê
+@D:\BootcampProject\src\01.Base\Exceptions\PermissionException.cs
 
 		  
 & - %
@@ -17,8 +11,8 @@ UD:\BootcampProject\default-project-main\src\01.Base\Exceptions\PermissionExcept
 
 !! %
 ##+ 2$$( /
-##< C$$1 8å
-SD:\BootcampProject\default-project-main\src\01.Base\Exceptions\NotFoundException.cs
+##< C$$1 8Ð
+>D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.cs
 
 		 
 $ +! (
@@ -26,8 +20,8 @@ SD:\BootcampProject\default-project-main\src\01.Base\Exceptions\NotFoundExceptio
 $ *$ *
 0 2- /
 $ '$ '
-0 5* /†
-RD:\BootcampProject\default-project-main\src\01.Base\Exceptions\BaseApiException.cs
+0 5* /ñ
+=D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.cs
 
  &
  11 == 
@@ -41,16 +35,22 @@ RD:\BootcampProject\default-project-main\src\01.Base\Exceptions\BaseApiException
 ::6 ?>> 
 ::H O;; 
 ::[ i;; &
-::s z?? Õ
-YD:\BootcampProject\default-project-main\src\01.Base\Exceptions\AuthenticationException.cs
+::s z?? À
+DD:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.cs
 		 $% <
 * 3 
 < C &
 M T( /
 
  "
-) 04 ;©
-=D:\BootcampProject\default-project-main\src\01.Base\Entity.cs
+) 04 ;
+@D:\BootcampProject\src\01.Base\Exceptions\ValidationException.cs
+
+		  
+& -( /
+7 >1 8
+< BS Y|
+(D:\BootcampProject\src\01.Base\Entity.cs
   ( 2
 
  
@@ -61,11 +61,7 @@ YD:\BootcampProject\default-project-main\src\01.Base\Exceptions\AuthenticationEx
 
  
 
- 
-
-## 
-
-'' K
-=D:\BootcampProject\default-project-main\src\01.Base\Class1.cs
+ 6
+(D:\BootcampProject\src\01.Base\Class1.cs
 
  

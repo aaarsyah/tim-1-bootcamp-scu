@@ -1,0 +1,269 @@
+@page "/detail/{CourseRefIdS}"
+
+@using System.Globalization
+@using MyApp.Shared.DTOs
+@using MyApp.BlazorUI.Services
+@using System.Net.Http.Json
+
+@inject NavigationManagerExt Navigation
+@inject ISnackbar Snackbar
+
+@inject IAuthService AuthService
+@inject ICourseService CourseService
+@inject ICheckoutService CheckoutService
+
+@inject IDialogService DialogService
+
+<PageTitle>Detail Kelas</PageTitle>
+
+<MudContainer Class="mt-10">
+    @if (Course is null)
+    {
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+    }
+    else
+    {
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudStack Row="true">
+                <MudImage Src="@Course.ImageUrl" />
+                <MudContainer>
+                    <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@Course.CategoryName</MudText>
+                    <MudText Typo="Typo.h2">@Course.Name</MudText>
+                    <MudText Typo="Typo.h2" Color="Color.Primary">IDR @Course.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
+                    <MudSelect Class="mt-2" @bind-Value="_date"
+                               Label="Tanggal Kursus"
+                               FitContent="true">
+                        @foreach (var d in ScheduleDates)
+                        {
+                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                    <MudButton Class="px-8 py-2 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddToCartAsync" Style="width: 233.5px">
+                        <MudText>Masukkan Keranjang</MudText>
+                    </MudButton>
+                    <MudButton Class="px-8 py-2 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog" Style="width: 233.5px">
+                        <MudText>Beli Sekarang</MudText>
+                    </MudButton>
+                </MudContainer>
+            </MudStack>
+        </MudHidden>
+
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudStack>
+                <MudImage Src="@Course.ImageUrl"></MudImage>
+                <MudContainer>
+                    <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@Course.CategoryName</MudText>
+                    <MudText Typo="Typo.h2">@Course.Name</MudText>
+                    <MudText Typo="Typo.h2" Color="Color.Primary">IDR @Course.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
+                    <MudSelect Class="mt-2" @bind-Value="_date"
+                               Label="Tanggal Kursus"
+                               FitContent="true">
+                        @foreach (var d in ScheduleDates)
+                        {
+                            <MudSelectItem Value="d">@d.ToString("d MMMM yyyy", new CultureInfo("id-ID"))</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                    <MudButton Class="px-8 py-2 mt-8" Variant="Variant.Outlined" Color="Color.Primary" OnClick="AddToCartAsync" Style="width: 233.5px">
+                        <MudText>Masukkan Keranjang</MudText>
+                    </MudButton>
+                    <MudButton Class="px-8 py-2 mt-8" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowPaymentDialog" Style="width: 233.5px">
+                        <MudText>Beli Sekarang</MudText>
+                    </MudButton>
+                </MudContainer>
+            </MudStack>
+        </MudHidden>
+
+        <MudText Class="mt-8" Typo="Typo.h2">
+            <b>Deskripsi</b>
+        </MudText>
+        <MudText Class="desc mt-8">
+            @Course.Description
+        </MudText>
+
+        <MudContainer>
+            <MudText Class="mt-16" Typo="Typo.h2" Align="Align.Center" Style="font-family: Inter" Color="Color.Primary">
+                Kelas lain yang mungkin kamu suka
+            </MudText>
+            <MudGrid Class="mt-8">
+                @if (OtherCourses != null)
+                {
+                    @foreach (var c in OtherCourses)
+                    {
+                        <MudItem xs="12" md="6" lg="4">
+                            <MudLink Color="Color.Default" OnClick="@(async () => { CourseRefId = c.RefId; await OnInitializedAsync(); Navigation.GoToDetail(c.RefId); })">
+                                <MudImage Src="@c.ImageUrl"></MudImage>
+                                <MudText Typo="Typo.h4" Style="font-weight: 400; color: #828282">@c.CategoryName</MudText>
+                                <MudText Typo="Typo.h3">@c.Name</MudText>
+                                <MudText Class="pt-10" Typo="Typo.h3" Color="Color.Primary">IDR @c.Price.ToString("N0", new CultureInfo("id-ID"))</MudText>
+                            </MudLink>
+                        </MudItem>
+                    }
+                }
+            </MudGrid>
+        </MudContainer>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public string CourseRefIdS { get; set; } = null!;
+
+    private Guid CourseRefId { get; set; }
+
+    private CourseDto? Course { get; set; }
+    private List<CourseDto>? OtherCourses { get; set; }
+    private DateOnly _date;
+    private DateOnly[] ScheduleDates = Array.Empty<DateOnly>();
+
+    protected override void OnInitialized()
+    {
+        if(!Guid.TryParse(CourseRefIdS, out Guid guid))
+        {
+            // Invalid Guid, redirect to home
+            Navigation.GoToHome();
+            return;
+        }
+        CourseRefId = guid;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        // Ambil data course by id
+        var result = await CourseService.GetCourseByIdAsync(CourseRefId);
+        if (result == null)
+        {
+            // TODO: Display Not Found error
+            Navigation.GoToHome();
+            return;
+        }
+        Course = result;
+        ScheduleDates = Course.ScheduleDates.ToArray();
+        if (ScheduleDates.Length > 0)
+            _date = ScheduleDates[0];
+        // Ambil courses lain untuk rekomendasi
+        var result2 = await CourseService.GetAllCourseAsync();
+        if (result2 != null)
+        {
+            OtherCourses = result2
+                .Where(c => c.RefId != CourseRefId && c.IsActive)
+                .ToList();
+        }
+    }
+
+    private async Task ShowPaymentDialog()
+    {
+        var auth = await AuthService.GetAuthAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+
+        // 1️. Ambil scheduleId berdasarkan tanggal yang dipilih
+        var selectedSchedule = Course?.Schedules.FirstOrDefault(s => s.Date == _date);
+        if (selectedSchedule == null)
+        {
+            Snackbar.Add("Jadwal tidak ditemukan untuk tanggal yang dipilih.", Severity.Warning);
+            return;
+        }
+
+        var scheduleRefId = selectedSchedule.RefId;
+        Console.WriteLine($"ScheduleId yang dikirim: {scheduleRefId}");
+
+
+        // 2️. Tambahkan item ke cart
+        var resultadd = await CheckoutService.AddCourseToCartAsync(auth, scheduleRefId);
+        if (!resultadd)
+        {
+            Snackbar.Add("Gagal menambahkan ke keranjang", Severity.Error);
+            return;
+        }
+        var resultget = await CheckoutService.GetSelfCartItem(auth);
+        if (resultget == null)
+        {
+            Snackbar.Add("Gagal menambahkan ke keranjang", Severity.Error);
+            return;
+        }
+        var cartItems = resultget;
+
+        // Ambil item terbaru untuk scheduleId ini
+        var lastCartItem = cartItems.OrderByDescending(c => c.RefId).First();
+        Console.WriteLine($"CartItem terakhir Id: {lastCartItem.RefId}");
+
+        var checkoutRequest = new CheckoutRequestDto
+        {
+            ItemCartRefIds = new List<Guid> { lastCartItem.RefId },
+            PaymentMethodRefId = Guid.Empty
+        };
+
+        var parameters = new DialogParameters();
+        parameters.Add("CheckoutRequest", checkoutRequest);
+
+
+        var options = new DialogOptions
+        {
+            CloseButton = false,
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<CheckoutDialog>("Pilih Metode Pembayaran", parameters, options);
+        var result = await dialog.Result;
+
+        // if (true)
+        // {
+        //     var auth = await AuthService.GetAccessTokenAsync();
+        //     if (auth == null)
+        //     {
+        //         Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+        //         return;
+        //     }
+        // }
+
+        // await _mudMessageBox.ShowAsync();
+    }
+
+    //Masukkan ke Keranjang
+    private async Task AddToCartAsync()
+    {
+        // Dapatkan autentikasi
+        var auth = await AuthService.GetAuthAsync();
+        if (auth == null)
+        {
+            Navigation.GoToLogin(); // User belum login, arahkan user ke login page
+            return;
+        }
+        try
+        {
+            if (Course == null)
+                return;
+
+            // Ambil scheduleId dari tanggal yang dipilih (_date)
+            var selectedSchedule = Course.Schedules
+                .FirstOrDefault(s => s.Date == _date);
+
+            if (selectedSchedule == null)
+            {
+                Console.WriteLine("Schedule not found for selected date.");
+                return;
+            }
+
+            var scheduleRefId = selectedSchedule.RefId;
+
+            // Panggil endpoint backend
+            var result = await CheckoutService.AddCourseToCartAsync(auth, scheduleRefId);
+            if (!result)
+            {
+                Snackbar.Add($"Gagal menambahkan ke keranjang", Severity.Error);
+                return;
+            }
+            // Arahkan ke halaman checkout
+            Navigation.GoToCheckout();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding to cart: {ex.Message}");
+        }
+    }
+}

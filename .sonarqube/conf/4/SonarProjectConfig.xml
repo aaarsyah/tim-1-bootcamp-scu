@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SonarProjectConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/analyzer/2021/1">
   <AnalysisConfigPath>D:\BootcampProject\.sonarqube\conf\SonarQubeAnalysisConfig.xml</AnalysisConfigPath>
-  <ProjectPath>D:\BootcampProject\default-project-main\src\05.Infrastructure\MyApp.Infrastructure.csproj</ProjectPath>
+  <ProjectPath>D:\BootcampProject\tests\02.Domain.Tests\02.Domain.Tests.csproj</ProjectPath>
   <FilesToAnalyzePath>D:\BootcampProject\.sonarqube\conf\4\FilesToAnalyze.txt</FilesToAnalyzePath>
   <OutPath>D:\BootcampProject\.sonarqube\out\4</OutPath>
-  <ProjectType>Product</ProjectType>
+  <ProjectType>Test</ProjectType>
   <TargetFramework>net9.0</TargetFramework>
 </SonarProjectConfig>

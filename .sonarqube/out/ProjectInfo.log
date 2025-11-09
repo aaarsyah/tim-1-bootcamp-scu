@@ -1,17 +1,19 @@
 Product projects
 ---------------------------------------
-D:\BootcampProject\default-project-main\src\03.Shared\MyApp.Shared.csproj
-D:\BootcampProject\default-project-main\src\07.Client\MyApp.Client.csproj
-D:\BootcampProject\default-project-main\src\01.Base\MyApp.Base.csproj
-D:\BootcampProject\default-project-main\src\02.Domain\MyApp.Domain.csproj
-D:\BootcampProject\default-project-main\src\05.Infrastructure\MyApp.Infrastructure.csproj
-D:\BootcampProject\default-project-main\src\08.BlazorUI\MyApp.BlazorUI.csproj
-D:\BootcampProject\default-project-main\src\04.Application\MyApp.Application.csproj
+D:\BootcampProject\src\07.Client\MyApp.Client.csproj
+D:\BootcampProject\src\03.Shared\MyApp.Shared.csproj
+D:\BootcampProject\src\01.Base\MyApp.Base.csproj
+D:\BootcampProject\src\02.Domain\MyApp.Domain.csproj
+D:\BootcampProject\src\05.Infrastructure\MyApp.Infrastructure.csproj
+D:\BootcampProject\src\08.BlazorUI\MyApp.BlazorUI.csproj
+D:\BootcampProject\src\04.Application\MyApp.Application.csproj
 
 
 Test projects
 ---------------------------------------
-D:\BootcampProject\default-project-main\src\06.WebAPI\MyApp.WebAPI.csproj
+D:\BootcampProject\tests\02.Domain.Tests\02.Domain.Tests.csproj
+D:\BootcampProject\tests\04.Application.Tests\04.Application.Tests.csproj
+D:\BootcampProject\src\06.WebAPI\MyApp.WebAPI.csproj
 
 
 Invalid projects

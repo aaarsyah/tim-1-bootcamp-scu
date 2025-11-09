@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <ProjectName>MyApp.BlazorUI</ProjectName>
+  <ProjectName>MyApp.Infrastructure</ProjectName>
   <ProjectLanguage>C#</ProjectLanguage>
   <ProjectType>Product</ProjectType>
-  <ProjectGuid>7635de55-d2d4-493b-b7f8-f7501ff14612</ProjectGuid>
-  <FullPath>D:\BootcampProject\default-project-main\src\08.BlazorUI\MyApp.BlazorUI.csproj</FullPath>
+  <ProjectGuid>eee0655b-c2b1-4e5b-935a-6dedbbceec1c</ProjectGuid>
+  <FullPath>D:\BootcampProject\src\05.Infrastructure\MyApp.Infrastructure.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResultFiles>
     <AnalysisResultFile Id="FilesToAnalyze" Location="D:\BootcampProject\.sonarqube\conf\5\FilesToAnalyze.txt" />

@@ -1,1 +1,1 @@
-_RID:\BootcampProject\default-project-main\src\02.Domain\MyApp.Domain.csproj¢net9.0òCSharp13
+JR4D:\BootcampProject\src\02.Domain\MyApp.Domain.csproj¢net9.0òCSharp13

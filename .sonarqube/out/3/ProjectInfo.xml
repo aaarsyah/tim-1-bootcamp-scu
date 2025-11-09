@@ -4,7 +4,7 @@
   <ProjectLanguage>C#</ProjectLanguage>
   <ProjectType>Product</ProjectType>
   <ProjectGuid>1134fe39-e03b-41ea-89fa-4a742f1e5446</ProjectGuid>
-  <FullPath>D:\BootcampProject\default-project-main\src\02.Domain\MyApp.Domain.csproj</FullPath>
+  <FullPath>D:\BootcampProject\src\02.Domain\MyApp.Domain.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResultFiles>
     <AnalysisResultFile Id="FilesToAnalyze" Location="D:\BootcampProject\.sonarqube\conf\3\FilesToAnalyze.txt" />

@@ -18,7 +18,7 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/02.Domain/Class1.cs",
+                "uri": "file:///D:/BootcampProject/src/02.Domain/Class1.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,

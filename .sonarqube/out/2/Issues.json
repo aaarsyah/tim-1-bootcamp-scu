@@ -12,18 +12,18 @@
       },
       "results": [
         {
-          "ruleId": "S125",
+          "ruleId": "S2094",
           "level": "warning",
-          "message": "Remove this commented out code.",
+          "message": "Remove this empty class, write its code or make it an \"interface\".",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/01.Base/Exceptions/PermissionException.cs",
+                "uri": "file:///D:/BootcampProject/src/01.Base/Class1.cs",
                 "region": {
-                  "startLine": 23,
-                  "startColumn": 5,
-                  "endLine": 23,
-                  "endColumn": 8
+                  "startLine": 3,
+                  "startColumn": 14,
+                  "endLine": 3,
+                  "endColumn": 20
                 }
               }
             }
@@ -33,18 +33,18 @@
           }
         },
         {
-          "ruleId": "S2094",
+          "ruleId": "S125",
           "level": "warning",
-          "message": "Remove this empty class, write its code or make it an \"interface\".",
+          "message": "Remove this commented out code.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/01.Base/Class1.cs",
+                "uri": "file:///D:/BootcampProject/src/01.Base/Exceptions/PermissionException.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 20
+                  "startLine": 23,
+                  "startColumn": 5,
+                  "endLine": 23,
+                  "endColumn": 8
                 }
               }
             }

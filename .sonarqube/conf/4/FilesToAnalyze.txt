@@ -1,5 +1,7 @@
-﻿D:\BootcampProject\default-project-main\src\05.Infrastructure\Class1.cs
-D:\BootcampProject\default-project-main\src\05.Infrastructure\Data\AppleMusicDbContext.cs
-D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\20251028065650_InitialCreate.cs
-D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\20251028065650_InitialCreate.Designer.cs
-D:\BootcampProject\default-project-main\src\05.Infrastructure\Migrations\AppleMusicDbContextModelSnapshot.cs
+﻿D:\BootcampProject\tests\02.Domain.Tests\Entities\UserTests.cs
+D:\BootcampProject\tests\02.Domain.Tests\ValueObjects\RoleTests.cs
+C:\Users\User\.nuget\packages\microsoft.net.test.sdk\18.0.0\build\net8.0\Microsoft.NET.Test.Sdk.Program.cs
+C:\Users\User\.nuget\packages\microsoft.testplatform.testhost\18.0.0\build\net8.0\x64\testhost.exe
+C:\Users\User\.nuget\packages\microsoft.testplatform.testhost\18.0.0\build\net8.0\x64\testhost.dll
+C:\Users\User\.nuget\packages\xunit.runner.visualstudio\3.1.5\build\net8.0\xunit.abstractions.dll
+C:\Users\User\.nuget\packages\xunit.runner.visualstudio\3.1.5\build\net8.0\xunit.runner.visualstudio.testadapter.dll

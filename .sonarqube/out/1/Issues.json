@@ -12,18 +12,52 @@
       },
       "results": [
         {
-          "ruleId": "S2094",
+          "ruleId": "CS8618",
           "level": "warning",
-          "message": "Remove this empty class, write its code or make it an \"interface\".",
+          "message": "Non-nullable property 'Data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/default-project-main/src/07.Client/Class1.cs",
+                "uri": "file:///D:/BootcampProject/src/03.Shared/ApiResponse.cs",
                 "region": {
-                  "startLine": 3,
+                  "startLine": 52,
                   "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 20
+                  "endLine": 52,
+                  "endColumn": 18
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/03.Shared/ApiResponse.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 14,
+                  "endLine": 52,
+                  "endColumn": 18
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1869",
+          "level": "note",
+          "message": "Avoid creating a new 'JsonSerializerOptions' instance for every serialization operation. Cache and reuse instances instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/03.Shared/ErrorResponse.cs",
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 47,
+                  "endLine": 66,
+                  "endColumn": 10
                 }
               }
             }
@@ -34,20 +68,32 @@
         }
       ],
       "rules": {
-        "S2094": {
-          "id": "S2094",
-          "shortDescription": "Classes should not be empty",
-          "fullDescription": "There is no good excuse for an empty class. If it’s being used simply as a common extension point, it should be replaced with an interface. If it was stubbed in as a placeholder for future development it should be fleshed-out. In any other case, it should be eliminated.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2094",
+        "CA1869": {
+          "id": "CA1869",
+          "shortDescription": "Cache and reuse 'JsonSerializerOptions' instances",
+          "fullDescription": "Avoid creating a new 'JsonSerializerOptions' instance for every serialization operation. Cache and reuse instances instead. Single use 'JsonSerializerOptions' instances can substantially degrade the performance of your application.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1869",
           "properties": {
-            "category": "Minor Code Smell",
+            "category": "Performance",
             "isEnabledByDefault": true,
             "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CS8618": {
+          "id": "CS8618",
+          "shortDescription": "Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
             ]
           }
         }

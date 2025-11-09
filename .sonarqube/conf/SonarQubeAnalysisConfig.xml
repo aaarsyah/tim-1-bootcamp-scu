@@ -148,12 +148,14 @@
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
     <Property Name="sonar.core.id">243B8A4D-AZpHzfvR_pxdsy7xjDa2</Property>
-    <Property Name="sonar.core.startTime">11/6/2025 4:25:47 PM</Property>
+    <Property Name="sonar.core.startTime">11/9/2025 1:25:04 PM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
+    <Property Name="sonar.cs.opencover.reportsPaths">TestResults/**/coverage.opencover.xml</Property>
+    <Property Name="sonar.cs.vstest.reportsPaths">TestResults/**/*.trx</Property>
     <Property Name="sonar.coverage.exclusions">**/Migrations/**,**/wwwroot/**,**/*.cshtml,**/Program.cs</Property>
-    <Property Name="sonar.exclusions">**/wwwroot/**,**/obj/**,**/bin/**,**/docker-compose.yml,**/sonar-scan.bat</Property>
+    <Property Name="sonar.exclusions">**/wwwroot/**,**/obj/**,**/bin/**,**/docker-compose.yml,**/sonar-scan.bat,TestResults/**/coverage.opencover.xml</Property>
   </LocalSettings>
   <ScannerOptsSettings />
   <AnalyzersSettings>
@@ -165,7 +167,6 @@
         <AnalyzerPlugin Key="csharp" Version="10.15.0.120848" StaticResourceName="SonarAnalyzer-csharp-10.15.0.120848.zip">
           <AssemblyPaths>
             <Path>C:\Users\User\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
-            <Path>C:\Users\User\AppData\Local\Temp\.sonarqube\resources\0\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
