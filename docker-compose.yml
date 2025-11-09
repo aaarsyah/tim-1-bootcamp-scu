@@ -1,35 +1,82 @@
 services:
-  sonarqube:
-    image: sonarqube:community
-    container_name: sonarqube
-    ports:
-      - "9000:9000"
-    environment:
-      - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonar
-      - SONAR_JDBC_USERNAME=sonar
-      - SONAR_JDBC_PASSWORD=wKb0-bv/+:fbm*H+=ha'
-    depends_on:
-      - db
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
-    restart: unless-stopped
-    mem_limit: 4g
-
+  # SQL Server Database
   db:
-    image: postgres:15
-    container_name: sonardb
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-app
     environment:
-      - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=wKb0-bv/+:fbm*H+=ha'
-      - POSTGRES_DB=sonar
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=x,1n*1x#d1QMgveS
+      - MSSQL_PID=Express
+    ports:
+      - "1434:1433"  # Port 1434 untuk connection string
     volumes:
-      - postgresql_data:/var/lib/postgresql/data
+      - mssql_data:/var/opt/mssql
     restart: unless-stopped
+    networks:
+      - frontend-network
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-C", "-S", "localhost", "-U", "sa", "-P", "x,1n*1x#d1QMgveS", "-Q", "SELECT 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Backend API with Swagger - Port 5001 for api.frontend.com
+  api:
+    build:
+      context: .
+      dockerfile: src/06.WebAPI/Dockerfile
+    container_name: api-app
+    ports:
+      - "5001:80"  # Port 5001 untuk api.frontend.com
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      # Database connection to container
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=MyAppDb;User Id=sa;Password=x,1n*1x#d1QMgveS;TrustServerCertificate=true;
+      - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - frontend-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Frontend Blazor UI - Port 8081 for frontend.com
+  frontend:
+    build:
+      context: .
+      dockerfile: src/08.BlazorUI/Dockerfile
+    container_name: frontend-app
+    ports:
+      - "8081:80"  # Port 8081 untuk frontend.com
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ApiBaseUrl=http://api.frontend.com:5001
+      - BaseAddress=http://frontend.com
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - frontend-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 volumes:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_logs:
-  postgresql_data:
+  mssql_data:
+
+networks:
+  frontend-network:
+    driver: bridge

@@ -1,5 +1,6 @@
 // Import Entity Framework Core untuk database operations
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -304,6 +305,15 @@ try
     app.UseAuthorization();
     
     app.MapControllers();
+
+    // Test endpoint
+    app.MapGet("/test", () => "API is running! Environment: " + app.Environment.EnvironmentName);
+
+    // Map Health Check endpoint
+    //app.MapHealthChecks("/health", new HealthCheckOptions
+    //{
+    //    ResponseWriter = HealthCheckResponseWriter.WriteResponse
+    //});
 
     // ===== STEP 12: INITIALIZE DATABASE =====
     // Purpose: Create database and seed initial data
