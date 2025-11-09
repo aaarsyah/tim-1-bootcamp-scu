@@ -6,17 +6,24 @@ Apple Music - Final Project Tim 1
 3. Anbang
 
 **Cara menjalankan untuk production**
+
 Buat docker compose untuk proyek
 ```
 docker-compose -f docker-compose.yml -p bootcamp-project up -d
 ```
 
-Saat ini masih belum ada database seeding dalam docker, jadi database masih kosong
+Database yang dihasilkan dari docker akan dalam keadaan kosong, jadi database perlu di-seeding
+
+Untuk menghasilkan script mentah untuk database seeding, jalankan command ini
+```
+dotnet ef migrations script --startup-project ../06.WebAPI
+```
 
 **Cara menjalankan untuk development**
-Database seeding
+
+Jalankan command dalam direktori `src\05.Infrastructure`
 ```
-dotnet ef database update
+dotnet ef database update --startup-project ../06.WebAPI
 ```
 (Bila tidak bisa, setup SQL Server terlebih dahulu, lalu set connection string sesuai dengan credential SQL Server di `"src\06.WebAPI\appsettings.Development.json"`)
 
@@ -27,6 +34,7 @@ dotnet run
 ```
 
 **Untuk development**
+
 Buat docker compose untuk sonarqube
 ```
 docker-compose -f docker-compose-sonarqube.yml -p BootcampProjectSonarQube up -d
