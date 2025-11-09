@@ -14,12 +14,10 @@ public class DeleteScheduleCommand : IRequest<ApiResponse<object>>
 public class DeleteScheduleCommandHandler : IRequestHandler<DeleteScheduleCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<DeleteScheduleCommandHandler> _logger;
-    public DeleteScheduleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeleteScheduleCommandHandler> logger)
+    public DeleteScheduleCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteScheduleCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(DeleteScheduleCommand request, CancellationToken cancellationToken)

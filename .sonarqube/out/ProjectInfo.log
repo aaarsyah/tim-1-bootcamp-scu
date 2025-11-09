@@ -1,8 +1,7 @@
 Product projects
 ---------------------------------------
-D:\BootcampProject\src\07.Client\MyApp.Client.csproj
-D:\BootcampProject\src\03.Shared\MyApp.Shared.csproj
 D:\BootcampProject\src\01.Base\MyApp.Base.csproj
+D:\BootcampProject\src\03.Shared\MyApp.Shared.csproj
 D:\BootcampProject\src\02.Domain\MyApp.Domain.csproj
 D:\BootcampProject\src\05.Infrastructure\MyApp.Infrastructure.csproj
 D:\BootcampProject\src\08.BlazorUI\MyApp.BlazorUI.csproj
@@ -23,7 +22,7 @@ Invalid projects
 
 Skipped projects
 ---------------------------------------
-{none}
+D:\BootcampProject\src\07.Client\MyApp.Client.csproj
 
 
 Excluded projects

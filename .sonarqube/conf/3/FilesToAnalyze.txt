@@ -1,5 +1,4 @@
-﻿D:\BootcampProject\src\02.Domain\Class1.cs
-D:\BootcampProject\src\02.Domain\Models\CartItem.cs
+﻿D:\BootcampProject\src\02.Domain\Models\CartItem.cs
 D:\BootcampProject\src\02.Domain\Models\Category.cs
 D:\BootcampProject\src\02.Domain\Models\Course.cs
 D:\BootcampProject\src\02.Domain\Models\Invoice.cs

@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 using MyApp.Application.Services;

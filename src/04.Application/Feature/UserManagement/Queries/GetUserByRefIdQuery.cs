@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using MyApp.Base.Exceptions;
-using MyApp.Domain.Models;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Queries;
+namespace MyApp.Application.Feature.UserManagement.Queries;
 
 public class GetUserByRefIdQuery : IRequest<ApiResponse<UserDto>>
 {

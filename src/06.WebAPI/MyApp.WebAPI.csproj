@@ -44,8 +44,4 @@
     <ProjectReference Include="..\05.Infrastructure\MyApp.Infrastructure.csproj" /> -->
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="logs\" />
-  </ItemGroup>
-
 </Project>

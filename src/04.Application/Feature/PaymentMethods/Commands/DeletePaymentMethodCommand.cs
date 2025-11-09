@@ -14,12 +14,10 @@ public class DeletePaymentMethodCommand : IRequest<ApiResponse<object>>
 public class DeletePaymentMethodCommandHandler : IRequestHandler<DeletePaymentMethodCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<DeletePaymentMethodCommandHandler> _logger;
-    public DeletePaymentMethodCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeletePaymentMethodCommandHandler> logger)
+    public DeletePaymentMethodCommandHandler(IUnitOfWork unitOfWork, ILogger<DeletePaymentMethodCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(DeletePaymentMethodCommand request, CancellationToken cancellationToken)

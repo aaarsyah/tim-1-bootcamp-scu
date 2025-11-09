@@ -17,12 +17,10 @@ public class AddCourseToCartCommandHandler : IRequestHandler<AddCourseToCartComm
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly ILogger<AddCourseToCartCommandHandler> _logger;
-    public AddCourseToCartCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<AddCourseToCartCommandHandler> logger)
+    public AddCourseToCartCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _logger = logger;
     }
     public async Task<ApiResponse<CartItemResponseDto>> Handle(AddCourseToCartCommand request, CancellationToken cancellationToken)
     {

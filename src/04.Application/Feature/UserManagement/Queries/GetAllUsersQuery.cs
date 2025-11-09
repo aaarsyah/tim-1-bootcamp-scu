@@ -3,7 +3,7 @@ using MediatR;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Queries;
+namespace MyApp.Application.Feature.UserManagement.Queries;
 
 public class GetAllUsersQuery : IRequest<ApiResponse<List<UserDto>>>
 {

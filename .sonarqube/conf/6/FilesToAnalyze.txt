@@ -105,4 +105,5 @@ D:\BootcampProject\src\08.BlazorUI\Components\_Imports.razor
 D:\BootcampProject\src\08.BlazorUI\Components\Layout\MainLayout.razor.css
 D:\BootcampProject\src\08.BlazorUI\Components\Layout\NavMenu.razor.css
 D:\BootcampProject\src\08.BlazorUI\Components\Pages\ListMenu.razor.css
+D:\BootcampProject\src\08.BlazorUI\Dockerfile
 D:\BootcampProject\src\08.BlazorUI\Properties\launchSettings.json

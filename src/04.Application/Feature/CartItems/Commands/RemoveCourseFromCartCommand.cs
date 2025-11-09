@@ -15,13 +15,9 @@ public class RemoveCourseFromCartCommand : IRequest<ApiResponse<object>>
 public class RemoveCourseFromCartCommandHandler : IRequestHandler<RemoveCourseFromCartCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-    private readonly ILogger<RemoveCourseFromCartCommandHandler> _logger;
-    public RemoveCourseFromCartCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RemoveCourseFromCartCommandHandler> logger)
+    public RemoveCourseFromCartCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
-        _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(RemoveCourseFromCartCommand request, CancellationToken cancellationToken)
     {

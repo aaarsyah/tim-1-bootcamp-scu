@@ -24,14 +24,11 @@ namespace MyApp.WebAPI.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<AuthController> _logger;
 
     public AuthController(
-        IMediator mediator,
-        ILogger<AuthController> logger)
+        IMediator mediator)
     {
         _mediator = mediator;
-        _logger = logger;
     }
 
     /// <summary>

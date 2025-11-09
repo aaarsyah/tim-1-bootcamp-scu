@@ -1,11 +1,9 @@
-// Import Microsoft.AspNetCore.Mvc untuk controller base classes dan attributes
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.Courses.Commands;
 using MyApp.Application.Feature.Courses.Queries;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 // Import DTOs untuk request/response objects
 using MyApp.Shared.DTOs;
 // Import Services untuk business logic

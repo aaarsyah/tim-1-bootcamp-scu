@@ -40,10 +40,10 @@ public class PasswordService : IPasswordService
         //    else if (!char.IsLetterOrDigit(c)) hasSpecial = true;
         //}
 
-        if (!Regex.IsMatch(password, @"[A-Z]")) return false; //hasUpper
-        if (!Regex.IsMatch(password, @"[a-z]")) return false; //hasLower
-        if (!Regex.IsMatch(password, @"\d")) return false; //hasDigit
-        if (!Regex.IsMatch(password, @"[ -/:-@[-`{-~]")) return false; //hasSpecial
+        if (!Regex.IsMatch(password, @"[A-Z]", RegexOptions.NonBacktracking)) return false; //hasUpper
+        if (!Regex.IsMatch(password, @"[a-z]", RegexOptions.NonBacktracking)) return false; //hasLower
+        if (!Regex.IsMatch(password, @"\d", RegexOptions.NonBacktracking)) return false; //hasDigit
+        if (!Regex.IsMatch(password, @"[ -/:-@[-`{-~]", RegexOptions.NonBacktracking)) return false; //hasSpecial
 
         //return hasUpper && hasLower && hasDigit && hasSpecial;
         return true;

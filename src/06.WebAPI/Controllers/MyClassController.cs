@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.MyClasses.Commands;
 using MyApp.Application.Feature.MyClasses.Queries;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 using System.Security.Claims;
 

@@ -1,4 +1,4 @@
-namespace MyApp.Infrastructure.Configuration
+namespace MyApp.Application.Configuration
 {
     /// <summary>
     /// JWT Configuration Settings

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using MyApp.Infrastructure.Data.Repositories.Interfaces;
 
 namespace MyApp.Infrastructure.Data.Repositories
 {

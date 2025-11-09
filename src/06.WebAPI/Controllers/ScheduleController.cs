@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.Schedules.Commands;
 using MyApp.Application.Feature.Schedules.Queries;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 
 namespace MyApp.WebAPI.Controllers;

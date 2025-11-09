@@ -1,13 +1,9 @@
-// Import Entity Framework Core untuk database operations
-using Microsoft.EntityFrameworkCore;
-// Import DbContext untuk database operations
-using MyApp.Infrastructure.Data;
 // Import Models untuk entities dan response wrappers
 using MyApp.Domain.Models;
 // Import Logging untuk log aplikasi
 using Microsoft.Extensions.Logging;
 // Import Configuration untuk akses konfigurasi aplikasi
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

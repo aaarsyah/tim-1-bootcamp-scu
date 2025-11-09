@@ -14,12 +14,10 @@ public class DeleteCourseCommand : IRequest<ApiResponse<object>>
 public class DeleteCourseCommandHandler : IRequestHandler<DeleteCourseCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<DeleteCourseCommandHandler> _logger;
-    public DeleteCourseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeleteCourseCommandHandler> logger)
+    public DeleteCourseCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteCourseCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(DeleteCourseCommand request, CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace MyApp.Infrastructure.Configuration
+namespace MyApp.Application.Configuration
 {
     /// <summary>
     /// Authorization Policies Configuration

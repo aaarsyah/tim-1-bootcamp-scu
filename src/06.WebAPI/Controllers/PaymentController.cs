@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.PaymentMethods.Commands;
 using MyApp.Application.Feature.PaymentMethods.Queries;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 
 namespace MyApp.WebAPI.Controllers;

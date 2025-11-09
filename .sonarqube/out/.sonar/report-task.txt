@@ -2,5 +2,5 @@ projectKey=BootcampProject
 serverUrl=http://localhost:9000
 serverVersion=25.10.0.114319
 dashboardUrl=http://localhost:9000/dashboard?id=BootcampProject
-ceTaskId=4764d4e3-e6ec-40f5-af99-ccf640187f51
-ceTaskUrl=http://localhost:9000/api/ce/task?id=4764d4e3-e6ec-40f5-af99-ccf640187f51
+ceTaskId=0a73e05e-49ae-41b9-add9-a0e50413b45e
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0a73e05e-49ae-41b9-add9-a0e50413b45e

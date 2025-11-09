@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Models;
-using MyApp.Infrastructure.Data.Repositories.Interfaces;
 
 namespace MyApp.Infrastructure.Data.Repositories;
 

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using MyApp.Base.Exceptions;
-using MyApp.Domain.Models;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
-using Org.BouncyCastle.Ocsp;
 
 namespace MyApp.Application.Feature.Invoices.Queries;
 

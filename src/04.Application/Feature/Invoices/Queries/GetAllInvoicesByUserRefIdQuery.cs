@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using MyApp.Base.Exceptions;
-using MyApp.Domain.Models;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 

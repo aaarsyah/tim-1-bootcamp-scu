@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using MyApp.Application.Services;
 using MyApp.Domain.Models;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Infrastructure.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

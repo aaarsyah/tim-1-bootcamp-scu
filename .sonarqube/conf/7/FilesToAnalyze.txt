@@ -1,5 +1,4 @@
-﻿D:\BootcampProject\src\04.Application\Class1.cs
-D:\BootcampProject\src\04.Application\Configuration\AuthorizationPolicies.cs
+﻿D:\BootcampProject\src\04.Application\Configuration\AuthorizationPolicies.cs
 D:\BootcampProject\src\04.Application\Configuration\JwtSettings.cs
 D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ChangePasswordCommand.cs
 D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ConfirmEmailCommand.cs

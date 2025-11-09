@@ -54,11 +54,12 @@ ND:\BootcampProject\src\08.BlazorUI\Components\Pages\Admin\CategoryDialog.razor
 HD:\BootcampProject\src\08.BlazorUI\Components\Pages\Admin\Category.razor 8jpr†)*+-012345789:;<=>?ABCDGHSTUVXYZ[]^_`bdefghiklmnopqrstuvxyz|}~€‚ƒ„…†‡ˆ‰ŠŒ‘’“”–—™š›œ
 	x‚?)*-128:>BDGHZ_bfghmnpqstu~€‚ƒ„…†‡ˆŒ’–—™›A
 7D:\BootcampProject\src\08.BlazorUI\Components\App.razor8r
-ˆ
-=D:\BootcampProject\src\08.BlazorUI\Services\MyClassService.cs 8r*	!"#$%&()*+,-./0x‚!#$(,-ï
+ï
 :D:\BootcampProject\src\08.BlazorUI\Services\UserService.csa 
 8jr¢
- !"#$%&'()*+,-./01234689:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWYZ[\]^_`abcdefghijklnopqrstuvwxyz{|}~€ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊÌÎÏÐÑÒÓÔÕÖ×ØÙÛx‚~ "&',-01368:<@AFGJKMOPTU[\_`bdeijpqtuwyz~…†‰ŠŒŽ“”š›žŸ¡£¤¨©®¯²³µ·¸¼½ÂÃÆÇÉÌÎÐÒÖ×[
+ !"#$%&'()*+,-./01234689:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWYZ[\]^_`abcdefghijklnopqrstuvwxyz{|}~€ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–˜™š›œžŸ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊÌÎÏÐÑÒÓÔÕÖ×ØÙÛx‚~ "&',-01368:<@AFGJKMOPTU[\_`bdeijpqtuwyz~…†‰ŠŒŽ“”š›žŸ¡£¤¨©®¯²³µ·¸¼½ÂÃÆÇÉÌÎÐÒÖ×‡
+=D:\BootcampProject\src\08.BlazorUI\Services\MyClassService.cs 8r)
+ !"#$%'()*+,-./x‚ "#'+,[
 FD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IUserService.csr	
 V
 ID:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IMyClassService.csr	Y
@@ -71,19 +72,18 @@ FD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAuthService.csr
 GD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAdminService.csr	
 ÷
 ;D:\BootcampProject\src\08.BlazorUI\Services\ErrorService.cs< 8j$*.6<@DKQ\rj	
- !"#$%&'()*+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklx,‚2	"$'()*,.0469:;<>@BDEIKNOPQSUVZ\_`abfi´
+ !"#$%&'()*+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklx,‚2	"$'()*,.0469:;<>@BDEIKNOPQSUVZ\_`abfi¯
+<D:\BootcampProject\src\08.BlazorUI\Services\CourseService.csH 8j7^wrî
+ !"#$%'()*+,-./01234568:;<=>?@ABCDFGHIJKLNOPQRSTUVWXYZ[\]_`abcdeghijklmnopqrstuvxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—™š›œžŸ ¡¢£¤¥¦¨©ª«¬­¯°±²³µ·¸¹º»¼¾¿ÀÁÂÃÄÅÇx‚i"#%')+-128=>?@ABCDIJLNPRTXY_bcegikmqrx{|~€‚„†Š‹‘”•—™›Ÿ£¤ª­¯±²µ·¹º¾ÂÃ´
 FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs 8
 rD	
- !#$%'()*+,./012345789:;<=?@ABCEFGHIJKLMNOx‚ !#%')*/39;<ABHIM¯
-<D:\BootcampProject\src\08.BlazorUI\Services\CourseService.csH 8j7^wrî
- !"#$%'()*+,-./01234568:;<=>?@ABCDFGHIJKLNOPQRSTUVWXYZ[\]_`abcdeghijklmnopqrstuvxyz{|}~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—™š›œžŸ ¡¢£¤¥¦¨©ª«¬­¯°±²³µ·¸¹º»¼¾¿ÀÁÂÃÄÅÇx‚i"#%')+-128=>?@ABCDIJLNPRTXY_bcegikmqrx{|~€‚„†Š‹‘”•—™›Ÿ£¤ª­¯±²µ·¹º¾ÂÃæ
+ !#$%'()*+,./012345789:;<=?@ABCEFGHIJKLMNOx‚ !#%')*/39;<ABHIMæ
 >D:\BootcampProject\src\08.BlazorUI\Services\CheckoutService.csˆ 8+j½rÆ	 !"#$%&'()*+,-./012345789:;<=>?@ABCDEFGHIJKLMNOPQRTUVWXYZ[\]^_`abcdefghijklnopqrstuvwxyz{|}~€‚ƒ„…‡ˆ‰Š‹ŒŽ‘’“”–—˜™š›œžŸ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉËÌÍÎÏÐÑÒÓÔÖ×ØÙÚÛÜÝÞßàáâãåæçèéêëìíîðñòóôõö÷øùúûüýÿ€‚ƒ„…†‡ˆŠ‹ŒŽ‘’“”•–—˜™š›œžŸ ¡£¤¥¦§¨©ª«¬­®¯°±x,‚Ê $%*+.23579;=ABGHKOPRTVXZ^_aefijlnprtxy~‚ƒ…‡‰‹‘’˜™œŸ¡£¥§«¬±²µ¶¸º¼½ÀÂÆÇÍÎÑÒÔÖØÚÜàáçèëìîðòôöúû‚…†ˆŠŒŽ”•š›žŸ¡£¥§©­®Ó
 :D:\BootcampProject\src\08.BlazorUI\Services\AuthService.csw 8%j7+C§ª°³¶¹¾ÅÈÌÎÓÕØÛÞãåóúš›œžŸr˜
- !"$%&()-./123456789:;<=>?@ABDEFGHIJKLMNOPQRSTUWXYZ[\]^_`abcdefghiklmnopqrstuvwxyz{|~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¥¦¨«¬­®¯±´µ·º»¼½¿ÀÂÃÄÆÉÊËÌÍÏÐÑÒÓÔÖÙÜÝßàáâãäæçèéêëìíîðñòóôõ÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³x!‚µ "$&()-15:=>@ADFHIMRUWY[\`efikmopty|~€‚ƒ‡Œ‘“•–šŸ £¥¨«­®±´·º¿ÆÉËÌÏÐÒÓÖÙÜßàâãæîðòóõ÷ùúüý‚…‰Ž’“•—˜¢£¥§«¬°±Š
+ !"$%&()-./123456789:;<=>?@ABDEFGHIJKLMNOPQRSTUWXYZ[\]^_`abcdefghiklmnopqrstuvwxyz{|~€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ ¡¢£¥¦¨«¬­®¯±´µ·º»¼½¿ÀÂÃÄÆÉÊËÌÍÏÐÑÒÓÔÖÙÜÝßàáâãäæçèéêëìíîðñòóôõ÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™ ¡¢£¤¥¦§¨©ª«¬­®¯°±²³x!‚µ "$&()-15:=>@ADFHIMRUWY[\`efikmopty|~€‚ƒ‡Œ‘“•–šŸ £¥¨«­®±´·º¿ÆÉËÌÏÐÒÓÖÙÜßàâãæîðòóõ÷ùúüý‚…‰Ž’“•—˜¢£¥§«¬°±„
+-D:\BootcampProject\src\08.BlazorUI\Program.cs/8j
+"'(.37r# #$%)*,/145689;<>?@Bx‚ #$%)*,/1468;<>?BŠ
 ;D:\BootcampProject\src\08.BlazorUI\Services\AdminService.cs‹ 8,jrâ
- !"#$%&()*+,-./01234589:;<=>?@ACDEFGHIJKLMNOPRSTUWXYZ[\]_`abcdefghijklnopqstuvwxyz{|}~€‚„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›žŸ ¡¢£¤¥¦§©ª«¬­®¯°±²³´µ¶¸¹º»½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÍÎÏÐÑÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçéêëìíîïðñóôõö÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹Ž‘’“”•–—˜™šœžŸ¡¢£¤¥¦¨©ª«¬­®¯°±²³´µ·¸¹º¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌx*‚Ö#$&(*,.23:;>?ACEGIMNTUYZ[]_aceijpquvxz{€†‰ŠŒŽ’”˜™ ¡¤¥§©«­¯³´º»¿ÀÂÄÆÈÊÎÏÕÖÚÛÝßàäåëîïñóõ÷ùýþ„…ˆ‰‹‘“—˜žŸ£¤¦¨ª¬®²³¹º¾¿ÁÃÄÈÉ†
--D:\BootcampProject\src\08.BlazorUI\Program.cs/8j!$)*059r%
-"%&'+,.13678:;=>@ABDx‚
-"%&'+,.1368:=>@ADâ
+ !"#$%&()*+,-./01234589:;<=>?@ACDEFGHIJKLMNOPRSTUWXYZ[\]_`abcdefghijklnopqstuvwxyz{|}~€‚„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›žŸ ¡¢£¤¥¦§©ª«¬­®¯°±²³´µ¶¸¹º»½¾¿ÀÁÂÄÅÆÇÈÉÊËÌÍÎÏÐÑÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçéêëìíîïðñóôõö÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹Ž‘’“”•–—˜™šœžŸ¡¢£¤¥¦¨©ª«¬­®¯°±²³´µ·¸¹º¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌx*‚Ö#$&(*,.23:;>?ACEGIMNTUYZ[]_aceijpquvxz{€†‰ŠŒŽ’”˜™ ¡¤¥§©«­¯³´º»¿ÀÂÄÆÈÊÎÏÕÖÚÛÝßàäåëîïñóõ÷ùýþ„…ˆ‰‹‘“—˜žŸ£¤¦¨ª¬®²³¹º¾¿ÁÃÄÈÉâ
 KD:\BootcampProject\src\08.BlazorUI\Components\Pages\NavigationManagerExt.cs 8j'()rj	
  "#$%*+,-/01245679:;<>?@ACDEFHIJKMNOPRSTUWXYZ\]^_abcdfghiklmnpqrsuvwxz{|}€‚ƒ‚$,16;@EJOTY^chmrw|

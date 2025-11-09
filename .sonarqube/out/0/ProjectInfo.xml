@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <ProjectName>MyApp.Client</ProjectName>
+  <ProjectName>MyApp.Base</ProjectName>
   <ProjectLanguage>C#</ProjectLanguage>
   <ProjectType>Product</ProjectType>
-  <ProjectGuid>95c41c7f-14c5-4c33-b8a7-31d804317091</ProjectGuid>
-  <FullPath>D:\BootcampProject\src\07.Client\MyApp.Client.csproj</FullPath>
+  <ProjectGuid>b684bea8-11fe-4f3c-8912-f082aabac469</ProjectGuid>
+  <FullPath>D:\BootcampProject\src\01.Base\MyApp.Base.csproj</FullPath>
   <IsExcluded>false</IsExcluded>
   <AnalysisResultFiles>
     <AnalysisResultFile Id="FilesToAnalyze" Location="D:\BootcampProject\.sonarqube\conf\0\FilesToAnalyze.txt" />

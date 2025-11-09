@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.Invoices.Queries;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 using System.Security.Claims;
 

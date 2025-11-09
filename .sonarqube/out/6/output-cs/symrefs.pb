@@ -1221,20 +1221,7 @@ HD:\BootcampProject\src\08.BlazorUI\Components\Pages\Admin\Category.razor(
  "__ 'ss (
 		  mm $
  'pp 9
-7D:\BootcampProject\src\08.BlazorUI\Components\App.razorÃ
-=D:\BootcampProject\src\08.BlazorUI\Services\MyClassService.cs
-
- 
-		( 0  "
- " 
-
-( 7
-R _: G
-  ! ,2
-   ( ; C$ ,
- 0 7
- !! ## "
-$$' ($$, -ó
+7D:\BootcampProject\src\08.BlazorUI\Components\App.razoró
 :D:\BootcampProject\src\08.BlazorUI\Services\UserService.cs
 
  v
@@ -1358,7 +1345,20 @@ HD:\BootcampProject\src\08.BlazorUI\Components\Pages\Admin\Category.razor(
 
 ÌÌ 
 ÎÎ 
-ÒÒ ¤
+ÒÒ Ã
+=D:\BootcampProject\src\08.BlazorUI\Services\MyClassService.cs
+
+ 
+( 0  "
+ " 
+
+( 7
+R _: G
+  ! ,2
+   ( ; C$ ,
+ 0 7
+    "" "
+##' (##, -¤
 FD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IUserService.cs
 
  
@@ -1656,40 +1656,7 @@ GD:\BootcampProject\src\08.BlazorUI\Services\Interfaces\IAdminService.cs
 ;; << @@ <
 NN &OO &PP  .SS -UU &VV )
 PP QQ (
-__ &`` &aa &bb )Þ
-FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
-
- $(
-
-
-* 7  +)) '
-( 0  "F
-) 3  !** %33 AA( 2MM6 @
-8 D $
-Y ` 
-4 OMM 0
-  (
- * /f k  , 1
-   !! ..> D
-!! ## %%S Y
-!!/ 0!!4 5
-%% "'' "
-.. //+ /
-
-77 (
-770 599( -
-99 ::G M
-:: ;;@ Q
-;; <<) 2
-
-??  
-AA BB) 2
-EE 1   +99 '
-EE9 <HH) ,
-GG HH 
-HH II 
-
-KK +š	
+__ &`` &aa &bb )š	
 <D:\BootcampProject\src\08.BlazorUI\Services\CourseService.cs
 
  T
@@ -1765,7 +1732,40 @@ FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
 
 ºº 
 ºº  !
-ºº. /‡
+ºº. /Þ
+FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
+
+ $(
+
+
+* 7  +)) '
+( 0  "F
+) 3  !** %33 AA( 2MM6 @
+8 D $
+Y ` 
+4 OMM 0
+  (
+ * /f k  , 1
+   !! ..> D
+!! ## %%S Y
+!!/ 0!!4 5
+%% "'' "
+.. //+ /
+
+77 (
+770 599( -
+99 ::G M
+:: ;;@ Q
+;; <<) 2
+
+??  
+AA BB) 2
+EE 1   +99 '
+EE9 <HH) ,
+GG HH 
+HH II 
+
+KK +‡
 >D:\BootcampProject\src\08.BlazorUI\Services\CheckoutService.cs
 
  Ž
@@ -2105,7 +2105,12 @@ FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
 °°6 A
 
 ®®A M
-±±9 Eá
+±±9 E¨
+-D:\BootcampProject\src\08.BlazorUI\Program.csŽ
+        $   ## $$ %% )) ** ,, // 11
+ 
+) + P
+11 44 66 88 ;; << >> ?? BB á
 ;D:\BootcampProject\src\08.BlazorUI\Services\AdminService.cs
 
  œ
@@ -2296,14 +2301,7 @@ FD:\BootcampProject\src\08.BlazorUI\Services\CustomAuthStateProvider.cs
 ÃÃ$ ,
 
 ÃÃ 
-ÄÄ ¨
--D:\BootcampProject\src\08.BlazorUI\Program.csŽ
-
-
-        $"" %% && '' ++ ,, .. 11 33
- 
-) + P
-33 66 88 :: == >> @@ AA DD ò
+ÄÄ ò
 KD:\BootcampProject\src\08.BlazorUI\Components\Pages\NavigationManagerExt.cs
 
  !ü

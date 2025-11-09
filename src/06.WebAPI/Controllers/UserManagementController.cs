@@ -1,10 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Application.Feature.Schedules.Commands;
-using MyApp.Application.Feature.Schedules.Queries;
+using MyApp.Application.Feature.UserManagement.Commands;
+using MyApp.Application.Feature.UserManagement.Queries;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 using System.Security.Claims;
 

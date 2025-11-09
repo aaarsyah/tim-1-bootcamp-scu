@@ -5,7 +5,7 @@ using MyApp.Base.Exceptions;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Commands;
+namespace MyApp.Application.Feature.UserManagement.Commands;
 
 public class AddRoleToUserCommand : IRequest<ApiResponse<object>>
 {
@@ -15,12 +15,10 @@ public class AddRoleToUserCommand : IRequest<ApiResponse<object>>
 public class AddRoleToUserCommandHandler : IRequestHandler<AddRoleToUserCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<AddRoleToUserCommandHandler> _logger;
-    public AddRoleToUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<AddRoleToUserCommandHandler> logger)
+    public AddRoleToUserCommandHandler(IUnitOfWork unitOfWork, ILogger<AddRoleToUserCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(AddRoleToUserCommand request, CancellationToken cancellationToken)

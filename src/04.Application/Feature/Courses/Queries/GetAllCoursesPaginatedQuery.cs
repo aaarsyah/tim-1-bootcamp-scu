@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 

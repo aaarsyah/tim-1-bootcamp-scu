@@ -1,5 +1,4 @@
 ﻿using MyApp.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace MyApp.Domain.Models;
 

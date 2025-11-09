@@ -5,7 +5,7 @@ using MyApp.Base.Exceptions;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Commands;
+namespace MyApp.Application.Feature.UserManagement.Commands;
 
 public class RemoveRoleFromUserCommand : IRequest<ApiResponse<object>>
 {
@@ -15,12 +15,10 @@ public class RemoveRoleFromUserCommand : IRequest<ApiResponse<object>>
 public class RemoveRoleFromUserCommandHandler : IRequestHandler<RemoveRoleFromUserCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<RemoveRoleFromUserCommandHandler> _logger;
-    public RemoveRoleFromUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RemoveRoleFromUserCommandHandler> logger)
+    public RemoveRoleFromUserCommandHandler(IUnitOfWork unitOfWork, ILogger<RemoveRoleFromUserCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(RemoveRoleFromUserCommand request, CancellationToken cancellationToken)

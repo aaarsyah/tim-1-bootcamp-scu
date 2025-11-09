@@ -1,5 +1,4 @@
 ﻿using MyApp.Shared.DTOs;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
 
 namespace MyApp.BlazorUI.Services;

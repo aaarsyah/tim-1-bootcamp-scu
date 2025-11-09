@@ -1,12 +1,11 @@
 // Import Entity Framework Core untuk database operations
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyApp.Application.Feature.Authentications.Commands;
 using MyApp.Application.Mappings;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 // Import AppleMusicDbContext dari folder Data
 using MyApp.Infrastructure.Data;
 // Import extension methods dari folder Extensions
@@ -338,7 +337,6 @@ try
     // ===== STEP 13: START APPLICATION =====
     Log.Information("Application started successfully with Authentication & Authorization");
     app.Run();
-
 }
 catch (Exception ex)
 {

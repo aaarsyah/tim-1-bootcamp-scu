@@ -5,7 +5,7 @@ using MyApp.Base.Exceptions;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Commands;
+namespace MyApp.Application.Feature.UserManagement.Commands;
 
 public class SetClaimForUserCommand : IRequest<ApiResponse<object>>
 {
@@ -16,12 +16,10 @@ public class SetClaimForUserCommand : IRequest<ApiResponse<object>>
 public class SetClaimForUserCommandHandler : IRequestHandler<SetClaimForUserCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<SetClaimForUserCommandHandler> _logger;
-    public SetClaimForUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<SetClaimForUserCommandHandler> logger)
+    public SetClaimForUserCommandHandler(IUnitOfWork unitOfWork, ILogger<SetClaimForUserCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(SetClaimForUserCommand request, CancellationToken cancellationToken)

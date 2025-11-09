@@ -17,12 +17,10 @@ public class CheckoutCartItemsCommand : IRequest<ApiResponse<CheckoutResponseDto
 public class CheckoutCartItemsCommandHandler : IRequestHandler<CheckoutCartItemsCommand, ApiResponse<CheckoutResponseDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<CheckoutCartItemsCommandHandler> _logger;
-    public CheckoutCartItemsCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<CheckoutCartItemsCommandHandler> logger)
+    public CheckoutCartItemsCommandHandler(IUnitOfWork unitOfWork, ILogger<CheckoutCartItemsCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<CheckoutResponseDto>> Handle(CheckoutCartItemsCommand request, CancellationToken cancellationToken)

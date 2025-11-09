@@ -1,7 +1,7 @@
 ﻿using MyApp.Base;
 using MyApp.Domain.Models;
 
-namespace MyApp.Infrastructure.Data.Repositories.Interfaces
+namespace MyApp.Infrastructure.Data.Repositories
 {
     public interface ICrudRepository<T> where T : BaseEntity // untuk biasa
     {

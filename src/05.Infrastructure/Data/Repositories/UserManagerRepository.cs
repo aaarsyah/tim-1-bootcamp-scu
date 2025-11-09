@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Models;
-using MyApp.Infrastructure.Data.Repositories.Interfaces;
-using System.Text.RegularExpressions;
 
 namespace MyApp.Infrastructure.Data.Repositories;
 
@@ -42,7 +40,6 @@ public class UserManagerRepository : IUserManagerRepository
         // TODO: Implement proper email normalization (some email provider such as gmail.com ignore + and .)
         // Refer to https://github.com/johno/normalize-email/blob/master/index.js for implementation
         return email.ToLower();
-        //Regex.IsMatch(pw, @"[A-Z]");
     }
     public async Task<User> CreateUserAsync(User userEntity)
     {

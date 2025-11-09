@@ -1,10 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using MyApp.Infrastructure.Data.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyApp.Infrastructure.Data.Repositories;
 

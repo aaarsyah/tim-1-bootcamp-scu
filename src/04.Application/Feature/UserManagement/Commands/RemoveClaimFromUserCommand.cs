@@ -5,7 +5,7 @@ using MyApp.Base.Exceptions;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 
-namespace MyApp.Application.Feature.Schedules.Commands;
+namespace MyApp.Application.Feature.UserManagement.Commands;
 
 public class RemoveClaimFromUserCommand : IRequest<ApiResponse<object>>
 {
@@ -15,12 +15,10 @@ public class RemoveClaimFromUserCommand : IRequest<ApiResponse<object>>
 public class RemoveClaimFromUserCommandHandler : IRequestHandler<RemoveClaimFromUserCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<RemoveClaimFromUserCommandHandler> _logger;
-    public RemoveClaimFromUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<RemoveClaimFromUserCommandHandler> logger)
+    public RemoveClaimFromUserCommandHandler(IUnitOfWork unitOfWork, ILogger<RemoveClaimFromUserCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(RemoveClaimFromUserCommand request, CancellationToken cancellationToken)

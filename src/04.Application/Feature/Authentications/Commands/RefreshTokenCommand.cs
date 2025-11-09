@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 using MyApp.Application.Services;
@@ -21,11 +21,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, A
     private readonly JwtSettings _jwtSettings;
     public RefreshTokenCommandHandler(
         IUnitOfWork unitOfWork,
-        IMapper mapper,
-        ILogger<RefreshTokenCommandHandler> logger,
         ITokenService tokenService,
-        IEmailService emailService,
-        IPasswordService passwordService,
         JwtSettings jwtSettings)
     {
         _unitOfWork = unitOfWork;

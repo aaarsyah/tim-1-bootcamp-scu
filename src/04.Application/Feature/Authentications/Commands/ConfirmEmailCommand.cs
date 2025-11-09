@@ -18,11 +18,7 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, A
     private readonly ILogger<ConfirmEmailCommandHandler> _logger;
     public ConfirmEmailCommandHandler(
         IUnitOfWork unitOfWork,
-        IMapper mapper,
-        ILogger<ConfirmEmailCommandHandler> logger,
-        ITokenService tokenService,
-        IEmailService emailService,
-        IPasswordService passwordService)
+        ILogger<ConfirmEmailCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;

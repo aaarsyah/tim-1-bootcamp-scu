@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Application.Validators;
 using MyApp.Infrastructure.Data;
 using MyApp.Infrastructure.Data.Repositories;
-using MyApp.Infrastructure.Data.Repositories.Interfaces;
 using MyApp.Application.Services;
 
 namespace MyApp.WebAPI.Extensions;

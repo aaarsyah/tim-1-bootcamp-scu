@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MyApp.Base.Exceptions;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Infrastructure.Data.Repositories;
 using MyApp.Shared.DTOs;
 using MyApp.Application.Services;
@@ -16,28 +16,19 @@ public class ResetPasswordCommand : IRequest<ApiResponse<object>>
 public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<ResetPasswordCommandHandler> _logger;
-    private readonly ITokenService _tokenService;
     private readonly IEmailService _emailService;
     private readonly IPasswordService _passwordService;
-    private readonly JwtSettings _jwtSettings;
     public ResetPasswordCommandHandler(
         IUnitOfWork unitOfWork,
-        IMapper mapper,
         ILogger<ResetPasswordCommandHandler> logger,
-        ITokenService tokenService,
         IEmailService emailService,
-        IPasswordService passwordService,
-        JwtSettings jwtSettings)
+        IPasswordService passwordService)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
-        _tokenService = tokenService;
         _emailService = emailService;
         _passwordService = passwordService;
-        _jwtSettings = jwtSettings;
     }
     public async Task<ApiResponse<object>> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {

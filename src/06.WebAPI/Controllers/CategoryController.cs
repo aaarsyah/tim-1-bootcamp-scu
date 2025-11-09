@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Feature.Categories.Commands;
 using MyApp.Application.Feature.Categories.Queries;
-using MyApp.Infrastructure.Configuration;
+using MyApp.Application.Configuration;
 using MyApp.Shared.DTOs;
 
 namespace MyApp.WebAPI.Controllers;
@@ -17,15 +17,13 @@ namespace MyApp.WebAPI.Controllers;
 public class CategoryController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<CategoryController> _logger;
 
     /// <summary>
     /// Constructor
     /// </summary>
-    public CategoryController(IMediator mediator, ILogger<CategoryController> logger)
+    public CategoryController(IMediator mediator)
     {
         _mediator = mediator;
-        _logger = logger;
     }
 
     /// <summary>

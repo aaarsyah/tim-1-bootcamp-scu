@@ -1,1 +1,6 @@
-﻿D:\BootcampProject\src\07.Client\Class1.cs
+﻿D:\BootcampProject\src\01.Base\Entity.cs
+D:\BootcampProject\src\01.Base\Exceptions\AuthenticationException.cs
+D:\BootcampProject\src\01.Base\Exceptions\BaseApiException.cs
+D:\BootcampProject\src\01.Base\Exceptions\NotFoundException.cs
+D:\BootcampProject\src\01.Base\Exceptions\PermissionException.cs
+D:\BootcampProject\src\01.Base\Exceptions\ValidationException.cs

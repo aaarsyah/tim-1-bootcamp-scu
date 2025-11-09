@@ -48,40 +48,6 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'ResetPasswordDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 36,
-                  "endLine": 14,
-                  "endColumn": 52
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 36,
-                  "endLine": 14,
-                  "endColumn": 52
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
           "message": "Non-nullable property 'ConfirmEmailDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
@@ -184,16 +150,16 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'RefreshTokenDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "message": "Non-nullable property 'ResetPasswordDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RefreshTokenCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
                 "region": {
-                  "startLine": 15,
-                  "startColumn": 35,
-                  "endLine": 15,
-                  "endColumn": 50
+                  "startLine": 14,
+                  "startColumn": 36,
+                  "endLine": 14,
+                  "endColumn": 52
                 }
               }
             }
@@ -201,46 +167,12 @@
           "relatedLocations": [
             {
               "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RefreshTokenCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
                 "region": {
-                  "startLine": 15,
-                  "startColumn": 35,
-                  "endLine": 15,
-                  "endColumn": 50
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'RegisterDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
-                "region": {
-                  "startLine": 15,
-                  "startColumn": 31,
-                  "endLine": 15,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
-                "region": {
-                  "startLine": 15,
-                  "startColumn": 31,
-                  "endLine": 15,
-                  "endColumn": 42
+                  "startLine": 14,
+                  "startColumn": 36,
+                  "endLine": 14,
+                  "endColumn": 52
                 }
               }
             }
@@ -258,9 +190,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 11,
+                  "startLine": 10,
                   "startColumn": 34,
-                  "endLine": 11,
+                  "endLine": 10,
                   "endColumn": 44
                 }
               }
@@ -271,9 +203,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 11,
+                  "startLine": 10,
                   "startColumn": 34,
-                  "endLine": 11,
+                  "endLine": 10,
                   "endColumn": 44
                 }
               }
@@ -354,40 +286,6 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'ClaimType' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveClaimFromUserCommand.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 19,
-                  "endLine": 13,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveClaimFromUserCommand.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 19,
-                  "endLine": 13,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
           "message": "Non-nullable property 'CheckoutDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
@@ -420,18 +318,31 @@
           }
         },
         {
-          "ruleId": "S125",
+          "ruleId": "CS8618",
           "level": "warning",
-          "message": "Remove this commented out code.",
+          "message": "Non-nullable property 'RefreshTokenDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RefreshTokenCommand.cs",
                 "region": {
-                  "startLine": 58,
-                  "startColumn": 9,
-                  "endLine": 58,
-                  "endColumn": 115
+                  "startLine": 15,
+                  "startColumn": 35,
+                  "endLine": 15,
+                  "endColumn": 50
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RefreshTokenCommand.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 35,
+                  "endLine": 15,
+                  "endColumn": 50
                 }
               }
             }
@@ -441,18 +352,86 @@
           }
         },
         {
-          "ruleId": "S2094",
+          "ruleId": "CS8618",
           "level": "warning",
-          "message": "Remove this empty class, write its code or make it an \"interface\".",
+          "message": "Non-nullable property 'RegisterDto' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Class1.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 20
+                  "startLine": 15,
+                  "startColumn": 31,
+                  "endLine": 15,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 31,
+                  "endLine": 15,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'ClaimType' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveClaimFromUserCommand.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 19,
+                  "endLine": 13,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveClaimFromUserCommand.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 19,
+                  "endLine": 13,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 9,
+                  "endLine": 46,
+                  "endColumn": 115
                 }
               }
             }
@@ -470,9 +449,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ConfirmEmailCommand.cs",
                 "region": {
-                  "startLine": 40,
+                  "startLine": 36,
                   "startColumn": 9,
-                  "endLine": 40,
+                  "endLine": 36,
                   "endColumn": 12
                 }
               }
@@ -533,9 +512,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RefreshTokenCommand.cs",
                 "region": {
-                  "startLine": 55,
+                  "startLine": 51,
                   "startColumn": 13,
-                  "endLine": 55,
+                  "endLine": 51,
                   "endColumn": 16
                 }
               }
@@ -609,48 +588,6 @@
           }
         },
         {
-          "ruleId": "S1450",
-          "level": "warning",
-          "message": "Remove the field '_configuration' and declare it as a local variable in the relevant methods.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/EmailService.cs",
-                "region": {
-                  "startLine": 13,
-                  "startColumn": 37,
-                  "endLine": 13,
-                  "endColumn": 51
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_logger' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/AddCourseToCartCommand.cs",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 61,
-                  "endLine": 20,
-                  "endColumn": 68
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S1135",
           "level": "warning",
           "message": "Complete the task associated to this 'TODO' comment.",
@@ -663,153 +600,6 @@
                   "startColumn": 12,
                   "endLine": 22,
                   "endColumn": 16
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 30,
-                  "endLine": 20,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_tokenService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
-                "region": {
-                  "startLine": 22,
-                  "startColumn": 36,
-                  "endLine": 22,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_emailService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 36,
-                  "endLine": 23,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_jwtSettings' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ChangePasswordCommand.cs",
-                "region": {
-                  "startLine": 25,
-                  "startColumn": 34,
-                  "endLine": 25,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ForgotPasswordCommand.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_passwordService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ForgotPasswordCommand.cs",
-                "region": {
-                  "startLine": 22,
-                  "startColumn": 39,
-                  "endLine": 22,
-                  "endColumn": 55
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_jwtSettings' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ForgotPasswordCommand.cs",
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 34,
-                  "endLine": 23,
-                  "endColumn": 46
                 }
               }
             }
@@ -848,9 +638,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Invoices/Queries/GetAllInvoicesByUserRefIdQuery.cs",
                 "region": {
-                  "startLine": 25,
+                  "startLine": 24,
                   "startColumn": 12,
-                  "endLine": 25,
+                  "endLine": 24,
                   "endColumn": 16
                 }
               }
@@ -890,9 +680,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Invoices/Queries/GetInvoiceByRefIdAsyncProtectedQuery.cs",
                 "region": {
-                  "startLine": 28,
+                  "startLine": 26,
                   "startColumn": 12,
-                  "endLine": 28,
+                  "endLine": 26,
                   "endColumn": 16
                 }
               }
@@ -911,9 +701,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Invoices/Queries/GetInvoiceDetailsByInvoiceIdProtectedQuery.cs",
                 "region": {
-                  "startLine": 28,
+                  "startLine": 26,
                   "startColumn": 12,
-                  "endLine": 28,
+                  "endLine": 26,
                   "endColumn": 16
                 }
               }
@@ -924,144 +714,18 @@
           }
         },
         {
-          "ruleId": "S4487",
+          "ruleId": "S1450",
           "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
+          "message": "Remove the field '_configuration' and declare it as a local variable in the relevant methods.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/DeleteCategoryCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Services/EmailService.cs",
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 30,
-                  "endLine": 17,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Commands/DeleteCourseCommand.cs",
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 30,
-                  "endLine": 17,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LogoutCommand.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 30,
-                  "endLine": 19,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_tokenService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LogoutCommand.cs",
-                "region": {
-                  "startLine": 21,
-                  "startColumn": 36,
-                  "endLine": 21,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_emailService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LogoutCommand.cs",
-                "region": {
-                  "startLine": 22,
-                  "startColumn": 36,
-                  "endLine": 22,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_passwordService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LogoutCommand.cs",
-                "region": {
-                  "startLine": 23,
-                  "startColumn": 39,
-                  "endLine": 23,
-                  "endColumn": 55
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_jwtSettings' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LogoutCommand.cs",
-                "region": {
-                  "startLine": 24,
-                  "startColumn": 34,
-                  "endLine": 24,
-                  "endColumn": 46
+                  "startLine": 13,
+                  "startColumn": 37,
+                  "endLine": 13,
+                  "endColumn": 51
                 }
               }
             }
@@ -1121,94 +785,10 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 11,
+                  "startLine": 10,
                   "startColumn": 34,
-                  "endLine": 11,
+                  "endLine": 10,
                   "endColumn": 44
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 30,
-                  "endLine": 20,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 30,
-                  "endLine": 19,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_tokenService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
-                "region": {
-                  "startLine": 21,
-                  "startColumn": 36,
-                  "endLine": 21,
-                  "endColumn": 49
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_jwtSettings' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ResetPasswordCommand.cs",
-                "region": {
-                  "startLine": 24,
-                  "startColumn": 34,
-                  "endLine": 24,
-                  "endColumn": 46
                 }
               }
             }
@@ -1251,48 +831,6 @@
                   "startColumn": 12,
                   "endLine": 22,
                   "endColumn": 16
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/RemoveCourseFromCartCommand.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_logger' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/RemoveCourseFromCartCommand.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 66,
-                  "endLine": 19,
-                  "endColumn": 73
                 }
               }
             }
@@ -1352,9 +890,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Queries/GetUserByRefIdQuery.cs",
                 "region": {
-                  "startLine": 25,
+                  "startLine": 24,
                   "startColumn": 12,
-                  "endLine": 25,
+                  "endLine": 24,
                   "endColumn": 16
                 }
               }
@@ -1428,27 +966,6 @@
           }
         },
         {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/PaymentMethods/Commands/DeletePaymentMethodCommand.cs",
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 30,
-                  "endLine": 17,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S125",
           "level": "warning",
           "message": "Remove this commented out code.",
@@ -1457,9 +974,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
                 "region": {
-                  "startLine": 163,
+                  "startLine": 159,
                   "startColumn": 9,
-                  "endLine": 163,
+                  "endLine": 159,
                   "endColumn": 62
                 }
               }
@@ -1478,9 +995,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
                 "region": {
-                  "startLine": 168,
+                  "startLine": 164,
                   "startColumn": 9,
-                  "endLine": 168,
+                  "endLine": 164,
                   "endColumn": 68
                 }
               }
@@ -1491,18 +1008,18 @@
           }
         },
         {
-          "ruleId": "S4487",
+          "ruleId": "S1116",
           "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
+          "message": "Remove this empty statement.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/MyClasses/Commands/DeleteMyClassCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ForgotPasswordCommand.cs",
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 30,
-                  "endLine": 17,
-                  "endColumn": 37
+                  "startLine": 49,
+                  "startColumn": 70,
+                  "endLine": 49,
+                  "endColumn": 71
                 }
               }
             }
@@ -1512,18 +1029,42 @@
           }
         },
         {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
+          "ruleId": "CA1860",
+          "level": "note",
+          "message": "Prefer comparing 'Count' to 0 rather than using 'Any()', both for clarity and for performance",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Schedules/Commands/DeleteScheduleCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/DeleteCategoryCommand.cs",
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 30,
-                  "endLine": 17,
-                  "endColumn": 37
+                  "startLine": 33,
+                  "startColumn": 13,
+                  "endLine": 33,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "DiagnosticPropertyKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "S2629",
+          "level": "warning",
+          "message": "Don't use string interpolation in logging message templates.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LoginCommand.cs",
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 36,
+                  "endLine": 77,
+                  "endColumn": 76
                 }
               }
             }
@@ -1533,102 +1074,18 @@
           }
         },
         {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
+          "ruleId": "CA2254",
+          "level": "note",
+          "message": "The logging message template should not vary between calls to 'LoggerExtensions.LogWarning(ILogger, string?, params object?[])'",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/AddRoleToUserCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LoginCommand.cs",
                 "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveClaimFromUserCommand.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/SetActiveForUserCommand.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/RemoveRoleFromUserCommand.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 30,
-                  "endLine": 18,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_mapper' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/UserManagement/Commands/SetClaimForUserCommand.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 30,
-                  "endLine": 19,
-                  "endColumn": 37
+                  "startLine": 77,
+                  "startColumn": 36,
+                  "endLine": 77,
+                  "endColumn": 76
                 }
               }
             }
@@ -1687,18 +1144,18 @@
           }
         },
         {
-          "ruleId": "S1116",
+          "ruleId": "S6667",
           "level": "warning",
-          "message": "Remove this empty statement.",
+          "message": "Logging in a catch clause should pass the caught exception as a parameter.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/ForgotPasswordCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
                 "region": {
-                  "startLine": 58,
-                  "startColumn": 70,
-                  "endLine": 58,
-                  "endColumn": 71
+                  "startLine": 111,
+                  "startColumn": 17,
+                  "endLine": 111,
+                  "endColumn": 133
                 }
               }
             }
@@ -1708,18 +1165,18 @@
           }
         },
         {
-          "ruleId": "S1481",
-          "level": "warning",
-          "message": "Remove the unused local variable 'validatedToken'.",
+          "ruleId": "CA1866",
+          "level": "note",
+          "message": "Use 'string.IndexOf(char)' instead of 'string.IndexOf(string)' when you have a string with a single char",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/CreateCategoryCommand.cs",
                 "region": {
-                  "startLine": 135,
-                  "startColumn": 92,
-                  "endLine": 135,
-                  "endColumn": 106
+                  "startLine": 34,
+                  "startColumn": 65,
+                  "endLine": 34,
+                  "endColumn": 70
                 }
               }
             }
@@ -1729,186 +1186,18 @@
           }
         },
         {
-          "ruleId": "S6444",
-          "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
+          "ruleId": "CA2016",
+          "level": "note",
+          "message": "Forward the 'cancellationToken' parameter to the 'WriteAllBytesAsync' method or pass in 'CancellationToken.None' explicitly to indicate intentionally not propagating the token",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/CreateCategoryCommand.cs",
                 "region": {
                   "startLine": 43,
-                  "startColumn": 14,
+                  "startColumn": 19,
                   "endLine": 43,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6444",
-          "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 44,
-                  "startColumn": 14,
-                  "endLine": 44,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6444",
-          "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 45,
-                  "startColumn": 14,
-                  "endLine": 45,
-                  "endColumn": 44
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S6444",
-          "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 14,
-                  "endLine": 46,
-                  "endColumn": 56
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "SYSLIB1045",
-          "level": "note",
-          "message": "Use 'GeneratedRegexAttribute' to generate the regular expression implementation at compile-time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 14,
-                  "endLine": 43,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "SYSLIB1045",
-          "level": "note",
-          "message": "Use 'GeneratedRegexAttribute' to generate the regular expression implementation at compile-time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 44,
-                  "startColumn": 14,
-                  "endLine": 44,
-                  "endColumn": 47
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "SYSLIB1045",
-          "level": "note",
-          "message": "Use 'GeneratedRegexAttribute' to generate the regular expression implementation at compile-time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 45,
-                  "startColumn": 14,
-                  "endLine": 45,
-                  "endColumn": 44
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "SYSLIB1045",
-          "level": "note",
-          "message": "Use 'GeneratedRegexAttribute' to generate the regular expression implementation at compile-time.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/PasswordService.cs",
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 14,
-                  "endLine": 46,
-                  "endColumn": 56
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1860",
-          "level": "note",
-          "message": "Prefer comparing 'Count' to 0 rather than using 'Any()', both for clarity and for performance",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/DeleteCategoryCommand.cs",
-                "region": {
-                  "startLine": 35,
-                  "startColumn": 13,
-                  "endLine": 35,
-                  "endColumn": 35
+                  "endColumn": 42
                 }
               }
             }
@@ -1916,29 +1205,10 @@
           "properties": {
             "warningLevel": 1,
             "customProperties": {
-              "DiagnosticPropertyKey": "Count"
+              "ArgumentName": "cancellationToken",
+              "ParameterName": null,
+              "ShouldFix": "1"
             }
-          }
-        },
-        {
-          "ruleId": "S2325",
-          "level": "warning",
-          "message": "Make 'BuildClaims' a static method.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
-                "region": {
-                  "startLine": 149,
-                  "startColumn": 25,
-                  "endLine": 149,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
           }
         },
         {
@@ -1997,99 +1267,10 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
                 "region": {
-                  "startLine": 135,
+                  "startLine": 133,
                   "startColumn": 20,
-                  "endLine": 135,
+                  "endLine": 133,
                   "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
-          "message": "Member 'BuildClaims' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
-                "region": {
-                  "startLine": 149,
-                  "startColumn": 25,
-                  "endLine": 149,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA1866",
-          "level": "note",
-          "message": "Use 'string.IndexOf(char)' instead of 'string.IndexOf(string)' when you have a string with a single char",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/CreateCategoryCommand.cs",
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 65,
-                  "endLine": 34,
-                  "endColumn": 70
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CA2016",
-          "level": "note",
-          "message": "Forward the 'cancellationToken' parameter to the 'WriteAllBytesAsync' method or pass in 'CancellationToken.None' explicitly to indicate intentionally not propagating the token",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Categories/Commands/CreateCategoryCommand.cs",
-                "region": {
-                  "startLine": 43,
-                  "startColumn": 19,
-                  "endLine": 43,
-                  "endColumn": 42
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1,
-            "customProperties": {
-              "ArgumentName": "cancellationToken",
-              "ParameterName": null,
-              "ShouldFix": "1"
-            }
-          }
-        },
-        {
-          "ruleId": "S6667",
-          "level": "warning",
-          "message": "Logging in a catch clause should pass the caught exception as a parameter.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/RegisterCommand.cs",
-                "region": {
-                  "startLine": 111,
-                  "startColumn": 17,
-                  "endLine": 111,
-                  "endColumn": 133
                 }
               }
             }
@@ -2154,9 +1335,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
                 "region": {
-                  "startLine": 125,
+                  "startLine": 123,
                   "startColumn": 17,
-                  "endLine": 125,
+                  "endLine": 123,
                   "endColumn": 77
                 }
               }
@@ -2167,18 +1348,39 @@
           }
         },
         {
-          "ruleId": "S2629",
+          "ruleId": "S1481",
           "level": "warning",
-          "message": "Don't use string interpolation in logging message templates.",
+          "message": "Remove the unused local variable 'validatedToken'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LoginCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
                 "region": {
-                  "startLine": 77,
-                  "startColumn": 36,
-                  "endLine": 77,
-                  "endColumn": 76
+                  "startLine": 131,
+                  "startColumn": 92,
+                  "endLine": 131,
+                  "endColumn": 106
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2325",
+          "level": "warning",
+          "message": "Make 'BuildClaims' a static method.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
+                "region": {
+                  "startLine": 145,
+                  "startColumn": 25,
+                  "endLine": 145,
+                  "endColumn": 36
                 }
               }
             }
@@ -2196,9 +1398,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
                 "region": {
-                  "startLine": 110,
+                  "startLine": 108,
                   "startColumn": 21,
-                  "endLine": 110,
+                  "endLine": 108,
                   "endColumn": 67
                 }
               }
@@ -2209,9 +1411,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
                 "region": {
-                  "startLine": 110,
+                  "startLine": 108,
                   "startColumn": 56,
-                  "endLine": 110,
+                  "endLine": 108,
                   "endColumn": 65
                 }
               }
@@ -2225,18 +1427,39 @@
           }
         },
         {
-          "ruleId": "CA2254",
+          "ruleId": "CA1822",
           "level": "note",
-          "message": "The logging message template should not vary between calls to 'LoggerExtensions.LogWarning(ILogger, string?, params object?[])'",
+          "message": "Member 'BuildClaims' does not access instance data and can be marked as static",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Authentications/Commands/LoginCommand.cs",
+                "uri": "file:///D:/BootcampProject/src/04.Application/Services/TokenService.cs",
                 "region": {
-                  "startLine": 77,
-                  "startColumn": 36,
-                  "endLine": 77,
-                  "endColumn": 76
+                  "startLine": 145,
+                  "startColumn": 25,
+                  "endLine": 145,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'GenerateInvoiceId' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
+                "region": {
+                  "startLine": 133,
+                  "startColumn": 20,
+                  "endLine": 133,
+                  "endColumn": 37
                 }
               }
             }
@@ -2254,9 +1477,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 66,
+                  "startLine": 65,
                   "startColumn": 24,
-                  "endLine": 66,
+                  "endLine": 65,
                   "endColumn": 76
                 }
               }
@@ -2279,9 +1502,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 71,
+                  "startLine": 70,
                   "startColumn": 28,
-                  "endLine": 71,
+                  "endLine": 70,
                   "endColumn": 80
                 }
               }
@@ -2304,9 +1527,9 @@
               "resultFile": {
                 "uri": "file:///D:/BootcampProject/src/04.Application/Feature/Courses/Queries/GetAllCoursesPaginatedQuery.cs",
                 "region": {
-                  "startLine": 76,
+                  "startLine": 75,
                   "startColumn": 18,
-                  "endLine": 76,
+                  "endLine": 75,
                   "endColumn": 70
                 }
               }
@@ -2318,27 +1541,6 @@
               "LeftOffendingMethod": "ToLower",
               "RightOffendingMethod": null
             }
-          }
-        },
-        {
-          "ruleId": "CA1822",
-          "level": "note",
-          "message": "Member 'GenerateInvoiceId' does not access instance data and can be marked as static",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/BootcampProject/src/04.Application/Feature/CartItems/Commands/CheckoutCartItemsCommand.cs",
-                "region": {
-                  "startLine": 135,
-                  "startColumn": 20,
-                  "endLine": 135,
-                  "endColumn": 37
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
           }
         }
       ],
@@ -2548,23 +1750,6 @@
             ]
           }
         },
-        "S2094": {
-          "id": "S2094",
-          "shortDescription": "Classes should not be empty",
-          "fullDescription": "There is no good excuse for an empty class. If it’s being used simply as a common extension point, it should be replaced with an interface. If it was stubbed in as a placeholder for future development it should be fleshed-out. In any other case, it should be eliminated.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2094",
-          "properties": {
-            "category": "Minor Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
         "S2139": {
           "id": "S2139",
           "shortDescription": "Exceptions should be either logged or rethrown but not both",
@@ -2614,39 +1799,6 @@
             ]
           }
         },
-        "S4487": {
-          "id": "S4487",
-          "shortDescription": "Unread \"private\" fields should be removed",
-          "fullDescription": "Private fields which are written but never read are a case of \"dead store\". Changing the value of such a field is useless and most probably indicates an error in the code.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4487",
-          "properties": {
-            "category": "Critical Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
-        "S6444": {
-          "id": "S6444",
-          "shortDescription": "Not specifying a timeout for regular expressions is security-sensitive",
-          "fullDescription": "Not specifying a timeout for regular expressions can lead to a Denial-of-Service attack. Pass a timeout when using System.Text.RegularExpressions to process untrusted input because a malicious user might craft a value for which the evaluation lasts excessively long.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6444",
-          "properties": {
-            "category": "Major Security Hotspot",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
         "S6667": {
           "id": "S6667",
           "shortDescription": "Logging in a catch clause should pass the caught exception as a parameter.",
@@ -2677,16 +1829,6 @@
               "MainSourceScope",
               "SonarWay"
             ]
-          }
-        },
-        "SYSLIB1045": {
-          "id": "SYSLIB1045",
-          "shortDescription": "Convert to 'GeneratedRegexAttribute'.",
-          "defaultLevel": "note",
-          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/syslib-diagnostics/syslib1045",
-          "properties": {
-            "category": "Performance",
-            "isEnabledByDefault": true
           }
         }
       }

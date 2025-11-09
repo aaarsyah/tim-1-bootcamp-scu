@@ -14,12 +14,10 @@ public class DeleteCategoryCommand : IRequest<ApiResponse<object>>
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, ApiResponse<object>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     private readonly ILogger<DeleteCategoryCommandHandler> _logger;
-    public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeleteCategoryCommandHandler> logger)
+    public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteCategoryCommandHandler> logger)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
         _logger = logger;
     }
     public async Task<ApiResponse<object>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)

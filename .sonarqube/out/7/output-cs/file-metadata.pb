@@ -62,5 +62,4 @@ _D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ForgotPa
 ]D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ConfirmEmailCommand.csutf-8h
 _D:\BootcampProject\src\04.Application\Feature\Authentications\Commands\ChangePasswordCommand.csutf-8K
 BD:\BootcampProject\src\04.Application\Configuration\JwtSettings.csutf-8U
-LD:\BootcampProject\src\04.Application\Configuration\AuthorizationPolicies.csutf-88
-/D:\BootcampProject\src\04.Application\Class1.csutf-8
+LD:\BootcampProject\src\04.Application\Configuration\AuthorizationPolicies.csutf-8

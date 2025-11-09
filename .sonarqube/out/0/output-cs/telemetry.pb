@@ -1,1 +1,1 @@
-JR4D:\BootcampProject\src\07.Client\MyApp.Client.csproj¢net9.0òCSharp13
+FR0D:\BootcampProject\src\01.Base\MyApp.Base.csproj¢net9.0òCSharp13
