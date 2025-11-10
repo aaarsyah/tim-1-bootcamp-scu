@@ -8,27 +8,27 @@ Apple Music - Final Project Tim 1
 **Cara menjalankan untuk production**
 
 Buat docker compose untuk proyek
-```
+```Batchfile
 docker-compose -f docker-compose.yml -p bootcamp-project up -d
 ```
 
 Database yang dihasilkan dari docker akan dalam keadaan kosong, jadi database perlu di-seeding
 
 Untuk menghasilkan script mentah untuk database seeding, jalankan command ini
-```
+```Batchfile
 dotnet ef migrations script --startup-project ../06.WebAPI
 ```
 
 **Cara menjalankan untuk development**
 
 Jalankan command dalam direktori `src\05.Infrastructure`
-```
+```Batchfile
 dotnet ef database update --startup-project ../06.WebAPI
 ```
 (Bila tidak bisa, setup SQL Server terlebih dahulu, lalu set connection string sesuai dengan credential SQL Server di `"src\06.WebAPI\appsettings.Development.json"`)
 
 Build proyek lalu run
-```
+```Batchfile
 dotnet build
 dotnet run
 ```
@@ -36,9 +36,15 @@ dotnet run
 **Untuk development**
 
 Buat docker compose untuk sonarqube
-```
+```Batchfile
 docker-compose -f docker-compose-sonarqube.yml -p BootcampProjectSonarQube up -d
 ```
 
 Setelah sonarqube berjalan, run `sonar-scan.bat` untuk meng-scan code dan run unit test untuk code coverage
 
+Set token di file `sonar-scan.bat` terlebih dahulu
+
+```Batchfile
+REM set token disini
+set /A TOKEN=sqp_0123456789abcdef0123456789abcdef01234567
+```
